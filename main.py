@@ -4,6 +4,7 @@ import Objects
 import Tiles as t
 
 #Holy SHIIIIITTTTT
+lakdjflkj = 0
 p.init()
 
 screen = p.display.set_mode((800, 600))
