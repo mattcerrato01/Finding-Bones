@@ -121,7 +121,7 @@ class Player(Movable_Object):
         self.soul_hourglass_bottom = p.transform.scale(loadify("Soul_Hourglass_Bottom.png"), (50, 80))
         self.soul_hourglass_top = p.transform.scale(loadify("Soul_Hourglass_Top.png"), (50, 80))
 
-        self.fate = 30
+        self.fate = 100
         self.soul = 80
 
     def move(self, keys, collidable_group):
