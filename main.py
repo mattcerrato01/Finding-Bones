@@ -16,8 +16,28 @@ screen = p.display.set_mode((800, 600))
 p.display.set_caption("Grim Reaper")
 
 
+
+
 def loadify(imgname):  # Returns loaded Image
     return p.image.load(imgname).convert_alpha()
+
+'''Function that adds a set number of demons to a group of sprites, takes in a group of sprites, a player object, and 
+the amount of demons to be added to the group'''
+def createDemons(demons, player, numDemons):
+    for i in range(numDemons):
+        randomx = random.randint(0, 800 * len(image_name_array[0]))
+        randomy = random.randint(0, 600 * len(image_name_array))
+        collided = False
+
+        demon = Objects.Demons("M-F-L.png", randomx, randomy, ["M-F-L", "M-F-S", "M-F-R"], ["M-B-L", "M-B-S", "M-B-R"],
+                               ["M-L-L", "M-L-S", "M-L-R"], ["M-R-L", "M-R-S", "M-R-R"], player)
+        for boys in demons:
+            if demon.collide(boys):
+                collided = True
+                i -= 1
+                break
+        if not collided:
+            demons.add(demon)
 
 
 player = Objects.Player("player.jpg", ["GR-F-L", "GR-F-S", "GR-F-R", "GR-F-S"],
@@ -43,21 +63,11 @@ image_name_array = [["background.jpg", "background.jpg", "background.jpg", "back
 tile_map = t.Map(image_name_array, collidable_group)
 demons = p.sprite.Group()
 
-# tile = t.Tile("background.jpg", collidable_group, 0, 0)
-for i in range(int(200 / player.fate)):
-    randomx = random.randint(0, 800 * len(image_name_array[0]))
-    randomy = random.randint(0, 600 * len(image_name_array))
-    collided = False
 
-    demon = Objects.Demons("M-F-L.png", randomx, randomy, ["M-F-L", "M-F-S", "M-F-R"], ["M-B-L", "M-B-S", "M-B-R"],
-                           ["M-L-L", "M-L-S", "M-L-R"], ["M-R-L", "M-R-S", "M-R-R"], player)
-    for boys in demons:
-        if demon.collide(boys):
-            collided = True
-            i -= 1
-            break
-    if not collided:
-        demons.add(demon)
+
+
+# tile = t.Tile("background.jpg", collidable_group, 0, 0)
+createDemons(demons,player,int(200 / player.fate))
 
 running = True
 
@@ -90,20 +100,7 @@ while running:
                 demons.remove(demons[0])
                 i += 1
             elif fate - player.fate > 0:
-                randomx = random.randint(0, 800 * len(image_name_array[0]))
-                randomy = random.randint(0, 600 * len(image_name_array))
-                collided = False
-
-                demon = Objects.Demons("M-F-L.png", randomx, randomy, ["M-F-L", "M-F-S", "M-F-R"],
-                                       ["M-B-L", "M-B-S", "M-B-R"], ["M-L-L", "M-L-S", "M-L-R"],
-                                       ["M-R-L", "M-R-S", "M-R-R"], player)
-                for boys in demons:
-                    if demon.collide(boys):
-                        collided = True
-                        i -= 1
-                        break
-                if not collided:
-                    demons.add(demon)
+                createDemons(demons,player,1)
                 i += 1
         fate = player.fate
     if not world.state():
