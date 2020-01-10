@@ -14,14 +14,14 @@ class Object(p.sprite.Sprite):
     def __init__(self, overworld_image_name, width=50, height=50): #NOTE: come back and clean up initialization and such here
         p.sprite.Sprite.__init__(self)
         self.overworld_image_name = overworld_image_name
-        self.underworld_image_name = overworld_image_name[:-4] + "_underworld" + overworld_image_name[-4:]
+        self.underworld_image_name = overworld_image_name[:-4] + "_underworld." + overworld_image_name[-4:]
         self.x = 0
         self.y = 0
         self.width = width
         self.height = height
         self.image = loadify(overworld_image_name)
-#        self.underworld_image = loadify(self.underworld_image_name)
-        #self.image = loadify(underworld_image_name)
+#       self.underworld_image = loadify(self.underworld_image_name)
+        #self.image = loadify(self.underworld_image_name)
         self.image = p.transform.scale(self.image, (self.width, self.height))
         self.investigation_pieces = []
         self.investigated = False
@@ -39,10 +39,8 @@ class Object(p.sprite.Sprite):
     def check_if_investigated(self, mouse_click):
         if self.rect.collidepoint(mouse_click):
             self.investigated = True
-            print("hell yeah")
+            print("investigated")
             return True
-
-
 
     def setX(self, x):
         self.x = x
@@ -63,6 +61,26 @@ class Object(p.sprite.Sprite):
 
     def collide(self, sprite):
         return p.sprite.collide_rect(self, sprite)
+
+class Villagers(Object):
+
+    def __init__(self, overworld_image_name):
+        Object.__init__(self, overworld_image_name)
+        self.soul_reaped = False
+        self.underworld_image = loadify(self.underworld_image_name)
+        self.image = loadify(self.underworld_image_name)
+
+    def check_if_investigated(self, mouse_click):
+        if self.rect.collidepoint(mouse_click):
+            if world.state():
+                self.investigated = True
+                print("talk")
+            elif not world.state():
+                self.soul_reaped = True
+                print("reaped")
+            return True
+        return False
+
 
 
 class Movable_Object(Object):  # as of now, only works for player.
@@ -102,7 +120,7 @@ class Player(Movable_Object):
     def __init__(self, name, up_walk, down_walk, left_walk, right_walk, ):
         # check to see if we can just flip left walk for right walk
         Movable_Object.__init__(self, name)
-        self.speed = 2
+        self.speed = 20
         self.diag_speed = self.speed / m.sqrt(2)
 
         coord.set_offset_x(374)
@@ -140,7 +158,16 @@ class Player(Movable_Object):
         self.soul_hourglass_top = p.transform.scale(loadify("Soul_Hourglass_Top.png"), (50, 80))
 
         self.fate = 100
-        self.soul = 80
+        self.soul = 100
+
+    def get_fate(self):
+        return self.fate
+    def set_fate(self, fate):
+        self.fate = fate
+    def get_soul(self):
+        return self.soul
+    def set_soul(self, soul):
+        self.soul = soul
 
     def move(self, keys, collidable_group):
 

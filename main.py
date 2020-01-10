@@ -46,6 +46,9 @@ player = Objects.Player("player.jpg", ["GR-F-L", "GR-F-S", "GR-F-R", "GR-F-S"],
 rect = Objects.Object("download.jpg", 100, 100)
 rect2 = Objects.Object("download1.jpg")
 rect3 = Objects.Object("download2.jpg")
+villager = Objects.Villagers("villager.jpeg")
+villager.setX( 400)
+villager.setY(400)
 rect.setX(100)
 rect.setY(300)
 rect2.setX(400)
@@ -53,7 +56,7 @@ rect2.setY(400)
 rect3.setX(820)
 rect3.setY(900)
 
-collidable_group = p.sprite.Group(rect, rect2, rect3)
+collidable_group = p.sprite.Group(rect, rect2, rect3, villager)
 
 image_name_array = [["background.jpg", "background.jpg", "background.jpg", "background.jpg"],
                     ["background.jpg", "background.jpg", "background.jpg", "background.jpg"],
@@ -93,13 +96,6 @@ while running:
                 clicked = False
                 break
 
-
-
-
-
-
-
-
     for x in range(p.time.get_ticks() // 10 - time // 10):
         player.move(p.key.get_pressed(), collision_group)
         if not world.state():
@@ -107,7 +103,7 @@ while running:
                 demon.move(player)
                 if demon.hit:
                     demons.remove(demon)
-                    player.fate -= 10
+                    player.set_fate(player.get_fate()-10)
                 # player.fate -= 10 # This will decrease player's fate when a demon hits it
 
     # adding or subtracting demons when player's fate goes down
@@ -125,7 +121,6 @@ while running:
     if not world.state():
         for demon in demons:
             demon.draw(screen)
-
     player.draw(screen)
 
     p.display.update()
