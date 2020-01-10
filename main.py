@@ -91,21 +91,27 @@ while running:
     if abs(fate-player.fate) >=5:
         i = 0
 
-        while i <1:
-            randomx = random.randint(0, 800 * len(image_name_array[0]))
-            randomy = random.randint(0, 600 * len(image_name_array))
-            collided = False
+        while i < abs(fate-player.fate)//5:
+            if fate-player.fate <0:
+                demons.remove(demons[0])
+                i+=1
+            elif fate - player.fate >0:
+                randomx = random.randint(0, 800 * len(image_name_array[0]))
+                randomy = random.randint(0, 600 * len(image_name_array))
+                collided = False
 
-            demon = Objects.Demons("M-F-L.png", randomx, randomy, ["M-F-L", "M-F-S", "M-F-R"],
-                                   ["M-B-L", "M-B-S", "M-B-R"], ["M-L-L", "M-L-S", "M-L-R"],
-                                   ["M-R-L", "M-R-S", "M-R-R"], player)
-            for boys in demons:
-                if demon.collide(boys):
-                    collided = True
-                    i -= 1
-                    break
-            if not collided:
-                demons.add(demon)
+                demon = Objects.Demons("M-F-L.png", randomx, randomy, ["M-F-L", "M-F-S", "M-F-R"],
+                                       ["M-B-L", "M-B-S", "M-B-R"], ["M-L-L", "M-L-S", "M-L-R"],
+                                       ["M-R-L", "M-R-S", "M-R-R"], player)
+                for boys in demons:
+                    if demon.collide(boys):
+                        collided = True
+                        i -= 1
+                        break
+                if not collided:
+                    demons.add(demon)
+                i +=1
+        fate = player.fate
 
 
     for demon in demons:
