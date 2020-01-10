@@ -45,12 +45,19 @@ image_name_array = [["background.jpg","background.jpg","background.jpg","backgro
 tile_map = t.Map(image_name_array, collidable_group)
 demons = p.sprite.Group()
 #tile = t.Tile("background.jpg", collidable_group, 0, 0)
-for i in range(int(500/player.fate)):
+for i in range(int(200/player.fate)):
     randomx = random.randint(0, 800*len(image_name_array[0]))
     randomy = random.randint(0,600*len(image_name_array))
+    collided = False
 
     demon = Objects.Demons("player.jpg", randomx, randomy, ["M-F-L", "M-F-S", "M-F-R"],["M-B-L", "M-B-S", "M-B-R"],["M-L-L", "M-L-S", "M-L-R"],["M-R-L", "M-R-S", "M-R-R"])
-    demons.add(demon)
+    for boys in demons:
+        if demon.collide(boys):
+            collided = True
+            i -= 1
+            break
+    if not collided:
+        demons.add(demon)
 
 
 
