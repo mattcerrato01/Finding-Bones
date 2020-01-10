@@ -2,10 +2,8 @@ import pygame as p
 import math as m
 import GameStates as gs
 
-world = gs.Overworld_State()
-
 coord = gs.CoordConverter()
-
+world = gs.WorldState()
 
 def loadify(imgname):
     return p.image.load(imgname).convert_alpha()
@@ -38,7 +36,7 @@ class Object(p.sprite.Sprite):
         self.update()
 
     def draw(self, screen):
-        if world.overworld:
+        if world.state():
             screen.blit(self.image, (coord.screen_x(self.x), coord.screen_y(self.y)))
         #else:
             #screen.blit(self.underworld_image, (coord.screen_x(self.x), coord.screen_y(self.y)))
@@ -59,34 +57,35 @@ class Movable_Object(Object):  # as of now, only works for player.
 
         self.x += x
         coord.set_offset_x(self.x + 374)
-
-        for collidable in collidable_group:
-            collidable.update()
-            if collidable != self and self.collide(collidable):
-                self.x -= x
-                coord.set_offset_x(self.x + 374)
-                break
+        if world.state():
+            for collidable in collidable_group:
+                collidable.update()
+                if collidable != self and self.collide(collidable):
+                    self.x -= x
+                    coord.set_offset_x(self.x + 374)
+                    break
 
     def moveY(self, y, collidable_group):
 
         self.y += y
         coord.set_offset_y(self.y + 228)
 
-        for collidable in collidable_group:
-            collidable.update()
-            if collidable != self and self.collide(collidable):
-                self.y -= y
-                coord.set_offset_y(self.y + 228)
+        if world.state():
+            for collidable in collidable_group:
                 collidable.update()
-                break
+                if collidable != self and self.collide(collidable):
+                    self.y -= y
+                    coord.set_offset_y(self.y + 228)
+                    collidable.update()
+                    break
 
 
 class Player(Movable_Object):
 
-    def __init__(self, name, up_walk, down_walk, left_walk, right_walk):
+    def __init__(self, name, up_walk, down_walk, left_walk, right_walk, ):
         # check to see if we can just flip left walk for right walk
         Movable_Object.__init__(self, name)
-        self.speed = 20
+        self.speed = 2
         self.diag_speed = self.speed / m.sqrt(2)
 
         coord.set_offset_x(374)
@@ -98,6 +97,8 @@ class Player(Movable_Object):
         self.height = 127  # check this, should be collision height
         self.rect = p.Rect(380, 244, self.width, self.height)
         self.walking_time = 0
+
+        self.tab_ = True
 
         self.up_walk = []
         self.down_walk = []
@@ -124,8 +125,8 @@ class Player(Movable_Object):
         self.fate = 100
         self.soul = 80
 
-
     def move(self, keys, collidable_group):
+
 
         temp_speed = self.speed
         temp_diag_speed = self.diag_speed
@@ -139,6 +140,8 @@ class Player(Movable_Object):
             animation_speed = 2
 
         walk_gap = 30
+
+
 
         if keys[100] == keys[97]:
             if keys[115]:
@@ -187,6 +190,21 @@ class Player(Movable_Object):
 
         coord.set_offset_x(self.x + 374)
         coord.set_offset_y(self.y + 228)
+
+        if p.key.get_pressed()[9] and self.tab_holder:
+            collide = True
+            for collidable in collidable_group:
+                collidable.update()
+                if collidable != self and self.collide(collidable):
+                    collide = False
+                    break
+            if collide:
+                world.toggle()
+                self.soul-=10
+                self.tab_holder = False
+
+        elif not p.key.get_pressed()[9]:
+            self.tab_holder = True
 
     def draw(self, screen):
         if self.image in self.up_walk:

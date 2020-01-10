@@ -1,5 +1,14 @@
-class Overworld_State():
+class WorldState():
+
     overworld = True
+
+    def state(self):
+        return WorldState.overworld
+
+    def toggle(self):
+        WorldState.overworld = not WorldState.overworld
+
+
 
 class CoordConverter():
 

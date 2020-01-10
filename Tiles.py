@@ -3,6 +3,7 @@ import math as m
 import GameStates as gs
 
 coord = gs.CoordConverter()
+world = gs.WorldState()
 
 def loadify(imgname): #Returns loaded Image
     return p.image.load(imgname).convert_alpha()
@@ -12,6 +13,7 @@ class Tile: #One 800x800 tile, contains the collision sprites contained within t
     def __init__(self, name, collision_group, x, y):
         self.image = loadify(name)
         self.image = p.transform.scale(self.image, (800, 600))
+        self.underworld_image = p.transform.scale(loadify(name[:-4] + "_underworld" + name[-4:]), (800, 600))
         self.collision_group = collision_group
         self.x = x*800
         self.y = y*600
@@ -24,9 +26,14 @@ class Tile: #One 800x800 tile, contains the collision sprites contained within t
         self.collision_group.remove(object)
 
     def draw(self, screen): #draws the tile and all the sprites within it
-        screen.blit(self.image, (coord.screen_x(self.x), coord.screen_y(self.y)))
+        if world.state():
+            screen.blit(self.image, (coord.screen_x(self.x), coord.screen_y(self.y)))
+        else:
+            screen.blit(self.underworld_image, (coord.screen_x(self.x), coord.screen_y(self.y)))
         for object in self.collision_group:
             object.draw(screen)
+
+
 
 class Map: #Contains a 2D array of all the tiles, and a function that draws only visible tiles
 
