@@ -1,88 +1,102 @@
 import pygame as p
 import math as m
+import GameStates as gs
+
+world = gs.Overworld_State()
+
+coord = gs.CoordConverter()
+
 
 def loadify(imgname):
     return p.image.load(imgname).convert_alpha()
 
+
 class Object(p.sprite.Sprite):
 
-    def __init__(self, name, width=50, height=50):
+
+
+    def __init__(self, overworld_image_name, width=50, height=50): #NOTE: come back and clean up initialization and such here
         p.sprite.Sprite.__init__(self)
-        self.name = name
+        self.overworld_image_name = overworld_image_name
+        self.underworld_image_name = overworld_image_name[:-4] + "_underworld" + overworld_image_name[-4:]
         self.x = 0
         self.y = 0
         self.width = width
         self.height = height
-        self.image = loadify(name)
+        self.image = loadify(overworld_image_name)
+#        self.underworld_image = loadify(self.underworld_image_name)
+        #self.image = loadify(underworld_image_name)
         self.image = p.transform.scale(self.image, (self.width, self.height))
-        self.rect = p.Rect(self.x, self.y, self.width, self.height)
+        self.update()
 
     def setX(self, x):
         self.x = x
-        self.rect = p.Rect(self.x, self.y, self.width, self.height)
+        self.update()
 
     def setY(self, y):
         self.y = y
-        self.rect = p.Rect(self.x, self.y, self.width, self.height)
+        self.update()
 
-    def draw(self, screen, offset_x, offset_y):
-        screen.blit(self.image, ((self.x-offset_x)+374, (self.y-offset_y)+228))
+    def draw(self, screen):
+        if world.overworld:
+            screen.blit(self.image, (coord.screen_x(self.x), coord.screen_y(self.y)))
+        #else:
+            #screen.blit(self.underworld_image, (coord.screen_x(self.x), coord.screen_y(self.y)))
+
+    def update(self):
+        self.rect = p.Rect(coord.screen_x(self.x), coord.screen_y(self.y), self.width, self.height)
 
     def collide(self, sprite):
-        #IDEA: multiple collidable groups for map regions
         return p.sprite.collide_rect(self, sprite)
 
 
-class Movable_Object(Object):
+class Movable_Object(Object):  # as of now, only works for player.
 
-    def __init__(self, name):
-        Object.__init__(self, name)
+    def __init__(self, overworld_image_name):
+        Object.__init__(self, overworld_image_name)
 
     def moveX(self, x, collidable_group):
 
-        collision = False
         self.x += x
-        self.rect = p.Rect(self.x, self.y-30, self.width, self.height)
+        coord.set_offset_x(self.x + 374)
 
         for collidable in collidable_group:
-            if  collidable != self and self.collide(collidable):
-                collision = True
+            collidable.update()
+            if collidable != self and self.collide(collidable):
+                self.x -= x
+                coord.set_offset_x(self.x + 374)
                 break
-
-        if collision:
-            self.x -= x
-            self.rect = p.Rect(self.x, self.y-30, self.width, self.height)
 
     def moveY(self, y, collidable_group):
 
         self.y += y
-        self.rect = p.Rect(self.x, self.y-30, self.width, self.height)
-        collision = False
+        coord.set_offset_y(self.y + 228)
 
         for collidable in collidable_group:
+            collidable.update()
             if collidable != self and self.collide(collidable):
-                collision = True
+                self.y -= y
+                coord.set_offset_y(self.y + 228)
+                collidable.update()
                 break
-
-        if collision:
-            self.y -= y
-            self.rect = p.Rect(self.x, self.y-30, self.width, self.height)
-
-
 
 
 class Player(Movable_Object):
 
-    def __init__(self, name, up_walk, down_walk, left_walk, right_walk):
-        #check to see if I can just flip left walk for right walk
+    def __init__(self, name, up_walk, down_walk, left_walk, right_walk, ):
+        # check to see if we can just flip left walk for right walk
         Movable_Object.__init__(self, name)
-        self.speed = 20
-        self.diag_speed = self.speed/m.sqrt(2)
-        self.x = 1600
-        self.y = 1600
-        self.width = 56
-        self.height = 127
-        self.rect = p.Rect(1600, 1600, 56, 142)
+        self.speed = 2
+        self.diag_speed = self.speed / m.sqrt(2)
+
+        coord.set_offset_x(374)
+        coord.set_offset_y(228)
+
+        self.x = coord.real_x(374)
+        self.y = coord.real_y(228)
+        self.width = 40
+        self.height = 127  # check this, should be collision height
+        self.rect = p.Rect(380, 244, self.width, self.height)
         self.walking_time = 0
 
         self.up_walk = []
@@ -91,66 +105,87 @@ class Player(Movable_Object):
         self.right_walk = []
 
         for name in up_walk:
-            self.up_walk.append(p.transform.scale(loadify(name+".png"), (112, 144)))
+            self.up_walk.append(p.transform.scale(loadify(name + ".png"), (112, 144)))
         for name in down_walk:
-            self.down_walk.append(p.transform.scale(loadify(name+".png"), (112, 144)))
+            self.down_walk.append(p.transform.scale(loadify(name + ".png"), (112, 144)))
         for name in left_walk:
-            self.left_walk.append(p.transform.scale(loadify(name+".png"), (112, 142)))
+            self.left_walk.append(p.transform.scale(loadify(name + ".png"), (112, 142)))
         for name in right_walk:
-            self.right_walk.append(p.transform.scale(loadify(name+".png"), (112, 142)))
+            self.right_walk.append(p.transform.scale(loadify(name + ".png"), (112, 142)))
 
         self.current_group = self.up_walk
 
+        self.empty_hourglass = p.transform.scale(loadify("Empty_Hourglass.png"), (50, 80))
+        self.fate_hourglass_bottom = p.transform.scale(loadify("Fate_Hourglass_Bottom.png"), (50, 80))
+        self.fate_hourglass_top = p.transform.scale(loadify("Fate_Hourglass_Top.png"), (50, 80))
+        self.soul_hourglass_bottom = p.transform.scale(loadify("Soul_Hourglass_Bottom.png"), (50, 80))
+        self.soul_hourglass_top = p.transform.scale(loadify("Soul_Hourglass_Top.png"), (50, 80))
 
-        #doing walking -- specifically i am looking at animating different walking in each if statement by changing self.image. May need to send
+        self.fate = 100
+        self.soul = 80
 
     def move(self, keys, collidable_group):
 
+        temp_speed = self.speed
+        temp_diag_speed = self.diag_speed
+        soul_drain = .01
+        animation_speed = 1
+
+        if keys[304]:
+            temp_speed *= 2
+            temp_diag_speed *= 2
+            soul_drain *= 2
+            animation_speed = 2
+
         walk_gap = 30
 
-        if p.key.get_pressed()[100] == keys[97]:
+        if keys[100] == keys[97]:
             if keys[115]:
-                self.moveY(self.speed,collidable_group)
+                self.moveY(temp_speed * -1, collidable_group)
                 self.current_group = self.up_walk
                 if self.walking_time % walk_gap:
-                    self.image = self.up_walk[self.walking_time//walk_gap % len(self.up_walk)]
+                    self.image = self.up_walk[self.walking_time // walk_gap % len(self.up_walk)]
             elif keys[119]:
-                self.moveY(self.speed*-1,collidable_group)
+                self.moveY(temp_speed, collidable_group)
                 self.current_group = self.down_walk
                 if self.walking_time % walk_gap:
-                    self.image = self.down_walk[self.walking_time//walk_gap % len(self.down_walk)]
+                    self.image = self.down_walk[self.walking_time // walk_gap % len(self.down_walk)]
         elif keys[115] == keys[119]:
             if keys[100]:
-                self.moveX(self.speed,collidable_group)
+                self.moveX(temp_speed * -1, collidable_group)
                 self.current_group = self.right_walk
                 if self.walking_time % walk_gap:
-                    self.image = self.right_walk[self.walking_time//walk_gap % len(self.right_walk)]
+                    self.image = self.right_walk[self.walking_time // walk_gap % len(self.right_walk)]
             elif keys[97]:
-                self.moveX(self.speed*-1,collidable_group)
+                self.moveX(temp_speed, collidable_group)
                 self.current_group = self.left_walk
                 if self.walking_time % walk_gap:
-                    self.image = self.left_walk[self.walking_time//walk_gap % len(self.left_walk)]
+                    self.image = self.left_walk[self.walking_time // walk_gap % len(self.left_walk)]
         else:
             if keys[100]:
-                self.moveX(self.diag_speed,collidable_group)
+                self.moveX(temp_diag_speed * -1, collidable_group)
                 self.current_group = self.right_walk
                 if self.walking_time % walk_gap:
-                    self.image = self.right_walk[self.walking_time//walk_gap % len(self.right_walk)]
+                    self.image = self.right_walk[self.walking_time // walk_gap % len(self.right_walk)]
             elif keys[97]:
-                self.moveX(self.diag_speed*-1,collidable_group)
+                self.moveX(temp_diag_speed, collidable_group)
                 self.current_group = self.left_walk
                 if self.walking_time % walk_gap:
-                    self.image = self.left_walk[self.walking_time//walk_gap % len(self.left_walk)]
+                    self.image = self.left_walk[self.walking_time // walk_gap % len(self.left_walk)]
             if keys[115]:
-                self.moveY(self.diag_speed,collidable_group)
+                self.moveY(temp_diag_speed * -1, collidable_group)
             elif keys[119]:
-                self.moveY(self.diag_speed*-1,collidable_group)
+                self.moveY(temp_diag_speed, collidable_group)
 
-        if p.key.get_pressed()[100] == p.key.get_pressed()[97] and not keys[115] and not keys[119]:
+        if keys[100] == keys[97] and not keys[115] and not keys[119]:
             self.walking_time = 0
             self.image = self.current_group[1]
         else:
-            self.walking_time += 1
+            self.walking_time += animation_speed
+            self.soul -= soul_drain
+
+        coord.set_offset_x(self.x + 374)
+        coord.set_offset_y(self.y + 228)
 
     def draw(self, screen):
         if self.image in self.up_walk:
@@ -162,12 +197,21 @@ class Player(Movable_Object):
         elif self.image in self.right_walk:
             screen.blit(self.image, (372, 229))
 
+        screen.blit(self.empty_hourglass, (10, 510), (0, 0, 50, 80))
+        screen.blit(self.fate_hourglass_top, (10, 544 - 30 * (self.fate / 100)), (0, 34 - 30 * (self.fate / 100), 50, 34))
+        screen.blit(self.fate_hourglass_bottom, (10, 556 + 30 * (self.fate / 100)), (0, 46 + 30 * (self.fate / 100), 50, 76))
+
+        screen.blit(self.empty_hourglass, (740, 510), (0, 0, 50, 80))
+        screen.blit(self.soul_hourglass_top, (740, 544 - 30 * (self.soul / 100)), (0, 38 - 30 * (self.soul / 100), 50, 34))
+        screen.blit(self.soul_hourglass_bottom, (740, 556 + 30 * (self.soul / 100)), (0, 46 + 30 * (self.soul / 100), 50, 76))
+
 class Demons(Object):
+
     def __init__(self, name, x, y, up_walk, down_walk, left_walk, right_walk):
         Object.__init__(self, name)
         self.setX(x)
         self.setY(y)
-        self.speed = 5
+        self.speed = 1
         self.hit = False
         self.walking_time = 0
 
@@ -188,43 +232,38 @@ class Demons(Object):
         self.current_group = self.up_walk
 
     def move(self, player):
-        chg_x = self.x - player.x
-        chg_y = self.y - player.y
-        angle = m.atan2(chg_y,chg_x)
-        x_move = m.cos(angle) * self.speed
-        y_move = m.sin(angle) * self.speed
+        chg_x = self.x + player.x
+        chg_y = self.y + player.y
+        hyp = m.sqrt(chg_x**2+chg_y**2)
+        #angle = m.atan2(chg_y, chg_x)
+        x_move = (chg_x*self.speed)/hyp # m.cos(angle) * self.speed
+        y_move = (chg_y*self.speed)/hyp # m.sin(angle) * self.speed
+
+        print(str(self.x) + " : " + str(player.x))
 
         walk_gap = 30
 
         self.y -= y_move
         self.x -= x_move
 
-        self.rect = p.Rect(self.x, self.y - 30, self.width, self.height)
+        self.update()
 
-        if x_move > 0 and abs(x_move)> abs(y_move):
+        if x_move > 0 and abs(x_move) > abs(y_move):
             self.current_group = self.left_walk
-        elif x_move < 0 and abs(x_move)> abs(y_move):
+        elif x_move < 0 and abs(x_move) > abs(y_move):
             self.current_group = self.right_walk
         elif y_move > 0 and abs(y_move) > abs(x_move):
             self.current_group = self.down_walk
         elif y_move < 0 and abs(y_move) > abs(x_move):
             self.current_group = self.up_walk
 
-
-
         if self.walking_time % walk_gap:
             self.image = self.current_group[self.walking_time // walk_gap % len(self.current_group)]
 
         self.walking_time += 5
 
-
         if self.collide(player):
             self.hit = True
 
-    def draw(self, screen, offset_x, offset_y):
-        screen.blit(self.image, ((self.x - offset_x) + 374, (self.y - offset_y) + 228))
-
-        #screen.blit(loadify("download.jpg"), (700, 10), (0,0,50,80 ))
-
-
-
+    def draw(self, screen):
+        screen.blit(self.image, (coord.screen_x(self.x), coord.screen_y(self.y)))

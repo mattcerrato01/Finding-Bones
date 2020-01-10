@@ -1,6 +1,8 @@
 import pygame as p
 import math as m
+import GameStates as gs
 
+coord = gs.CoordConverter()
 
 def loadify(imgname): #Returns loaded Image
     return p.image.load(imgname).convert_alpha()
@@ -9,10 +11,10 @@ class Tile: #One 800x800 tile, contains the collision sprites contained within t
 
     def __init__(self, name, collision_group, x, y):
         self.image = loadify(name)
-        self.image = p.transform.scale(self.image, (800, 800))
+        self.image = p.transform.scale(self.image, (800, 600))
         self.collision_group = collision_group
         self.x = x*800
-        self.y = y*800
+        self.y = y*600
 
 
     def add_to_group(self, *object):
@@ -21,10 +23,10 @@ class Tile: #One 800x800 tile, contains the collision sprites contained within t
     def remove_from_goup(self, *object):
         self.collision_group.remove(object)
 
-    def draw(self, screen, offset_x, offset_y): #draws the tile and all the sprites within it
-        screen.blit(self.image, (self.x-offset_x+374, self.y-offset_y+228))
+    def draw(self, screen): #draws the tile and all the sprites within it
+        screen.blit(self.image, (coord.screen_x(self.x), coord.screen_y(self.y)))
         for object in self.collision_group:
-            object.draw(screen, offset_x, offset_y)
+            object.draw(screen)
 
 class Map: #Contains a 2D array of all the tiles, and a function that draws only visible tiles
 
@@ -37,7 +39,7 @@ class Map: #Contains a 2D array of all the tiles, and a function that draws only
             for name in name_array:
                 new_group = p.sprite.Group()
                 for collidable in collidable_group:
-                    if collidable.x >= x*800 and collidable.x < (x+1)*800 and collidable.y >= y*800 and collidable.y < (y+1)*800:
+                    if collidable.x >= x*800 and collidable.x < (x+1)*800 and collidable.y >= y*600 and collidable.y < (y+1)*600:
                         new_group.add(collidable)
 
 
@@ -46,36 +48,36 @@ class Map: #Contains a 2D array of all the tiles, and a function that draws only
                 y+=1
             x+=1
 
-    def draw(self, screen, offset_x, offset_y): #called in the main while loop, determines what tiles are visible and calls their draw functions
+    def draw(self, screen): #called in the main while loop, determines what tiles are visible and calls their draw functions
 #tile player is in
 
         return_group = p.sprite.Group()
 
+        variable_1 = int(coord.real_x(400)//800)
+        variable_2 = int(variable_1 + coord.real_x(400)//400%2*2-1)
+        variable_a = int(coord.real_y(300)//600)
+        variable_b = int(variable_a + coord.real_y(300)//300%2*2-1)
+        variable_5 = len(self.tile_array)
 
-        if int(offset_x // 800) >= 0 and int(offset_x // 800) < len(self.tile_array) and int(offset_y // 800) >= 0 and int(offset_y // 800) < len(self.tile_array[0]):
-            self.tile_array[int(offset_x // 800)][int(offset_y // 800)].draw(screen, offset_x-25, offset_y)
-            return_group.add(self.tile_array[int(offset_x // 800)][int(offset_y // 800)].collision_group.sprites())
-        one = False
-        two = False
+        boolean_1 = variable_1 >= 0 and variable_1 < variable_5
+        boolean_2 = variable_2 >= 0 and variable_2 < variable_5
+        boolean_a = variable_a >= 0 and variable_a < variable_5
+        boolean_b = variable_b >= 0 and variable_b < variable_5
 
-#tile to the right / left of player
-        if int(offset_x // 800 + offset_x // 400 % 2 * 2 - 1) >= 0 and int(offset_x // 800 + offset_x // 400 % 2 * 2 - 1) < len(self.tile_array) and int(offset_y // 800) >= 0 and int(offset_y // 800) < len(self.tile_array[0]) :
-            self.tile_array[int(offset_x // 800 + offset_x // 400 % 2 * 2 - 1)][int(offset_y // 800)].draw(screen, offset_x-25, offset_y)
-            return_group.add(self.tile_array[int(offset_x // 800 + offset_x // 400 % 2 * 2 - 1)][int(offset_y // 800)].collision_group.sprites())
-            one = True
+        if boolean_1 and boolean_a:
+            self.tile_array[variable_1][variable_a].draw(screen)
+            return_group.add(self.tile_array[variable_1][variable_a].collision_group.sprites())
+        if boolean_1 and boolean_b:
+            self.tile_array[variable_1][variable_b].draw(screen)
+            return_group.add(self.tile_array[variable_1][variable_b].collision_group.sprites())
+        if boolean_2 and boolean_a:
+            self.tile_array[variable_2][variable_a].draw(screen)
+            return_group.add(self.tile_array[variable_2][variable_a].collision_group.sprites())
+        if boolean_2 and boolean_b:
+            self.tile_array[variable_2][variable_b].draw(screen)
+            return_group.add(self.tile_array[variable_2][variable_b].collision_group.sprites())
 
-        #print(str(int(offset_x // 800 + offset_x // 400 % 2 * 2 - 1) >= 0) + " : " + str(int(offset_x // 800 + offset_x // 400 % 2 * 2 - 1) < len(self.tile_array)) + " : " + str(int(offset_y // 800) >= 0) + " : " + str(int(offset_y // 800) < len(self.tile_array[0])))
-        #print(str(offset_x) + ", " + str(offset_y))
-
-#tile above / below the player
-        if int(offset_y // 800 + (offset_y // 400 % 2 * 2 - 1)) >= 0 and int(offset_y // 800 + (offset_y // 400 % 2 * 2 - 1)) < len(self.tile_array[0]) and int(offset_x // 800) >= 0 and int(offset_x // 800) < len(self.tile_array):
-            self.tile_array[int(offset_x // 800)][int(offset_y // 800 + (offset_y // 400 % 2 * 2 - 1))].draw(screen, offset_x-25, offset_y)
-            return_group.add(self.tile_array[int(offset_x // 800)][int(offset_y // 800 + (offset_y // 400 % 2 * 2 - 1))].collision_group.sprites())
-            two = True
-
-#tile in (left OR right) and (top OR bottom) of screen
-        if one and two:
-            self.tile_array[int(offset_x // 800 + offset_x // 400 % 2 * 2 - 1)][int(offset_y // 800 + (offset_y // 400 % 2 * 2 - 1))].draw(screen, offset_x-25, offset_y)
-            return_group.add(self.tile_array[int(offset_x // 800 + offset_x // 400 % 2 * 2 - 1)][int(offset_y // 800 + (offset_y // 400 % 2 * 2 - 1))].collision_group.sprites())
+        #p.draw.rect(screen,(0,0,0),(0,299,800,2))
+        #p.draw.rect(screen,(0,0,0),(399,0,2,600))
 
         return return_group
