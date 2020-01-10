@@ -83,10 +83,10 @@ class Movable_Object(Object):  # as of now, only works for player.
 
 class Player(Movable_Object):
 
-    def __init__(self, name, up_walk, down_walk, left_walk, right_walk, ):
+    def __init__(self, name, up_walk, down_walk, left_walk, right_walk):
         # check to see if we can just flip left walk for right walk
         Movable_Object.__init__(self, name)
-        self.speed = 2
+        self.speed = 20
         self.diag_speed = self.speed / m.sqrt(2)
 
         coord.set_offset_x(374)
@@ -123,6 +123,7 @@ class Player(Movable_Object):
 
         self.fate = 100
         self.soul = 80
+
 
     def move(self, keys, collidable_group):
 
@@ -207,11 +208,11 @@ class Player(Movable_Object):
 
 class Demons(Object):
 
-    def __init__(self, name, x, y, up_walk, down_walk, left_walk, right_walk):
+    def __init__(self, name, x, y, up_walk, down_walk, left_walk, right_walk,player):
         Object.__init__(self, name)
         self.setX(x)
         self.setY(y)
-        self.speed = 10
+        self.speed = 2- player.fate/100*1.5
         self.hit = False
         self.walking_time = 0
 

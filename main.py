@@ -7,7 +7,7 @@ import random
 
 coord = gs.CoordConverter()
 
-
+gs.Overworld_State = False
 p.init()
 
 screen = p.display.set_mode((800, 600))
@@ -44,13 +44,14 @@ image_name_array = [["background.jpg","background.jpg","background.jpg","backgro
 
 tile_map = t.Map(image_name_array, collidable_group)
 demons = p.sprite.Group()
+
 #tile = t.Tile("background.jpg", collidable_group, 0, 0)
 for i in range(int(200/player.fate)):
     randomx = random.randint(0, 800*len(image_name_array[0]))
     randomy = random.randint(0,600*len(image_name_array))
     collided = False
 
-    demon = Objects.Demons("player.jpg", randomx, randomy, ["M-F-L", "M-F-S", "M-F-R"],["M-B-L", "M-B-S", "M-B-R"],["M-L-L", "M-L-S", "M-L-R"],["M-R-L", "M-R-S", "M-R-R"])
+    demon = Objects.Demons("M-F-L.png", randomx, randomy, ["M-F-L", "M-F-S", "M-F-R"],["M-B-L", "M-B-S", "M-B-R"],["M-L-L", "M-L-S", "M-L-R"],["M-R-L", "M-R-S", "M-R-R"],player)
     for boys in demons:
         if demon.collide(boys):
             collided = True
@@ -64,6 +65,7 @@ for i in range(int(200/player.fate)):
 running = True
 
 time = 0
+fate = player.fate
 
 while running:
 
@@ -79,10 +81,12 @@ while running:
     collision_group = tile_map.draw(screen)
     for x in range(p.time.get_ticks()//10 - time//10):
         player.move(p.key.get_pressed(), collision_group)
-        for demon in demons:
-            demon.move(player)
-            if demon.hit:
-                demons.remove(demon)
+        if not gs.Overworld_State:
+            for demon in demons:
+                demon.move(player)
+                if demon.hit:
+                    demons.remove(demon)
+                    player.fate -= 10
                 # player.fate -= 10 # This will decrease player's fate when a demon hits it
 
     for demon in demons:
