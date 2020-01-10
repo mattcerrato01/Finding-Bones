@@ -3,8 +3,7 @@ import math as m
 import Objects
 import Tiles as t
 
-#HI
-#blah
+#Holy SHIIIIITTTTT
 p.init()
 
 screen = p.display.set_mode((800, 600))
