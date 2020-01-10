@@ -211,7 +211,7 @@ class Demons(Object):
         Object.__init__(self, name)
         self.setX(x)
         self.setY(y)
-        self.speed = 1
+        self.speed = 10
         self.hit = False
         self.walking_time = 0
 
@@ -239,7 +239,6 @@ class Demons(Object):
         x_move = (chg_x*self.speed)/hyp # m.cos(angle) * self.speed
         y_move = (chg_y*self.speed)/hyp # m.sin(angle) * self.speed
 
-        print(str(self.x) + " : " + str(player.x))
 
         walk_gap = 30
 
