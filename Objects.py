@@ -37,10 +37,10 @@ class Object(p.sprite.Sprite):
         return self.investigated
 
     def check_if_investigated(self, mouse_click):
-        if mouse_click[0] >= self.x and mouse_click[0] <= self.x + self.width:
-            if mouse_click[1] >= self.y and mouse_click[1] <= self.y + self.height:
-                self.investigated = True
-                return True
+        if self.rect.collidepoint(mouse_click):
+            self.investigated = True
+            print("hell yeah")
+            return True
 
 
 

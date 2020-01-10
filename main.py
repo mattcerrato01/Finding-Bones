@@ -77,12 +77,29 @@ fate = player.fate
 while running:
 
     screen.fill([255, 255, 255])
+    collision_group = tile_map.draw(screen)
+    clicked = False
 
     for event in p.event.get():
         if event.type == p.QUIT:
             running = False
+        elif event.type == p.MOUSEBUTTONUP:
+            clicked = True
+            pos = p.mouse.get_pos()
 
-    collision_group = tile_map.draw(screen)
+    if clicked:
+        for collidable in collision_group:
+            if collidable.check_if_investigated(pos):
+                clicked = False
+                break
+
+
+
+
+
+
+
+
     for x in range(p.time.get_ticks() // 10 - time // 10):
         player.move(p.key.get_pressed(), collision_group)
         if not world.state():
