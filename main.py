@@ -92,12 +92,14 @@ while running:
                     demons.remove(demon)
                     player.fate -= 10
                 # player.fate -= 10 # This will decrease player's fate when a demon hits it
+
+    # adding or subtracting demons when player's fate goes down
     if abs(fate - player.fate) >= 5:
         i = 0
-
         while i < abs(fate - player.fate) // 5:
             if fate - player.fate < 0:
-                demons.remove(demons[0])
+                randIDX = random.randint(0,len(demons)-1)
+                demons.remove(demons[randIDX])
                 i += 1
             elif fate - player.fate > 0:
                 createDemons(demons,player,1)

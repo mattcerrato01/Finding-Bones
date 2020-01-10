@@ -23,7 +23,26 @@ class Object(p.sprite.Sprite):
 #        self.underworld_image = loadify(self.underworld_image_name)
         #self.image = loadify(underworld_image_name)
         self.image = p.transform.scale(self.image, (self.width, self.height))
+        self.investigation_pieces = []
+        self.investigated = False
         self.update()
+
+    def set_investigation_pieces(self, things):
+        self.investigation_pieces = things
+
+    def set_investigated(self, clicked):
+        self.investigated = clicked
+
+    def get_investigated(self):
+        return self.investigated
+
+    def check_if_investigated(self, mouse_click):
+        if mouse_click[0] >= self.x and mouse_click[0] <= self.x + self.width:
+            if mouse_click[1] >= self.y and mouse_click[1] <= self.y + self.height:
+                self.investigated = True
+                return True
+
+
 
     def setX(self, x):
         self.x = x
