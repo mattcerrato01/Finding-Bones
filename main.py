@@ -47,8 +47,8 @@ rect = Objects.Object("download.jpg", 100, 100)
 rect2 = Objects.Object("download1.jpg")
 rect3 = Objects.Object("download2.jpg")
 villager = Objects.Villagers("villager.jpeg")
-villager.setX( 400)
-villager.setY(400)
+villager.setX(800)
+villager.setY(800)
 rect.setX(100)
 rect.setY(300)
 rect2.setX(400)
@@ -93,8 +93,9 @@ while running:
     if clicked:
         for collidable in collision_group:
             if collidable.check_if_investigated(pos):
-                clicked = False
                 break
+        clicked = False
+
 
     for x in range(p.time.get_ticks() // 10 - time // 10):
         player.move(p.key.get_pressed(), collision_group)
@@ -104,20 +105,19 @@ while running:
                 if demon.hit:
                     demons.remove(demon)
                     player.set_fate(player.get_fate()-10)
-                # player.fate -= 10 # This will decrease player's fate when a demon hits it
 
     # adding or subtracting demons when player's fate goes down
-    if abs(fate - player.fate) >= 5:
+    if abs(fate - player.get_fate()) >= 5:
         i = 0
-        while i < abs(fate - player.fate) // 5:
+        while i < abs(fate - player.get_fate()) // 5:
             if fate - player.fate < 0:
                 randIDX = random.randint(0,len(demons)-1)
                 demons.remove(demons[randIDX])
                 i += 1
-            elif fate - player.fate > 0:
+            elif fate - player.get_fate() > 0:
                 createDemons(demons,player,1)
                 i += 1
-        fate = player.fate
+        fate = player.get_fate()
     if not world.state():
         for demon in demons:
             demon.draw(screen)

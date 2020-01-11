@@ -21,7 +21,7 @@ class Object(p.sprite.Sprite):
         self.height = height
         self.image = loadify(overworld_image_name)
 #       self.underworld_image = loadify(self.underworld_image_name)
-        #self.image = loadify(self.underworld_image_name)
+        #self.underworld_image = p.transform.scale(self.image, (self.width, self.height))
         self.image = p.transform.scale(self.image, (self.width, self.height))
         self.investigation_pieces = []
         self.investigated = False
@@ -41,6 +41,7 @@ class Object(p.sprite.Sprite):
             self.investigated = True
             print("investigated")
             return True
+        return False
 
     def setX(self, x):
         self.x = x
@@ -53,8 +54,8 @@ class Object(p.sprite.Sprite):
     def draw(self, screen):
         if world.state():
             screen.blit(self.image, (coord.screen_x(self.x), coord.screen_y(self.y)))
-        #else:
-            #screen.blit(self.underworld_image, (coord.screen_x(self.x), coord.screen_y(self.y)))
+        else:
+            screen.blit(self.image, (coord.screen_x(self.x), coord.screen_y(self.y)))
 
     def update(self):
         self.rect = p.Rect(coord.screen_x(self.x), coord.screen_y(self.y), self.width, self.height)
@@ -62,24 +63,33 @@ class Object(p.sprite.Sprite):
     def collide(self, sprite):
         return p.sprite.collide_rect(self, sprite)
 
+
 class Villagers(Object):
 
     def __init__(self, overworld_image_name):
         Object.__init__(self, overworld_image_name)
         self.soul_reaped = False
+        self.underworld_image_name = "EndermanNormal.png"
         self.underworld_image = loadify(self.underworld_image_name)
-        self.image = loadify(self.underworld_image_name)
+        self.underworld_image = p.transform.scale(self.underworld_image, (self.width, self.height))
 
     def check_if_investigated(self, mouse_click):
         if self.rect.collidepoint(mouse_click):
             if world.state():
                 self.investigated = True
                 print("talk")
-            elif not world.state():
+            else:
                 self.soul_reaped = True
                 print("reaped")
             return True
         return False
+
+    def draw(self, screen):
+        if world.state():
+            screen.blit(self.image, (coord.screen_x(self.x), coord.screen_y(self.y)))
+        else:
+            screen.blit(self.underworld_image, (coord.screen_x(self.x), coord.screen_y(self.y)))
+
 
 
 
@@ -236,13 +246,13 @@ class Player(Movable_Object):
         coord.set_offset_y(self.y + 228)
 
         if p.key.get_pressed()[9] and self.tab_holder:
-            collide = True
+            collide = False
             for collidable in collidable_group:
                 collidable.update()
                 if collidable != self and self.collide(collidable):
-                    collide = False
+                    collide = True
                     break
-            if collide:
+            if not collide:
                 world.toggle()
                 self.soul-=10
                 self.tab_holder = False
