@@ -111,7 +111,6 @@ while running:
                 if demon.hit:
                     demons.remove(demon)
                     player.set_fate(player.get_fate()-10)
-
     # adding or subtracting demons when player's fate goes down
     if abs(fate - player.get_fate()) >= 5:
         i = 0
