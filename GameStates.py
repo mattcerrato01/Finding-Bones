@@ -7,6 +7,8 @@ class WorldState():
 
     def toggle(self):
         WorldState.overworld = not WorldState.overworld
+    def x(self):
+        x = 0
 
 
 
