@@ -109,6 +109,9 @@ class Movable_Object(Object):  # as of now, only works for player.
                     self.x -= x
                     coord.set_offset_x(self.x + 374)
                     break
+        else:
+            for collidable in collidable_group:
+                collidable.update()
 
     def moveY(self, y, collidable_group):
 
@@ -123,6 +126,9 @@ class Movable_Object(Object):  # as of now, only works for player.
                     coord.set_offset_y(self.y + 228)
                     collidable.update()
                     break
+        else:
+            for collidable in collidable_group:
+                collidable.update()
 
 
 class Player(Movable_Object):

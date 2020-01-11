@@ -91,11 +91,11 @@ while running:
             pos = p.mouse.get_pos()
 
     if clicked:
+
         for collidable in collision_group:
             if collidable.check_if_investigated(pos):
                 break
         clicked = False
-    #     adlkjhfk;l
 
     for x in range(p.time.get_ticks() // 10 - time // 10):
         player.move(p.key.get_pressed(), collision_group)
