@@ -73,6 +73,8 @@ class Villagers(Object):
         self.underworld_image = loadify(self.underworld_image_name)
         self.underworld_image = p.transform.scale(self.underworld_image, (self.width, self.height))
 
+        #self.fated
+
     def get_soul_reaped(self):
         return self.soul_reaped
 
@@ -139,7 +141,7 @@ class Player(Movable_Object):
     def __init__(self, name, up_walk, down_walk, left_walk, right_walk, ):
         # check to see if we can just flip left walk for right walk
         Movable_Object.__init__(self, name)
-        self.speed = 20
+        self.speed = 2
         self.diag_speed = self.speed / m.sqrt(2)
 
         coord.set_offset_x(374)
