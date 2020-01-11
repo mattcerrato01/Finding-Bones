@@ -95,11 +95,11 @@ while running:
         for collidable in collision_group:
 
             if collidable.check_if_investigated(pos):
-                if "soul" in collidable.underworld_image_name:
+                if type(collidable) == Objects.Villagers:
                     if collidable.get_soul_reaped():
                         collidable_group.remove(collidable)
                         tile_map = t.Map(image_name_array, collidable_group)
-                        player.set_soul(player.get_soul()-10)
+                        player.soul-=10
                 break
         clicked = False
 
@@ -111,7 +111,6 @@ while running:
                 if demon.hit:
                     demons.remove(demon)
                     player.set_fate(player.get_fate()-10)
-
     # adding or subtracting demons when player's fate goes down
     if abs(fate - player.get_fate()) >= 5:
         i = 0
