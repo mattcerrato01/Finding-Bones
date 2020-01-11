@@ -93,7 +93,12 @@ while running:
     if clicked:
 
         for collidable in collision_group:
+
             if collidable.check_if_investigated(pos):
+                if "soul" in collidable.underworld_image_name:
+                    if collidable.get_soul_reaped():
+                        collidable_group.remove(collidable)
+                        tile_map = t.Map(image_name_array, collidable_group)
                 break
         clicked = False
 
