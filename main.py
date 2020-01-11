@@ -99,6 +99,7 @@ while running:
                     if collidable.get_soul_reaped():
                         collidable_group.remove(collidable)
                         tile_map = t.Map(image_name_array, collidable_group)
+                        player.set_soul(player.get_soul()-10)
                 break
         clicked = False
 

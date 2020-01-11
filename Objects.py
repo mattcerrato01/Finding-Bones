@@ -14,7 +14,7 @@ class Object(p.sprite.Sprite):
     def __init__(self, overworld_image_name, width=50, height=50): #NOTE: come back and clean up initialization and such here
         p.sprite.Sprite.__init__(self)
         self.overworld_image_name = overworld_image_name
-        self.underworld_image_name = overworld_image_name[:-4] + "_underworld." + overworld_image_name[-4:]
+        self.underworld_image_name = overworld_image_name[:-4] + "_underworld" + overworld_image_name[-4:]
         self.x = 0
         self.y = 0
         self.width = width
