@@ -86,7 +86,13 @@ class Villagers(Object):
 				print("reaped")
 			return True
 		return False
-
+	
+	def changeMouse(self, mouse):
+		if self.rect.collidepoint(mouse) and not self.soul_reaped:
+			return True
+		else:
+			return False
+	
 	def draw(self, screen):
 		if world.state():
 			screen.blit(self.image, (coord.screen_x(self.x), coord.screen_y(self.y)))
