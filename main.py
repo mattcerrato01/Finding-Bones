@@ -49,7 +49,7 @@ player = Objects.Player("player.jpg", ["GR-F-L", "GR-F-S", "GR-F-R", "GR-F-S"],
 rect = Objects.Object("download.jpg", 100, 100)
 rect2 = Objects.Object("download1.jpg")
 rect3 = Objects.Object("download2.jpg")
-villager = Objects.Villagers("villager.jpeg")
+villager = Objects.Villagers("villager_m.png")
 villager.setX(800)
 villager.setY(800)
 rect.setX(100)
