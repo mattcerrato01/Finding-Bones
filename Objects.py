@@ -2,6 +2,8 @@ import pygame as p
 import math as m
 import GameStates as gs
 
+#git test
+
 coord = gs.CoordConverter()
 world = gs.WorldState()
 
@@ -75,6 +77,7 @@ class Villagers(Object):
 
 	def get_soul_reaped(self):
 		return self.soul_reaped
+
 
 	def check_if_investigated(self, mouse_click):
 		if self.rect.collidepoint(mouse_click):
