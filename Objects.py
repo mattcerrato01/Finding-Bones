@@ -68,16 +68,19 @@ class Object(p.sprite.Sprite):
 
 class Villagers(Object):
 
-	def __init__(self, overworld_image_name):
+	def __init__(self, overworld_image_name, essential=False):
 		Object.__init__(self, overworld_image_name)
 		self.soul_reaped = False
 		self.underworld_image_name = "Enderman_soul.png"
 		self.underworld_image = loadify(self.underworld_image_name)
 		self.underworld_image = p.transform.scale(self.underworld_image, (self.width, self.height))
+		self.essential = essential
 
 	def get_soul_reaped(self):
 		return self.soul_reaped
 
+	def get_essential(self):
+		return self.essential
 
 	def check_if_investigated(self, mouse_click):
 		if self.rect.collidepoint(mouse_click):

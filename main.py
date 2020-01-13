@@ -56,6 +56,8 @@ rect2.setY(400)
 rect3.setX(820)
 rect3.setY(900)
 
+villagers = [villager]
+
 collidable_group = p.sprite.Group(rect, rect2, rect3, villager)
 
 image_name_array = [["background.jpg", "background.jpg", "background.jpg", "background.jpg"],
@@ -129,16 +131,18 @@ while running:
 	
 	player.draw(screen)
 	
-	if villager.changeMouse(p.mouse.get_pos()):
-		if world.state():
-			p.mouse.set_visible(False)
-			screen.blit(cc1, p.mouse.get_pos())
+	for villager in villagers:
+		if villager.changeMouse(p.mouse.get_pos()):
+			if world.state():
+				p.mouse.set_visible(False)
+				screen.blit(cc1, p.mouse.get_pos())
+			else:
+				if not villager.get_essential():
+					p.mouse.set_visible(False)
+					screen.blit(cc2, p.mouse.get_pos())
 		else:
-			p.mouse.set_visible(False)
-			screen.blit(cc2, p.mouse.get_pos())
-	else:
-		p.mouse.set_cursor(*p.cursors.arrow)
-		p.mouse.set_visible(True)
+			p.mouse.set_cursor(*p.cursors.arrow)
+			p.mouse.set_visible(True)
 	
 
 	p.display.update()
