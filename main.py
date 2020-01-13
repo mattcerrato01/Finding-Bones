@@ -1,3 +1,5 @@
+#TESTING PUSH
+
 import pygame as p
 import math as m
 import Objects
@@ -18,31 +20,32 @@ p.display.set_caption("Grim Reaper")
 
 
 
-def loadify(imgname):  # Returns loaded Image
-	return p.image.load(imgname).convert_alpha()
 
-'''Function that adds a set number of demons to a group of sprites, takes in a group of sprites, a player object, and 
+def loadify(imgname):  # Returns loaded Image
+    return p.image.load(imgname).convert_alpha()
+
+'''Function that adds a set number of demons to a group of sprites, takes in a group of sprites, a player object, and
 the amount of demons to be added to the group'''
 def createDemons(demons, player, numDemons):
-	for i in range(numDemons):
-		randomx = random.randint(0, 800 * len(image_name_array[0]))
-		randomy = random.randint(0, 600 * len(image_name_array))
-		collided = False
+    for i in range(numDemons):
+        randomx = random.randint(0, 800 * len(image_name_array[0]))
+        randomy = random.randint(0, 600 * len(image_name_array))
+        collided = False
 
-		demon = Objects.Demons("M-F-L.png", randomx, randomy, ["M-F-L", "M-F-S", "M-F-R"], ["M-B-L", "M-B-S", "M-B-R"],
-							   ["M-L-L", "M-L-S", "M-L-R"], ["M-R-L", "M-R-S", "M-R-R"], player)
-		for boys in demons:
-			if demon.collide(boys):
-				collided = True
-				i -= 1
-				break
-		if not collided:
-			demons.add(demon)
+        demon = Objects.Demons("M-F-L.png", randomx, randomy, ["M-F-L", "M-F-S", "M-F-R"], ["M-B-L", "M-B-S", "M-B-R"],
+                               ["M-L-L", "M-L-S", "M-L-R"], ["M-R-L", "M-R-S", "M-R-R"], player)
+        for boys in demons:
+            if demon.collide(boys):
+                collided = True
+                i -= 1
+                break
+        if not collided:
+            demons.add(demon)
 
 
 player = Objects.Player("player.jpg", ["GR-F-L", "GR-F-S", "GR-F-R", "GR-F-S"],
-						["GR-B-L", "GR-B-S", "GR-B-R", "GR-B-S"], ["GR-L-1", "GR-L-S", "GR-L-1", "GR-L-2"],
-						["GR-R-1", "GR-R-S", "GR-R-1", "GR-R-2"])
+                        ["GR-B-L", "GR-B-S", "GR-B-R", "GR-B-S"], ["GR-L-1", "GR-L-S", "GR-L-1", "GR-L-2"],
+                        ["GR-R-1", "GR-R-S", "GR-R-1", "GR-R-2"])
 rect = Objects.Object("download.jpg", 100, 100)
 rect2 = Objects.Object("download1.jpg")
 rect3 = Objects.Object("download2.jpg")
@@ -61,15 +64,15 @@ villagers = [villager]
 collidable_group = p.sprite.Group(rect, rect2, rect3, villager)
 
 image_name_array = [["background.jpg", "background.jpg", "background.jpg", "background.jpg"],
-					["background.jpg", "background.jpg", "background.jpg", "background.jpg"],
-					["background.jpg", "background.jpg", "background.jpg", "background.jpg"],
-					["background.jpg", "background.jpg", "background.jpg", "background.jpg"], ]
+                    ["background.jpg", "background.jpg", "background.jpg", "background.jpg"],
+                    ["background.jpg", "background.jpg", "background.jpg", "background.jpg"],
+                    ["background.jpg", "background.jpg", "background.jpg", "background.jpg"], ]
 
 tile_map = t.Map(image_name_array, collidable_group)
 demons = p.sprite.Group()
+talking_objects = []
 
-cc1 = p.image.load("download.jpg")
-cc2 = p.image.load("villager.jpeg")
+
 
 # tile = t.Tile("background.jpg", collidable_group, 0, 0)
 createDemons(demons,player,int(200 / player.fate))
@@ -78,7 +81,7 @@ running = True
 
 time = 0
 fate = player.fate
-
+dialogue_box_undraw_event = p.USEREVENT+1 #Event that will essentially undraw the text box of an object
 while running:
 
 	screen.fill([255, 255, 255])
@@ -128,9 +131,9 @@ while running:
 	if not world.state():
 		for demon in demons:
 			demon.draw(screen)
-	
+
 	player.draw(screen)
-	
+
 	for villager in villagers:
 		if villager.changeMouse(p.mouse.get_pos()):
 			if world.state():
@@ -143,7 +146,7 @@ while running:
 		else:
 			p.mouse.set_cursor(*p.cursors.arrow)
 			p.mouse.set_visible(True)
-	
+
 
 	p.display.update()
 
