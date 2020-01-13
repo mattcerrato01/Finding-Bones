@@ -5,6 +5,7 @@ import GameStates as gs
 
 coord = gs.CoordConverter()
 world = gs.WorldState()
+names = gs.NameGenerator()
 
 
 def loadify(imgname):
@@ -32,8 +33,8 @@ class Object(p.sprite.Sprite):
 		self.talking = False
 		self.update()
 
-	def set_object_to_inventory(self, object):
-		self.object_to_inventory = object
+	def set_object_to_inventory(self, item):
+		self.object_to_inventory = item
 
 	def get_object_to_inventory(self):
 		return self.object_to_inventory
@@ -74,8 +75,7 @@ class Object(p.sprite.Sprite):
 				font = p.font.SysFont("papyrus", 12)
 				dialogue_box = font.render(self.investigation_pieces[0], True, (255, 255, 255))
 				rect = dialogue_box.get_rect()
-				screen.blit(dialogue_box, (
-				coord.screen_x(self.x) + self.width / 2 - rect.width / 2, coord.screen_y(self.y) + self.height))
+				screen.blit(dialogue_box, (coord.screen_x(self.x) + self.width / 2 - rect.width / 2, coord.screen_y(self.y) + self.height))
 		else:
 			screen.blit(self.image, (coord.screen_x(self.x), coord.screen_y(self.y)))
 
@@ -88,13 +88,18 @@ class Object(p.sprite.Sprite):
 
 class Villagers(Object):
 
-	def __init__(self, overworld_image_name, essential=False):
+	def __init__(self, overworld_image_name, essential=False, male = True):
 		Object.__init__(self, overworld_image_name)
+		name = names.generate(male)
 		self.soul_reaped = False
-		self.underworld_image_name = "Enderman_soul.png"
 		self.underworld_image = loadify(self.underworld_image_name)
 		self.underworld_image = p.transform.scale(self.underworld_image, (self.width, self.height))
 		self.essential = essential
+
+		font = p.font.SysFont('Times New Roman', 16)
+		self.nameplate = font.render(name, False, (0, 0, 0), (255,255,255))
+
+
 
 	# self.fated
 
@@ -113,6 +118,8 @@ class Villagers(Object):
 	def draw(self, screen):
 		if world.state():
 			screen.blit(self.image, (coord.screen_x(self.x), coord.screen_y(self.y)))
+			rect = self.nameplate.get_rect()
+			screen.blit(self.nameplate, (coord.screen_x(self.x) + self.width / 2 - rect.width / 2, coord.screen_y(self.y) + self.height))
 		else:
 			screen.blit(self.underworld_image, (coord.screen_x(self.x), coord.screen_y(self.y)))
 
@@ -227,6 +234,10 @@ class Player(Movable_Object):
 
 	def set_soul(self, soul):
 		self.soul = soul
+	def getX(self):
+		return self.x
+	def getY(self):
+		return self.y
 
 	def move(self, keys, collidable_group):
 
@@ -244,41 +255,41 @@ class Player(Movable_Object):
 		walk_gap = 30
 
 		if keys[100] == keys[97]:
-			if keys[115]:
+			if keys[115] and self.y > -2250:
 				self.moveY(temp_speed * -1, collidable_group)
 				self.current_group = self.up_walk
 				if self.walking_time % walk_gap:
 					self.image = self.up_walk[self.walking_time // walk_gap % len(self.up_walk)]
-			elif keys[119]:
+			elif keys[119] and self.y < 0:
 				self.moveY(temp_speed, collidable_group)
 				self.current_group = self.down_walk
 				if self.walking_time % walk_gap:
 					self.image = self.down_walk[self.walking_time // walk_gap % len(self.down_walk)]
 		elif keys[115] == keys[119]:
-			if keys[100]:
+			if keys[100] and self.x > - 3150:
 				self.moveX(temp_speed * -1, collidable_group)
 				self.current_group = self.right_walk
 				if self.walking_time % walk_gap:
 					self.image = self.right_walk[self.walking_time // walk_gap % len(self.right_walk)]
-			elif keys[97]:
+			elif keys[97] and self.x < 0:
 				self.moveX(temp_speed, collidable_group)
 				self.current_group = self.left_walk
 				if self.walking_time % walk_gap:
 					self.image = self.left_walk[self.walking_time // walk_gap % len(self.left_walk)]
 		else:
-			if keys[100]:
+			if keys[100] and self.x > -3150:
 				self.moveX(temp_diag_speed * -1, collidable_group)
 				self.current_group = self.right_walk
 				if self.walking_time % walk_gap:
 					self.image = self.right_walk[self.walking_time // walk_gap % len(self.right_walk)]
-			elif keys[97]:
+			elif keys[97] and self.x < 0:
 				self.moveX(temp_diag_speed, collidable_group)
 				self.current_group = self.left_walk
 				if self.walking_time % walk_gap:
 					self.image = self.left_walk[self.walking_time // walk_gap % len(self.left_walk)]
-			if keys[115]:
+			if keys[115] and self.y > -2250:
 				self.moveY(temp_diag_speed * -1, collidable_group)
-			elif keys[119]:
+			elif keys[119] and self.y < 0:
 				self.moveY(temp_diag_speed, collidable_group)
 
 		if keys[100] == keys[97] and not keys[115] and not keys[119]:

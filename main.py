@@ -48,7 +48,7 @@ player = Objects.Player("player.jpg", ["GR-F-L", "GR-F-S", "GR-F-R", "GR-F-S"],
 rect = Objects.Object("download.jpg", 100, 100)
 rect2 = Objects.Object("download1.jpg")
 rect3 = Objects.Object("download2.jpg")
-villager = Objects.Villagers("villager.jpeg")
+villager = Objects.Villagers("villager_m.png")
 villager.setX(800)
 villager.setY(800)
 rect.setX(100)
@@ -144,11 +144,11 @@ while running:
 
 	for villager in villagers:
 		if villager.changeMouse(p.mouse.get_pos()):
-			if world.state():
+			if world.state() and not villager.get_soul_reaped():
 				p.mouse.set_visible(False)
 				screen.blit(cc1, p.mouse.get_pos())
 			else:
-				if not villager.get_essential():
+				if not villager.get_essential() and not villager.get_soul_reaped():
 					p.mouse.set_visible(False)
 					screen.blit(cc2, p.mouse.get_pos())
 		else:
