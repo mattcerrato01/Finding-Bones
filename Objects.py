@@ -23,26 +23,29 @@ class Object(p.sprite.Sprite):
 #       self.underworld_image = loadify(self.underworld_image_name)
         #self.underworld_image = p.transform.scale(self.image, (self.width, self.height))
         self.image = p.transform.scale(self.image, (self.width, self.height))
-        self.investigation_pieces = ["Got it"]
+        self.investigation_pieces = ["Investigated"]
+        self.object_to_inventory = "berry"
+        self.add_to_inventory = []
         self.talking = False
-        self.time = 0
         self.update()
 
-
+    def set_object_to_inventory(self, object):
+        self.object_to_inventory = object
+    def get_object_to_inventory(self):
+        return self.object_to_inventory
+    def get_add_to_inventory(self):
+        return self.add_to_inventory
     def set_investigation_pieces(self, things):
         self.investigation_pieces = things
     def get_talking(self):
         return self.talking
-
-
-
-    def set_time(self,time):
-        self.time = time
     def set_talking(self, talking):
         self.talking = talking
-    def check_if_investigated(self, mouse_click):
+    def check_if_investigated(self, mouse_click, fate = 100):
         if self.rect.collidepoint(mouse_click):
             self.talking = True
+            if fate > 50:
+                self.add_to_inventory = True
             return True
         return False
 
@@ -59,7 +62,7 @@ class Object(p.sprite.Sprite):
             screen.blit(self.image, (coord.screen_x(self.x), coord.screen_y(self.y)))
             if self.talking:
                 font = p.font.SysFont("papyrus", 12)
-                dialogue_box = font.render(self.investigation_pieces[0], True, (0, 0, 0))
+                dialogue_box = font.render(self.investigation_pieces[0], True, (255, 255, 255))
                 rect = dialogue_box.get_rect()
                 screen.blit(dialogue_box, (coord.screen_x(self.x) + self.width/2 - rect.width/2, coord.screen_y(self.y) + self.height))
         else:
@@ -147,6 +150,7 @@ class Player(Movable_Object):
     def __init__(self, name, up_walk, down_walk, left_walk, right_walk, ):
         # check to see if we can just flip left walk for right walk
         Movable_Object.__init__(self, name)
+        self.inventory = []
         self.speed = 2  #Change to 20 when testing
         self.diag_speed = self.speed / m.sqrt(2)
 
@@ -186,6 +190,11 @@ class Player(Movable_Object):
 
         self.fate = 100
         self.soul = 100
+
+    def get_inventory(self):
+        return self.inventory[:]
+    def append_to_inventory(self, object):
+        self.inventory.append(object)
 
     def get_fate(self):
         return self.fate

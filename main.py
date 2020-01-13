@@ -105,6 +105,16 @@ while running:
                         collidable_group.remove(collidable)
                         tile_map = t.Map(image_name_array, collidable_group)
                         player.soul-=10
+                if collidable.add_to_inventory:
+                    already_in_inventory = False
+                    for item in player.get_inventory():
+                        if collidable.get_object_to_inventory() == item:
+                            already_in_inventory = True
+                            break
+                    if not already_in_inventory:
+                        player.append_to_inventory(collidable.get_object_to_inventory())
+                        print(player.get_inventory())
+
                 break
         clicked = False
 
