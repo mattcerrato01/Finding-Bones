@@ -23,23 +23,26 @@ class Object(p.sprite.Sprite):
 #       self.underworld_image = loadify(self.underworld_image_name)
         #self.underworld_image = p.transform.scale(self.image, (self.width, self.height))
         self.image = p.transform.scale(self.image, (self.width, self.height))
-        self.investigation_pieces = []
-        self.investigated = False
+        self.investigation_pieces = ["Got it"]
+        self.talking = False
+        self.time = 0
         self.update()
+
 
     def set_investigation_pieces(self, things):
         self.investigation_pieces = things
+    def get_talking(self):
+        return self.talking
 
-    def set_investigated(self, clicked):
-        self.investigated = clicked
 
-    def get_investigated(self):
-        return self.investigated
 
+    def set_time(self,time):
+        self.time = time
+    def set_talking(self, talking):
+        self.talking = talking
     def check_if_investigated(self, mouse_click):
         if self.rect.collidepoint(mouse_click):
-            self.investigated = True
-            print("investigated")
+            self.talking = True
             return True
         return False
 
@@ -54,6 +57,11 @@ class Object(p.sprite.Sprite):
     def draw(self, screen):
         if world.state():
             screen.blit(self.image, (coord.screen_x(self.x), coord.screen_y(self.y)))
+            if self.talking:
+                font = p.font.SysFont("papyrus", 12)
+                dialogue_box = font.render(self.investigation_pieces[0], True, (0, 0, 0))
+                rect = dialogue_box.get_rect()
+                screen.blit(dialogue_box, (coord.screen_x(self.x) + self.width/2 - rect.width/2, coord.screen_y(self.y) + self.height))
         else:
             screen.blit(self.image, (coord.screen_x(self.x), coord.screen_y(self.y)))
 
@@ -81,11 +89,9 @@ class Villagers(Object):
     def check_if_investigated(self, mouse_click):
         if self.rect.collidepoint(mouse_click):
             if world.state():
-                self.investigated = True
                 print("talk")
             else:
                 self.soul_reaped = True
-                print("reaped")
             return True
         return False
 

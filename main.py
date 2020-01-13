@@ -18,6 +18,7 @@ p.display.set_caption("Grim Reaper")
 
 
 
+
 def loadify(imgname):  # Returns loaded Image
     return p.image.load(imgname).convert_alpha()
 
@@ -65,7 +66,7 @@ image_name_array = [["background.jpg", "background.jpg", "background.jpg", "back
 
 tile_map = t.Map(image_name_array, collidable_group)
 demons = p.sprite.Group()
-
+talking_objects = []
 
 
 
@@ -76,7 +77,7 @@ running = True
 
 time = 0
 fate = player.fate
-
+dialogue_box_undraw_event = p.USEREVENT+1
 while running:
 
     screen.fill([255, 255, 255])
@@ -89,12 +90,16 @@ while running:
         elif event.type == p.MOUSEBUTTONUP:
             clicked = True
             pos = p.mouse.get_pos()
+        elif event.type == dialogue_box_undraw_event:
+            if len(talking_objects)>0:
+                talking_objects[0].set_talking(False)
+                talking_objects.pop(0)
 
     if clicked:
-
         for collidable in collision_group:
-
             if collidable.check_if_investigated(pos):
+                talking_objects.append(collidable)
+                p.time.set_timer(dialogue_box_undraw_event, 3000)
                 if type(collidable) == Objects.Villagers:
                     if collidable.get_soul_reaped():
                         collidable_group.remove(collidable)
@@ -127,6 +132,7 @@ while running:
         for demon in demons:
             demon.draw(screen)
     player.draw(screen)
+
 
     p.display.update()
 
