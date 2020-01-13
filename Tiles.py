@@ -48,8 +48,7 @@ class Map:  # Contains a 2D array of all the tiles, and a function that draws on
             for name in name_array:
                 new_group = p.sprite.Group()
                 for collidable in collidable_group:
-                    if collidable.x >= x * 800 and collidable.x < (
-                            x + 1) * 800 and collidable.y >= y * 600 and collidable.y < (y + 1) * 600:
+                    if x * 800 <= collidable.x < (x + 1) * 800 and y * 600 <= collidable.y < (y + 1) * 600:
                         new_group.add(collidable)
 
                 self.tile_array[x].append(Tile(name, new_group, x, y))

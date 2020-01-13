@@ -4,6 +4,7 @@ import GameStates as gs
 
 coord = gs.CoordConverter()
 world = gs.WorldState()
+names = gs.NameGenerator()
 
 
 def loadify(imgname):
@@ -31,8 +32,8 @@ class Object(p.sprite.Sprite):
 		self.talking = False
 		self.update()
 
-	def set_object_to_inventory(self, object):
-		self.object_to_inventory = object
+	def set_object_to_inventory(self, item):
+		self.object_to_inventory = item
 
 	def get_object_to_inventory(self):
 		return self.object_to_inventory
@@ -73,8 +74,7 @@ class Object(p.sprite.Sprite):
 				font = p.font.SysFont("papyrus", 12)
 				dialogue_box = font.render(self.investigation_pieces[0], True, (255, 255, 255))
 				rect = dialogue_box.get_rect()
-				screen.blit(dialogue_box, (
-				coord.screen_x(self.x) + self.width / 2 - rect.width / 2, coord.screen_y(self.y) + self.height))
+				screen.blit(dialogue_box, (coord.screen_x(self.x) + self.width / 2 - rect.width / 2, coord.screen_y(self.y) + self.height))
 		else:
 			screen.blit(self.image, (coord.screen_x(self.x), coord.screen_y(self.y)))
 
@@ -87,13 +87,18 @@ class Object(p.sprite.Sprite):
 
 class Villagers(Object):
 
-	def __init__(self, overworld_image_name, essential=False):
+	def __init__(self, overworld_image_name, essential=False, male = True):
 		Object.__init__(self, overworld_image_name)
+		name = names.generate(male)
 		self.soul_reaped = False
-		self.underworld_image_name = "Enderman_soul.png"
 		self.underworld_image = loadify(self.underworld_image_name)
 		self.underworld_image = p.transform.scale(self.underworld_image, (self.width, self.height))
 		self.essential = essential
+
+		font = p.font.SysFont('Times New Roman', 16)
+		self.nameplate = font.render(name, False, (0, 0, 0), (255,255,255))
+
+
 
 	# self.fated
 
@@ -112,6 +117,8 @@ class Villagers(Object):
 	def draw(self, screen):
 		if world.state():
 			screen.blit(self.image, (coord.screen_x(self.x), coord.screen_y(self.y)))
+			rect = self.nameplate.get_rect()
+			screen.blit(self.nameplate, (coord.screen_x(self.x) + self.width / 2 - rect.width / 2, coord.screen_y(self.y) + self.height))
 		else:
 			screen.blit(self.underworld_image, (coord.screen_x(self.x), coord.screen_y(self.y)))
 

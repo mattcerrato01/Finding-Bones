@@ -1,4 +1,6 @@
-class WorldState():
+import random
+
+class WorldState:
 
     overworld = True
 
@@ -10,9 +12,19 @@ class WorldState():
     def x(self):
         x = 0
 
+class NameGenerator:
 
+    def __init__(self):
+        self.male_names = ["Kristoff","William","Jonathon","Walter","Francis","Peter","Frederick","Roger","Arthur","Cedric","Zane","Donald","Leo","Ronald","Robin","Gavin","Charles","Benjamin","Augustus"]
 
-class CoordConverter():
+        self.female_names = ["Murial","Mary","Elizabeth","Maria"]
+
+    def generate(self, male = True):
+        if male:
+            return self.male_names[random.randint(0, len(self.male_names)-1)]
+        return self.female_names[random.randint(0, len(self.female_names)-1)]
+
+class CoordConverter:
 
     offset_x = 0
     offset_y = 0
