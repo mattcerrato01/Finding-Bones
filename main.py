@@ -148,7 +148,7 @@ while running:
 				p.mouse.set_visible(False)
 				screen.blit(cc1, p.mouse.get_pos())
 			else:
-				if not villager.get_essential():
+				if not villager.get_essential() and not villager.get_soul_reaped():
 					p.mouse.set_visible(False)
 					screen.blit(cc2, p.mouse.get_pos())
 		else:
