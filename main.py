@@ -144,7 +144,7 @@ while running:
 
 	for villager in villagers:
 		if villager.changeMouse(p.mouse.get_pos()):
-			if world.state():
+			if world.state() and not villager.get_soul_reaped():
 				p.mouse.set_visible(False)
 				screen.blit(cc1, p.mouse.get_pos())
 			else:
