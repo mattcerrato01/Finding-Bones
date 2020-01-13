@@ -77,7 +77,7 @@ running = True
 
 time = 0
 fate = player.fate
-dialogue_box_undraw_event = p.USEREVENT+1
+dialogue_box_undraw_event = p.USEREVENT+1 #Event that will essentially undraw the text box of an object
 while running:
 
     screen.fill([255, 255, 255])
