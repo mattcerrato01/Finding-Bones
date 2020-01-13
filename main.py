@@ -22,30 +22,30 @@ p.display.set_caption("Grim Reaper")
 
 
 def loadify(imgname):  # Returns loaded Image
-    return p.image.load(imgname).convert_alpha()
+	return p.image.load(imgname).convert_alpha()
 
 '''Function that adds a set number of demons to a group of sprites, takes in a group of sprites, a player object, and
 the amount of demons to be added to the group'''
 def createDemons(demons, player, numDemons):
-    for i in range(numDemons):
-        randomx = random.randint(0, 800 * len(image_name_array[0]))
-        randomy = random.randint(0, 600 * len(image_name_array))
-        collided = False
+	for i in range(numDemons):
+		randomx = random.randint(0, 800 * len(image_name_array[0]))
+		randomy = random.randint(0, 600 * len(image_name_array))
+		collided = False
 
-        demon = Objects.Demons("M-F-L.png", randomx, randomy, ["M-F-L", "M-F-S", "M-F-R"], ["M-B-L", "M-B-S", "M-B-R"],
-                               ["M-L-L", "M-L-S", "M-L-R"], ["M-R-L", "M-R-S", "M-R-R"], player)
-        for boys in demons:
-            if demon.collide(boys):
-                collided = True
-                i -= 1
-                break
-        if not collided:
-            demons.add(demon)
+		demon = Objects.Demons("M-F-L.png", randomx, randomy, ["M-F-L", "M-F-S", "M-F-R"], ["M-B-L", "M-B-S", "M-B-R"],
+							   ["M-L-L", "M-L-S", "M-L-R"], ["M-R-L", "M-R-S", "M-R-R"], player)
+		for boys in demons:
+			if demon.collide(boys):
+				collided = True
+				i -= 1
+				break
+		if not collided:
+			demons.add(demon)
 
 
 player = Objects.Player("player.jpg", ["GR-F-L", "GR-F-S", "GR-F-R", "GR-F-S"],
-                        ["GR-B-L", "GR-B-S", "GR-B-R", "GR-B-S"], ["GR-L-1", "GR-L-S", "GR-L-1", "GR-L-2"],
-                        ["GR-R-1", "GR-R-S", "GR-R-1", "GR-R-2"])
+						["GR-B-L", "GR-B-S", "GR-B-R", "GR-B-S"], ["GR-L-1", "GR-L-S", "GR-L-1", "GR-L-2"],
+						["GR-R-1", "GR-R-S", "GR-R-1", "GR-R-2"])
 rect = Objects.Object("download.jpg", 100, 100)
 rect2 = Objects.Object("download1.jpg")
 rect3 = Objects.Object("download2.jpg")
@@ -59,14 +59,15 @@ rect2.setY(400)
 rect3.setX(820)
 rect3.setY(900)
 
+
 villagers = [villager]
 
 collidable_group = p.sprite.Group(rect, rect2, rect3, villager)
 
 image_name_array = [["background.jpg", "background.jpg", "background.jpg", "background.jpg"],
-                    ["background.jpg", "background.jpg", "background.jpg", "background.jpg"],
-                    ["background.jpg", "background.jpg", "background.jpg", "background.jpg"],
-                    ["background.jpg", "background.jpg", "background.jpg", "background.jpg"], ]
+					["background.jpg", "background.jpg", "background.jpg", "background.jpg"],
+					["background.jpg", "background.jpg", "background.jpg", "background.jpg"],
+					["background.jpg", "background.jpg", "background.jpg", "background.jpg"], ]
 
 tile_map = t.Map(image_name_array, collidable_group)
 demons = p.sprite.Group()
@@ -96,12 +97,17 @@ while running:
 		elif event.type == p.MOUSEBUTTONUP:
 			clicked = True
 			pos = p.mouse.get_pos()
+		elif event.type == dialogue_box_undraw_event:
+			if len(talking_objects) >0:
+				talking_objects[0].set_talking(False)
+				talking_objects.pop(0)
 
 	if clicked:
-
 		for collidable in collision_group:
 
 			if collidable.check_if_investigated(pos):
+				talking_objects.append(collidable)
+				p.time.set_timer(dialogue_box_undraw_event,3000)
 				if type(collidable) == Objects.Villagers:
 					if collidable.get_soul_reaped():
 						collidable_group.remove(collidable)
