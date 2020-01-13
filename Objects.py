@@ -211,6 +211,10 @@ class Player(Movable_Object):
 		return self.soul
 	def set_soul(self, soul):
 		self.soul = soul
+	def getX(self):
+		return self.x
+	def getY(self):
+		return self.y
 
 	def move(self, keys, collidable_group):
 
@@ -231,41 +235,41 @@ class Player(Movable_Object):
 
 
 		if keys[100] == keys[97]:
-			if keys[115]:
+			if keys[115] and self.y > -2250:
 				self.moveY(temp_speed * -1, collidable_group)
 				self.current_group = self.up_walk
 				if self.walking_time % walk_gap:
 					self.image = self.up_walk[self.walking_time // walk_gap % len(self.up_walk)]
-			elif keys[119]:
+			elif keys[119] and self.y < 0:
 				self.moveY(temp_speed, collidable_group)
 				self.current_group = self.down_walk
 				if self.walking_time % walk_gap:
 					self.image = self.down_walk[self.walking_time // walk_gap % len(self.down_walk)]
 		elif keys[115] == keys[119]:
-			if keys[100]:
+			if keys[100] and self.x > - 3150:
 				self.moveX(temp_speed * -1, collidable_group)
 				self.current_group = self.right_walk
 				if self.walking_time % walk_gap:
 					self.image = self.right_walk[self.walking_time // walk_gap % len(self.right_walk)]
-			elif keys[97]:
+			elif keys[97] and self.x < 0:
 				self.moveX(temp_speed, collidable_group)
 				self.current_group = self.left_walk
 				if self.walking_time % walk_gap:
 					self.image = self.left_walk[self.walking_time // walk_gap % len(self.left_walk)]
 		else:
-			if keys[100]:
+			if keys[100] and self.x > -3150:
 				self.moveX(temp_diag_speed * -1, collidable_group)
 				self.current_group = self.right_walk
 				if self.walking_time % walk_gap:
 					self.image = self.right_walk[self.walking_time // walk_gap % len(self.right_walk)]
-			elif keys[97]:
+			elif keys[97] and self.x < 0:
 				self.moveX(temp_diag_speed, collidable_group)
 				self.current_group = self.left_walk
 				if self.walking_time % walk_gap:
 					self.image = self.left_walk[self.walking_time // walk_gap % len(self.left_walk)]
-			if keys[115]:
+			if keys[115] and self.y > -2250:
 				self.moveY(temp_diag_speed * -1, collidable_group)
-			elif keys[119]:
+			elif keys[119] and self.y < 0:
 				self.moveY(temp_diag_speed, collidable_group)
 
 		if keys[100] == keys[97] and not keys[115] and not keys[119]:
