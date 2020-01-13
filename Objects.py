@@ -5,13 +5,15 @@ import GameStates as gs
 coord = gs.CoordConverter()
 world = gs.WorldState()
 
+
 def loadify(imgname):
 	return p.image.load(imgname).convert_alpha()
 
 
 class Object(p.sprite.Sprite):
 
-	def __init__(self, overworld_image_name, width=50, height=50): #NOTE: come back and clean up initialization and such here
+	def __init__(self, overworld_image_name, width=50,
+				 height=50):  # NOTE: come back and clean up initialization and such here
 		p.sprite.Sprite.__init__(self)
 		self.overworld_image_name = overworld_image_name
 		self.underworld_image_name = overworld_image_name[:-4] + "_underworld" + overworld_image_name[-4:]
@@ -20,8 +22,8 @@ class Object(p.sprite.Sprite):
 		self.width = width
 		self.height = height
 		self.image = loadify(overworld_image_name)
-#		self.underworld_image = loadify(self.underworld_image_name)
-		#self.underworld_image = p.transform.scale(self.image, (self.width, self.height))
+		#		self.underworld_image = loadify(self.underworld_image_name)
+		# self.underworld_image = p.transform.scale(self.image, (self.width, self.height))
 		self.image = p.transform.scale(self.image, (self.width, self.height))
 		self.investigation_pieces = ["Investigated"]
 		self.object_to_inventory = "berry"
@@ -31,22 +33,29 @@ class Object(p.sprite.Sprite):
 
 	def set_object_to_inventory(self, object):
 		self.object_to_inventory = object
+
 	def get_object_to_inventory(self):
 		return self.object_to_inventory
+
 	def get_add_to_inventory(self):
 		return self.add_to_inventory
+
 	def set_investigation_pieces(self, things):
 		self.investigation_pieces = things
+
 	def get_talking(self):
 		return self.talking
+
 	def set_talking(self, talking):
 		self.talking = talking
-	def check_if_investigated(self, mouse_click, fate = 100):
-		if self.rect.collidepoint(mouse_click):
-			self.talking = True
-			if fate > 50:
-				self.add_to_inventory = True
-			return True
+
+	def check_if_investigated(self, mouse_click, fate=100):
+		if world.state():
+			if self.rect.collidepoint(mouse_click):
+				self.talking = True
+				if fate > 50:
+					self.add_to_inventory = True
+				return True
 		return False
 
 	def setX(self, x):
@@ -64,7 +73,8 @@ class Object(p.sprite.Sprite):
 				font = p.font.SysFont("papyrus", 12)
 				dialogue_box = font.render(self.investigation_pieces[0], True, (255, 255, 255))
 				rect = dialogue_box.get_rect()
-				screen.blit(dialogue_box, (coord.screen_x(self.x) + self.width/2 - rect.width/2, coord.screen_y(self.y) + self.height))
+				screen.blit(dialogue_box, (
+				coord.screen_x(self.x) + self.width / 2 - rect.width / 2, coord.screen_y(self.y) + self.height))
 		else:
 			screen.blit(self.image, (coord.screen_x(self.x), coord.screen_y(self.y)))
 
@@ -85,12 +95,12 @@ class Villagers(Object):
 		self.underworld_image = p.transform.scale(self.underworld_image, (self.width, self.height))
 		self.essential = essential
 
-		#self.fated
+	# self.fated
 
 	def get_essential(self):
 		return self.essential
 
-	def check_if_investigated(self, mouse_click, fate = 100):
+	def check_if_investigated(self, mouse_click, fate=100):
 		if self.rect.collidepoint(mouse_click):
 			if world.state():
 				print("talk")
@@ -108,7 +118,8 @@ class Villagers(Object):
 	def changeMouse(self, mouse):
 		if self.rect.collidepoint(mouse):
 			return True
-		else: return False
+		else:
+			return False
 
 	def get_soul_reaped(self):
 		return self.soul_reaped
@@ -158,7 +169,7 @@ class Player(Movable_Object):
 		# check to see if we can just flip left walk for right walk
 		Movable_Object.__init__(self, name)
 		self.inventory = []
-		self.speed = 2	#Change to 20 when testing
+		self.speed = 2  # Change to 20 when testing
 		self.diag_speed = self.speed / m.sqrt(2)
 
 		coord.set_offset_x(374)
@@ -200,15 +211,19 @@ class Player(Movable_Object):
 
 	def get_inventory(self):
 		return self.inventory[:]
+
 	def append_to_inventory(self, object):
 		self.inventory.append(object)
 
 	def get_fate(self):
 		return self.fate
+
 	def set_fate(self, fate):
 		self.fate = fate
+
 	def get_soul(self):
 		return self.soul
+
 	def set_soul(self, soul):
 		self.soul = soul
 	def getX(self):
@@ -217,7 +232,6 @@ class Player(Movable_Object):
 		return self.y
 
 	def move(self, keys, collidable_group):
-
 
 		temp_speed = self.speed
 		temp_diag_speed = self.diag_speed
@@ -231,8 +245,6 @@ class Player(Movable_Object):
 			animation_speed = 2
 
 		walk_gap = 30
-
-
 
 		if keys[100] == keys[97]:
 			if keys[115] and self.y > -2250:
@@ -291,7 +303,7 @@ class Player(Movable_Object):
 					break
 			if not collide:
 				world.toggle()
-				self.soul-=10
+				self.soul -= 10
 				self.tab_holder = False
 
 		elif not p.key.get_pressed()[9]:
@@ -308,20 +320,25 @@ class Player(Movable_Object):
 			screen.blit(self.image, (372, 229))
 
 		screen.blit(self.empty_hourglass, (10, 510), (0, 0, 50, 80))
-		screen.blit(self.fate_hourglass_top, (10, 544 - 30 * (self.fate / 100)), (0, 34 - 30 * (self.fate / 100), 50, 34))
-		screen.blit(self.fate_hourglass_bottom, (10, 556 + 30 * (self.fate / 100)), (0, 46 + 30 * (self.fate / 100), 50, 76))
+		screen.blit(self.fate_hourglass_top, (10, 544 - 30 * (self.fate / 100)),
+					(0, 34 - 30 * (self.fate / 100), 50, 34))
+		screen.blit(self.fate_hourglass_bottom, (10, 556 + 30 * (self.fate / 100)),
+					(0, 46 + 30 * (self.fate / 100), 50, 76))
 
 		screen.blit(self.empty_hourglass, (740, 510), (0, 0, 50, 80))
-		screen.blit(self.soul_hourglass_top, (740, 544 - 30 * (self.soul / 100)), (0, 38 - 30 * (self.soul / 100), 50, 34))
-		screen.blit(self.soul_hourglass_bottom, (740, 556 + 30 * (self.soul / 100)), (0, 46 + 30 * (self.soul / 100), 50, 76))
+		screen.blit(self.soul_hourglass_top, (740, 544 - 30 * (self.soul / 100)),
+					(0, 38 - 30 * (self.soul / 100), 50, 34))
+		screen.blit(self.soul_hourglass_bottom, (740, 556 + 30 * (self.soul / 100)),
+					(0, 46 + 30 * (self.soul / 100), 50, 76))
+
 
 class Demons(Object):
 
-	def __init__(self, name, x, y, up_walk, down_walk, left_walk, right_walk,player):
+	def __init__(self, name, x, y, up_walk, down_walk, left_walk, right_walk, player):
 		Object.__init__(self, name)
 		self.setX(x)
 		self.setY(y)
-		self.speed = 2- player.fate/100*1.5
+		self.speed = 2 - player.fate / 100 * 1.5
 		self.hit = False
 		self.walking_time = 0
 
@@ -344,11 +361,10 @@ class Demons(Object):
 	def move(self, player):
 		chg_x = self.x + player.x
 		chg_y = self.y + player.y
-		hyp = m.sqrt(chg_x**2+chg_y**2)
-		#angle = m.atan2(chg_y, chg_x)
-		x_move = (chg_x*self.speed)/hyp # m.cos(angle) * self.speed
-		y_move = (chg_y*self.speed)/hyp # m.sin(angle) * self.speed
-
+		hyp = m.sqrt(chg_x ** 2 + chg_y ** 2)
+		# angle = m.atan2(chg_y, chg_x)
+		x_move = (chg_x * self.speed) / hyp  # m.cos(angle) * self.speed
+		y_move = (chg_y * self.speed) / hyp  # m.sin(angle) * self.speed
 
 		walk_gap = 30
 

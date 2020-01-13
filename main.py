@@ -1,4 +1,3 @@
-#TESTING PUSH//
 
 import pygame as p
 import math as m
@@ -106,8 +105,9 @@ while running:
 		for collidable in collision_group:
 
 			if collidable.check_if_investigated(pos):
-				talking_objects.append(collidable)
-				p.time.set_timer(dialogue_box_undraw_event,3000)
+				if world.state():
+					talking_objects.append(collidable)
+					p.time.set_timer(dialogue_box_undraw_event,3000)
 				if type(collidable) == Objects.Villagers:
 					if collidable.get_soul_reaped():
 						collidable_group.remove(collidable)
