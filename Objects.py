@@ -77,18 +77,18 @@ class Object(p.sprite.Sprite):
 
 class Villagers(Object):
 
-    def __init__(self, overworld_image_name, essential=False):
-        Object.__init__(self, overworld_image_name)
-        self.soul_reaped = False
-        self.underworld_image_name = "Enderman_soul.png"
-        self.underworld_image = loadify(self.underworld_image_name)
-        self.underworld_image = p.transform.scale(self.underworld_image, (self.width, self.height))
-        self.essential = essential
+	def __init__(self, overworld_image_name, essential=False):
+		Object.__init__(self, overworld_image_name)
+		self.soul_reaped = False
+		self.underworld_image_name = "Enderman_soul.png"
+		self.underworld_image = loadify(self.underworld_image_name)
+		self.underworld_image = p.transform.scale(self.underworld_image, (self.width, self.height))
+		self.essential = essential
 
 		#self.fated
 
-    def get_essential(self):
-        return self.essential
+	def get_essential(self):
+		return self.essential
 
 	def check_if_investigated(self, mouse_click, fate = 100):
 		if self.rect.collidepoint(mouse_click):
@@ -104,7 +104,7 @@ class Villagers(Object):
 			screen.blit(self.image, (coord.screen_x(self.x), coord.screen_y(self.y)))
 		else:
 			screen.blit(self.underworld_image, (coord.screen_x(self.x), coord.screen_y(self.y)))
-	
+
 	def changeMouse(self, mouse):
 		if self.rect.collidepoint(mouse):
 			return True
