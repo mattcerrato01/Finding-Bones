@@ -2,6 +2,8 @@ import pygame as p
 import math as m
 import GameStates as gs
 
+#git test#
+
 coord = gs.CoordConverter()
 world = gs.WorldState()
 
@@ -76,6 +78,7 @@ class Villagers(Object):
 	def get_soul_reaped(self):
 		return self.soul_reaped
 
+
 	def check_if_investigated(self, mouse_click):
 		if self.rect.collidepoint(mouse_click):
 			if world.state():
@@ -96,6 +99,7 @@ class Villagers(Object):
 	def draw(self, screen):
 		if world.state():
 			screen.blit(self.image, (coord.screen_x(self.x), coord.screen_y(self.y)))
+
 		else:
 			screen.blit(self.underworld_image, (coord.screen_x(self.x), coord.screen_y(self.y)))
 
@@ -145,7 +149,7 @@ class Player(Movable_Object):
 	def __init__(self, name, up_walk, down_walk, left_walk, right_walk, ):
 		# check to see if we can just flip left walk for right walk
 		Movable_Object.__init__(self, name)
-		self.speed = 20
+		self.speed = 2
 		self.diag_speed = self.speed / m.sqrt(2)
 
 		coord.set_offset_x(374)
