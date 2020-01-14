@@ -16,14 +16,15 @@ def loadify(imgname):
 
 class Object(p.sprite.Sprite):
 
-    def __init__(self, overworld_image_name, width=50, height=50):  # NOTE: come back and clean up initialization and such here
+    def __init__(self, overworld_image_name, width=50, height=50, villager = False):  # NOTE: come back and clean up initialization and such here
         p.sprite.Sprite.__init__(self)
         self.soul_reaped = False
         self.action = """'berry' to inv 
                         AND print 'You got BERRY'
                         AND Q(1,1) {print 'I love this'}"""
         self.overworld_image_name = overworld_image_name
-        self.underworld_image_name = overworld_image_name[:-4] + "_underworld" + overworld_image_name[-4:]
+        if not villager:
+            self.underworld_image_name = overworld_image_name[:-4] + "_underworld" + overworld_image_name[-4:]
         self.x = 0
         self.y = 0
         self.width = width
@@ -52,7 +53,7 @@ class Object(p.sprite.Sprite):
         self.y = y
         self.update()
 
-    def draw(self, screen):
+    def draw(self, screen, player = None):
         if world.state():
             screen.blit(self.image, (coord.screen_x(self.x), coord.screen_y(self.y)))
         else:
@@ -68,7 +69,16 @@ class Object(p.sprite.Sprite):
 class Villagers(Object):
 
     def __init__(self, overworld_image_name, essential=False, male = True):
-        Object.__init__(self, overworld_image_name, 46, 110)
+        Object.__init__(self, overworld_image_name[3], 46, 110, villager=True)
+        self.underworld_image_name = "VillagerMaleFront_underworld.png"
+        self.idle_images = [p.transform.scale(loadify(overworld_image_name[0][0]), (self.width, self.height))
+        ,p.transform.scale(loadify(overworld_image_name[0][1]), (self.width, self.height))]
+
+        self.left_image = p.transform.scale(loadify(overworld_image_name[1]), (self.width, self.height))
+        self.right_image = p.transform.scale(loadify(overworld_image_name[2]), (self.width, self.height))
+        self.back_image = p.transform.scale(loadify(overworld_image_name[3]), (self.width, self.height))
+        self.current_image = self.back_image
+        self.current_image = p.transform.scale(self.current_image, (self.width,self.height))
 
         name = names.generate(male)
         self.objects_to_inventory = []
@@ -77,6 +87,7 @@ class Villagers(Object):
         self.underworld_image = loadify(self.underworld_image_name)
         self.underworld_image = p.transform.scale(self.underworld_image, (self.width, self.height))
         self.essential = essential
+        self.walking_time = 0
 
         font = p.font.SysFont('Times New Roman', 16)
         self.nameplate = font.render(name, False, (0, 0, 0), (255,255,255))
@@ -86,9 +97,30 @@ class Villagers(Object):
     def get_essential(self):
         return self.essential
 
-    def draw(self, screen):
+    def draw(self, screen, player):
+        walk_gap = 30 #aklsdjf
+        distx = (400 - coord.screen_x(self.x+self.width/2))
+        disty = (300-coord.screen_y(self.y+self.height/2))
         if world.state():
-            screen.blit(self.image, (coord.screen_x(self.x), coord.screen_y(self.y)))
+            dist = m.sqrt(distx**2 + disty**2)
+            if dist < 200:
+                if abs(distx) > abs(disty):
+                    if distx>=0:
+                        self.current_image = self.right_image
+                    elif distx<0:
+                        self.current_image = self.left_image
+                elif abs(distx) < abs(disty):
+                    if disty<=0:
+                        self.current_image = self.back_image
+                    elif disty>0:
+                        if self.walking_time % walk_gap:
+                            self.current_image = self.idle_images[self.walking_time // walk_gap % len(self.idle_images)]
+            else:
+                if self.walking_time % walk_gap:
+                    self.current_image = self.idle_images[self.walking_time // walk_gap % len(self.idle_images)]
+            self.walking_time +=5
+
+            screen.blit(self.current_image, (coord.screen_x(self.x), coord.screen_y(self.y)))
             rect = self.nameplate.get_rect()
             screen.blit(self.nameplate, (coord.screen_x(self.x) + self.width / 2 - rect.width / 2, coord.screen_y(self.y) + self.height))
         else:
@@ -283,7 +315,7 @@ class Player(Movable_Object):
         elif not p.key.get_pressed()[9]:
             self.tab_holder = True
 
-    def draw(self, screen):
+    def draw(self, screen, player = 0):
         if self.image in self.up_walk:
             screen.blit(self.image, (374, 228))
         elif self.image in self.down_walk:
@@ -364,7 +396,7 @@ class Demons(Object):
         if self.collide(player):
             self.hit = True
 
-    def draw(self, screen):
+    def draw(self, screen, player = None):
         screen.blit(self.image, (coord.screen_x(self.x), coord.screen_y(self.y)))
 
 class Dialogue_box():

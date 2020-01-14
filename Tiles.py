@@ -27,13 +27,13 @@ class Tile:  # One 800x800 tile, contains the collision sprites contained within
     def remove_from_goup(self, *object):
         self.collision_group.remove(object)
 
-    def draw(self, screen):  # draws the tile and all the sprites within it
+    def draw(self, screen, player):  # draws the tile and all the sprites within it
         if world.state():
             screen.blit(self.image, (coord.screen_x(self.x), coord.screen_y(self.y)))
         else:
             screen.blit(self.underworld_image, (coord.screen_x(self.x), coord.screen_y(self.y)))
         for object in self.collision_group:
-            object.draw(screen)
+            object.draw(screen, player)
 
 
 class Map:  # Contains a 2D array of all the tiles, and a function that draws only visible tiles
@@ -56,7 +56,7 @@ class Map:  # Contains a 2D array of all the tiles, and a function that draws on
             x += 1
 
     def draw(self,
-             screen):  # called in the main while loop, determines what tiles are visible and calls their draw functions
+             screen, player):  # called in the main while loop, determines what tiles are visible and calls their draw functions
         # tile player is in
 
         return_group = p.sprite.Group()
@@ -73,16 +73,16 @@ class Map:  # Contains a 2D array of all the tiles, and a function that draws on
         boolean_b = variable_b >= 0 and variable_b < variable_5
 
         if boolean_1 and boolean_a:
-            self.tile_array[variable_1][variable_a].draw(screen)
+            self.tile_array[variable_1][variable_a].draw(screen, player)
             return_group.add(self.tile_array[variable_1][variable_a].collision_group.sprites())
         if boolean_1 and boolean_b:
-            self.tile_array[variable_1][variable_b].draw(screen)
+            self.tile_array[variable_1][variable_b].draw(screen, player)
             return_group.add(self.tile_array[variable_1][variable_b].collision_group.sprites())
         if boolean_2 and boolean_a:
-            self.tile_array[variable_2][variable_a].draw(screen)
+            self.tile_array[variable_2][variable_a].draw(screen, player)
             return_group.add(self.tile_array[variable_2][variable_a].collision_group.sprites())
         if boolean_2 and boolean_b:
-            self.tile_array[variable_2][variable_b].draw(screen)
+            self.tile_array[variable_2][variable_b].draw(screen, player)
             return_group.add(self.tile_array[variable_2][variable_b].collision_group.sprites())
 
         # p.draw.rect(screen,(0,0,0),(0,299,800,2))
