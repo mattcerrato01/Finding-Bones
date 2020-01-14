@@ -98,7 +98,7 @@ class Villagers(Object):
         return self.essential
 
     def draw(self, screen, player):
-        walk_gap = 30
+        walk_gap = 30 #aklsdjf
         if world.state():
             dist = m.sqrt((coord.screen_x(abs(player.x)) - coord.screen_x(self.x))**2 + coord.screen_y(abs(player.y)-coord.screen_y(self.y))**2)
             if dist < 100:
