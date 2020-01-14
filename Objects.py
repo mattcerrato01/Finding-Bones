@@ -14,8 +14,7 @@ def loadify(imgname):
 
 class Object(p.sprite.Sprite):
 
-    def __init__(self, overworld_image_name, width=50,
-                 height=50):  # NOTE: come back and clean up initialization and such here
+    def __init__(self, overworld_image_name, width=50, height=50):  # NOTE: come back and clean up initialization and such here
         p.sprite.Sprite.__init__(self)
         self.overworld_image_name = overworld_image_name
         self.underworld_image_name = overworld_image_name[:-4] + "_underworld" + overworld_image_name[-4:]
@@ -403,3 +402,15 @@ class Demons(Object):
 
     def draw(self, screen):
         screen.blit(self.image, (coord.screen_x(self.x), coord.screen_y(self.y)))
+
+class Dialogue_box():
+    def __init__(self):
+        self.dialogue = 'yup'
+
+    def draw(self, screen):
+        dialogue_surface = p.Surface((600,100), p.SRCALPHA).convert_alpha()  # per-pixel alpha
+        dialogue_surface.fill((0,0,0,128)) # notice the alpha value in the color
+        dialogue_box_font = p.font.SysFont("papyrus", 20)
+        dialogue_box = dialogue_box_font.render(self.dialogue, True, (255, 255, 255))
+        screen.blit(dialogue_surface, (100,25))
+        screen.blit(dialogue_box,(110,35))

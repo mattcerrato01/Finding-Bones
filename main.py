@@ -15,8 +15,6 @@ p.init()
 screen = p.display.set_mode((800, 600))
 
 p.display.set_caption("Grim Reaper")
-dialogue_surface = p.Surface((600,100), p.SRCALPHA).convert_alpha()  # per-pixel alpha
-dialogue_surface.fill((0,0,0,128))                         # notice the alpha value in the color
 
 
 
@@ -58,6 +56,7 @@ rect2.setX(400)
 rect2.setY(400)
 rect3.setX(820)
 rect3.setY(900)
+dialogue_box = Objects.Dialogue_box()
 
 
 villagers = [villager]
@@ -145,7 +144,7 @@ while running:
         for demon in demons:
             demon.draw(screen)
 
-    screen.blit(dialogue_surface, (100,25))
+    dialogue_box.draw(screen)
 
     player.draw(screen)
 
