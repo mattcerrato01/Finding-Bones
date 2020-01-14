@@ -51,7 +51,7 @@ player = Objects.Player("player.jpg", ["GR-F-L", "GR-F-S", "GR-F-R", "GR-F-S"],
 rect = Objects.Object("download.jpg", 100, 100)
 rect2 = Objects.Object("download1.jpg")
 rect3 = Objects.Object("download2.jpg")
-villager = Objects.Villagers("VillagerMaleFront.png")
+villager = Objects.Villagers([["VillagerMaleFront.png", "VillagerMaleFrontIdle.png"],"VillagerMaleFaceLeft.png", "VillagerMaleFaceRight.png","VillagerMaleBack.png"])
 villager.setX(800)
 villager.setY(800)
 rect.setX(100)
@@ -89,7 +89,7 @@ fate = player.fate
 while running:
 
     screen.fill([255, 255, 255])
-    collision_group = tile_map.draw(screen)
+    collision_group = tile_map.draw(screen, player)
     clicked = False
 
     for event in p.event.get():
