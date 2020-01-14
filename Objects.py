@@ -18,6 +18,9 @@ class Object(p.sprite.Sprite):
 
     def __init__(self, overworld_image_name, width=50, height=50):  # NOTE: come back and clean up initialization and such here
         p.sprite.Sprite.__init__(self)
+        self.soul_reaped = False
+        self.action = """'berry' to inv 
+                        AND print 'You got BERRY'"""
         self.overworld_image_name = overworld_image_name
         self.underworld_image_name = overworld_image_name[:-4] + "_underworld" + overworld_image_name[-4:]
         self.x = 0
@@ -28,31 +31,17 @@ class Object(p.sprite.Sprite):
         #		self.underworld_image = loadify(self.underworld_image_name)
         # self.underworld_image = p.transform.scale(self.image, (self.width, self.height))
         self.image = p.transform.scale(self.image, (self.width, self.height))
-        self.investigation_pieces = ["Investigated"]
-        self.objects_to_inventory = ["berry"]
-        self.add_to_inventory = []
         self.update()
 
-    def append_to_objects_to_inventory(self, item):
-        self.objects_to_inventory.append(item)
+    def perform_action(self, mouse_click): # returns true if villager has been reaped
+        if self.rect.collidepoint(mouse_click):
 
-    def pop_objects_to_inventory(self):
-        self.objects_to_inventory.pop(0)
+            self.action = actions.perform_action(self.action, [0,0])
 
-    def get_objects_to_inventory(self):
-        return self.objects_to_inventory[:]
-
-    def get_add_to_inventory(self):
-        return self.add_to_inventory
-
-    def get_investigation_pieces(self):
-        return self.investigation_pieces[:]
-
-    def set_investigation_pieces(self, things):
-        self.investigation_pieces = things
-
-    def check_if_investigated(self, mouse_click):
-        return self.rect.collidepoint(mouse_click)
+            if type(self) == Villagers and not world.state():
+                self.soul_reaped = False
+                return True
+        return False
 
     def setX(self, x):
         self.x = x
@@ -81,7 +70,6 @@ class Villagers(Object):
         Object.__init__(self, overworld_image_name, 46, 110)
 
         name = names.generate(male)
-        self.soul_reaped = False
         self.objects_to_inventory = []
         self.investigation_pieces = [name + ": Fuck you"]
 
@@ -393,4 +381,4 @@ class Dialogue_box():
 
             for i in range(len(dialogue)):
                 dialogue_box = dialogue_box_font.render(dialogue[i][0], True, (255, 255, 255))
-                screen.blit(dialogue_box,(120,40 + 20*i))
+                screen.blit(dialogue_box,(120,30 + 20*i))

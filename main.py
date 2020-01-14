@@ -99,17 +99,10 @@ while running:
             pos = p.mouse.get_pos()
 
             for collidable in collision_group:
-                if collidable.check_if_investigated(pos):
-                    if world.state():
-                        actions.dialogue_box(collidable.get_investigation_pieces()[0])
-                        if len(collidable.get_objects_to_inventory()) > 0:
-                            inventory.append_to_inventory(collidable.get_objects_to_inventory()[0])
-                            collidable.pop_objects_to_inventory()
-                    if type(collidable) == Objects.Villagers:
-                        if collidable.get_soul_reaped():
-                            collidable_group.remove(collidable)
-                            tile_map = t.Map(image_name_array, collidable_group)
-                            player.soul -= 10
+                if collidable.perform_action(pos): #returns true if villager has been reaped
+                    collidable_group.remove(collidable)
+                    tile_map = t.Map(image_name_array, collidable_group)
+                    player.soul += 10
                     break
             print(inventory.inventory)
 

@@ -82,10 +82,47 @@ class Actions:
 
         return len(Actions.dialogue_list) > 0
 
+    def perform_action(self, quest_actions, quests):
+
         """
-        :param dialogue: what to print
-        
-        prints dialogue to dialogue box for period of time
-        
-        :return: 
-        """
+
+                :param quest_num: which quest you are referencing
+                :param quest_stage: what stage of that quest
+                :param action: what actions to be performed upon completion of that stage. Should be a string. Possible Actions:
+
+                " 'berry' to inv " adds berry to inventory
+                " 'berry' from inv " removes berry from inventory
+                " print 'Hello there!' " prints 'Hello there!' in the dialogue box
+                " 'berry' to inv AND print 'You received a berry!' " adds a berry to inventory and prints 'You received a berry!' to dialogue box
+
+                :return:
+                """
+
+        return_string = ""
+
+        for action in quest_actions.split(' AND '):
+            first_index = action.find("Q(")
+            second_index = action.find(",")
+            if not first_index == -1 and not second_index == -1 and quests[action[first_index+2:second_index]] == action[second_index+1,action.find(")")] or ( action[second_index+1] == "A" and quests[action[first_index+2:second_index]] > 0 ):
+                return_string+=self.perform_action(action[action.find("{")+1,action.find("}")])
+
+            if "inv" in action:
+                first_index = action.find("'")
+                second_index = action.find("'", first_index+1)
+                if 0 <= first_index < second_index:
+                    if "to" in action:
+                        Inventory.append_to_inventory(Inventory, action[first_index+1:second_index])
+                    elif "from" in action:
+                        Inventory.remove_from_inventory(Inventory, action[first_index+1:second_index])
+                else:
+                    print("error in quest action, no item found")
+            elif "print" in action:
+                first_index = action.find("'")
+                second_index = action.find("'", first_index + 1)
+                if 0 <= first_index < second_index:
+                    print(action[first_index+1:second_index])
+                    self.dialogue_box(action[first_index+1:second_index])
+
+        return ""
+
+    "Q(1,A) {} AND Q(2,4) {}"
