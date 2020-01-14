@@ -84,25 +84,24 @@ class Villagers(Object):
         Object.__init__(self, overworld_image_name)
         name = names.generate(male)
         self.soul_reaped = False
+        self.objects_to_inventory = []
+        self.investigation_pieces = [name + ": Fuck you"]
+
         self.underworld_image = loadify(self.underworld_image_name)
         self.underworld_image = p.transform.scale(self.underworld_image, (self.width, self.height))
         self.essential = essential
 
         font = p.font.SysFont('Times New Roman', 16)
         self.nameplate = font.render(name, False, (0, 0, 0), (255,255,255))
+    #   self.fated
 
-
-
-    # self.fated
 
     def get_essential(self):
         return self.essential
 
     def check_if_investigated(self, mouse_click, fate=100):
         if self.rect.collidepoint(mouse_click):
-            if world.state():
-                print("talk")
-            else:
+            if not world.state():
                 self.soul_reaped = True
             return True
         return False
