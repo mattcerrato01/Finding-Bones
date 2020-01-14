@@ -12,6 +12,7 @@ coord = gs.CoordConverter()
 world = gs.WorldState()
 inventory = gs.Inventory()
 actions = gs.Actions()
+quests = gs.QuestManager(3)
 
 gs.Overworld_State = False
 p.init()
@@ -20,7 +21,7 @@ screen = p.display.set_mode((800, 600))
 
 p.display.set_caption("Grim Reaper")
 
-
+quests.advance_quest(1)
 
 
 def loadify(imgname):  # Returns loaded Image
@@ -88,24 +89,23 @@ time = 0
 fate = player.fate
 while running:
 
-	screen.fill([255, 255, 255])
-	collision_group = tile_map.draw(screen)
-	clicked = False
+    screen.fill([255, 255, 255])
+    collision_group = tile_map.draw(screen)
+    clicked = False
 
-	for event in p.event.get():
-		if event.type == p.QUIT:
-			running = False
-		elif event.type == p.MOUSEBUTTONUP:
+    for event in p.event.get():
+        if event.type == p.QUIT:
+            running = False
+        elif event.type == p.MOUSEBUTTONUP:
 
-			pos = p.mouse.get_pos()
+            pos = p.mouse.get_pos()
 
-			for collidable in collision_group:
-				if collidable.perform_action(pos): #returns true if villager has been reaped
-					collidable_group.remove(collidable)
-					tile_map = t.Map(image_name_array, collidable_group)
-					player.soul += 10
-					break
-			print(inventory.inventory)
+            for collidable in collision_group:
+                if collidable.perform_action(pos): #returns true if villager has been reaped
+                    collidable_group.remove(collidable)
+                    tile_map = t.Map(image_name_array, collidable_group)
+                    player.soul += 10
+                    break
 
 
 
@@ -150,7 +150,7 @@ while running:
 		else:
 			p.mouse.set_cursor(*p.cursors.arrow)
 			p.mouse.set_visible(True)
-	
+
 	if player.fate <= 0 or player.soul <= 0:
 		player.fate = 100
 		player.soul = 100

@@ -20,7 +20,8 @@ class Object(p.sprite.Sprite):
         p.sprite.Sprite.__init__(self)
         self.soul_reaped = False
         self.action = """'berry' to inv 
-                        AND print 'You got BERRY'"""
+                        AND print 'You got BERRY'
+                        AND Q(1,1) {print 'I love this'}"""
         self.overworld_image_name = overworld_image_name
         self.underworld_image_name = overworld_image_name[:-4] + "_underworld" + overworld_image_name[-4:]
         self.x = 0
@@ -36,7 +37,7 @@ class Object(p.sprite.Sprite):
     def perform_action(self, mouse_click): # returns true if villager has been reaped
         if self.rect.collidepoint(mouse_click):
 
-            self.action = actions.perform_action(self.action, [0,0])
+            self.action = actions.perform_action(self.action)
 
             if type(self) == Villagers and not world.state():
                 self.soul_reaped = False
