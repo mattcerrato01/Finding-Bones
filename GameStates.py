@@ -16,9 +16,9 @@ class WorldState:
 class NameGenerator:
 
     def __init__(self):
-        self.male_names = ["Kristoff","William","Jonathon","Walter","Francis","Peter","Frederick","Roger","Arthur","Cedric","Zane","Donald","Leo","Ronald","Robin","Gavin","Charles","Benjamin","Augustus"]
+        self.male_names = ["William","Jonathan","Walter","Peter","Frederick","Roger","Arthur","Cedric","Leo","Ronald","Robin","Gavin","Charles","Benjamin","Matthew","Edwin","Nick","Bruce","Anthony","Juan","Albert","Gabriel"]
 
-        self.female_names = ["Murial","Mary","Elizabeth","Maria"]
+        self.female_names = ["Mary","Elizabeth","Maria","Claudia","Lydia","Cynthia","Lauren","Maisy","Erika","Silvia","Melody","Ann","Lisa","Elise","Joanne","Sue"]
 
     def generate(self, male = True):
         if male:

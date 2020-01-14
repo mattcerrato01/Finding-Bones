@@ -99,18 +99,20 @@ class Villagers(Object):
 
     def draw(self, screen, player):
         walk_gap = 30 #aklsdjf
+        distx = (400 - coord.screen_x(self.x+self.width/2))
+        disty = (300-coord.screen_y(self.y+self.height/2))
         if world.state():
-            dist = m.sqrt((coord.screen_x(abs(player.x)) - coord.screen_x(self.x))**2 + coord.screen_y(abs(player.y)-coord.screen_y(self.y))**2)
-            if dist < 100:
-                if abs(abs(player.x)-self.x) > abs(abs(player.y)- self.y):
-                    if abs(player.x) > self.x:
+            dist = m.sqrt(distx**2 + disty**2)
+            if dist < 200:
+                if distx < disty:
+                    if distx>0:
                         self.current_image = self.right_image
-                    elif abs(player.x) < self.x:
+                    elif disty<0:
                         self.current_image = self.left_image
-                elif abs(abs(player.x)-self.x) < abs(abs(player.y)- self.y):
-                    if abs(player.y) < self.y:
+                elif distx > disty:
+                    if disty<0:
                         self.current_image = self.back_image
-                    elif abs(player.y) > self.y:
+                    elif disty>0:
                         if self.walking_time % walk_gap:
                             self.current_image = self.idle_images[self.walking_time // walk_gap % len(self.idle_images)]
             else:
