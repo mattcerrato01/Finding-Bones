@@ -7,6 +7,7 @@ p.init()
 def main(screen):
 	#print("starting in", screen)
 	running = True
+	clicked = False
 	
 	background = p.Surface(screen.get_size())
 	background = background.convert()
@@ -20,7 +21,7 @@ def main(screen):
 	print(startbuttonpos)
 	
 	font = p.font.Font(None, 36)
-	text = font.render("Press Esc to Start", 1, (10, 10, 10))
+	text = font.render("Click Here to Start", 1, (10, 10, 10))
 	textpos = text.get_rect()
 	textpos.centerx = background.get_rect().centerx
 	textpos = textpos.move(0,150)
@@ -37,12 +38,16 @@ def main(screen):
 		for event in p.event.get():
 			if event.type == p.QUIT:
 				running = False
+			elif event.type == p.MOUSEBUTTONUP:
+				clicked = True
 		key = p.key.get_pressed()
 		if key[p.K_ESCAPE]:
 			running = False
 		
-		if startbutton.get_rect().collidepoint(p.mouse.get_pos()):
-   			print("mouse is over 'newGameButton'")
+		if 300 < p.mouse.get_pos()[0] < 500 and 140 < p.mouse.get_pos()[1] < 180:
+			#print("mouse is over 'newGameButton'")
+			if clicked:
+				running = False
 
 		screen.blit(background, (0, 0))
 		p.display.flip()
