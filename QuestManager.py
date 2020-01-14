@@ -60,7 +60,7 @@ class QuestManager:
             elif "print" in action:
                 first_index = action.find("'")
                 second_index = action.find("'", first_index + 1)
-                #if 0 <= first_index < second_index:
+                #if 0 <= first_index < second_index:#
                     #code for printing action[first_index+1:second_index]
 
 
