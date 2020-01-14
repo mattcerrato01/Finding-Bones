@@ -70,7 +70,6 @@ image_name_array = [["background.jpg", "background.jpg", "background.jpg", "back
 
 tile_map = t.Map(image_name_array, collidable_group)
 demons = p.sprite.Group()
-talking_objects = []
 
 cc1 = p.image.load("VillagerMaleFront.png")
 cc2 = p.image.load("VillagerMaleFront_underworld.png")
@@ -97,16 +96,14 @@ while running:
             clicked = True
             pos = p.mouse.get_pos()
         elif event.type == dialogue_box_undraw_event:
-            if len(talking_objects) >0:
-                talking_objects[0].set_talking(False)
-                talking_objects.pop(0)
+            dialogue_box.pop_dialogue()
 
     if clicked:
-        for collidable in collision_group:
 
+        for collidable in collision_group:
             if collidable.check_if_investigated(pos):
                 if world.state():
-                    talking_objects.append(collidable)
+                    dialogue_box.add_dialogue(collidable.get_investigation_pieces()[0])
                     p.time.set_timer(dialogue_box_undraw_event,3000)
                     if len(collidable.get_objects_to_inventory()) > 0:
                         player.append_to_inventory(collidable.get_objects_to_inventory()[0])

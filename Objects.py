@@ -29,7 +29,6 @@ class Object(p.sprite.Sprite):
         self.investigation_pieces = ["Investigated"]
         self.objects_to_inventory = ["berry"]
         self.add_to_inventory = []
-        self.talking = False
         self.update()
 
     def append_to_objects_to_inventory(self, item):
@@ -44,19 +43,15 @@ class Object(p.sprite.Sprite):
     def get_add_to_inventory(self):
         return self.add_to_inventory
 
+    def get_investigation_pieces(self):
+        return self.investigation_pieces[:]
+
     def set_investigation_pieces(self, things):
         self.investigation_pieces = things
-
-    def get_talking(self):
-        return self.talking
-
-    def set_talking(self, talking):
-        self.talking = talking
 
     def check_if_investigated(self, mouse_click, fate=100):
         if world.state():
             if self.rect.collidepoint(mouse_click):
-                self.talking = True
                 if fate > 50:
                     self.add_to_inventory = True
                 return True
@@ -73,11 +68,6 @@ class Object(p.sprite.Sprite):
     def draw(self, screen):
         if world.state():
             screen.blit(self.image, (coord.screen_x(self.x), coord.screen_y(self.y)))
-            if self.talking:
-                font = p.font.SysFont("papyrus", 12)
-                dialogue_box = font.render(self.investigation_pieces[0], True, (255, 255, 255))
-                rect = dialogue_box.get_rect()
-                screen.blit(dialogue_box, (coord.screen_x(self.x) + self.width / 2 - rect.width / 2, coord.screen_y(self.y) + self.height))
         else:
             screen.blit(self.image, (coord.screen_x(self.x), coord.screen_y(self.y)))
 
@@ -407,11 +397,22 @@ class Dialogue_box():
     def __init__(self):
         self.dialogue = []
 
+    def add_dialogue(self, line):
+        self.dialogue.append(line)
+
+    def pop_dialogue(self):
+        if len(self.dialogue)>0:
+            self.dialogue.pop(0)
+
     def draw(self, screen):
         dialogue_surface = p.Surface((600,100), p.SRCALPHA).convert_alpha()  # per-pixel alpha
         dialogue_surface.fill((0,0,0,128)) # notice the alpha value in the color
         screen.blit(dialogue_surface, (100,25))
         dialogue_box_font = p.font.SysFont("papyrus", 20)
+
+        while len(self.dialogue) > 4:
+            self.dialogue.pop(0)
+
         for i in range(len(self.dialogue)):
             dialogue_box = dialogue_box_font.render(self.dialogue[i], True, (255, 255, 255))
             screen.blit(dialogue_box,(120,40 + 20*i))
