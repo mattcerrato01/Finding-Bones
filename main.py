@@ -89,23 +89,23 @@ time = 0
 fate = player.fate
 while running:
 
-    screen.fill([255, 255, 255])
-    collision_group = tile_map.draw(screen)
-    clicked = False
+	screen.fill([255, 255, 255])
+	collision_group = tile_map.draw(screen)
+	clicked = False
 
-    for event in p.event.get():
-        if event.type == p.QUIT:
-            running = False
-        elif event.type == p.MOUSEBUTTONUP:
+	for event in p.event.get():
+		if event.type == p.QUIT:
+			running = False
+		elif event.type == p.MOUSEBUTTONUP:
 
-            pos = p.mouse.get_pos()
+			pos = p.mouse.get_pos()
 
-            for collidable in collision_group:
-                if collidable.perform_action(pos): #returns true if villager has been reaped
-                    collidable_group.remove(collidable)
-                    tile_map = t.Map(image_name_array, collidable_group)
-                    player.soul += 10
-                    break
+			for collidable in collision_group:
+				if collidable.perform_action(pos): #returns true if villager has been reaped
+					collidable_group.remove(collidable)
+					tile_map = t.Map(image_name_array, collidable_group)
+					player.soul += 10
+					break
 
 
 
