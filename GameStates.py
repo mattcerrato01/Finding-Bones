@@ -82,7 +82,7 @@ class Actions:
 
         return len(Actions.dialogue_list) > 0
 
-    def perform_action(self, quest_actions, quests):
+    def perform_action(self, quest_actions):
 
         """
 
@@ -101,10 +101,14 @@ class Actions:
         return_string = ""
 
         for action in quest_actions.split(' AND '):
+
             first_index = action.find("Q(")
             second_index = action.find(",")
-            if not first_index == -1 and not second_index == -1 and quests[action[first_index+2:second_index]] == action[second_index+1,action.find(")")] or ( action[second_index+1] == "A" and quests[action[first_index+2:second_index]] > 0 ):
-                return_string+=self.perform_action(action[action.find("{")+1,action.find("}")])
+
+            if "Q(" in action:
+                if QuestManager.quests[int(action[first_index+2:second_index])] == action[second_index+1:action.find(")")] or action[second_index+1] == "A":
+
+                    return_string+=self.perform_action(action[action.find("{")+1,action.find("}")])
 
             if "inv" in action:
                 first_index = action.find("'")
@@ -120,9 +124,39 @@ class Actions:
                 first_index = action.find("'")
                 second_index = action.find("'", first_index + 1)
                 if 0 <= first_index < second_index:
-                    print(action[first_index+1:second_index])
                     self.dialogue_box(action[first_index+1:second_index])
 
         return ""
 
     "Q(1,A) {} AND Q(2,4) {}"
+
+class QuestManager:
+
+    quests = []
+    quest_actions = []
+
+    def __init__(self, number_of_quests):
+        for i in range(number_of_quests-1):
+            QuestManager.quests.append(0)
+            QuestManager.quest_actions.append([])
+
+    def set_quest_actions(self, quest_num, quest_stage, action):
+
+        while( len(QuestManager.quest_actions[quest_num])-1 < quest_stage ):
+            QuestManager.quest_actions[quest_num].append('')
+
+        QuestManager.quest_actions[quest_num][quest_stage] = action
+
+    def advance_quest(self, quest_num):
+        QuestManager.quests[quest_num]+=1
+        #QuestManager.quest_actions.perform_action(QuestManager.quest_actions[quest_num][QuestManager.quests[quest_num]])
+
+
+    def quest_stage(self, quest_num):
+        return QuestManager.quests[quest_num]
+
+    def is_quest_stage(self, quest_num, quest_stage):
+        return QuestManager.quests[quest_num] == quest_stage
+
+    def past_quest_stage(self, quest_num, quest_stage):
+        return QuestManager.quests[quest_num] > quest_stage

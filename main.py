@@ -11,6 +11,7 @@ coord = gs.CoordConverter()
 world = gs.WorldState()
 inventory = gs.Inventory()
 actions = gs.Actions()
+quests = gs.QuestManager(3)
 
 gs.Overworld_State = False
 p.init()
@@ -19,7 +20,7 @@ screen = p.display.set_mode((800, 600))
 
 p.display.set_caption("Grim Reaper")
 
-
+quests.advance_quest(1)
 
 
 def loadify(imgname):  # Returns loaded Image
@@ -104,7 +105,6 @@ while running:
                     tile_map = t.Map(image_name_array, collidable_group)
                     player.soul += 10
                     break
-            print(inventory.inventory)
 
 
 
