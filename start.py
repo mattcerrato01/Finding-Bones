@@ -15,10 +15,10 @@ def main(screen):
 	startbutton = p.image.load("VillagerMaleFront.png")
 	startbutton = p.transform.scale(startbutton, (100,80))
 	startbuttonpos = startbutton.get_rect()
-	print(startbuttonpos)
+	#print(startbuttonpos)
 	startbuttonpos.centerx = background.get_rect().centerx
 	startbuttonpos = startbuttonpos.move(0,300)
-	print(startbuttonpos)
+	#print(startbuttonpos)
 	
 	font = p.font.Font(None, 36)
 	text = font.render("Click Here to Start", 1, (10, 10, 10))
@@ -34,7 +34,7 @@ def main(screen):
 	while running:
 		#screen.fill([255, 255, 255])
 		
-		print(p.mouse.get_pos())
+		#print(p.mouse.get_pos())
 		for event in p.event.get():
 			if event.type == p.QUIT:
 				running = False
