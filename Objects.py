@@ -29,10 +29,10 @@ class Object(p.sprite.Sprite):
         self.y = 0
         self.width = width
         self.height = height
-        self.overworld_image = loadify(overworld_image_name)
+        self.image = loadify(overworld_image_name)
         #		self.underworld_image = loadify(self.underworld_image_name)
         # self.underworld_image = p.transform.scale(self.image, (self.width, self.height))
-        self.overworld_image = p.transform.scale(self.overworld_image, (self.width, self.height))
+        self.image = p.transform.scale(self.image, (self.width, self.height))
         self.update()
 
     def perform_action(self, mouse_click): # returns true if villager has been reaped
@@ -55,9 +55,9 @@ class Object(p.sprite.Sprite):
 
     def draw(self, screen, player = None):
         if world.state():
-            screen.blit(self.overworld_image, (coord.screen_x(self.x), coord.screen_y(self.y)))
+            screen.blit(self.image, (coord.screen_x(self.x), coord.screen_y(self.y)))
         else:
-            screen.blit(self.overworld_image, (coord.screen_x(self.x), coord.screen_y(self.y)))
+            screen.blit(self.image, (coord.screen_x(self.x), coord.screen_y(self.y)))
 
     def update(self):
         self.rect = p.Rect(coord.screen_x(self.x), coord.screen_y(self.y), self.width, self.height)
