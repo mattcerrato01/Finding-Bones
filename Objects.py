@@ -404,14 +404,15 @@ class Dialogue_box():
             self.dialogue.pop(0)
 
     def draw(self, screen):
-        dialogue_surface = p.Surface((600,100), p.SRCALPHA).convert_alpha()  # per-pixel alpha
-        dialogue_surface.fill((0,0,0,128)) # notice the alpha value in the color
-        screen.blit(dialogue_surface, (100,25))
-        dialogue_box_font = p.font.SysFont("papyrus", 20)
+        if len(self.dialogue)>0:
+            dialogue_surface = p.Surface((600,100), p.SRCALPHA).convert_alpha()  # per-pixel alpha
+            dialogue_surface.fill((0,0,0,128)) # notice the alpha value in the color
+            screen.blit(dialogue_surface, (100,25))
+            dialogue_box_font = p.font.SysFont("papyrus", 20)
 
-        while len(self.dialogue) > 4:
-            self.dialogue.pop(0)
+            while len(self.dialogue) > 4:
+                self.dialogue.pop(0)
 
-        for i in range(len(self.dialogue)):
-            dialogue_box = dialogue_box_font.render(self.dialogue[i], True, (255, 255, 255))
-            screen.blit(dialogue_box,(120,40 + 20*i))
+            for i in range(len(self.dialogue)):
+                dialogue_box = dialogue_box_font.render(self.dialogue[i], True, (255, 255, 255))
+                screen.blit(dialogue_box,(120,40 + 20*i))
