@@ -80,6 +80,8 @@ class Actions:
             else:
                 break
 
+        return len(Actions.dialogue_list) > 0
+
         """
         :param dialogue: what to print
         

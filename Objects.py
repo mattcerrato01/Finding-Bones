@@ -381,16 +381,16 @@ class Demons(Object):
 class Dialogue_box():
 
     def draw(self, screen):
-        actions.update_dialogue_box()
-        dialogue = actions.dialogue_list
-        dialogue_surface = p.Surface((600,100), p.SRCALPHA).convert_alpha()  # per-pixel alpha
-        dialogue_surface.fill((0,0,0,128)) # notice the alpha value in the color
-        screen.blit(dialogue_surface, (100,25))
-        dialogue_box_font = p.font.SysFont("papyrus", 20)
+        if actions.update_dialogue_box():
+            dialogue = actions.dialogue_list
+            dialogue_surface = p.Surface((600,100), p.SRCALPHA).convert_alpha()  # per-pixel alpha
+            dialogue_surface.fill((0,0,0,128)) # notice the alpha value in the color
+            screen.blit(dialogue_surface, (100,25))
+            dialogue_box_font = p.font.SysFont("papyrus", 20)
 
-        while len(dialogue) > 4:
-            dialogue.pop(0)
+            while len(dialogue) > 4:
+                dialogue.pop(0)
 
-        for i in range(len(dialogue)):
-            dialogue_box = dialogue_box_font.render(dialogue[i][0], True, (255, 255, 255))
-            screen.blit(dialogue_box,(120,40 + 20*i))
+            for i in range(len(dialogue)):
+                dialogue_box = dialogue_box_font.render(dialogue[i][0], True, (255, 255, 255))
+                screen.blit(dialogue_box,(120,40 + 20*i))
