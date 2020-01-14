@@ -5,6 +5,7 @@ import Objects
 import Tiles as t
 import GameStates as gs
 import random
+import start as st
 
 coord = gs.CoordConverter()
 world = gs.WorldState()
@@ -16,7 +17,7 @@ screen = p.display.set_mode((800, 600))
 
 p.display.set_caption("Grim Reaper")
 
-
+st.main(screen)
 
 
 def loadify(imgname):  # Returns loaded Image
