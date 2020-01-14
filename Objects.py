@@ -104,13 +104,13 @@ class Villagers(Object):
         if world.state():
             dist = m.sqrt(distx**2 + disty**2)
             if dist < 200:
-                if distx < disty:
-                    if distx>0:
+                if abs(distx) > abs(disty):
+                    if distx>=0:
                         self.current_image = self.right_image
-                    elif disty<0:
+                    elif distx<0:
                         self.current_image = self.left_image
-                elif distx > disty:
-                    if disty<0:
+                elif abs(distx) < abs(disty):
+                    if disty<=0:
                         self.current_image = self.back_image
                     elif disty>0:
                         if self.walking_time % walk_gap:
