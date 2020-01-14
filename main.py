@@ -5,6 +5,7 @@ import Objects
 import Tiles as t
 import GameStates as gs
 import random
+import start as st
 
 coord = gs.CoordConverter()
 world = gs.WorldState()
@@ -79,7 +80,7 @@ cc2 = p.image.load("VillagerMaleFront_underworld.png")
 
 # tile = t.Tile("background.jpg", collidable_group, 0, 0)
 createDemons(demons,player,int(200 / player.fate))
-
+st.main(screen)
 running = True
 
 time = 0
