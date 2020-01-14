@@ -8,6 +8,8 @@ import random
 
 coord = gs.CoordConverter()
 world = gs.WorldState()
+inventory = gs.Inventory()
+actions = gs.Actions()
 
 gs.Overworld_State = False
 p.init()
@@ -82,7 +84,6 @@ running = True
 
 time = 0
 fate = player.fate
-dialogue_box_undraw_event = p.USEREVENT+1 #Event that will essentially undraw the text box of an object
 while running:
 
     screen.fill([255, 255, 255])
@@ -93,29 +94,26 @@ while running:
         if event.type == p.QUIT:
             running = False
         elif event.type == p.MOUSEBUTTONUP:
-            clicked = True
+
             pos = p.mouse.get_pos()
-        elif event.type == dialogue_box_undraw_event:
-            dialogue_box.pop_dialogue()
 
-    if clicked:
+            for collidable in collision_group:
+                if collidable.check_if_investigated(pos):
+                    if world.state():
+                        actions.dialogue_box(collidable.get_investigation_pieces()[0])
+                        if len(collidable.get_objects_to_inventory()) > 0:
+                            inventory.append_to_inventory(collidable.get_objects_to_inventory()[0])
+                            collidable.pop_objects_to_inventory()
+                    if type(collidable) == Objects.Villagers:
+                        if collidable.get_soul_reaped():
+                            collidable_group.remove(collidable)
+                            tile_map = t.Map(image_name_array, collidable_group)
+                            player.soul -= 10
+                    break
+            print(inventory.inventory)
 
-        for collidable in collision_group:
-            if collidable.check_if_investigated(pos):
-                if world.state():
-                    dialogue_box.add_dialogue(collidable.get_investigation_pieces()[0])
-                    p.time.set_timer(dialogue_box_undraw_event,3000)
-                    if len(collidable.get_objects_to_inventory()) > 0:
-                        player.append_to_inventory(collidable.get_objects_to_inventory()[0])
-                        collidable.pop_objects_to_inventory()
-                if type(collidable) == Objects.Villagers:
-                    if collidable.get_soul_reaped():
-                        collidable_group.remove(collidable)
-                        tile_map = t.Map(image_name_array, collidable_group)
-                        player.soul-=10
-                break
-        print(player.inventory)
-        clicked = False
+
+
 
     for x in range(p.time.get_ticks() // 10 - time // 10):
         player.move(p.key.get_pressed(), collision_group)

@@ -6,6 +6,8 @@ import GameStates as gs
 coord = gs.CoordConverter()
 world = gs.WorldState()
 names = gs.NameGenerator()
+inventory = gs.Inventory()
+actions = gs.Actions()
 
 
 def loadify(imgname):
@@ -49,13 +51,8 @@ class Object(p.sprite.Sprite):
     def set_investigation_pieces(self, things):
         self.investigation_pieces = things
 
-    def check_if_investigated(self, mouse_click, fate=100):
-        if world.state():
-            if self.rect.collidepoint(mouse_click):
-                if fate > 50:
-                    self.add_to_inventory = True
-                return True
-        return False
+    def check_if_investigated(self, mouse_click):
+        return self.rect.collidepoint(mouse_click)
 
     def setX(self, x):
         self.x = x
@@ -81,7 +78,8 @@ class Object(p.sprite.Sprite):
 class Villagers(Object):
 
     def __init__(self, overworld_image_name, essential=False, male = True):
-        Object.__init__(self, overworld_image_name)
+        Object.__init__(self, overworld_image_name, 46, 110)
+
         name = names.generate(male)
         self.soul_reaped = False
         self.objects_to_inventory = []
@@ -98,13 +96,6 @@ class Villagers(Object):
 
     def get_essential(self):
         return self.essential
-
-    def check_if_investigated(self, mouse_click, fate=100):
-        if self.rect.collidepoint(mouse_click):
-            if not world.state():
-                self.soul_reaped = True
-            return True
-        return False
 
     def draw(self, screen):
         if world.state():
@@ -167,7 +158,7 @@ class Player(Movable_Object):
     def __init__(self, name, up_walk, down_walk, left_walk, right_walk, ):
         # check to see if we can just flip left walk for right walk
         Movable_Object.__init__(self, name)
-        self.inventory = []
+
         self.speed = 2  # Change to 20 when testing
         self.diag_speed = self.speed / m.sqrt(2)
 
@@ -208,11 +199,6 @@ class Player(Movable_Object):
         self.fate = 100
         self.soul = 100
 
-    def get_inventory(self):
-        return self.inventory[:]
-
-    def append_to_inventory(self, object):
-        self.inventory.append(object)
 
     def get_fate(self):
         return self.fate
@@ -393,25 +379,18 @@ class Demons(Object):
         screen.blit(self.image, (coord.screen_x(self.x), coord.screen_y(self.y)))
 
 class Dialogue_box():
-    def __init__(self):
-        self.dialogue = []
-
-    def add_dialogue(self, line):
-        self.dialogue.append(line)
-
-    def pop_dialogue(self):
-        if len(self.dialogue)>0:
-            self.dialogue.pop(0)
 
     def draw(self, screen):
+        actions.update_dialogue_box()
+        dialogue = actions.dialogue_list
         dialogue_surface = p.Surface((600,100), p.SRCALPHA).convert_alpha()  # per-pixel alpha
         dialogue_surface.fill((0,0,0,128)) # notice the alpha value in the color
         screen.blit(dialogue_surface, (100,25))
         dialogue_box_font = p.font.SysFont("papyrus", 20)
 
-        while len(self.dialogue) > 4:
-            self.dialogue.pop(0)
+        while len(dialogue) > 4:
+            dialogue.pop(0)
 
-        for i in range(len(self.dialogue)):
-            dialogue_box = dialogue_box_font.render(self.dialogue[i], True, (255, 255, 255))
+        for i in range(len(dialogue)):
+            dialogue_box = dialogue_box_font.render(dialogue[i][0], True, (255, 255, 255))
             screen.blit(dialogue_box,(120,40 + 20*i))

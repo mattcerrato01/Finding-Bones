@@ -1,4 +1,5 @@
 import random
+import pygame as p
 
 class WorldState:
 
@@ -46,3 +47,43 @@ class CoordConverter:
 
     def screen_y(self, real_y):
         return real_y + CoordConverter.offset_y
+
+class Inventory:
+
+    inventory = []
+
+    def get_inventory(self):
+        return Inventory.inventory[:]
+
+    def append_to_inventory(self, object):
+        Inventory.inventory.append(object)
+
+    def remove_from_inventory(self, object):
+        Inventory.inventory.remove(object)
+
+class Actions:
+
+    dialogue_list = []
+
+    def dialogue_box(self, dialogue):
+
+        Actions.dialogue_list.append((dialogue, p.time.get_ticks()))
+
+    def update_dialogue_box(self):
+
+        while len(Actions.dialogue_list) > 4:
+            Actions.dialogue_list.pop(0)
+
+        while len(Actions.dialogue_list) > 0:
+            if Actions.dialogue_list[0][1]+3000 < p.time.get_ticks():
+                Actions.dialogue_list.pop(0)
+            else:
+                break
+
+        """
+        :param dialogue: what to print
+        
+        prints dialogue to dialogue box for period of time
+        
+        :return: 
+        """
