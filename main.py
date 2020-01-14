@@ -17,7 +17,7 @@ screen = p.display.set_mode((800, 600))
 
 p.display.set_caption("Grim Reaper")
 
-st.main(screen)
+
 
 
 def loadify(imgname):  # Returns loaded Image
@@ -78,7 +78,7 @@ cc2 = p.image.load("VillagerMaleFront_underworld.png")
 
 # tile = t.Tile("background.jpg", collidable_group, 0, 0)
 createDemons(demons,player,int(200 / player.fate))
-
+st.main(screen)
 running = True
 
 time = 0
