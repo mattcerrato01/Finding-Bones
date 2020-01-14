@@ -15,7 +15,8 @@ p.init()
 screen = p.display.set_mode((800, 600))
 
 p.display.set_caption("Grim Reaper")
-
+dialogue_surface = p.Surface((600,100), p.SRCALPHA).convert_alpha()  # per-pixel alpha
+dialogue_surface.fill((0,0,0,128))                         # notice the alpha value in the color
 
 
 
@@ -48,7 +49,7 @@ player = Objects.Player("player.jpg", ["GR-F-L", "GR-F-S", "GR-F-R", "GR-F-S"],
 rect = Objects.Object("download.jpg", 100, 100)
 rect2 = Objects.Object("download1.jpg")
 rect3 = Objects.Object("download2.jpg")
-villager = Objects.Villagers("villager_m.png")
+villager = Objects.Villagers("VillagerMaleFront.png")
 villager.setX(800)
 villager.setY(800)
 rect.setX(100)
@@ -72,8 +73,8 @@ tile_map = t.Map(image_name_array, collidable_group)
 demons = p.sprite.Group()
 talking_objects = []
 
-cc1 = p.image.load("download.jpg")
-cc2 = p.image.load("villager.jpeg")
+cc1 = p.image.load("VillagerMaleFront.png")
+cc2 = p.image.load("VillagerMaleFront_underworld.png")
 
 
 # tile = t.Tile("background.jpg", collidable_group, 0, 0)
@@ -139,6 +140,8 @@ while running:
 	if not world.state():
 		for demon in demons:
 			demon.draw(screen)
+
+	screen.blit(dialogue_surface, (100,25))
 
 	player.draw(screen)
 
