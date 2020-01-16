@@ -427,8 +427,8 @@ class Dialogue_box():
     def draw(self, screen):
         if actions.update_dialogue_box():
             dialogue = actions.dialogue_list
-            dialogue_surface = p.Surface((600,100), p.SRCALPHA).convert_alpha()  # per-pixel alpha
-            dialogue_surface.fill((0,0,0,128)) # notice the alpha value in the color
+            dialogue_surface = p.Surface((600,100)).convert_alpha()  # per-pixel alpha
+            dialogue_surface.fill((0,0,0)) # notice the alpha value in the color
             screen.blit(dialogue_surface, (100,25))
             dialogue_box_font = p.font.SysFont("papyrus", 20)
 

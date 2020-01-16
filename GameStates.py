@@ -61,6 +61,22 @@ class Inventory:
     def remove_from_inventory(self, object):
         Inventory.inventory.remove(object)
 
+    def draw(self, screen):
+        height  = 50 + 20*len(Inventory.inventory)
+        dialogue_surface = p.Surface((150, height ))  # per-pixel alpha
+        dialogue_surface.fill((0,0,0)) # notice the alpha value in the color
+        screen.blit(dialogue_surface, (450,228))
+        dialogue_box_font = p.font.SysFont("papyrus", 20)
+        dialogue_box = dialogue_box_font.render("Inventory:", True, (255, 255, 255))
+        rect = dialogue_box.get_rect()
+        screen.blit(dialogue_box,(525 - rect.width/2,238))
+        for i in range(len(Inventory.inventory)):
+            dialogue_box = dialogue_box_font.render(Inventory.inventory[i], True, (255, 255, 255))
+            rect = dialogue_box.get_rect()
+            screen.blit(dialogue_box,(525 - rect.width/2 ,258 + 20*i))
+
+
+
 class Actions:
 
     dialogue_list = []
@@ -128,9 +144,11 @@ class Actions:
                         if action[first_index+1:second_index] in Inventory.inventory[item_idx]:
                             num = 0
                             if "to" in action:
-                                num = int(Inventory.inventory[item_idx][0]) + 1
+                                int_index = Inventory.inventory[item_idx].find(" ")
+                                num = int(Inventory.inventory[item_idx][int_index-1]) + 1
                             elif "from" in action:
-                                num = int(Inventory.inventory[item_idx][0]) - 1
+                                int_index = Inventory.inventory[item_idx].find(" ")
+                                num = int(Inventory.inventory[item_idx][int_index-1]) - 1
                             Inventory.inventory[item_idx] = str(num) + Inventory.inventory[item_idx][1:]
                             found = True
                             break

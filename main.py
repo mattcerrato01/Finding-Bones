@@ -182,3 +182,77 @@ while running:
 		
 	p.display.update()
 
+	screen.fill([255, 255, 255])
+	collision_group = tile_map.draw(screen, player)
+	clicked = False
+
+	for event in p.event.get():
+		if event.type == p.QUIT:
+			running = False
+		elif event.type == p.MOUSEBUTTONUP:
+
+			pos = p.mouse.get_pos()
+
+			for collidable in collision_group:
+				if collidable.perform_action(pos): #returns true if villager has been reaped
+					collidable_group.remove(collidable)
+					tile_map = t.Map(image_name_array, collidable_group)
+					player.soul += 10
+					break
+	keys = p.key.get_pressed()
+	if keys[p.K_i]:
+
+		inventory.draw(screen)
+
+
+
+
+	for x in range(p.time.get_ticks() // 10 - time // 10):
+		player.move(p.key.get_pressed(), collision_group, demons)
+		if not world.state():
+			for demon in demons:
+				demon.move(player)
+				if demon.hit:
+					demons.remove(demon)
+					player.set_fate(player.get_fate()-10)
+	# adding or subtracting demons when player's fate goes down
+	if abs(fate - player.get_fate()) >= 5:
+		i = 0
+		while i < abs(fate - player.get_fate()) // 5:
+			if fate - player.fate < 0:
+				randIDX = random.randint(0,len(demons)-1)
+				demons.remove(demons[randIDX])
+				i += 1
+			elif fate - player.get_fate() > 0:
+				createDemons(demons,player,1)
+				i += 1
+		fate = player.get_fate()
+	if not world.state():
+		for demon in demons:
+			demon.draw(screen)
+
+	dialogue_box.draw(screen)
+
+	player.draw(screen)
+
+	for villager in villagers:
+		if villager.changeMouse(p.mouse.get_pos()):
+			if world.state() and not villager.get_soul_reaped():
+				p.mouse.set_visible(False)
+				screen.blit(cc1, p.mouse.get_pos())
+			else:
+				if not villager.get_essential() and not villager.get_soul_reaped():
+					p.mouse.set_visible(False)
+					screen.blit(cc2, p.mouse.get_pos())
+		else:
+			p.mouse.set_cursor(*p.cursors.arrow)
+			p.mouse.set_visible(True)
+
+	if player.fate <= 0 or player.soul <= 0:
+		player.fate = 100
+		player.soul = 100
+		end.main(screen)
+
+	p.display.update()
+
+	time = p.time.get_ticks()
