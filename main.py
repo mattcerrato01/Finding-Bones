@@ -173,7 +173,7 @@ while running:
             player.fate = 100
             player.soul = 100
             end.main(screen)
-            time = p.time.get_ticks()
+        time = p.time.get_ticks()
     else:
         for event in p.event.get():
             if event.type == p.QUIT:
