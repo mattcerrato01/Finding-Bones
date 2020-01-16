@@ -111,7 +111,7 @@ while running:
 
 
     for x in range(p.time.get_ticks() // 10 - time // 10):
-        player.move(p.key.get_pressed(), collision_group)
+        player.move(p.key.get_pressed(), collision_group, demons)
         if not world.state():
             for demon in demons:
                 demon.move(player)

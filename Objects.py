@@ -44,6 +44,10 @@ class Object(p.sprite.Sprite):
                 self.soul_reaped = False
                 return True
         return False
+    def getX(self):
+        return self.x
+    def getY(self):
+        return self.y
 
     def setX(self, x):
         self.x = x
@@ -237,7 +241,7 @@ class Player(Movable_Object):
     def getY(self):
         return self.y
 
-    def move(self, keys, collidable_group):
+    def move(self, keys, collidable_group, demon_group):
 
         temp_speed = self.speed
         temp_diag_speed = self.diag_speed
@@ -306,6 +310,12 @@ class Player(Movable_Object):
                 collidable.update()
                 if collidable != self and self.collide(collidable):
                     collide = True
+                    break
+            for demon in demon_group:
+                demon.update()
+                if self.collide(demon):
+                    demon.setX(demon.getX() + 200)
+                    demon.setY(demon.getY() + 200)
                     break
             if not collide:
                 world.toggle()
