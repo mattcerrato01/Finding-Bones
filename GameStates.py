@@ -144,9 +144,11 @@ class Actions:
                         if action[first_index+1:second_index] in Inventory.inventory[item_idx]:
                             num = 0
                             if "to" in action:
-                                num = int(Inventory.inventory[item_idx][0]) + 1
+                                int_index = Inventory.inventory[item_idx].find(" ")
+                                num = int(Inventory.inventory[item_idx][int_index-1]) + 1
                             elif "from" in action:
-                                num = int(Inventory.inventory[item_idx][0]) - 1
+                                int_index = Inventory.inventory[item_idx].find(" ")
+                                num = int(Inventory.inventory[item_idx][int_index-1]) - 1
                             Inventory.inventory[item_idx] = str(num) + Inventory.inventory[item_idx][1:]
                             found = True
                             break
