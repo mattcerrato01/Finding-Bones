@@ -120,12 +120,14 @@ while running:
         key = p.key.get_pressed()
         if key[p.K_i]:
             inventory.draw(screen)  #Draws inventory when holding i
-        elif key[p.K_ESCAPE] and ptime == 0:
+        
+        if key[p.K_ESCAPE] and esc_holder:
+            esc_holder = False
             paused = True
-            ptime = 30
 
-        if ptime > 0:
-            ptime -= 1
+        elif not key[p.K_ESCAPE]:
+            esc_holder = True
+    
 
 
 
@@ -180,12 +182,12 @@ while running:
             if event.type == p.QUIT:
                 running = False
         key = p.key.get_pressed()
-        if key[p.K_ESCAPE]:
-            if ptime == 0:
-                paused = False
-                ptime = 20
-        if ptime > 0:
-            ptime -= 1
+        if key[p.K_ESCAPE] and esc_holder:
+            esc_holder = False
+            paused = False
+
+        elif not key[p.K_ESCAPE]:
+            esc_holder = True
         #print(ptime)
         p.draw.rect(screen,(0,0,0),p.Rect(250,200,300,200))
         screen.blit(pausetext, ptextRect)
