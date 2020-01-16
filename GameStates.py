@@ -95,6 +95,14 @@ class Actions:
                 " print 'Hello there!' " prints 'Hello there!' in the dialogue box
                 " 'berry' to inv AND print 'You received a berry!' " adds a berry to inventory and prints 'You received a berry!' to dialogue box
 
+                do(3) {}
+                do(A) {}
+                Q(2,3) {}
+                Q(2,A) {}
+                if(has "berry")
+                if(fate>=100)
+                if(soul<90)
+
                 :return:
                 """
 
@@ -140,7 +148,7 @@ class Actions:
                 if 0 <= first_index < second_index:
                     self.dialogue_box(action[first_index+1:second_index])
 
-        return ""
+        return return_string
 
     "Q(1,A) {} AND Q(2,4) {}"
 

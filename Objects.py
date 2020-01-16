@@ -2,6 +2,7 @@
 import pygame as p
 import math as m
 import GameStates as gs
+import random as r
 
 coord = gs.CoordConverter()
 world = gs.WorldState()
@@ -75,14 +76,16 @@ class Villagers(Object):
     def __init__(self, overworld_image_name, essential=False, male = True):
         Object.__init__(self, overworld_image_name[3], 46, 110, villager=True)
         self.underworld_image_name = "VillagerMaleFront_underworld.png"
-        self.idle_images = [p.transform.scale(loadify(overworld_image_name[0][0]), (self.width, self.height))
-        ,p.transform.scale(loadify(overworld_image_name[0][1]), (self.width, self.height))]
+        self.image = (p.transform.scale(loadify(overworld_image_name[0][0]), (self.width, self.height)))
+        self.idle = (p.transform.scale(loadify(overworld_image_name[0][1]), (self.width, self.height)))
 
         self.left_image = p.transform.scale(loadify(overworld_image_name[1]), (self.width, self.height))
         self.right_image = p.transform.scale(loadify(overworld_image_name[2]), (self.width, self.height))
         self.back_image = p.transform.scale(loadify(overworld_image_name[3]), (self.width, self.height))
         self.current_image = self.back_image
         self.current_image = p.transform.scale(self.current_image, (self.width,self.height))
+
+        self.forward_image = self.image
 
         name = names.generate(male)
         self.objects_to_inventory = []
@@ -102,7 +105,7 @@ class Villagers(Object):
         return self.essential
 
     def draw(self, screen, player):
-        walk_gap = 30 #aklsdjf
+        walk_gap = 100 #aklsdjf
         distx = (400 - coord.screen_x(self.x+self.width/2))
         disty = (300-coord.screen_y(self.y+self.height/2))
         if world.state():
@@ -117,12 +120,22 @@ class Villagers(Object):
                     if disty<=0:
                         self.current_image = self.back_image
                     elif disty>0:
-                        if self.walking_time % walk_gap:
-                            self.current_image = self.idle_images[self.walking_time // walk_gap % len(self.idle_images)]
+                        if self.walking_time % walk_gap == 0:
+                            if r.randint(0,6) == 1:
+                                self.forward_image = self.idle
+                                print(str(self.walking_time)+ " " + str(self.walking_time%walk_gap))
+                            else:
+                                self.forward_image = self.image
+                        self.current_image = self.forward_image
             else:
-                if self.walking_time % walk_gap:
-                    self.current_image = self.idle_images[self.walking_time // walk_gap % len(self.idle_images)]
-            self.walking_time +=5
+                if self.walking_time % walk_gap == 0:
+                    if r.randint(0, 6) == 1:
+                        self.forward_image = self.idle
+                        print(str(self.walking_time) + " " + str(self.walking_time % walk_gap))
+                    else:
+                        self.forward_image = self.image
+                self.current_image = self.forward_image
+            self.walking_time +=1
 
             screen.blit(self.current_image, (coord.screen_x(self.x), coord.screen_y(self.y)))
             rect = self.nameplate.get_rect()
