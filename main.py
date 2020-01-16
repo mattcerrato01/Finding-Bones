@@ -85,6 +85,12 @@ createDemons(demons,player,int(200 / player.fate))
 st.main(screen)
 running = True
 
+font = p.font.Font(None, 36)
+pausetext = font.render("Paused", 1, (250, 250, 250))
+ptextRect = pausetext.get_rect() 
+ptextRect.center = (400,300) 
+
+
 time = 0
 fate = player.fate
 paused = False
@@ -113,7 +119,7 @@ while running:
 		key = p.key.get_pressed()
 		if key[p.K_ESCAPE] and ptime == 0:
 			paused = True
-			ptime = 30
+			ptime = 20
 		
 		if ptime > 0:
 			ptime -= 1
@@ -174,10 +180,12 @@ while running:
 		if key[p.K_ESCAPE]:
 			if ptime == 0:
 				paused = False
-				ptime = 30
+				ptime = 20
 		if ptime > 0:
 			ptime -= 1
 		#print(ptime)
 		p.draw.rect(screen,(0,0,0),p.Rect(250,200,300,200))
+		screen.blit(pausetext, ptextRect) 
+		
 		
 	p.display.update()
