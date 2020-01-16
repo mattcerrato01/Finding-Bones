@@ -61,6 +61,20 @@ class Inventory:
     def remove_from_inventory(self, object):
         Inventory.inventory.remove(object)
 
+    def draw(self, screen):
+        height  = 50 + 20*len(Inventory.inventory)
+        p.draw.rect(screen,(0,0,0), (450,228,150, height))
+        dialogue_box_font = p.font.SysFont("papyrus", 20)
+        dialogue_box = dialogue_box_font.render("Inventory:", True, (255, 255, 255))
+        rect = dialogue_box.get_rect()
+        screen.blit(dialogue_box,(525 - rect.width/2,238))
+        for i in range(len(Inventory.inventory)):
+            dialogue_box = dialogue_box_font.render(Inventory.inventory[i], True, (255, 255, 255))
+            rect = dialogue_box.get_rect()
+            screen.blit(dialogue_box,(525 - rect.width/2 ,258 + 20*i))
+
+
+
 class Actions:
 
     dialogue_list = []
@@ -95,6 +109,14 @@ class Actions:
                 " print 'Hello there!' " prints 'Hello there!' in the dialogue box
                 " 'berry' to inv AND print 'You received a berry!' " adds a berry to inventory and prints 'You received a berry!' to dialogue box
 
+                do(3) {}
+                do(A) {}
+                Q(2,3) {}
+                Q(2,A) {}
+                if(has "berry")
+                if(fate>=100)
+                if(soul<90)
+
                 :return:
                 """
 
@@ -102,31 +124,62 @@ class Actions:
 
         for action in quest_actions.split(' AND '):
 
+            return_sub_string = ""
+
             first_index = action.find("Q(")
             second_index = action.find(",")
 
             if "Q(" in action:
-                if QuestManager.quests[int(action[first_index+2:second_index])] == action[second_index+1:action.find(")")] or action[second_index+1] == "A":
+                if QuestManager.quests[int(action[first_index+2:second_index])] == int(action[second_index+1:action.find(")")]) or action[second_index+1] == "A":
 
-                    return_string+=self.perform_action(action[action.find("{")+1,action.find("}")])
+                    return_sub_string = action[action.find("Q"):action.find("{")+1] + self.perform_action(action[action.find("{")+1:action.find("}")]) + "}"
 
-            if "inv" in action:
+
+            elif "do(" in action:
+
+                print("not ready yet")
+
+            elif "inv" in action:
+
+                return_sub_string = action
+
                 first_index = action.find("'")
                 second_index = action.find("'", first_index+1)
                 if 0 <= first_index < second_index:
-                    if "to" in action:
-                        Inventory.append_to_inventory(Inventory, action[first_index+1:second_index])
-                    elif "from" in action:
-                        Inventory.remove_from_inventory(Inventory, action[first_index+1:second_index])
-                else:
-                    print("error in quest action, no item found")
+                    found = False
+                    for item_idx in range(len(Inventory.inventory)):
+                        if action[first_index+1:second_index] in Inventory.inventory[item_idx]:
+                            num = 0
+                            if "to" in action:
+                                int_index = Inventory.inventory[item_idx].find(" ")
+                                num = int(Inventory.inventory[item_idx][0:int_index]) + 1
+                            elif "from" in action:
+                                int_index = Inventory.inventory[item_idx].find(" ")
+                                num = int(Inventory.inventory[item_idx][0:int_index]) - 1
+                            Inventory.inventory[item_idx] = str(num) + Inventory.inventory[item_idx][item_idx+1:]
+                            found = True
+                            break
+                    if not found:
+                        if "to" in action:
+                            Inventory.append_to_inventory(Inventory, "1 x "+ action[first_index+1:second_index])
+                        elif "from" in action:
+                            Inventory.remove_from_inventory(Inventory, action[first_index+1:second_index])
+
+                    print(Inventory.inventory)
+
             elif "print" in action:
+                return_sub_string = action
                 first_index = action.find("'")
                 second_index = action.find("'", first_index + 1)
                 if 0 <= first_index < second_index:
                     self.dialogue_box(action[first_index+1:second_index])
 
-        return ""
+
+            return_string+=return_sub_string+" AND "
+
+        print(return_string[:-5])
+        return return_string[:-5]
+        #return ""
 
     "Q(1,A) {} AND Q(2,4) {}"
 
