@@ -111,15 +111,29 @@ class Actions:
                     return_string+=self.perform_action(action[action.find("{")+1,action.find("}")])
 
             if "inv" in action:
+
                 first_index = action.find("'")
                 second_index = action.find("'", first_index+1)
                 if 0 <= first_index < second_index:
-                    if "to" in action:
-                        Inventory.append_to_inventory(Inventory, action[first_index+1:second_index])
-                    elif "from" in action:
-                        Inventory.remove_from_inventory(Inventory, action[first_index+1:second_index])
-                else:
-                    print("error in quest action, no item found")
+                    found = False
+                    for item_idx in range(len(Inventory.inventory)):
+                        if action[first_index+1:second_index] in Inventory.inventory[item_idx]:
+                            num = 0
+                            if "to" in action:
+                                num = int(Inventory.inventory[item_idx][0]) + 1
+                            elif "from" in action:
+                                num = int(Inventory.inventory[item_idx][0]) - 1
+                            Inventory.inventory[item_idx] = str(num) + Inventory.inventory[item_idx][1:]
+                            found = True
+                            break
+                    if not found:
+                        if "to" in action:
+                            Inventory.append_to_inventory(Inventory, "1 x "+ action[first_index+1:second_index])
+                        elif "from" in action:
+                            Inventory.remove_from_inventory(Inventory, action[first_index+1:second_index])
+
+                    print(Inventory.inventory)
+
             elif "print" in action:
                 first_index = action.find("'")
                 second_index = action.find("'", first_index + 1)
