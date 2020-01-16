@@ -132,6 +132,7 @@ class Actions:
 
                     return_string+=self.perform_action(action[action.find("{")+1,action.find("}")])
 
+
             if "inv" in action:
 
                 first_index = action.find("'")
@@ -143,11 +144,11 @@ class Actions:
                             num = 0
                             if "to" in action:
                                 int_index = Inventory.inventory[item_idx].find(" ")
-                                num = int(Inventory.inventory[item_idx][int_index-1]) + 1
+                                num = int(Inventory.inventory[item_idx][0:int_index]) + 1
                             elif "from" in action:
                                 int_index = Inventory.inventory[item_idx].find(" ")
-                                num = int(Inventory.inventory[item_idx][int_index-1]) - 1
-                            Inventory.inventory[item_idx] = str(num) + Inventory.inventory[item_idx][1:]
+                                num = int(Inventory.inventory[item_idx][0:int_index]) - 1
+                            Inventory.inventory[item_idx] = str(num) + Inventory.inventory[item_idx][item_idx+1:]
                             found = True
                             break
                     if not found:
@@ -163,7 +164,7 @@ class Actions:
                 second_index = action.find("'", first_index + 1)
                 if 0 <= first_index < second_index:
                     self.dialogue_box(action[first_index+1:second_index])
-
+        return_string = quest_actions
         return return_string
 
     "Q(1,A) {} AND Q(2,4) {}"
