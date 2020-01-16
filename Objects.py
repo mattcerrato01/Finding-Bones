@@ -96,7 +96,7 @@ class Villagers(Object):
         self.essential = essential
         self.walking_time = 0
 
-        font = p.font.SysFont('Times New Roman', 16)
+        font = p.font.SysFont('Times New Romans', 16)
         self.nameplate = font.render(name, False, (0, 0, 0), (255,255,255))
     #   self.fated
 

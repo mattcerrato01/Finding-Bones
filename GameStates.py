@@ -124,16 +124,24 @@ class Actions:
 
         for action in quest_actions.split(' AND '):
 
+            return_sub_string = ""
+
             first_index = action.find("Q(")
             second_index = action.find(",")
 
             if "Q(" in action:
-                if QuestManager.quests[int(action[first_index+2:second_index])] == action[second_index+1:action.find(")")] or action[second_index+1] == "A":
+                if QuestManager.quests[int(action[first_index+2:second_index])] == int(action[second_index+1:action.find(")")]) or action[second_index+1] == "A":
 
-                    return_string+=self.perform_action(action[action.find("{")+1,action.find("}")])
+                    return_sub_string = action[action.find("Q"):action.find("{")+1] + self.perform_action(action[action.find("{")+1:action.find("}")]) + "}"
 
 
-            if "inv" in action:
+            elif "do(" in action:
+
+                print("not ready yet")
+
+            elif "inv" in action:
+
+                return_sub_string = action
 
                 first_index = action.find("'")
                 second_index = action.find("'", first_index+1)
@@ -160,12 +168,18 @@ class Actions:
                     print(Inventory.inventory)
 
             elif "print" in action:
+                return_sub_string = action
                 first_index = action.find("'")
                 second_index = action.find("'", first_index + 1)
                 if 0 <= first_index < second_index:
                     self.dialogue_box(action[first_index+1:second_index])
-        return_string = quest_actions
-        return return_string
+
+
+            return_string+=return_sub_string+" AND "
+
+        print(return_string[:-5])
+        return return_string[:-5]
+        #return ""
 
     "Q(1,A) {} AND Q(2,4) {}"
 
