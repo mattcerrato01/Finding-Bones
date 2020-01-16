@@ -65,13 +65,17 @@ class Inventory:
         height  = 50 + 20*len(Inventory.inventory)
         dialogue_surface = p.Surface((150, height ))  # per-pixel alpha
         dialogue_surface.fill((0,0,0)) # notice the alpha value in the color
-        screen.blit(dialogue_surface, (450,120))
+        screen.blit(dialogue_surface, (450,228))
         dialogue_box_font = p.font.SysFont("papyrus", 20)
         dialogue_box = dialogue_box_font.render("Inventory:", True, (255, 255, 255))
-        screen.blit(dialogue_box,(460,130))
+        rect = dialogue_box.get_rect()
+        screen.blit(dialogue_box,(525 - rect.width/2,238))
         for i in range(len(Inventory.inventory)):
             dialogue_box = dialogue_box_font.render(Inventory.inventory[i], True, (255, 255, 255))
-            screen.blit(dialogue_box,(450,150 + 20*i))
+            rect = dialogue_box.get_rect()
+            screen.blit(dialogue_box,(525 - rect.width/2 ,258 + 20*i))
+
+
 
 class Actions:
 
