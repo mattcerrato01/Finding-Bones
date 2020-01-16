@@ -112,7 +112,7 @@ while running:
 
         key = p.key.get_pressed()
         if key[p.K_i]:
-            inventory.draw(screen)
+            inventory.draw(screen)  #Draws inventory when holding i
         elif key[p.K_ESCAPE] and ptime == 0:
             paused = True
             ptime = 30
