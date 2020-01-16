@@ -126,29 +126,6 @@ while running:
         if ptime > 0:
             ptime -= 1
 
-        for x in range(p.time.get_ticks() // 10 - time // 10):
-            player.move(p.key.get_pressed(), collision_group, demons)
-            if not world.state():
-                for demon in demons:
-                    demon.move(player)
-                    if demon.hit:
-                        demons.remove(demon)
-                        player.set_fate(player.get_fate()-10)
-        # adding or subtracting demons when player's fate goes down
-        if abs(fate - player.get_fate()) >= 5:
-            i = 0
-            while i < abs(fate - player.get_fate()) // 5:
-                if fate - player.fate < 0:
-                    randIDX = random.randint(0,len(demons)-1)
-                    demons.remove(demons[randIDX])
-                    i += 1
-                elif fate - player.get_fate() > 0:
-                    createDemons(demons,player,1)
-                    i += 1
-            fate = player.get_fate()
-        if not world.state():
-            for demon in demons:
-                demon.draw(screen)
 
 
         for x in range(p.time.get_ticks() // 10 - time // 10):
