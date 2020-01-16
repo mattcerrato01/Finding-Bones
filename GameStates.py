@@ -63,9 +63,7 @@ class Inventory:
 
     def draw(self, screen):
         height  = 50 + 20*len(Inventory.inventory)
-        dialogue_surface = p.Surface((150, height ))  # per-pixel alpha
-        dialogue_surface.fill((0,0,0)) # notice the alpha value in the color
-        screen.blit(dialogue_surface, (450,228))
+        p.draw.rect(screen,(0,0,0), (450,228,150, height))
         dialogue_box_font = p.font.SysFont("papyrus", 20)
         dialogue_box = dialogue_box_font.render("Inventory:", True, (255, 255, 255))
         rect = dialogue_box.get_rect()
