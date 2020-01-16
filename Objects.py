@@ -20,9 +20,8 @@ class Object(p.sprite.Sprite):
     def __init__(self, overworld_image_name, width=50, height=50, villager = False):  # NOTE: come back and clean up initialization and such here
         p.sprite.Sprite.__init__(self)
         self.soul_reaped = False
-        self.action = """'berry' to inv 
-                        AND print 'You got BERRY'
-                        AND Q(1,1) {print 'I love this'}"""
+        self.action = """if(has 'berry') {'berry' to inv}
+                        AND if(hasnt 'berry') {print 'You already have a BERRY.'}"""
         self.overworld_image_name = overworld_image_name
         if not villager:
             self.underworld_image_name = overworld_image_name[:-4] + "_underworld" + overworld_image_name[-4:]
