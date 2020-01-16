@@ -152,11 +152,14 @@ class Actions:
                             num = 0
                             if "to" in action:
                                 int_index = Inventory.inventory[item_idx].find(" ")
-                                num = int(Inventory.inventory[item_idx][0:int_index]) + 1
+                                num = int(Inventory.inventory[item_idx][:int_index]) + 1
                             elif "from" in action:
                                 int_index = Inventory.inventory[item_idx].find(" ")
-                                num = int(Inventory.inventory[item_idx][0:int_index]) - 1
-                            Inventory.inventory[item_idx] = str(num) + Inventory.inventory[item_idx][item_idx+1:]
+                                num = int(Inventory.inventory[item_idx][:int_index]) - 1
+                            print(Inventory.inventory[item_idx][item_idx+1:])
+
+                            Inventory.inventory[item_idx] = str(num) + Inventory.inventory[item_idx][int_index:]
+
                             found = True
                             break
                     if not found:
