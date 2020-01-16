@@ -106,6 +106,10 @@ while running:
                     tile_map = t.Map(image_name_array, collidable_group)
                     player.soul += 10
                     break
+    keys = p.key.get_pressed()
+    if keys[p.K_i]:
+
+        inventory.draw(screen)
 
 
 
