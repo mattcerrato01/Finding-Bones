@@ -149,13 +149,7 @@ while running:
         if not world.state():
             for demon in demons:
                 demon.draw(screen)
-        key = p.key.get_pressed()
-        if key[p.K_ESCAPE] and ptime == 0:
-            paused = True
-            ptime = 20
 
-        if ptime > 0:
-            ptime -= 1
 
         for x in range(p.time.get_ticks() // 10 - time // 10):
             player.move(p.key.get_pressed(), collision_group, demons)
