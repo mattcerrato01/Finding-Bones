@@ -20,8 +20,8 @@ class Object(p.sprite.Sprite):
     def __init__(self, overworld_image_name, width=50, height=50, villager = False):  # NOTE: come back and clean up initialization and such here
         p.sprite.Sprite.__init__(self)
         self.soul_reaped = False
-        self.action = """if(has 'berry') {'berry' to inv}
-                        AND if(hasnt 'berry') {print 'You already have a BERRY.'}"""
+        self.action = """if(hasnt 'berry') {'berry' to inv'}
+                        AND if(has 'berry') {print 'You already have a BERRY.'}"""
         self.overworld_image_name = overworld_image_name
         if not villager:
             self.underworld_image_name = overworld_image_name[:-4] + "_underworld" + overworld_image_name[-4:]
@@ -122,7 +122,6 @@ class Villagers(Object):
                         if self.walking_time % walk_gap == 0:
                             if r.randint(0,6) == 1:
                                 self.forward_image = self.idle
-                                print(str(self.walking_time)+ " " + str(self.walking_time%walk_gap))
                             else:
                                 self.forward_image = self.image
                         self.current_image = self.forward_image
@@ -130,7 +129,6 @@ class Villagers(Object):
                 if self.walking_time % walk_gap == 0:
                     if r.randint(0, 6) == 1:
                         self.forward_image = self.idle
-                        print(str(self.walking_time) + " " + str(self.walking_time % walk_gap))
                     else:
                         self.forward_image = self.image
                 self.current_image = self.forward_image
