@@ -57,10 +57,8 @@ class Inventory:
         print("Testing for " + item)
 
         for item_idx in range(len(Inventory.inventory)):
-            if item in Inventory.inventory[item_idx]:
-
-                print("Found " + Inventory.inventory[item_idx][:Inventory.inventory[item_idx].find(" ")] + " of " + item)
-                return int(Inventory.inventory[item_idx][:Inventory.inventory[item_idx].find(" ")])
+            if item == Inventory.inventory[item_idx][0]:
+                return Inventory.inventory[item_idx][1]
         print("Found 0 of " + item)
         return 0
 
@@ -68,10 +66,22 @@ class Inventory:
         return Inventory.inventory[:]
 
     def append_to_inventory(self, object):
-        Inventory.inventory.append(object)
+
+        found_item = False
+
+        for i in range(len(Inventory.inventory)):
+            if Inventory.inventory[i][0] == object:
+                Inventory.inventory[i][1] += 1
+                found_item = True
+                break
+        if not found_item:
+            Inventory.inventory.append( ( object , 1 ) )
 
     def remove_from_inventory(self, object):
-        Inventory.inventory.remove(object)
+        for i in range(len(Inventory.inventory)):
+            if Inventory.inventory[i][0] == object:
+                Inventory.inventory.remove( ( object, Inventory.inventory[i][1] ) )
+                break
 
     def draw(self, screen):
         height  = 50 + 20*len(Inventory.inventory)
@@ -197,6 +207,15 @@ class Actions:
             #         else:
             #             return_sub_string = action+" AND "
             # """
+
+            elif "has(" in action:
+
+                first_index = action.find("has(")+4
+                second_index = action.find(")")
+
+                if Inventory.has(Inventory,action[first_index:second_index]):
+                    return_sub_string = action[action.find("has("):action.find("{") + 1] + self.perform_action(action[action.find("{") + 1:action.find("}")]) + "}" + " AND "
+
 
             elif "inv" in action:
 

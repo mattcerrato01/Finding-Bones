@@ -97,6 +97,8 @@ fate = player.fate
 paused = False
 ptime = 0
 esc_holder = False
+
+
 while running:
 
     if not paused:
