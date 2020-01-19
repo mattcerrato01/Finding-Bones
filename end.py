@@ -21,6 +21,9 @@ def main(screen):
 	screen.blit(background, (0, 0))
 	p.display.flip()
 	
+	c1 = p.image.load("cursor-small-arrow.png")
+	
+	
 	while endrunning:
 		#screen.fill([255, 255, 255])
 		clicked = False
@@ -38,10 +41,14 @@ def main(screen):
 			#print("mouse is over 'newGameButton'")
 			if clicked:
 				endrunning = False
-
+		background.fill((250, 250, 250))
+		background.blit(text, textpos)
+		p.mouse.set_visible(False)
+		background.blit(c1, p.mouse.get_pos())
 		screen.blit(background, (0, 0))
 		p.display.flip()
 		#startbutton.blit(screen, p.mouse.get_pos())
+		
 	
 
 
