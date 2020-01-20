@@ -64,10 +64,13 @@ rect3.setX(820)
 rect3.setY(900)
 dialogue_box = Objects.Dialogue_box()
 
+villager_tutorial = Objects.Villagers([["VillagerMaleFront.png", "VillagerMaleFrontIdle.png"],"VillagerMaleFaceLeft.png", "VillagerMaleFaceRight.png","VillagerMaleBack.png"], essential = True)
+villager_tutorial.setX(400)
+villager_tutorial.setY(200)
 
-villagers = [villager]
+villagers = [villager, villager_tutorial]
 
-collidable_group = p.sprite.Group(rect, rect2, rect3, villager)
+collidable_group = p.sprite.Group(rect, rect2, rect3, villager, villager_tutorial)
 
 image_name_array = [["background.jpg", "background.jpg", "background.jpg", "background.jpg"],
 					["background.jpg", "background.jpg", "background.jpg", "background.jpg"],
@@ -119,7 +122,7 @@ while running:
 				pos = p.mouse.get_pos()
 
 				for collidable in collision_group:
-					if collidable.perform_action(pos): #returns true if villager has been reaped
+					if collidable.perform_action(pos) and not collidable.get_essential(): #returns true if villager has been reaped
 						collidable_group.remove(collidable)
 						tile_map = t.Map(image_name_array, collidable_group)
 						player.soul += 10
@@ -175,7 +178,7 @@ while running:
 						mouseChanged = True
 						break
 					else:
-						if not villager.get_essential() and not villager.get_soul_reaped():
+						if not collidable.get_essential() and not villager.get_soul_reaped():
 							screen.blit(scythe_cursor, p.mouse.get_pos())
 							mouseChanged = True
 							break
