@@ -43,6 +43,11 @@ class Object(p.sprite.Sprite):
                 self.soul_reaped = False
                 return True
         return False
+    def changeMouse(self, mouse):
+        if self.rect.collidepoint(mouse):
+            return True
+        else:
+            return False
     def getX(self):
         return self.x
     def getY(self):
@@ -141,11 +146,7 @@ class Villagers(Object):
         else:
             screen.blit(self.underworld_image, (coord.screen_x(self.x), coord.screen_y(self.y)))
 
-    def changeMouse(self, mouse):
-        if self.rect.collidepoint(mouse):
-            return True
-        else:
-            return False
+
 
     def get_soul_reaped(self):
         return self.soul_reaped
