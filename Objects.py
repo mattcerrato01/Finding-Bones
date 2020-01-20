@@ -78,7 +78,7 @@ class Object(p.sprite.Sprite):
 
 class Cage(Object):
     def __init__(self, overworld_image_name = "cage-locked-bones.png"):
-        Object.__init__(overworld_image_name, 128,114)
+        Object.__init__(self,overworld_image_name, 128,114)
         self.action = """has(berry){print 'Im freed'}"""
 class Villagers(Object):
 

@@ -70,7 +70,7 @@ rect2.setX(400)
 rect2.setY(400)
 rect3.setX(820)
 rect3.setY(900)
-#cage = Objects.Cage()
+cage = Objects.Cage()
 cage.setX(1200)
 cage.setY(1200)
 dialogue_box = Objects.Dialogue_box()
@@ -194,7 +194,7 @@ while running:
         mouseChanged = False
         for collidable in collision_group:
             if collidable.changeMouse(p.mouse.get_pos()):
-                if type(collidable) == Objects.Villagers or Objects.Quest_Villager:
+                if type(collidable) == Objects.Villagers or type(collidable)==Objects.Quest_Villager:
                     if world.state() and not villager.get_soul_reaped():
                         screen.blit(speech_cursor, p.mouse.get_pos())
                         mouseChanged = True
