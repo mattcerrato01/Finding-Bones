@@ -29,7 +29,7 @@ def main(screen):
 		#print(p.mouse.get_pos())
 		for event in p.event.get():
 			if event.type == p.QUIT:
-				running = False
+				endrunning = False
 			elif event.type == p.MOUSEBUTTONUP:
 				clicked = True
 		key = p.key.get_pressed()
