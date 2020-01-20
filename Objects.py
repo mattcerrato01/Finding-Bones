@@ -21,7 +21,7 @@ class Object(p.sprite.Sprite):
     def __init__(self, overworld_image_name, width=50, height=50, villager = False):  # NOTE: come back and clean up initialization and such here
         p.sprite.Sprite.__init__(self)
         self.soul_reaped = False
-        self.action = """do(2) {print 'Hello there!'} AND do(2:3) {print 'go away now'} AND has(berry) {print 'Im a big berry man'}"""
+        self.action = """do(2) {to inv 'berry'} AND do(2:3) {print 'go away now'} AND has(berry) {print 'Im a big berry man'}"""
         self.overworld_image_name = overworld_image_name
         if not villager:
             self.underworld_image_name = overworld_image_name[:-4] + "_underworld" + overworld_image_name[-4:]
@@ -79,7 +79,7 @@ class Object(p.sprite.Sprite):
 class Cage(Object):
     def __init__(self, overworld_image_name = "cage-locked-bones.png"):
         Object.__init__(self, overworld_image_name, 128, 114)
-        self.action = """has(berry) {print 'I'm freed'}"""
+        self.action = """has('berry') {print 'I'm freed'}"""
 class Villagers(Object):
 
     def __init__(self, overworld_image_name, fated, essential=False, male = True):

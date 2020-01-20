@@ -72,7 +72,7 @@ class Inventory:
                 found_item = True
                 break
         if not found_item:
-            Inventory.inventory.append( ( object , 1 ) )
+            Inventory.inventory.append( [ object , 1 ] )
 
     def remove_from_inventory(self, object):
         for i in range(len(Inventory.inventory)):
