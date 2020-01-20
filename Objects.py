@@ -79,7 +79,7 @@ class Object(p.sprite.Sprite):
 class Cage(Object):
     def __init__(self, overworld_image_name = "cage-locked-bones.png"):
         Object.__init__(self, overworld_image_name, 128, 114)
-        self.action = """has('berry') {print 'I'm freed'}"""
+        self.action = """has('1 x berry'){print 'Im freed'}"""
 class Villagers(Object):
 
     def __init__(self, overworld_image_name, fated, essential=False, male = True):
@@ -167,7 +167,7 @@ class Quest_Villager(Villagers):
 
     def __init__(self, overworld_image_name, fated, quest_end, male=True, grey = False):
         Villagers.__init__(self, overworld_image_name, fated, True, male)
-        print(str(self.essential) + str(quest_end))
+        # print(str(self.essential) + str(quest_end))
         self.grey = grey
         self.quest_end = quest_end
         if grey:
@@ -178,7 +178,7 @@ class Quest_Villager(Villagers):
 
     def draw(self, screen, player):
 
-        print( str(self.essential) + " " + str(qm.quests[self.quest_end[0]]) + " " + str(self.quest_end[1])  )
+        # print( str(self.essential) + " " + str(qm.quests[self.quest_end[0]]) + " " + str(self.quest_end[1])  )
 
         if world.state():
             Villagers.draw(self, screen, player)

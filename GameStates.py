@@ -233,12 +233,14 @@ class Actions:
                                 int_index = Inventory.inventory[item_idx].find(" ")
                                 num = int(Inventory.inventory[item_idx][:int_index]) - 1
 
-                            Inventory.inventory[item_idx] = str(num) + " x " + Inventory.inventory[item_idx][int_index:]
+                            Inventory.inventory[item_idx][0] = str(num) + " x " + Inventory.inventory[item_idx][int_index:]
 
                             found = True
                             break
+
                     if not found:
                         if "to" in action:
+                            print(Inventory.inventory)
                             Inventory.append_to_inventory(Inventory, "1 x "+ action[first_index+1:second_index])
                         elif "from" in action:
                             Inventory.remove_from_inventory(Inventory, action[first_index+1:second_index])
