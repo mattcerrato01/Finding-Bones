@@ -166,7 +166,7 @@ while running:
 		dialogue_box.draw(screen)
 
 		player.draw(screen)
-
+		mouseChanged = False
 		for collidable in collision_group:
 			if collidable.changeMouse(p.mouse.get_pos()):
 				if type(collidable) == "Villagers":
