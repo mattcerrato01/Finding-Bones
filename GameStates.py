@@ -59,7 +59,7 @@ class Inventory:
         for item_idx in range(len(Inventory.inventory)):
             if item == Inventory.inventory[item_idx][0]:
                 return Inventory.inventory[item_idx][1]
-        print("Found 0 of " + item)
+        print("Found" + Inventory.inventory[item_idx][1] + " of " + item)
         return 0
 
     def get_inventory(self):
@@ -231,13 +231,13 @@ class Actions:
                             num = 0
                             if "to" in action:
                                 int_index = Inventory.inventory[item_idx].find(" ")
-                                num = int(Inventory.inventory[item_idx][:int_index]) + 1
+                                num = int(Inventory.inventory[item_idx][0][:int_index]) + 1
                             elif "from" in action:
-                                int_index = Inventory.inventory[item_idx].find(" ")
-                                num = int(Inventory.inventory[item_idx][:int_index]) - 1
-                            print(Inventory.inventory[item_idx][item_idx+1:])
+                                int_index = Inventory.inventory[item_idx][0].find(" ")
+                                num = int(Inventory.inventory[item_idx][0][:int_index]) - 1
+                            print(Inventory.inventory[item_idx][0][item_idx+1:])
 
-                            Inventory.inventory[item_idx] = str(num) + Inventory.inventory[item_idx][int_index:]
+                            Inventory.inventory[item_idx] = str(num) + Inventory.inventory[item_idx][0][int_index:]
 
                             found = True
                             break
