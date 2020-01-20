@@ -99,6 +99,10 @@ pausetext = font.render("Paused", 1, (250, 250, 250))
 ptextRect = pausetext.get_rect()
 ptextRect.center = (400,300)
 
+t_stage = 0
+def run_tutorial():
+	print("tutorial running")
+
 
 time = 0
 fate = player.fate
@@ -106,6 +110,7 @@ paused = False
 ptime = 0
 esc_holder = False
 mouseChanged = False
+tutorial_active = False
 
 while running:
 
@@ -127,10 +132,15 @@ while running:
 						tile_map = t.Map(image_name_array, collidable_group)
 						player.soul += 10
 						break
-
+		if tutorial_active:
+			run_tutorial()
+			
 		key = p.key.get_pressed()
 		if key[p.K_i]:
 			inventory.draw(screen)	#Draws inventory when holding i
+		
+		if key[p.K_p]:
+			pass
 		
 		if key[p.K_ESCAPE] and esc_holder:
 			esc_holder = False
@@ -139,7 +149,7 @@ while running:
 		elif not key[p.K_ESCAPE]:
 			esc_holder = True
 	
-
+		
 
 
 		for x in range(p.time.get_ticks() // 10 - time // 10):
