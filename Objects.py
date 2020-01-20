@@ -102,7 +102,7 @@ class Villagers(Object):
         self.essential = essential
         self.walking_time = 0
         self.dialogues = ["""print 'Woah nice costume'""", """print 'its a little early for halloween though isnt it'"""
-            , """print 'Hello There'""", """print 'Im not sure about this scotty'"""] #List of dialogue options for normal villagers
+            , """print 'Hello There'""", """print 'Im not sure about this scotty'""", """print 'Dewit'"""] #List of dialogue options for normal villagers
         idx = r.randint(0,len(self.dialogues)-1)
         self.action = self.dialogues[idx]
         font = p.font.SysFont('Times New Romans', 16)

@@ -72,7 +72,7 @@ rect3.setX(820)
 rect3.setY(900)
 dialogue_box = Objects.Dialogue_box()
 
-villager_tutorial = Objects.Villagers([["VillagerMaleFront.png", "VillagerMaleFrontIdle.png"],"VillagerMaleFaceLeft.png", "VillagerMaleFaceRight.png","VillagerMaleBack.png"], False, essential = True)
+villager_tutorial = Objects.Quest_Villager([["VillagerMaleFront.png", "VillagerMaleFrontIdle.png"],"VillagerMaleFaceLeft.png", "VillagerMaleFaceRight.png","VillagerMaleBack.png"], True, (2,3))
 villager_tutorial.setX(400)
 villager_tutorial.setY(200)
 
