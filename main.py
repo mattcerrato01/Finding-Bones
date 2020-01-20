@@ -75,7 +75,7 @@ cage.setX(1200)
 cage.setY(1200)
 dialogue_box = Objects.Dialogue_box()
 
-villager_tutorial = Objects.Villagers([["VillagerMaleFront.png", "VillagerMaleFrontIdle.png"],"VillagerMaleFaceLeft.png", "VillagerMaleFaceRight.png","VillagerMaleBack.png"], False, essential = True)
+villager_tutorial = Objects.Quest_Villager([["VillagerMaleFront.png", "VillagerMaleFrontIdle.png"],"VillagerMaleFaceLeft.png", "VillagerMaleFaceRight.png","VillagerMaleBack.png"], True, (2,3))
 villager_tutorial.setX(400)
 villager_tutorial.setY(200)
 
@@ -200,7 +200,7 @@ while running:
                         mouseChanged = True
                         break
                     else:
-                        if not collidable.get_essential() and not villager.get_soul_reaped():
+                        if not type(collidable) == Objects.Quest_Villager and not villager.get_soul_reaped():
                             screen.blit(scythe_cursor, p.mouse.get_pos())
                             mouseChanged = True
                             break
