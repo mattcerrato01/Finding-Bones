@@ -197,7 +197,7 @@ while running:
                         mouseChanged = True
                         break
                     else:
-                        if not collidable.get_essential() and not villager.get_soul_reaped():
+                        if not type(collidable) == Objects.Quest_Villager and not villager.get_soul_reaped():
                             screen.blit(scythe_cursor, p.mouse.get_pos())
                             mouseChanged = True
                             break
