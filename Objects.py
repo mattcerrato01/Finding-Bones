@@ -76,7 +76,7 @@ class Object(p.sprite.Sprite):
     def collide(self, sprite):
         return p.sprite.collide_rect(self, sprite)
 
-class cage(Object):
+class Cage(Object):
     def __init__(self, overworld_image_name = "cage-locked-bones.png"):
         Object.__init__(self, overworld_image_name, 128, 114)
         self.action = """has(berry) {print 'I'm freed'}"""
