@@ -79,10 +79,10 @@ tile_map = t.Map(image_name_array, collidable_group)
 demons = p.sprite.Group()
 
 # cursors:
-c1 = p.image.load("cursor-small-arrow.png")
-c2 = p.image.load("cursor-small-magnifyingglass.png")
-c3 = p.image.load("cursor-small-scythe.png")
-c4 = p.image.load("cursor-small-speechbubble.png")
+cursor = p.transform.scale(loadify("cursor-small-arrow.png"), (15,15))
+investigation_cursor = p.transform.scale(loadify("cursor-small-magnifyingglass.png"), (15,15))
+scythe_cursor = p.transform.scale(loadify("cursor-small-scythe.png"), (15,15))
+speech_cursor = p.transform.scale(loadify("cursor-small-speechbubble.png"), (15,15))
 
 
 
@@ -171,12 +171,12 @@ while running:
 			if villager.changeMouse(p.mouse.get_pos()):
 				if world.state() and not villager.get_soul_reaped():
 					p.mouse.set_visible(False)
-					screen.blit(c4, p.mouse.get_pos())
+					screen.blit(speech_cursor, p.mouse.get_pos())
 					mouseChanged = True
 				else:
 					if not villager.get_essential() and not villager.get_soul_reaped():
 						p.mouse.set_visible(False)
-						screen.blit(c3, p.mouse.get_pos())
+						screen.blit(scythe_cursor, p.mouse.get_pos())
 						mouseChanged = True
 			else:
 				mouseChanged = False
@@ -184,11 +184,11 @@ while running:
 		for i in interactables:
 			if i.rect.collidepoint(p.mouse.get_pos()):
 				p.mouse.set_visible(False)
-				screen.blit(c2, p.mouse.get_pos())
+				screen.blit(investigation_cursor, p.mouse.get_pos())
 				mouseChanged = True
 		if not mouseChanged:
 			p.mouse.set_visible(False)
-			screen.blit(c1, p.mouse.get_pos())
+			screen.blit(cursor, p.mouse.get_pos())
 
 		if player.fate <= 0 or player.soul <= 0:
 			player.fate = 100
