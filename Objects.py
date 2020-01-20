@@ -44,6 +44,8 @@ class Object(p.sprite.Sprite):
                 self.soul_reaped = False
                 return True
         return False
+    def update_action(self):
+        return self.action
     def changeMouse(self, mouse):
         if self.rect.collidepoint(mouse):
             return True
@@ -93,19 +95,23 @@ class Villagers(Object):
         self.forward_image = self.image
 
         name = names.generate(male)
-        self.objects_to_inventory = []
-        self.investigation_pieces = [name + ": Fuck you"]
+
 
         self.underworld_image = loadify(self.underworld_image_name)
         self.underworld_image = p.transform.scale(self.underworld_image, (self.width, self.height))
         self.essential = essential
         self.walking_time = 0
-
+        self.dialogues = ["""print 'Woah nice costume'""", """print 'its a little early for halloween though isnt it'"""
+            , """print 'Hello There'""", """print 'Im not sure about this scotty'"""] #List of dialogue options for normal villagers
+        idx = r.randint(0,len(self.dialogues)-1)
+        self.action = self.dialogues[idx]
         font = p.font.SysFont('Times New Romans', 16)
         self.nameplate = font.render(name, False, (0, 0, 0), (255,255,255))
     #   self.fated
 
-
+    def update_action(self):
+        idx = r.randint(0,len(self.dialogues)-1)
+        self.action = self.dialogues[idx]
     def get_essential(self):
         return self.essential
 

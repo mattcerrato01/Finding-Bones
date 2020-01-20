@@ -29,9 +29,8 @@ def main(screen):
 	background.blit(startbutton, startbuttonpos)
 	screen.blit(background, (0, 0))
 	p.display.flip()
-	
-	c1 = p.image.load("cursor-small-arrow.png")
 
+	cursor = p.transform.scale(p.image.load("cursor-small-arrow.png").convert_alpha(), (15,15))
 	
 	while running:
 		#screen.fill([255, 255, 255])
@@ -54,7 +53,7 @@ def main(screen):
 		background.blit(text, textpos)
 		background.blit(startbutton, startbuttonpos)
 		p.mouse.set_visible(False)
-		background.blit(c1, p.mouse.get_pos())
+		background.blit(cursor, p.mouse.get_pos())
 		screen.blit(background, (0, 0))
 		p.display.flip()
 		#startbutton.blit(screen, p.mouse.get_pos())
