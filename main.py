@@ -169,7 +169,7 @@ while running:
 		mouseChanged = False
 		for collidable in collision_group:
 			if collidable.changeMouse(p.mouse.get_pos()):
-				if type(collidable) == "Villagers":
+				if type(collidable) == Objects.Villagers:
 					if world.state() and not villager.get_soul_reaped():
 						screen.blit(speech_cursor, p.mouse.get_pos())
 						mouseChanged = True
