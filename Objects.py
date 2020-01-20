@@ -21,7 +21,7 @@ class Object(p.sprite.Sprite):
     def __init__(self, overworld_image_name, width=50, height=50, villager = False):  # NOTE: come back and clean up initialization and such here
         p.sprite.Sprite.__init__(self)
         self.soul_reaped = False
-        self.action = """do(2) {print 'Hello there!'} AND do(2:3) {print 'go away now'} AND has(berry) {print 'Im a big berry man'}"""
+        self.action = """do(2) {to inv 'berry'} AND do(2:3) {print 'go away now'} AND has(berry) {print 'Im a big berry man'}"""
         self.overworld_image_name = overworld_image_name
         if not villager:
             self.underworld_image_name = overworld_image_name[:-4] + "_underworld" + overworld_image_name[-4:]
@@ -102,7 +102,7 @@ class Villagers(Object):
         self.essential = essential
         self.walking_time = 0
         self.dialogues = ["""print 'Woah nice costume'""", """print 'its a little early for halloween though isnt it'"""
-            , """print 'Hello There'""", """print 'Im not sure about this scotty'"""] #List of dialogue options for normal villagers
+            , """print 'Hello There'""", """print 'Im not sure about this scotty'""", """print 'Dewit'"""] #List of dialogue options for normal villagers
         idx = r.randint(0,len(self.dialogues)-1)
         self.action = self.dialogues[idx]
         font = p.font.SysFont('Times New Romans', 16)
@@ -164,7 +164,7 @@ class Quest_Villager(Villagers):
 
     def __init__(self, overworld_image_name, fated, quest_end, male=True, grey = False):
         Villagers.__init__(self, overworld_image_name, fated, True, male)
-        print(str(self.essential) + str(quest_end))
+        # print(str(self.essential) + str(quest_end))
         self.grey = grey
         self.quest_end = quest_end
 

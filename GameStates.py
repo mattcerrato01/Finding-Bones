@@ -72,7 +72,7 @@ class Inventory:
                 found_item = True
                 break
         if not found_item:
-            Inventory.inventory.append( ( object , 1 ) )
+            Inventory.inventory.append( [ object , 1 ] )
 
     def remove_from_inventory(self, object):
         for i in range(len(Inventory.inventory)):
@@ -211,6 +211,7 @@ class Actions:
                 second_index = action.find(")")
 
                 if Inventory.has(Inventory,action[first_index:second_index]):
+                    print("happened")
                     return_sub_string = action[action.find("has("):action.find("{") + 1] + self.perform_action(action[action.find("{") + 1:action.find("}")]) + "}" + " AND "
 
 
@@ -224,21 +225,23 @@ class Actions:
                 if 0 <= first_index < second_index:
                     found = False
                     for item_idx in range(len(Inventory.inventory)):
-                        if action[first_index+1:second_index] in Inventory.inventory[item_idx]:
+                        if action[first_index+1:second_index] in Inventory.inventory[item_idx][0]:
                             num = 0
                             if "to" in action:
-                                int_index = Inventory.inventory[item_idx].find(" ")
-                                num = int(Inventory.inventory[item_idx][:int_index]) + 1
+                                int_index = Inventory.inventory[item_idx][0].find(" ")
+                                num = int(Inventory.inventory[item_idx][0][:int_index]) + 1
                             elif "from" in action:
-                                int_index = Inventory.inventory[item_idx].find(" ")
-                                num = int(Inventory.inventory[item_idx][:int_index]) - 1
+                                int_index = Inventory.inventory[item_idx][0].find(" ")
+                                num = int(Inventory.inventory[item_idx][0][:int_index]) - 1
 
-                            Inventory.inventory[item_idx] = str(num) + Inventory.inventory[item_idx][int_index:]
-
+                            Inventory.inventory[item_idx][0] = str(num) + Inventory.inventory[item_idx][0][int_index:]
+                            print(Inventory.inventory[0][0])
                             found = True
                             break
+
                     if not found:
                         if "to" in action:
+
                             Inventory.append_to_inventory(Inventory, "1 x "+ action[first_index+1:second_index])
                         elif "from" in action:
                             Inventory.remove_from_inventory(Inventory, action[first_index+1:second_index])
