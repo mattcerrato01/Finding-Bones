@@ -140,9 +140,6 @@ while running:
         elif not key[p.K_ESCAPE]:
             esc_holder = True
 
-
-
-
         for x in range(p.time.get_ticks() // 10 - time // 10):
             player.move(p.key.get_pressed(), collision_group, demons)
             if not world.state():
@@ -169,24 +166,25 @@ while running:
 
         dialogue_box.draw(screen)
 
-		player.draw(screen)
-		mouseChanged = False
-		for collidable in collision_group:
-			if collidable.changeMouse(p.mouse.get_pos()):
-				if type(collidable) == Objects.Villagers:
-					if world.state() and not villager.get_soul_reaped():
-						screen.blit(speech_cursor, p.mouse.get_pos())
-						mouseChanged = True
-						break
-					else:
-						if not collidable.get_essential() and not villager.get_soul_reaped():
-							screen.blit(scythe_cursor, p.mouse.get_pos())
-							mouseChanged = True
-							break
-				else:
-					screen.blit(investigation_cursor, p.mouse.get_pos())
-					mouseChanged = True
-					break
+        player.draw(screen)
+
+        mouseChanged = False
+        for collidable in collision_group:
+            if collidable.changeMouse(p.mouse.get_pos()):
+                if type(collidable) == Objects.Villagers:
+                    if world.state() and not villager.get_soul_reaped():
+                        screen.blit(speech_cursor, p.mouse.get_pos())
+                        mouseChanged = True
+                        break
+                    else:
+                        if not collidable.get_essential() and not villager.get_soul_reaped():
+                            screen.blit(scythe_cursor, p.mouse.get_pos())
+                            mouseChanged = True
+                            break
+                else:
+                    screen.blit(investigation_cursor, p.mouse.get_pos())
+                    mouseChanged = True
+                    break
 
         if not mouseChanged:
             screen.blit(cursor, p.mouse.get_pos())
