@@ -231,7 +231,7 @@ class Actions:
                             num = 0
                             if "to" in action:
                                 int_index = Inventory.inventory[item_idx].find(" ")
-                                num = int(Inventory.inventory[item_idx][0][:int_index]) + 1
+                                num = int(Inventory.inventory[item_idx][0][:int_index]) + 1 #changed to include tuples
                             elif "from" in action:
                                 int_index = Inventory.inventory[item_idx][0].find(" ")
                                 num = int(Inventory.inventory[item_idx][0][:int_index]) - 1
