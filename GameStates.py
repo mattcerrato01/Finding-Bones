@@ -56,6 +56,7 @@ class Inventory:
 
         for item_idx in range(len(Inventory.inventory)):
             if item in Inventory.inventory[item_idx][0]:
+                print("definite" + str(Inventory.inventory[item_idx][0]) + " " + str(Inventory.inventory[item_idx][1]))
                 return Inventory.inventory[item_idx][1]
         return 0
 
@@ -223,28 +224,10 @@ class Actions:
                 second_index = action.find("'", first_index+1)
 
                 if 0 <= first_index < second_index:
-                    found = False
-                    for item_idx in range(len(Inventory.inventory)):
-                        if action[first_index+1:second_index] in Inventory.inventory[item_idx][0]:
-                            num = 0
-                            if "to" in action:
-                                int_index = Inventory.inventory[item_idx][0].find(" ")
-                                num = int(Inventory.inventory[item_idx][0][:int_index]) + 1
-                            elif "from" in action:
-                                int_index = Inventory.inventory[item_idx][0].find(" ")
-                                num = int(Inventory.inventory[item_idx][0][:int_index]) - 1
-
-                            Inventory.inventory[item_idx][0] = str(num) + Inventory.inventory[item_idx][0][int_index:]
-                            print(Inventory.inventory[0][0])
-                            found = True
-                            break
-
-                    if not found:
-                        if "to" in action:
-
-                            Inventory.append_to_inventory(Inventory, "1 x "+ action[first_index+1:second_index])
-                        elif "from" in action:
-                            Inventory.remove_from_inventory(Inventory, action[first_index+1:second_index])
+                    if "to" in action:
+                        Inventory.append_to_inventory(Inventory, action[first_index+1:second_index])
+                    elif "from" in action:
+                        Inventory.remove_from_inventory(Inventory, action[first_index+1:second_index])
 
 
             elif "print" in action:
