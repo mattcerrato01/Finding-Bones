@@ -167,6 +167,8 @@ class Quest_Villager(Villagers):
         print(str(self.essential) + str(quest_end))
         self.grey = grey
         self.quest_end = quest_end
+
+        self.question_mark = p.transform.scale(loadify("question_mark.png"), (16, 24))
         if grey:
             self.grey_soul = p.transform.scale(loadify("grey_soul.png"), (self.width, self.height))
         self.essential_soul = p.transform.scale(loadify("essential_soul.png"), (self.width, self.height))
@@ -175,10 +177,9 @@ class Quest_Villager(Villagers):
 
     def draw(self, screen, player):
 
-        print( str(self.essential) + " " + str(qm.quests[self.quest_end[0]]) + " " + str(self.quest_end[1])  )
-
         if world.state():
             Villagers.draw(self, screen, player)
+            screen.blit(self.question_mark, (coord.screen_x(self.x)+self.width/2-8, coord.screen_y(self.y)-30))
         elif self.essential and qm.quests[self.quest_end[0]] < self.quest_end[1]:
             self.draw_image(screen, self.essential_soul)
         elif self.grey and qm.quests[3]>4:
