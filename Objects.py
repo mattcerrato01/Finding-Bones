@@ -9,6 +9,7 @@ world = gs.WorldState()
 names = gs.NameGenerator()
 inventory = gs.Inventory()
 actions = gs.Actions()
+qm = gs.QuestManager()
 
 
 def loadify(imgname):
@@ -76,8 +77,9 @@ class Object(p.sprite.Sprite):
 
 class Villagers(Object):
 
-    def __init__(self, overworld_image_name, essential=False, male = True):
+    def __init__(self, overworld_image_name, fated, essential=False, male = True):
         Object.__init__(self, overworld_image_name[3], 46, 110, villager=True)
+        self.fated = fated
         self.underworld_image_name = "VillagerMaleFront_underworld.png"
         self.image = (p.transform.scale(loadify(overworld_image_name[0][0]), (self.width, self.height)))
         self.idle = (p.transform.scale(loadify(overworld_image_name[0][1]), (self.width, self.height)))
@@ -126,7 +128,6 @@ class Villagers(Object):
                         if self.walking_time % walk_gap == 0:
                             if r.randint(0,6) == 1:
                                 self.forward_image = self.idle
-                                print(str(self.walking_time)+ " " + str(self.walking_time%walk_gap))
                             else:
                                 self.forward_image = self.image
                         self.current_image = self.forward_image
@@ -134,25 +135,57 @@ class Villagers(Object):
                 if self.walking_time % walk_gap == 0:
                     if r.randint(0, 6) == 1:
                         self.forward_image = self.idle
-                        print(str(self.walking_time) + " " + str(self.walking_time % walk_gap))
                     else:
                         self.forward_image = self.image
                 self.current_image = self.forward_image
             self.walking_time +=1
 
-            screen.blit(self.current_image, (coord.screen_x(self.x), coord.screen_y(self.y)))
-            rect = self.nameplate.get_rect()
-            screen.blit(self.nameplate, (coord.screen_x(self.x) + self.width / 2 - rect.width / 2, coord.screen_y(self.y) + self.height))
+            self.draw_image(screen, self.current_image)
         else:
-            screen.blit(self.underworld_image, (coord.screen_x(self.x), coord.screen_y(self.y)))
+            self.draw_image(screen, self.underworld_image)
+
+    def draw_image(self, screen, image):
+        screen.blit(image, (coord.screen_x(self.x), coord.screen_y(self.y)))
+        rect = self.nameplate.get_rect()
+        screen.blit(self.nameplate, (coord.screen_x(self.x) + self.width / 2 - rect.width / 2, coord.screen_y(self.y) + self.height))
 
 
 
     def get_soul_reaped(self):
         return self.soul_reaped
 
+class Quest_Villager(Villagers):
 
-class Movable_Object(Object):  # as of now, only works for player.
+    def __init__(self, overworld_image_name, fated, quest_end, male=True, grey = False):
+        Villagers.__init__(self, overworld_image_name, fated, True, male)
+        print(str(self.essential) + str(quest_end))
+        self.grey = grey
+        self.quest_end = quest_end
+        if grey:
+            self.grey_soul = p.transform.scale(loadify("grey_soul.png"), (self.width, self.height))
+        self.essential_soul = p.transform.scale(loadify("essential_soul.png"), (self.width, self.height))
+        self.fated_soul = p.transform.scale(loadify("fated_soul.png"), (self.width, self.height))
+        self.unfated_soul = p.transform.scale(loadify("unfated_soul.png"), (self.width, self.height))
+
+    def draw(self, screen, player):
+
+        print( str(self.essential) + " " + str(qm.quests[self.quest_end[0]]) + " " + str(self.quest_end[1])  )
+
+        if world.state():
+            Villagers.draw(self, screen, player)
+        elif self.essential and qm.quests[self.quest_end[0]] < self.quest_end[1]:
+            self.draw_image(screen, self.essential_soul)
+        elif self.grey and qm.quests[3]>4:
+            self.draw_image(screen, self.grey_soul)
+        elif self.fated:
+            self.draw_image(screen, self.fated_soul)
+        else:
+            self.draw_image(screen, self.unfated_soul)
+
+
+
+
+class Movable_Object(Object):
 
     def __init__(self, overworld_image_name):
         Object.__init__(self, overworld_image_name)

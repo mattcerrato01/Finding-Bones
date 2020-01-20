@@ -54,12 +54,9 @@ class Inventory:
 
     def has(self, item):
 
-        print("Testing for " + item)
-
         for item_idx in range(len(Inventory.inventory)):
             if item == Inventory.inventory[item_idx][0]:
                 return Inventory.inventory[item_idx][1]
-        print("Found 0 of " + item)
         return 0
 
     def get_inventory(self):
@@ -235,7 +232,6 @@ class Actions:
                             elif "from" in action:
                                 int_index = Inventory.inventory[item_idx].find(" ")
                                 num = int(Inventory.inventory[item_idx][:int_index]) - 1
-                            print(Inventory.inventory[item_idx][item_idx+1:])
 
                             Inventory.inventory[item_idx] = str(num) + Inventory.inventory[item_idx][int_index:]
 
@@ -247,7 +243,6 @@ class Actions:
                         elif "from" in action:
                             Inventory.remove_from_inventory(Inventory, action[first_index+1:second_index])
 
-                    print(Inventory.inventory)
 
             elif "print" in action:
                 return_sub_string = action+" AND "
@@ -259,7 +254,6 @@ class Actions:
 
             return_string+=return_sub_string
 
-        print(return_string[:-5])
         return return_string[:-5]
         #return ""
 
@@ -270,10 +264,16 @@ class QuestManager:
     quests = []
     quest_actions = []
 
-    def __init__(self, number_of_quests):
-        for i in range(number_of_quests-1):
-            QuestManager.quests.append(0)
-            QuestManager.quest_actions.append([])
+
+    def add_number_quests(self, num):
+        while True:
+            if self.add_quest() >= num:
+                break
+
+    def add_quest(self):
+        QuestManager.quests.append(0)
+        QuestManager.quest_actions.append([])
+        return len(QuestManager.quests)
 
     def set_quest_actions(self, quest_num, quest_stage, action):
 
@@ -283,8 +283,13 @@ class QuestManager:
         QuestManager.quest_actions[quest_num][quest_stage] = action
 
     def advance_quest(self, quest_num):
+        while(len(QuestManager.quests) <= quest_num):
+            QuestManager.quests.append(0)
+            QuestManager.quest_actions.append([])
         QuestManager.quests[quest_num]+=1
-        #QuestManager.quest_actions.perform_action(QuestManager.quest_actions[quest_num][QuestManager.quests[quest_num]])
+        while (len(QuestManager.quest_actions[quest_num]) <= QuestManager.quests[quest_num]):
+            QuestManager.quest_actions[quest_num].append('')
+        Actions.perform_action(Actions, QuestManager.quest_actions[quest_num][QuestManager.quests[quest_num]])
 
 
     def quest_stage(self, quest_num):

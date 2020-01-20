@@ -12,7 +12,7 @@ coord = gs.CoordConverter()
 world = gs.WorldState()
 inventory = gs.Inventory()
 actions = gs.Actions()
-quests = gs.QuestManager(3)
+quests = gs.QuestManager()
 
 gs.Overworld_State = False
 p.init()
@@ -20,6 +20,9 @@ p.init()
 screen = p.display.set_mode((800, 600))
 
 p.display.set_caption("Grim Reaper")
+
+
+quests.add_number_quests(3)
 
 quests.advance_quest(1)
 #quests.advance_quest(1)
@@ -53,9 +56,14 @@ player = Objects.Player("player.jpg", ["GR-F-L", "GR-F-S", "GR-F-R", "GR-F-S"],
 rect = Objects.Object("download.jpg", 100, 100)
 rect2 = Objects.Object("download1.jpg")
 rect3 = Objects.Object("download2.jpg")
-villager = Objects.Villagers([["VillagerMaleFront.png", "VillagerMaleFrontIdle.png"],"VillagerMaleFaceLeft.png", "VillagerMaleFaceRight.png","VillagerMaleBack.png"])
+villager = Objects.Villagers([["VillagerMaleFront.png", "VillagerMaleFrontIdle.png"],"VillagerMaleFaceLeft.png", "VillagerMaleFaceRight.png","VillagerMaleBack.png"], False)
 villager.setX(800)
 villager.setY(800)
+
+quest_villager = Objects.Quest_Villager([["VillagerMaleFront.png", "VillagerMaleFrontIdle.png"],"VillagerMaleFaceLeft.png", "VillagerMaleFaceRight.png","VillagerMaleBack.png"], True, (2,3))
+quest_villager.setX(400)
+quest_villager.setY(800)
+
 rect.setX(100)
 rect.setY(300)
 rect2.setX(400)
@@ -67,7 +75,7 @@ dialogue_box = Objects.Dialogue_box()
 
 villagers = [villager]
 
-collidable_group = p.sprite.Group(rect, rect2, rect3, villager)
+collidable_group = p.sprite.Group(rect, rect2, rect3, villager, quest_villager)
 
 image_name_array = [["background.jpg", "background.jpg", "background.jpg", "background.jpg"],
 					["background.jpg", "background.jpg", "background.jpg", "background.jpg"],
