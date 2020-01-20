@@ -79,7 +79,7 @@ class Object(p.sprite.Sprite):
 class Cage(Object):
     def __init__(self, overworld_image_name = "cage-locked-bones.png"):
         Object.__init__(self, overworld_image_name, 128, 114)
-        self.action = """has('1 x berry'){print 'Im freed'}"""
+        self.action = """has('1 x berry'){print 'Im freed'}""" #WIll print Im freed if player has berry
 class Villagers(Object):
 
     def __init__(self, overworld_image_name, fated, essential=False, male = True):
