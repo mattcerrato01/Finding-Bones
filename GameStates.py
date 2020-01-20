@@ -67,7 +67,7 @@ class Inventory:
         found_item = False
 
         for i in range(len(Inventory.inventory)):
-            if object in Inventory.inventory[i][0]:
+            if object in Inventory.inventory[i][0]: #dkid
                 Inventory.inventory[i][1] += 1
                 found_item = True
                 break
