@@ -99,6 +99,10 @@ pausetext = font.render("Paused", 1, (250, 250, 250))
 ptextRect = pausetext.get_rect()
 ptextRect.center = (400,300)
 
+t_stage = 0
+def run_tutorial():
+	print("tutorial running")
+
 
 time = 0
 fate = player.fate
@@ -106,109 +110,116 @@ paused = False
 ptime = 0
 esc_holder = False
 mouseChanged = False
+tutorial_active = False
 
 while running:
 
-    if not paused:
-        screen.fill([255, 255, 255])
-        collision_group = tile_map.draw(screen, player)
-        clicked = False
+	if not paused:
+		screen.fill([255, 255, 255])
+		collision_group = tile_map.draw(screen, player)
+		clicked = False
 
-        for event in p.event.get():
-            if event.type == p.QUIT:
-                running = False
-            elif event.type == p.MOUSEBUTTONUP:
+		for event in p.event.get():
+			if event.type == p.QUIT:
+				running = False
+			elif event.type == p.MOUSEBUTTONUP:
 
-                pos = p.mouse.get_pos()
+				pos = p.mouse.get_pos()
 
-                for collidable in collision_group:
-                    if collidable.perform_action(pos) and not collidable.get_essential: #returns true if villager has been reaped
-                        collidable_group.remove(collidable)
-                        tile_map = t.Map(image_name_array, collidable_group)
-                        player.soul += 10
-                        break
-                    collidable.update_action()
+				for collidable in collision_group:
+					if collidable.perform_action(pos) and not collidable.get_essential(): #returns true if villager has been reaped
+						collidable_group.remove(collidable)
+						tile_map = t.Map(image_name_array, collidable_group)
+						player.soul += 10
+						break
+		if tutorial_active:
+			run_tutorial()
 
-        key = p.key.get_pressed()
-        if key[p.K_i]:
-            inventory.draw(screen)	#Draws inventory when holding i
+		key = p.key.get_pressed()
+		if key[p.K_i]:
+			inventory.draw(screen)	#Draws inventory when holding i
 
-        if key[p.K_ESCAPE] and esc_holder:
-            esc_holder = False
-            paused = True
+		if key[p.K_p]:
+			pass
 
-        elif not key[p.K_ESCAPE]:
-            esc_holder = True
+		if key[p.K_ESCAPE] and esc_holder:
+			esc_holder = False
+			paused = True
 
-        for x in range(p.time.get_ticks() // 10 - time // 10):
-            player.move(p.key.get_pressed(), collision_group, demons)
-            if not world.state():
-                for demon in demons:
-                    demon.move(player)
-                    if demon.hit:
-                        demons.remove(demon)
-                        player.set_fate(player.get_fate()-10)
-        # adding or subtracting demons when player's fate goes down
-        if abs(fate - player.get_fate()) >= 5:
-            i = 0
-            while i < abs(fate - player.get_fate()) // 5:
-                if fate - player.fate < 0:
-                    randIDX = random.randint(0,len(demons)-1)
-                    demons.remove(demons[randIDX])
-                    i += 1
-                elif fate - player.get_fate() > 0:
-                    createDemons(demons,player,1)
-                    i += 1
-            fate = player.get_fate()
-        if not world.state():
-            for demon in demons:
-                demon.draw(screen)
-
-        dialogue_box.draw(screen)
-
-        player.draw(screen)
-
-        mouseChanged = False
-        for collidable in collision_group:
-            if collidable.changeMouse(p.mouse.get_pos()):
-                if type(collidable) == Objects.Villagers:
-                    if world.state() and not villager.get_soul_reaped():
-                        screen.blit(speech_cursor, p.mouse.get_pos())
-                        mouseChanged = True
-                        break
-                    else:
-                        if not collidable.get_essential() and not villager.get_soul_reaped():
-                            screen.blit(scythe_cursor, p.mouse.get_pos())
-                            mouseChanged = True
-                            break
-                else:
-                    screen.blit(investigation_cursor, p.mouse.get_pos())
-                    mouseChanged = True
-                    break
-
-        if not mouseChanged:
-            screen.blit(cursor, p.mouse.get_pos())
-
-        if player.fate <= 0 or player.soul <= 0:
-            player.fate = 100
-            player.soul = 100
-            p.mouse.set_visible(True)
-            end.main(screen)
-        time = p.time.get_ticks()
-    else:
-        for event in p.event.get():
-            if event.type == p.QUIT:
-                running = False
-        key = p.key.get_pressed()
-        if key[p.K_ESCAPE] and esc_holder:
-            esc_holder = False
-            paused = False
-
-        elif not key[p.K_ESCAPE]:
-            esc_holder = True
-        #print(ptime)
-        p.draw.rect(screen,(0,0,0),p.Rect(250,200,300,200))
-        screen.blit(pausetext, ptextRect)
+		elif not key[p.K_ESCAPE]:
+			esc_holder = True
 
 
-    p.display.update()
+
+
+		for x in range(p.time.get_ticks() // 10 - time // 10):
+			player.move(p.key.get_pressed(), collision_group, demons)
+			if not world.state():
+				for demon in demons:
+					demon.move(player)
+					if demon.hit:
+						demons.remove(demon)
+						player.set_fate(player.get_fate()-10)
+		# adding or subtracting demons when player's fate goes down
+		if abs(fate - player.get_fate()) >= 5:
+			i = 0
+			while i < abs(fate - player.get_fate()) // 5:
+				if fate - player.fate < 0:
+					randIDX = random.randint(0,len(demons)-1)
+					demons.remove(demons[randIDX])
+					i += 1
+				elif fate - player.get_fate() > 0:
+					createDemons(demons,player,1)
+					i += 1
+			fate = player.get_fate()
+		if not world.state():
+			for demon in demons:
+				demon.draw(screen)
+
+		dialogue_box.draw(screen)
+
+		player.draw(screen)
+		mouseChanged = False
+		for collidable in collision_group:
+			if collidable.changeMouse(p.mouse.get_pos()):
+				if type(collidable) == Objects.Villagers:
+					if world.state() and not villager.get_soul_reaped():
+						screen.blit(speech_cursor, p.mouse.get_pos())
+						mouseChanged = True
+						break
+					else:
+						if not collidable.get_essential() and not villager.get_soul_reaped():
+							screen.blit(scythe_cursor, p.mouse.get_pos())
+							mouseChanged = True
+							break
+				else:
+					screen.blit(investigation_cursor, p.mouse.get_pos())
+					mouseChanged = True
+					break
+
+		if not mouseChanged:
+			screen.blit(cursor, p.mouse.get_pos())
+
+		if player.fate <= 0 or player.soul <= 0:
+			player.fate = 100
+			player.soul = 100
+			p.mouse.set_visible(True)
+			end.main(screen)
+		time = p.time.get_ticks()
+	else:
+		for event in p.event.get():
+			if event.type == p.QUIT:
+				running = False
+		key = p.key.get_pressed()
+		if key[p.K_ESCAPE] and esc_holder:
+			esc_holder = False
+			paused = False
+
+		elif not key[p.K_ESCAPE]:
+			esc_holder = True
+		#print(ptime)
+		p.draw.rect(screen,(0,0,0),p.Rect(250,200,300,200))
+		screen.blit(pausetext, ptextRect)
+
+
+	p.display.update()
