@@ -233,7 +233,7 @@ class Actions:
                                 int_index = Inventory.inventory[item_idx].find(" ")
                                 num = int(Inventory.inventory[item_idx][:int_index]) - 1
 
-                            Inventory.inventory[item_idx] = str(num) + Inventory.inventory[item_idx][int_index:]
+                            Inventory.inventory[item_idx] = str(num) + " x " + Inventory.inventory[item_idx][int_index:]
 
                             found = True
                             break

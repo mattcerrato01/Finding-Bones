@@ -70,6 +70,9 @@ rect2.setX(400)
 rect2.setY(400)
 rect3.setX(820)
 rect3.setY(900)
+cage = Objects.cage()
+cage.setX(1200)
+cage.setY(1200)
 dialogue_box = Objects.Dialogue_box()
 
 villager_tutorial = Objects.Villagers([["VillagerMaleFront.png", "VillagerMaleFrontIdle.png"],"VillagerMaleFaceLeft.png", "VillagerMaleFaceRight.png","VillagerMaleBack.png"], False, essential = True)
@@ -78,7 +81,7 @@ villager_tutorial.setY(200)
 
 villagers = [villager, villager_tutorial]
 
-collidable_group = p.sprite.Group(rect, rect2, rect3, villager, villager_tutorial, quest_villager)
+collidable_group = p.sprite.Group(rect, rect2, rect3, villager, villager_tutorial, quest_villager, cage)
 
 image_name_array = [["background.jpg", "background.jpg", "background.jpg", "background.jpg"],
                     ["background.jpg", "background.jpg", "background.jpg", "background.jpg"],
