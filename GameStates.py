@@ -52,14 +52,36 @@ class Inventory:
 
     inventory = []
 
+    def has(self, item):
+
+        print("Testing for " + item)
+
+        for item_idx in range(len(Inventory.inventory)):
+            if item == Inventory.inventory[item_idx][0]:
+                return Inventory.inventory[item_idx][1]
+        print("Found 0 of " + item)
+        return 0
+
     def get_inventory(self):
         return Inventory.inventory[:]
 
     def append_to_inventory(self, object):
-        Inventory.inventory.append(object)
+
+        found_item = False
+
+        for i in range(len(Inventory.inventory)):
+            if Inventory.inventory[i][0] == object:
+                Inventory.inventory[i][1] += 1
+                found_item = True
+                break
+        if not found_item:
+            Inventory.inventory.append( ( object , 1 ) )
 
     def remove_from_inventory(self, object):
-        Inventory.inventory.remove(object)
+        for i in range(len(Inventory.inventory)):
+            if Inventory.inventory[i][0] == object:
+                Inventory.inventory.remove( ( object, Inventory.inventory[i][1] ) )
+                break
 
     def draw(self, screen):
         height  = 50 + 20*len(Inventory.inventory)
@@ -132,19 +154,76 @@ class Actions:
             if "Q(" in action:
                 if QuestManager.quests[int(action[first_index+2:second_index])] == int(action[second_index+1:action.find(")")]) or action[second_index+1] == "A":
 
-                    return_sub_string = action[action.find("Q"):action.find("{")+1] + self.perform_action(action[action.find("{")+1:action.find("}")]) + "}"
+                    return_sub_string = action[action.find("Q"):action.find("{")+1] + self.perform_action(action[action.find("{")+1:action.find("}")]) + "}" +" AND "
 
 
             elif "do(" in action:
 
-                print("not ready yet")
+                first_index = action.find("do(")+3
+                second_index = action.find(")")
+
+                if ":" in action[first_index:second_index]:
+
+                    lower_bound = int(action[first_index:action.find(":")])
+                    upper_bound = int(action[action.find(":")+1:second_index])
+
+                    will_run = False
+
+                    if lower_bound>0:
+                        return_sub_string = "do(" + str(lower_bound-1) + ":" + str(upper_bound) + ") {" + action[action.find("{")+1:action.find("}")] + "}" +" AND "
+                    else:
+                        will_run = True
+
+                else:
+                    upper_bound = int(action[first_index:second_index])
+                    will_run = True
+
+
+
+                if will_run and upper_bound>0:
+
+                    return_sub_string = "do(" + str(upper_bound-1) + ") {" + self.perform_action(action[action.find("{")+1:action.find("}")]) + "}" +" AND "
+            # """elif "if(" in action:
+            #
+            #     first_index = action.find("if(") + 3
+            #     second_index = action.find(")")
+            #
+            #     if "has " in action[first_index: second_index]:
+            #         index_one = action.find("'")
+            #         index_two = action.find("'", first_index + 1)
+            #
+            #         print("Current action is " + action)
+            #         print("Initiating search of " + action[index_one+1:index_two])
+            #         if Inventory.has(Inventory,action[index_one+1:index_two]) > 0:
+            #             return_sub_string = "if(" + action[first_index:second_index] + ") {" + self.perform_action(action[action.find("{") + 1:action.find("}")]) + "}" + " AND "
+            #         else:
+            #             return_sub_string = action+" AND "
+            #
+            #     elif "hasnt " in action[first_index: second_index]:
+            #         index_one = action.find("'")
+            #         index_two = action.find("'", first_index + 1)
+            #         if Inventory.has(Inventory,action[index_one+1:index_two]) == 0:
+            #             return_sub_string = "if(" + action[first_index:second_index] + ") {" + self.perform_action(action[action.find("{") + 1:action.find("}")]) + "}" + " AND "
+            #         else:
+            #             return_sub_string = action+" AND "
+            # """
+
+            elif "has(" in action:
+
+                first_index = action.find("has(")+4
+                second_index = action.find(")")
+
+                if Inventory.has(Inventory,action[first_index:second_index]):
+                    return_sub_string = action[action.find("has("):action.find("{") + 1] + self.perform_action(action[action.find("{") + 1:action.find("}")]) + "}" + " AND "
+
 
             elif "inv" in action:
 
-                return_sub_string = action
+                return_sub_string = action+" AND "
 
                 first_index = action.find("'")
                 second_index = action.find("'", first_index+1)
+
                 if 0 <= first_index < second_index:
                     found = False
                     for item_idx in range(len(Inventory.inventory)):
@@ -152,11 +231,14 @@ class Actions:
                             num = 0
                             if "to" in action:
                                 int_index = Inventory.inventory[item_idx].find(" ")
-                                num = int(Inventory.inventory[item_idx][0:int_index]) + 1
+                                num = int(Inventory.inventory[item_idx][:int_index]) + 1
                             elif "from" in action:
                                 int_index = Inventory.inventory[item_idx].find(" ")
-                                num = int(Inventory.inventory[item_idx][0:int_index]) - 1
-                            Inventory.inventory[item_idx] = str(num) + Inventory.inventory[item_idx][item_idx+1:]
+                                num = int(Inventory.inventory[item_idx][:int_index]) - 1
+                            print(Inventory.inventory[item_idx][item_idx+1:])
+
+                            Inventory.inventory[item_idx] = str(num) + Inventory.inventory[item_idx][int_index:]
+
                             found = True
                             break
                     if not found:
@@ -168,14 +250,14 @@ class Actions:
                     print(Inventory.inventory)
 
             elif "print" in action:
-                return_sub_string = action
+                return_sub_string = action+" AND "
                 first_index = action.find("'")
                 second_index = action.find("'", first_index + 1)
                 if 0 <= first_index < second_index:
                     self.dialogue_box(action[first_index+1:second_index])
 
 
-            return_string+=return_sub_string+" AND "
+            return_string+=return_sub_string
 
         print(return_string[:-5])
         return return_string[:-5]
