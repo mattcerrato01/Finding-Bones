@@ -204,7 +204,8 @@ while running:
 			player.fate = 100
 			player.soul = 100
 			p.mouse.set_visible(True)
-			end.main(screen)
+			if not end.main(screen):
+				running = False
 		time = p.time.get_ticks()
 	else:
 		for event in p.event.get():

@@ -41,6 +41,7 @@ def main(screen):
 			#print("mouse is over 'newGameButton'")
 			if clicked:
 				endrunning = False
+				return False
 		background.fill((250, 250, 250))
 		background.blit(text, textpos)
 		p.mouse.set_visible(False)
