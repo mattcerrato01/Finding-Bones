@@ -41,13 +41,13 @@ class Object(p.sprite.Sprite):
         self.update()
 
     def perform_action(self, mouse_click): # returns true if villager has been reaped
-        if self.rect.collidepoint(mouse_click):
+        if self.rect.collidepoint(mouse_click) and world.state():
 
             self.action = actions.perform_action(self.action)
 
-            if type(self) == Villagers and not world.state():
-                self.soul_reaped = False
-                return True
+        elif self.rect.collidepoint(mouse_click) and type(self) == Villagers and not world.state():
+            self.soul_reaped = False
+            return True
         return False
     def update_action(self):
         return self.action
@@ -96,7 +96,7 @@ class Villagers(Object):
             self.underworld_image = loadify("unfated_soul.png")
 
         if male:
-            self.forward_image = (p.transform.scale(loadify(overworld_image_name+"_front_m.png"), (self.width, self.height)))
+            self.image = (p.transform.scale(loadify(overworld_image_name+"_front_m.png"), (self.width, self.height)))
             self.idle = (p.transform.scale(loadify(overworld_image_name+"_idle_m.png"), (self.width, self.height)))
             self.left_image = p.transform.scale(loadify(overworld_image_name+"_left_m.png"), (self.width, self.height))
             self.right_image = p.transform.scale(loadify(overworld_image_name+"_right_m.png"), (self.width, self.height))
@@ -194,7 +194,7 @@ class Quest_Villager(Villagers):
         if world.state():
             Villagers.draw(self, screen, player)
             screen.blit(self.question_mark, (coord.screen_x(self.x)+self.width/2-8, coord.screen_y(self.y)-30))
-        elif self.essential and qm.quests[self.quest_end[0]] < self.quest_end[1]:
+        elif qm.quests[self.quest_end[0]] < self.quest_end[1]:
             self.draw_image(screen, self.essential_soul)
         elif self.grey and qm.quests[3]>4:
             self.draw_image(screen, self.grey_soul)

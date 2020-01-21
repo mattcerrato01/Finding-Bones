@@ -141,7 +141,7 @@ while running:
                 pos = p.mouse.get_pos()
 
                 for collidable in collision_group:
-                    if collidable.perform_action(pos) and not collidable.get_essential(): #returns true if villager has been reaped
+                    if collidable.perform_action(pos): #returns true if villager has been reaped
                         collidable_group.remove(collidable)
                         tile_map = t.Map(image_name_array, collidable_group)
                         player.soul += 10
