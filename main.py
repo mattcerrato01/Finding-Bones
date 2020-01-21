@@ -61,8 +61,8 @@ rect2 = Objects.Object("download1.jpg")
 rect3 = Objects.Object("download2.jpg")
 
 setup = Setup.Setup()
-vill = setup.villagers()
-print(vill)
+collidables = setup.collidables()
+print(collidables)
 
 quest_villager = Objects.Quest_Villager("villager", True, (2,3), 400, 800)
 
@@ -85,8 +85,9 @@ collidable_group = p.sprite.Group(rect, rect2, rect3, villager_tutorial, quest_v
 for i in range(5):
     villager = Objects.Villagers("villager", False, 500 + 100*i, 500 + 100*i)
     collidable_group.add(villager)
+for collidable in collidables:
+    collidable_group.add(collidable)
 
-collidable_group.add(vill)
 for tombstone in graveyard.get_tombstones():
     collidable_group.add(tombstone)
 image_name_array = [["tile1.png", "tile5.png", "tile9.png", "tile13.png"],

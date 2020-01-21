@@ -575,6 +575,24 @@ class Graveyard(Object):
     def get_tombstones(self):
         return self.tombstones[:]
 
+class Hitbox(p.sprite.Sprite):
+    def __init__(self, x, y, width, height):
+        p.sprite.Sprite.__init__(self)
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+        self.drawn = False
+        self.mouse_drawn = False
+        self.rect = p.Rect(coord.screen_x(self.x), coord.screen_y(self.y), self.width, self.height)
+
+    def draw(self, screen, player):
+        self.drawn = True
+
+    def changeMouse(self, pos):
+        self.mouse_drawn = True
+
+
 
 
 

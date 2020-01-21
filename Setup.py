@@ -19,8 +19,12 @@ class WriteTest:
 class Setup:
 
     def collidables(self):
+        collidable = p.sprite.Group(self.villagers())
+        for sprite in self.hitboxes():
+            collidable.add(sprite)
 
-        collidable = p.sprite.Group(self.villagers)
+
+
 
         return collidable
 
@@ -43,3 +47,19 @@ class Setup:
             line = file.readline()
 
         return villager_list
+
+    def hitboxes(self):
+        print("here we lay")
+        file = open("setup/hitboxes.txt", "r")
+        hitbox_list = p.sprite.Group()
+        file.readline()
+        line = file.readline()
+
+        while line:
+            split_array = line.split(", ")
+
+            hitbox_list.add( Objects.Hitbox( int(split_array[0]), int(split_array[1]), int(split_array[2]), int(split_array[3])))
+
+            line = file.readline()
+
+        return hitbox_list
