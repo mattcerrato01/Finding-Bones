@@ -20,23 +20,27 @@ class Setup:
 
     def collidables(self):
 
-        collidables = p.sprite.Group(self.villagers)
+        collidable = p.sprite.Group(self.villagers)
 
-        return collidables
+        return collidable
 
 
 
     def villagers(self):
+        print("here we are")
 
         file = open("setup/villagers.txt","r")
 
-        villager_list = []
+        villager_list = p.sprite.Group()
+        file.readline()
         line = file.readline()
 
-        while len(line) > 0:
-            split_array = line.split(", ")[0]
+        while line:
+            split_array = line.split(", ")
+            print("yayaya")
 
-            villager_list.append( Objects.Villagers( split_array[0] , split_array[1] , split_array[2]) )
+            villager_list.add( Objects.Villagers( split_array[0] , split_array[1] == "True" , int(split_array[2]), int(split_array[3]), split_array[4] == "True" ) )
+            print("I hate jews " + str(bool(split_array[4])))
 
             line = file.readline()
 

@@ -87,8 +87,16 @@ class Cage(Object):
         self.action = """has(berry){print "I'm freed"}"""
 class Villagers(Object):
 
-    def __init__(self, overworld_image_name, fated, male = True):
-        Object.__init__(self, overworld_image_name + "_front_f.png", 46, 110)
+    def __init__(self, overworld_image_name, fated, x, y, male = True):
+        self.male = male
+        if male:
+            Object.__init__(self, overworld_image_name + "_front_m.png", 46, 110)
+        else:
+            Object.__init__(self, overworld_image_name + "_front_f.png", 46, 110)
+
+        self.setX(x)
+        self.setY(y)
+
         self.fated = fated
         if fated:
             self.underworld_image = loadify("fated_soul.png")
@@ -96,13 +104,13 @@ class Villagers(Object):
             self.underworld_image = loadify("unfated_soul.png")
 
         if male:
-            self.image = (p.transform.scale(loadify(overworld_image_name+"_front_m.png"), (self.width, self.height)))
+            self.front_image = (p.transform.scale(loadify(overworld_image_name+"_front_m.png"), (self.width, self.height)))
             self.idle = (p.transform.scale(loadify(overworld_image_name+"_idle_m.png"), (self.width, self.height)))
             self.left_image = p.transform.scale(loadify(overworld_image_name+"_left_m.png"), (self.width, self.height))
             self.right_image = p.transform.scale(loadify(overworld_image_name+"_right_m.png"), (self.width, self.height))
             self.back_image = p.transform.scale(loadify(overworld_image_name+"_back_m.png"), (self.width, self.height))
         else:
-            self.image = (p.transform.scale(loadify(overworld_image_name + "_front_f.png"), (self.width, self.height)))
+            self.front_image = (p.transform.scale(loadify(overworld_image_name + "_front_f.png"), (self.width, self.height)))
             self.idle = (p.transform.scale(loadify(overworld_image_name + "_idle_f.png"), (self.width, self.height)))
             self.left_image = p.transform.scale(loadify(overworld_image_name + "_left_f.png"), (self.width, self.height))
             self.right_image = p.transform.scale(loadify(overworld_image_name + "_right_f.png"), (self.width, self.height))
@@ -156,7 +164,7 @@ class Villagers(Object):
                     if r.randint(0, 6) == 1:
                         self.forward_image = self.idle
                     else:
-                        self.forward_image = self.image
+                        self.forward_image = self.front_image
                 self.current_image = self.forward_image
             self.walking_time +=1
 
@@ -176,8 +184,8 @@ class Villagers(Object):
 
 class Quest_Villager(Villagers):
 
-    def __init__(self, overworld_image_name, fated, quest_end, male=True, grey = False):
-        Villagers.__init__(self, overworld_image_name, fated, male)
+    def __init__(self, overworld_image_name, fated, quest_end, x, y, male = True, grey = False):
+        Villagers.__init__(self, overworld_image_name, fated, x, y, male)
         # print(str(self.essential) + str(quest_end))
         self.grey = grey
         self.quest_end = quest_end

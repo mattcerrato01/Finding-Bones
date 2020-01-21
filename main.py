@@ -7,7 +7,7 @@ import GameStates as gs
 import random
 import start as st
 import end
-import Setup as setup
+import Setup
 
 
 
@@ -59,13 +59,12 @@ player = Objects.Player("player.jpg", ["GR-F-L", "GR-F-S", "GR-F-R", "GR-F-S"],
 rect = Objects.Object("download.jpg", 100, 100)
 rect2 = Objects.Object("download1.jpg")
 rect3 = Objects.Object("download2.jpg")
-villager = Objects.Villagers("villager", False)
-villager.setX(800)
-villager.setY(800)
 
-quest_villager = Objects.Quest_Villager("villager", True, (2,3))
-quest_villager.setX(400)
-quest_villager.setY(800)
+setup = Setup.Setup()
+vill = setup.villagers()
+print(vill)
+
+quest_villager = Objects.Quest_Villager("villager", True, (2,3), 400, 800)
 
 rect.setX(100)
 rect.setY(300)
@@ -78,18 +77,16 @@ cage.setX(1200)
 cage.setY(1200)
 dialogue_box = Objects.Dialogue_box()
 
-villager_tutorial = Objects.Quest_Villager("villager", True, (2,3))
-villager_tutorial.setX(400)
-villager_tutorial.setY(200)
+villager_tutorial = Objects.Quest_Villager("villager", True, (2,3), 400, 200)
 
-villagers = [villager, villager_tutorial]
+collidable_group = p.sprite.Group(rect, rect2, rect3, villager_tutorial, quest_villager, cage)
 
-collidable_group = p.sprite.Group(rect, rect2, rect3, villager, villager_tutorial, quest_villager, cage)
+collidable_group.add(vill)
 
 image_name_array = [["background.jpg", "background.jpg", "background.jpg", "background.jpg"],
                     ["background.jpg", "background.jpg", "background.jpg", "background.jpg"],
                     ["background.jpg", "background.jpg", "background.jpg", "background.jpg"],
-                    ["background.jpg", "background.jpg", "background.jpg", "background.jpg"], ]
+                    ["background.jpg", "background.jpg", "background.jpg", "background.jpg"]]
 
 tile_map = t.Map(image_name_array, collidable_group)
 demons = p.sprite.Group()
@@ -198,12 +195,12 @@ while running:
         for collidable in collision_group:
             if collidable.changeMouse(p.mouse.get_pos()):
                 if type(collidable) == Objects.Villagers or type(collidable)==Objects.Quest_Villager:
-                    if world.state() and not villager.get_soul_reaped():
+                    if world.state():
                         screen.blit(speech_cursor, p.mouse.get_pos())
                         mouseChanged = True
                         break
                     else:
-                        if not type(collidable) == Objects.Quest_Villager and not villager.get_soul_reaped():
+                        if not type(collidable) == Objects.Quest_Villager:
                             screen.blit(scythe_cursor, p.mouse.get_pos())
                             mouseChanged = True
                             break
