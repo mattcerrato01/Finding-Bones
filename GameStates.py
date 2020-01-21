@@ -254,8 +254,9 @@ class Actions:
                     self.dialogue_box(action[first_index+1:second_index])
 
             elif "adv" in action:
-                first_index = action.find("adv ")+4
-                quest_num = int(action[first_index:first_index+1])
+                first_index = action.find("'")
+                second_index = action.find("'", first_index+1)
+                quest_num = int(action[first_index:second_index])
                 QuestManager.advance_quest(quest_num)
 
 
