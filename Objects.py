@@ -18,7 +18,7 @@ def loadify(imgname):
 
 class Object(p.sprite.Sprite):
 
-    def __init__(self, overworld_image_name, width=50, height=50):  # NOTE: come back and clean up initialization and such here
+    def __init__(self, overworld_image_name, x=0, y=0, width=50, height=50):  # NOTE: come back and clean up initialization and such here
         p.sprite.Sprite.__init__(self)
         self.soul_reaped = False
         self.action = """has(berry) {print "I'm a big berry man"} AND do(2) {to inv "berry", print "Take your berry you bastard"} AND do(2:3) {print "go away now"}  """
@@ -28,10 +28,10 @@ class Object(p.sprite.Sprite):
             self.underworld_image_name = overworld_image_name[:-4] + "_underworld" + overworld_image_name[-4:]
             self.underworld_image = p.transform.scale(loadify(self.underworld_image_name), (self.width, self.height))
         except:
-            print("ok")
+            aldkfj = 0
 
-        self.x = 0
-        self.y = 0
+        self.x = x
+        self.y = y
         self.width = width
         self.height = height
         self.image = loadify(overworld_image_name)
@@ -93,6 +93,8 @@ class Villagers(Object):
             Object.__init__(self, overworld_image_name + "_front_m.png", 46, 110)
         else:
             Object.__init__(self, overworld_image_name + "_front_f.png", 46, 110)
+        self.width = 46
+        self.height = 110
 
         self.setX(x)
         self.setY(y)
@@ -163,7 +165,7 @@ class Villagers(Object):
 
 
     def draw(self, screen, player):
-        walk_gap = 100 #aklsdjf
+        walk_gap = 100
         distx = (400 - coord.screen_x(self.x+self.width/2))
         disty = (300-coord.screen_y(self.y+self.height/2))
         if world.state():
@@ -182,7 +184,7 @@ class Villagers(Object):
                             if r.randint(0,6) == 1:
                                 self.forward_image = self.idle
                             else:
-                                self.forward_image = self.image
+                                self.forward_image = self.front_image
                         self.current_image = self.forward_image
             else:
                 if self.walking_time % walk_gap == 0:

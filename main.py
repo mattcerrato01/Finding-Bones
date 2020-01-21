@@ -169,9 +169,6 @@ while running:
         elif not key[p.K_ESCAPE]:
             esc_holder = True
 
-
-
-
         for x in range(p.time.get_ticks() // 10 - time // 10):
             player.move(p.key.get_pressed(), collision_group, demons)
             if not world.state():

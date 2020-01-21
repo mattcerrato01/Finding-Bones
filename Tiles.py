@@ -32,8 +32,7 @@ class Tile:  # One 800x800 tile, contains the collision sprites contained within
             screen.blit(self.image, (coord.screen_x(self.x), coord.screen_y(self.y)))
         else:
             screen.blit(self.underworld_image, (coord.screen_x(self.x), coord.screen_y(self.y)))
-        for object in self.collision_group:
-            object.draw(screen, player)
+
 
 
 class Map:  # Contains a 2D array of all the tiles, and a function that draws only visible tiles
@@ -84,6 +83,9 @@ class Map:  # Contains a 2D array of all the tiles, and a function that draws on
         if boolean_2 and boolean_b:
             self.tile_array[variable_2][variable_b].draw(screen, player)
             return_group.add(self.tile_array[variable_2][variable_b].collision_group.sprites())
+
+        for sprite in return_group:
+            sprite.draw(screen, player)
 
         # p.draw.rect(screen,(0,0,0),(0,299,800,2))
         # p.draw.rect(screen,(0,0,0),(399,0,2,600))
