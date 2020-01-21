@@ -179,8 +179,18 @@ class Actions:
 
 
                 if will_run and upper_bound>0:
+                    conditional_action = action[action.find("{") + 1:action.find("}")]
+                    strings = conditional_action.split(", ")
+                    upper_bound_chg = 0
+                    end_string = ""
+                    for idx in range(len(strings)):
+                        if idx == (len(strings)-1):
 
-                    return_sub_string = "do(" + str(upper_bound-1) + ") {" + self.perform_action(action[action.find("{")+1:action.find("}")]) + "}" +" AND "
+                            upper_bound_chg = 1
+                        print(idx, upper_bound_chg)
+                        end_string += "{" + self.perform_action(strings[idx]) + "}" + " AND "
+
+                    return_sub_string = "do(" + str(upper_bound-upper_bound_chg) + ") " + end_string
             # """elif "if(" in action:
             #
             #     first_index = action.find("if(") + 3
@@ -208,12 +218,17 @@ class Actions:
 
             elif "has(" in action:
 
+
                 first_index = action.find("has(")+4
                 second_index = action.find(")")
 
+
+
                 if Inventory.has(Inventory,action[first_index:second_index]):
+                    conditional_action = action[action.find("{") + 1:action.find("}")]
                     print("happened")
-                    return_sub_string = action[action.find("has("):action.find("{") + 1] + self.perform_action(action[action.find("{") + 1:action.find("}")]) + "}" + " AND "
+                    for string in conditional_action.split(", "):
+                        return_sub_string = action[action.find("has("):action.find("{") + 1] + self.perform_action(string) + "}" + " AND "
 
 
             elif "inv" in action:
