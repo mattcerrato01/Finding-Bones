@@ -124,8 +124,32 @@ class Villagers(Object):
 
         self.underworld_image = p.transform.scale(self.underworld_image, (self.width, self.height))
         self.walking_time = 0
-        self.dialogues = ["""print "Woah nice costume" """, """print "its a little early for halloween though isnt it" """
-            , """print "Hello There" """, """print "Im not sure about this scotty" """, """print "Dewit" """] #List of dialogue options for normal villagers
+
+
+
+        self.dialogues = ["""print “Weird stuff goin on today, amirite?” """,
+                          """print “Ya ever try berries and fish?  It tastes great, except for how bad it is.” """,
+                          """print "I"m about to try some isometric exercise, care to join me?" """,
+                          """print "The wife"s makin" stew for supper tonight." """,
+                          """print "What kind of diet you doing? You look so skinny." """,
+                          """print "Wonderful weather we"re having." """,
+                          """print "Monarchy? More like Monanarcy, when we overthrowing the government?" """,
+                          """print "That king is just, yowza, more like King Thicc" """,
+                          """print "I heard the chicken served near the well is fantastic" """,
+                          """print "Weather looks terrible today, I hate the sun." """,
+                          """print "I want to eat more berries, but I think 700 is enough" """,
+                          """print "Loud belch" """,
+                          """print "I want to own a cow farm, but all I have is a chicken farm" """,
+                          """print "Wonder if we will ever see a dragon?" """,
+                          """print "I heard that some guy has started to follow the way of the vampire" """,
+                          """print "I wonder where Brad went, I haven"t seen him in weeks" """,
+                          """print "Can"t wait to eat some boiled turnip tonight" """,
+                          """print "I heard the carnival is coming here, within a decade" """,
+                          """print "I hope Death is doing okay today" """,
+                          """print "Hello friend! Need some berries" """,
+                          """print "One day, I will eat something other than fish" """,
+                          """print "I wish I wish I was a fish """,
+                          """print "Best way to ward off demons? Call them demoffs" """] #List of dialogue options for normal villager
         idx = r.randint(0,len(self.dialogues)-1)
         self.action = self.dialogues[idx]
         font = p.font.SysFont('Times New Romans', 16)
@@ -500,3 +524,6 @@ class Dialogue_box():
             for i in range(len(dialogue)):
                 dialogue_box = dialogue_box_font.render(dialogue[i][0], True, (255, 255, 255))
                 screen.blit(dialogue_box,(120,35 + 20*i))
+class Graveyard(Object):
+    def __init__(self, overworld_image_name = "tombstone.png"):
+        Object.__init__(self, overworld_image_name)\

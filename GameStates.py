@@ -190,30 +190,6 @@ class Actions:
                         end_string +=  self.perform_action(strings[idx])  + ", "
 
                     return_sub_string = "do(" + str(upper_bound-upper_bound_chg) + ") {" + end_string + "}" + " AND "
-            # """elif "if(" in action:
-            #
-            #     first_index = action.find("if(") + 3
-            #     second_index = action.find(")")
-            #
-            #     if "has " in action[first_index: second_index]:
-            #         index_one = action.find('")
-            #         index_two = action.find('", first_index + 1)
-            #
-            #         print("Current action is " + action)
-            #         print("Initiating search of " + action[index_one+1:index_two])
-            #         if Inventory.has(Inventory,action[index_one+1:index_two]) > 0:
-            #             return_sub_string = "if(" + action[first_index:second_index] + ") {" + self.perform_action(action[action.find("{") + 1:action.find("}")]) + "}" + " AND "
-            #         else:
-            #             return_sub_string = action+" AND "
-            #
-            #     elif "hasnt " in action[first_index: second_index]:
-            #         index_one = action.find('")
-            #         index_two = action.find('", first_index + 1)
-            #         if Inventory.has(Inventory,action[index_one+1:index_two]) == 0:
-            #             return_sub_string = "if(" + action[first_index:second_index] + ") {" + self.perform_action(action[action.find("{") + 1:action.find("}")]) + "}" + " AND "
-            #         else:
-            #             return_sub_string = action+" AND "
-            # """
 
             elif "has(" in action:
 
