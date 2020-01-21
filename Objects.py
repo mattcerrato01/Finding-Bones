@@ -291,7 +291,7 @@ class Player(Movable_Object):
         coord.set_offset_x(374)
         coord.set_offset_y(228)
 
-        self.x = coord.real_x(374)
+        self.x = coord.real_x(374-225)
         self.y = coord.real_y(228)
         self.width = 40
         self.height = 127  # check this, should be collision height
