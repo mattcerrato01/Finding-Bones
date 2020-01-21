@@ -82,7 +82,7 @@ class Inventory:
                 break
 
     def draw(self, screen):
-        height  = 50 + 20*len(Inventory.inventory)
+        height  = 50 + 20*len(Inventory.inventory) #hjkl
         p.draw.rect(screen,(0,0,0), (450,228,150, height))
         dialogue_box_font = p.font.SysFont("papyrus", 20)
         dialogue_box = dialogue_box_font.render("Inventory:", True, (255, 255, 255))
