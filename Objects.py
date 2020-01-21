@@ -512,20 +512,24 @@ class Demons(Object):
 
 class Dialogue_box():
 
+    def __init__(self):
+        self.box_1 = p.transform.scale(loadify("dialoguebox-1.png"), (300, 100))
+        self.box_2 = p.transform.scale(loadify("dialoguebox-2.png"), (300, 100))
+        self.dialogue = actions.dialogue_list
+        self.dialogue_box_font = p.font.SysFont("papyrus", 20)
+
     def draw(self, screen):
         if actions.update_dialogue_box():
-            dialogue = actions.dialogue_list
-            dialogue_box_font = p.font.SysFont("papyrus", 20)
-            box_1 = p.transform.scale(loadify("dialoguebox-1.png"), (300, 100))
-            box_2 = p.transform.scale(loadify("dialoguebox-2.png"), (300, 100))
-            screen.blit(box_1, (100,25))
-            screen.blit(box_2,(400,25))
 
-            while len(dialogue) > 4:
-                dialogue.pop(0)
 
-            for i in range(len(dialogue)):
-                dialogue_box = dialogue_box_font.render(dialogue[i][0], True, (255, 255, 255))
+            screen.blit(self.box_1, (100,25))
+            screen.blit(self.box_2,(400,25))
+
+            while len(self.dialogue) > 4:
+                self.dialogue.pop(0)
+
+            for i in range(len(self.dialogue)):
+                dialogue_box = self.dialogue_box_font.render(self.dialogue[i][0], True, (255, 255, 255))
                 screen.blit(dialogue_box,(120,35 + 20*i))
 
 class Tombstone(Object):
