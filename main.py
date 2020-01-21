@@ -129,8 +129,6 @@ def run_tutorial(t_stage):
     		villager_tutorial.setX(villager_tutorial.getX()+1)
     		villager_tutorial.setY(villager_tutorial.getY()+2)
     	t_stage = 3
-    elif t_stage == 3:
-    	tutorial_active = False
     return t_stage
 
 t_stage = 0
@@ -167,6 +165,8 @@ while running:
                     collidable.update_action()
         if tutorial_active:
             t_stage = run_tutorial(t_stage)
+            if t_stage == 3:
+            	tutorial_active = False
 
         key = p.key.get_pressed()
         if key[p.K_i]:
