@@ -85,7 +85,10 @@ class Villagers(Object):
     def __init__(self, overworld_image_name, fated, essential=False, male = True):
         Object.__init__(self, overworld_image_name[3], 46, 110, villager=True)
         self.fated = fated
-        self.underworld_image_name = "VillagerMaleFront_underworld.png"
+        if self.fated:
+            self.underworld_image_name = "essential_soul.png"
+        else:
+            self.underworld_image_name = "unfated_soul.png"
         self.image = (p.transform.scale(loadify(overworld_image_name[0][0]), (self.width, self.height)))
         self.idle = (p.transform.scale(loadify(overworld_image_name[0][1]), (self.width, self.height)))
 
@@ -469,12 +472,15 @@ class Dialogue_box():
     def draw(self, screen):
         if actions.update_dialogue_box():
             dialogue = actions.dialogue_list
-            p.draw.rect(screen,(0,0,0), (100,25, 600, 100))
             dialogue_box_font = p.font.SysFont("papyrus", 20)
+            box_1 = p.transform.scale(loadify("dialoguebox-1.png"), (300, 100))
+            box_2 = p.transform.scale(loadify("dialoguebox-2.png"), (300, 100))
+            screen.blit(box_1, (100,25))
+            screen.blit(box_2,(400,25))
 
             while len(dialogue) > 4:
                 dialogue.pop(0)
 
             for i in range(len(dialogue)):
                 dialogue_box = dialogue_box_font.render(dialogue[i][0], True, (255, 255, 255))
-                screen.blit(dialogue_box,(120,30 + 20*i))
+                screen.blit(dialogue_box,(120,35 + 20*i))
