@@ -253,6 +253,12 @@ class Actions:
                 if 0 <= first_index < second_index:
                     self.dialogue_box(action[first_index+1:second_index])
 
+            elif "adv" in action:
+                first_index = action.find("adv ")+4
+                quest_num = int(action[first_index:first_index+1])
+                QuestManager.advance_quest(quest_num)
+
+
 
             return_string+=return_sub_string
 
