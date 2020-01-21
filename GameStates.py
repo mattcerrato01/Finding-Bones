@@ -221,14 +221,13 @@ class Actions:
                 first_index = action.find("has(")+4
                 second_index = action.find(")")
 
-
-
                 if Inventory.has(Inventory,action[first_index:second_index]):
                     conditional_action = action[action.find("{") + 1:action.find("}")]
                     print("happened")
                     for string in conditional_action.split(", "):
                         return_sub_string = action[action.find("has("):action.find("{") + 1] + self.perform_action(string) + "}" + " AND "
-
+                else:
+                    return_sub_string = action + " AND "
 
             elif "inv" in action:
 
