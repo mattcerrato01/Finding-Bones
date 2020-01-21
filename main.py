@@ -121,14 +121,14 @@ def run_tutorial(t_stage):
     print("tutorial running press p to skip")
     print(t_stage)
     if t_stage == 0:
-    	t_stage = 1
+        t_stage = 1
     elif t_stage == 1:
-    	t_stage = 2
+        t_stage = 2
     elif t_stage == 2:
-    	while villager_tutorial.getX() < 420:
-    		villager_tutorial.setX(villager_tutorial.getX()+1)
-    		villager_tutorial.setY(villager_tutorial.getY()+2)
-    	t_stage = 3
+        while villager_tutorial.getX() < 420:
+            villager_tutorial.setX(villager_tutorial.getX()+1)
+            villager_tutorial.setY(villager_tutorial.getY()+2)
+        t_stage = 3
     return t_stage
 
 t_stage = 0
@@ -166,7 +166,7 @@ while running:
         if tutorial_active:
             t_stage = run_tutorial(t_stage)
             if t_stage == 3:
-            	tutorial_active = False
+                tutorial_active = False
 
         key = p.key.get_pressed()
         if key[p.K_i]:

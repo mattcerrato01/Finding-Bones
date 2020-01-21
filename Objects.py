@@ -537,6 +537,9 @@ class Tombstone(Object):
         Object.__init__(self, overworld_image_name, 94,100)
         self.name = name
 
+    def set_name(self, name):
+        self.name = name
+
     def draw(self, screen, player = None):
         screen.blit(self.image, (coord.screen_x(self.x), coord.screen_y(self.y)))
         grave_font = p.font.SysFont("papyrus", 20)
@@ -547,37 +550,38 @@ class Tombstone(Object):
 class Graveyard(Object):
 
     def __init__(self, x = 200, y= 0):
-        Object.__init__(self,   overworld_image_name="graveyard-tombstone.png")
+        Object.__init__(self,   overworld_image_name="graveyard-tombstone.png", x= x,y= y)
         self.dead_people = []
         self.tombstones = []
-        self.x = x
-        self.y = y
-
-    def add_grave(self, villager):
-        self.dead_people.append(villager)
+        self.visible_tombstones = []
         y_of_grave = self.y
         x_of_grave = self.x
-        num_of_graves = 0
-        for i in range(len(self.dead_people)):
-            self.tombstones = []
-            num_of_graves +=1
-            if num_of_graves>3:
-                num_of_graves = 0
+        for i in range(9):
+            tombstone = Tombstone()
+            if i % 3 == 0 and i>0:
                 x_of_grave = self.x
-                y_of_grave += 120
+                y_of_grave += 175
 
-            tombstone = Tombstone(name = self.dead_people[i].name)
             tombstone.setX(x_of_grave)
             tombstone.setY(y_of_grave)
             self.tombstones.append(tombstone)
-            x_of_grave += 100
+            x_of_grave += 125
 
+
+    def add_grave(self, villager):
+
+        self.dead_people.append(villager)
         if len(self.dead_people) > 9:
             self.dead_people.pop(0)
-            self.tombstones.pop(0)
+            self.visible_tombstones.pop(0)
+        for i in range(len(self.dead_people)):
+            self.tombstones[i].set_name(self.dead_people[i].name)
+
+        self.visible_tombstones.append(self.tombstones[len(self.dead_people)-1])
+
 
     def get_tombstones(self):
-        return self.tombstones[:]
+            return self.visible_tombstones[:]
 
 class Hitbox(p.sprite.Sprite):
     def __init__(self, x, y, width, height, action = ""):
