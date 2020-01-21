@@ -21,7 +21,7 @@ class Object(p.sprite.Sprite):
     def __init__(self, overworld_image_name, width=50, height=50, villager = False):  # NOTE: come back and clean up initialization and such here
         p.sprite.Sprite.__init__(self)
         self.soul_reaped = False
-        self.action = """do(2) {to inv 'berry', print 'Take your berry you bastard'} AND do(2:3) {print 'go away now'} AND has(berry) {print 'Im a big berry man'}"""
+        self.action = """has(berry) {print 'Im a big berry man'} AND do(2) {to inv 'berry', print 'Take your berry you bastard'} AND do(2:3) {print 'go away now'}  """
         self.overworld_image_name = overworld_image_name
         if not villager:
             self.underworld_image_name = overworld_image_name[:-4] + "_underworld" + overworld_image_name[-4:]

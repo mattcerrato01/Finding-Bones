@@ -187,10 +187,9 @@ class Actions:
                         if idx == (len(strings)-1):
 
                             upper_bound_chg = 1
-                        print(idx, upper_bound_chg)
-                        end_string += "{" + self.perform_action(strings[idx]) + "}" + " AND "
+                        end_string +=  self.perform_action(strings[idx])  + ", "
 
-                    return_sub_string = "do(" + str(upper_bound-upper_bound_chg) + ") " + end_string
+                    return_sub_string = "do(" + str(upper_bound-upper_bound_chg) + ") {" + end_string + "}" + " AND "
             # """elif "if(" in action:
             #
             #     first_index = action.find("if(") + 3
@@ -241,6 +240,8 @@ class Actions:
                 if 0 <= first_index < second_index:
                     if "to" in action:
                         Inventory.append_to_inventory(Inventory, action[first_index+1:second_index])
+                        print(Inventory.inventory)
+
                     elif "from" in action:
                         Inventory.remove_from_inventory(Inventory, action[first_index+1:second_index])
 
