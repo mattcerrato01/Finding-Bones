@@ -21,7 +21,7 @@ class Object(p.sprite.Sprite):
     def __init__(self, overworld_image_name, width=50, height=50, villager = False):  # NOTE: come back and clean up initialization and such here
         p.sprite.Sprite.__init__(self)
         self.soul_reaped = False
-        self.action = """has(berry) {print 'Im a big berry man'} AND do(2) {to inv 'berry', print 'Take your berry you bastard'} AND do(2:3) {print 'go away now'}  """
+        self.action = """has(berry) {print "I'm a big berry man"} AND do(2) {to inv "berry", print "Take your berry you bastard"} AND do(2:3) {print "go away now"}  """
         self.overworld_image_name = overworld_image_name
         if not villager:
             self.underworld_image_name = overworld_image_name[:-4] + "_underworld" + overworld_image_name[-4:]
@@ -79,7 +79,7 @@ class Object(p.sprite.Sprite):
 class Cage(Object):
     def __init__(self, overworld_image_name = "cage-locked-bones.png"):
         Object.__init__(self,overworld_image_name, 128,114)
-        self.action = """has(berry){print 'Im freed'}"""
+        self.action = """has(berry){print "I'm freed"}"""
 class Villagers(Object):
 
     def __init__(self, overworld_image_name, fated, essential=False, male = True):
@@ -107,8 +107,8 @@ class Villagers(Object):
         self.underworld_image = p.transform.scale(self.underworld_image, (self.width, self.height))
         self.essential = essential
         self.walking_time = 0
-        self.dialogues = ["""print 'Woah nice costume'""", """print 'its a little early for halloween though isnt it'"""
-            , """print 'Hello There'""", """print 'Im not sure about this scotty'""", """print 'Dewit'"""] #List of dialogue options for normal villagers
+        self.dialogues = ["""print "Woah nice costume" """, """print "its a little early for halloween though isnt it" """
+            , """print "Hello There" """, """print "Im not sure about this scotty" """, """print "Dewit" """] #List of dialogue options for normal villagers
         idx = r.randint(0,len(self.dialogues)-1)
         self.action = self.dialogues[idx]
         font = p.font.SysFont('Times New Romans', 16)
