@@ -89,7 +89,7 @@ class Inventory:
         rect = dialogue_box.get_rect()
         screen.blit(dialogue_box,(525 - rect.width/2,238))
         for i in range(len(Inventory.inventory)):
-            dialogue_box = dialogue_box_font.render(Inventory.inventory[i], True, (255, 255, 255))
+            dialogue_box = dialogue_box_font.render(Inventory.inventory[i][0], True, (255, 255, 255))
             rect = dialogue_box.get_rect()
             screen.blit(dialogue_box,(525 - rect.width/2 ,258 + 20*i))
 

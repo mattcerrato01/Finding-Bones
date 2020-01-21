@@ -117,18 +117,28 @@ pausetext = font.render("Paused", 1, (250, 250, 250))
 ptextRect = pausetext.get_rect()
 ptextRect.center = (400,300)
 
+def run_tutorial(t_stage):
+    print("tutorial running press p to skip")
+    print(t_stage)
+    if t_stage == 0:
+    	t_stage = 1
+    elif t_stage == 1:
+    	t_stage = 2
+    elif t_stage == 2:
+    	while villager_tutorial.getX() < 420:
+    		villager_tutorial.setX(villager_tutorial.getX()+1)
+    		villager_tutorial.setY(villager_tutorial.getY()+2)
+    	t_stage = 3
+    return t_stage
+
 t_stage = 0
-def run_tutorial():
-    print("tutorial running")
-
-
 time = 0
 fate = player.fate
 paused = False
 ptime = 0
 esc_holder = False
 mouseChanged = False
-tutorial_active = False
+tutorial_active = True
 
 while running:
 
@@ -154,14 +164,16 @@ while running:
                         break
                     collidable.update_action()
         if tutorial_active:
-            run_tutorial()
+            t_stage = run_tutorial(t_stage)
+            if t_stage == 3:
+            	tutorial_active = False
 
         key = p.key.get_pressed()
         if key[p.K_i]:
             inventory.draw(screen)	#Draws inventory when holding i
 
         if key[p.K_p]:
-            pass
+            tutorial_active = False
 
         if key[p.K_ESCAPE] and esc_holder:
             esc_holder = False
