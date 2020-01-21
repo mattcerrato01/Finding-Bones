@@ -66,7 +66,7 @@ print(vill)
 
 quest_villager = Objects.Quest_Villager("villager", True, (2,3), 400, 800)
 
-graveyard = Objects.Graveyard()
+graveyard = Objects.Graveyard(100,800)
 
 rect.setX(100)
 rect.setY(300)
@@ -82,6 +82,9 @@ dialogue_box = Objects.Dialogue_box()
 villager_tutorial = Objects.Quest_Villager("villager", True, (2,3), 400, 200)
 
 collidable_group = p.sprite.Group(rect, rect2, rect3, villager_tutorial, quest_villager, cage)
+for i in range(5):
+    villager = Objects.Villagers("villager", False, 500 + 100*i, 500 + 100*i)
+    collidable_group.add(villager)
 
 collidable_group.add(vill)
 for tombstone in graveyard.get_tombstones():

@@ -115,8 +115,9 @@ class Villagers(Object):
             self.left_image = p.transform.scale(loadify(overworld_image_name + "_left_f.png"), (self.width, self.height))
             self.right_image = p.transform.scale(loadify(overworld_image_name + "_right_f.png"), (self.width, self.height))
             self.back_image = p.transform.scale(loadify(overworld_image_name + "_back_f.png"), (self.width, self.height))
-
+        self.forward_image = self.front_image
         self.current_image = self.back_image
+
 
         self.name = names.generate(male)
 
@@ -554,11 +555,11 @@ class Graveyard(Object):
         for i in range(len(self.dead_people)):
             self.tombstones = []
             num_of_graves +=1
-            x_of_grave += 100
             if num_of_graves>3:
                 num_of_graves = 0
                 x_of_grave = self.x
                 y_of_grave += 120
+            x_of_grave += 100
             tombstone = Tombstone(name = self.dead_people[i].name)
             tombstone.setX(x_of_grave)
             tombstone.setY(y_of_grave)
