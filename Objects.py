@@ -552,6 +552,7 @@ class Graveyard(Object):
         x_of_grave = self.x
         num_of_graves = 0
         for i in range(len(self.dead_people)):
+            self.tombstones = []
             num_of_graves +=1
             x_of_grave += 100
             if num_of_graves>3:

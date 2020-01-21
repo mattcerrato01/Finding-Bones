@@ -37,10 +37,8 @@ class Setup:
 
         while line:
             split_array = line.split(", ")
-            print("yayaya")
 
             villager_list.add( Objects.Villagers( split_array[0] , split_array[1] == "True" , int(split_array[2]), int(split_array[3]), split_array[4] == "True" ) )
-            print("I hate jews " + str(bool(split_array[4])))
 
             line = file.readline()
 
