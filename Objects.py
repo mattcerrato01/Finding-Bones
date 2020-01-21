@@ -13,24 +13,29 @@ qm = gs.QuestManager()
 
 
 def loadify(imgname):
-    return p.image.load(imgname).convert_alpha()
+    return p.image.load("images/" + imgname).convert_alpha()
 
 
 class Object(p.sprite.Sprite):
 
-    def __init__(self, overworld_image_name, width=50, height=50, villager = False):  # NOTE: come back and clean up initialization and such here
+    def __init__(self, overworld_image_name, width=50, height=50):  # NOTE: come back and clean up initialization and such here
         p.sprite.Sprite.__init__(self)
         self.soul_reaped = False
         self.action = """has(berry) {print "I'm a big berry man"} AND do(2) {to inv "berry", print "Take your berry you bastard"} AND do(2:3) {print "go away now"}  """
         self.overworld_image_name = overworld_image_name
-        if not villager:
+
+        try:
             self.underworld_image_name = overworld_image_name[:-4] + "_underworld" + overworld_image_name[-4:]
+            self.underworld_image = p.transform.scale(loadify(self.underworld_image_name), (self.width, self.height))
+        except:
+            print("ok")
+
         self.x = 0
         self.y = 0
         self.width = width
         self.height = height
         self.image = loadify(overworld_image_name)
-        #		self.underworld_image = loadify(self.underworld_image_name)
+
         # self.underworld_image = p.transform.scale(self.image, (self.width, self.height))
         self.image = p.transform.scale(self.image, (self.width, self.height))
         self.update()
@@ -82,30 +87,34 @@ class Cage(Object):
         self.action = """has(berry){print "I'm freed"}"""
 class Villagers(Object):
 
-    def __init__(self, overworld_image_name, fated, essential=False, male = True):
-        Object.__init__(self, overworld_image_name[3], 46, 110, villager=True)
+    def __init__(self, overworld_image_name, fated, male = True):
+        Object.__init__(self, overworld_image_name + "_front_f.png", 46, 110)
         self.fated = fated
-        if self.fated:
-            self.underworld_image_name = "essential_soul.png"
+        if fated:
+            self.underworld_image = loadify("fated_soul.png")
         else:
-            self.underworld_image_name = "unfated_soul.png"
-        self.image = (p.transform.scale(loadify(overworld_image_name[0][0]), (self.width, self.height)))
-        self.idle = (p.transform.scale(loadify(overworld_image_name[0][1]), (self.width, self.height)))
+            self.underworld_image = loadify("unfated_soul.png")
 
-        self.left_image = p.transform.scale(loadify(overworld_image_name[1]), (self.width, self.height))
-        self.right_image = p.transform.scale(loadify(overworld_image_name[2]), (self.width, self.height))
-        self.back_image = p.transform.scale(loadify(overworld_image_name[3]), (self.width, self.height))
+        if male:
+            self.forward_image = (p.transform.scale(loadify(overworld_image_name+"_front_m.png"), (self.width, self.height)))
+            self.idle = (p.transform.scale(loadify(overworld_image_name+"_idle_m.png"), (self.width, self.height)))
+            self.left_image = p.transform.scale(loadify(overworld_image_name+"_left_m.png"), (self.width, self.height))
+            self.right_image = p.transform.scale(loadify(overworld_image_name+"_right_m.png"), (self.width, self.height))
+            self.back_image = p.transform.scale(loadify(overworld_image_name+"_back_m.png"), (self.width, self.height))
+        else:
+            self.image = (p.transform.scale(loadify(overworld_image_name + "_front_f.png"), (self.width, self.height)))
+            self.idle = (p.transform.scale(loadify(overworld_image_name + "_idle_f.png"), (self.width, self.height)))
+            self.left_image = p.transform.scale(loadify(overworld_image_name + "_left_f.png"), (self.width, self.height))
+            self.right_image = p.transform.scale(loadify(overworld_image_name + "_right_f.png"), (self.width, self.height))
+            self.back_image = p.transform.scale(loadify(overworld_image_name + "_back_f.png"), (self.width, self.height))
+
         self.current_image = self.back_image
-        self.current_image = p.transform.scale(self.current_image, (self.width,self.height))
-
-        self.forward_image = self.image
 
         name = names.generate(male)
 
 
-        self.underworld_image = loadify(self.underworld_image_name)
+
         self.underworld_image = p.transform.scale(self.underworld_image, (self.width, self.height))
-        self.essential = essential
         self.walking_time = 0
         self.dialogues = ["""print "Woah nice costume" """, """print "its a little early for halloween though isnt it" """
             , """print "Hello There" """, """print "Im not sure about this scotty" """, """print "Dewit" """] #List of dialogue options for normal villagers
@@ -118,8 +127,7 @@ class Villagers(Object):
     def update_action(self):
         idx = r.randint(0,len(self.dialogues)-1)
         self.action = self.dialogues[idx]
-    def get_essential(self):
-        return self.essential
+
 
     def draw(self, screen, player):
         walk_gap = 100 #aklsdjf
@@ -169,7 +177,7 @@ class Villagers(Object):
 class Quest_Villager(Villagers):
 
     def __init__(self, overworld_image_name, fated, quest_end, male=True, grey = False):
-        Villagers.__init__(self, overworld_image_name, fated, True, male)
+        Villagers.__init__(self, overworld_image_name, fated, male)
         # print(str(self.essential) + str(quest_end))
         self.grey = grey
         self.quest_end = quest_end

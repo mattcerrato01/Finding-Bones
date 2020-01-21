@@ -4,6 +4,9 @@ import Objects
 
 p.init()
 
+def loadify(imgname):
+    return p.image.load("images/" + imgname).convert_alpha()
+
 def main(screen):
 	#print("starting in", screen)
 	running = True
@@ -12,7 +15,7 @@ def main(screen):
 	background = p.Surface(screen.get_size())
 	background = background.convert()
 	background.fill((250, 250, 250))
-	startbutton = p.image.load("VillagerMaleFront.png")
+	startbutton = loadify("VillagerMaleFront.png")
 	startbutton = p.transform.scale(startbutton, (100,80))
 	startbuttonpos = startbutton.get_rect()
 	#print(startbuttonpos)
@@ -30,7 +33,7 @@ def main(screen):
 	screen.blit(background, (0, 0))
 	p.display.flip()
 
-	cursor = p.transform.scale(p.image.load("cursor-small-arrow.png").convert_alpha(), (15,15))
+	cursor = p.transform.scale(loadify("cursor-small-arrow.png").convert_alpha(), (15,15))
 	
 	while running:
 		#screen.fill([255, 255, 255])

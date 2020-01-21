@@ -7,8 +7,8 @@ coord = gs.CoordConverter()
 world = gs.WorldState()
 
 
-def loadify(imgname):  # Returns loaded Image
-    return p.image.load(imgname).convert_alpha()
+def loadify(imgname):
+    return p.image.load("images/" + imgname).convert_alpha()
 
 
 class Tile:  # One 800x800 tile, contains the collision sprites contained within that tile

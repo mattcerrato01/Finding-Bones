@@ -7,6 +7,9 @@ import GameStates as gs
 import random
 import start as st
 import end
+import Setup as setup
+
+
 
 coord = gs.CoordConverter()
 world = gs.WorldState()
@@ -28,8 +31,8 @@ quests.advance_quest(1)
 #quests.advance_quest(1)
 
 
-def loadify(imgname):  # Returns loaded Image
-    return p.image.load(imgname).convert_alpha()
+def loadify(imgname):
+    return p.image.load("images/" + imgname).convert_alpha()
 
 '''Function that adds a set number of demons to a group of sprites, takes in a group of sprites, a player object, and
 the amount of demons to be added to the group'''
@@ -56,11 +59,11 @@ player = Objects.Player("player.jpg", ["GR-F-L", "GR-F-S", "GR-F-R", "GR-F-S"],
 rect = Objects.Object("download.jpg", 100, 100)
 rect2 = Objects.Object("download1.jpg")
 rect3 = Objects.Object("download2.jpg")
-villager = Objects.Villagers([["VillagerMaleFront.png", "VillagerMaleFrontIdle.png"],"VillagerMaleFaceLeft.png", "VillagerMaleFaceRight.png","VillagerMaleBack.png"], False)
+villager = Objects.Villagers("villager", False)
 villager.setX(800)
 villager.setY(800)
 
-quest_villager = Objects.Quest_Villager([["VillagerMaleFront.png", "VillagerMaleFrontIdle.png"],"VillagerMaleFaceLeft.png", "VillagerMaleFaceRight.png","VillagerMaleBack.png"], True, (2,3))
+quest_villager = Objects.Quest_Villager("villager", True, (2,3))
 quest_villager.setX(400)
 quest_villager.setY(800)
 
@@ -75,7 +78,7 @@ cage.setX(1200)
 cage.setY(1200)
 dialogue_box = Objects.Dialogue_box()
 
-villager_tutorial = Objects.Quest_Villager([["VillagerMaleFront.png", "VillagerMaleFrontIdle.png"],"VillagerMaleFaceLeft.png", "VillagerMaleFaceRight.png","VillagerMaleBack.png"], True, (2,3))
+villager_tutorial = Objects.Quest_Villager("villager", True, (2,3))
 villager_tutorial.setX(400)
 villager_tutorial.setY(200)
 
