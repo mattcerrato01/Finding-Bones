@@ -66,6 +66,8 @@ print(vill)
 
 quest_villager = Objects.Quest_Villager("villager", True, (2,3), 400, 800)
 
+graveyard = Objects.Graveyard()
+
 rect.setX(100)
 rect.setY(300)
 rect2.setX(400)
@@ -82,7 +84,8 @@ villager_tutorial = Objects.Quest_Villager("villager", True, (2,3), 400, 200)
 collidable_group = p.sprite.Group(rect, rect2, rect3, villager_tutorial, quest_villager, cage)
 
 collidable_group.add(vill)
-
+for tombstone in graveyard.get_tombstones():
+    collidable_group.add(tombstone)
 image_name_array = [["background.jpg", "background.jpg", "background.jpg", "background.jpg"],
                     ["background.jpg", "background.jpg", "background.jpg", "background.jpg"],
                     ["background.jpg", "background.jpg", "background.jpg", "background.jpg"],
@@ -139,6 +142,7 @@ while running:
 
                 for collidable in collision_group:
                     if collidable.perform_action(pos): #returns true if villager has been reaped
+                        graveyard.add_grave(collidable)
                         collidable_group.remove(collidable)
                         tile_map = t.Map(image_name_array, collidable_group)
                         player.soul += 10

@@ -118,7 +118,7 @@ class Villagers(Object):
 
         self.current_image = self.back_image
 
-        name = names.generate(male)
+        self.name = names.generate(male)
 
 
 
@@ -153,7 +153,7 @@ class Villagers(Object):
         idx = r.randint(0,len(self.dialogues)-1)
         self.action = self.dialogues[idx]
         font = p.font.SysFont('Times New Romans', 16)
-        self.nameplate = font.render(name, False, (0, 0, 0), (255,255,255))
+        self.nameplate = font.render(self.name, False, (0, 0, 0), (255,255,255))
     #   self.fated
 
     def update_action(self):
@@ -524,6 +524,53 @@ class Dialogue_box():
             for i in range(len(dialogue)):
                 dialogue_box = dialogue_box_font.render(dialogue[i][0], True, (255, 255, 255))
                 screen.blit(dialogue_box,(120,35 + 20*i))
+
+class Tombstone(Object):
+    def __init__(self, overworld_image_name = "graveyard-tombstone.png", name = ""):
+        Object.__init__(self, overworld_image_name, 94,100)
+        self.name = name
+
+    def draw(self, screen, player = None):
+        screen.blit(self.image, (coord.screen_x(self.x), coord.screen_y(self.y)))
+        grave_font = p.font.SysFont("papyrus", 20)
+        grave_name = grave_font.render(self.name, True, (0,0,0))
+        grave_rect = grave_name.get_rect()
+        screen.blit(grave_name, (coord.screen_x(self.x) + self.width/2 - grave_rect.width/2, coord.screen_y(self.y) + self.height/2))
+
 class Graveyard(Object):
-    def __init__(self, overworld_image_name = "tombstone.png"):
-        Object.__init__(self, overworld_image_name)\
+
+    def __init__(self, x = 200, y= 0):
+        Object.__init__(self,   overworld_image_name="graveyard-tombstone.png")
+        self.dead_people = []
+        self.tombstones = []
+        self.x = x
+        self.y = y
+
+    def add_grave(self, villager):
+        self.dead_people.append(villager)
+        y_of_grave = self.y
+        x_of_grave = self.x
+        num_of_graves = 0
+        for i in range(len(self.dead_people)):
+            num_of_graves +=1
+            x_of_grave += 100
+            if num_of_graves>3:
+                num_of_graves = 0
+                x_of_grave = self.x
+                y_of_grave += 120
+            tombstone = Tombstone(name = self.dead_people[i].name)
+            tombstone.setX(x_of_grave)
+            tombstone.setY(y_of_grave)
+            self.tombstones.append(tombstone)
+
+        if len(self.dead_people) > 9:
+            self.dead_people.pop(0)
+            self.tombstones.pop(0)
+
+    def get_tombstones(self):
+        return self.tombstones[:]
+
+
+
+
+
