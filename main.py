@@ -128,6 +128,9 @@ def run_tutorial(t_stage):
     	while villager_tutorial.getX() < 420:
     		villager_tutorial.setX(villager_tutorial.getX()+1)
     		villager_tutorial.setY(villager_tutorial.getY()+2)
+    	t_stage = 3
+    elif t_stage == 3:
+    	tutorial_active = False
     return t_stage
 
 t_stage = 0
