@@ -1,0 +1,2 @@
+overworld_image_name, x=0, y=0, width=50, height=50, action
+download.jpg, 100, 300, 100, 100, """has(berry) {print "I'm a big berry man"} AND do(2) {to inv "berry", print "Take your berry you bastard"} AND do(2:3) {print "go away now"}  """

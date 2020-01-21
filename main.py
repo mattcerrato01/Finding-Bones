@@ -56,7 +56,7 @@ def createDemons(demons, player, numDemons):
 player = Objects.Player("player.jpg", ["GR-F-L", "GR-F-S", "GR-F-R", "GR-F-S"],
                         ["GR-B-L", "GR-B-S", "GR-B-R", "GR-B-S"], ["GR-L-1", "GR-L-S", "GR-L-1", "GR-L-2"],
                         ["GR-R-1", "GR-R-S", "GR-R-1", "GR-R-2"])
-rect = Objects.Object("download.jpg", 100, 100)
+# rect = Objects.Object("download.jpg", 100, 100)
 rect2 = Objects.Object("download1.jpg")
 rect3 = Objects.Object("download2.jpg")
 
@@ -68,8 +68,8 @@ quest_villager = Objects.Quest_Villager("villager", True, (2,3), 400, 800)
 
 graveyard = Objects.Graveyard(75,1325)
 
-rect.setX(100)
-rect.setY(300)
+# rect.setX(100)
+# rect.setY(300)
 rect2.setX(400)
 rect2.setY(400)
 rect3.setX(820)
@@ -81,7 +81,7 @@ dialogue_box = Objects.Dialogue_box()
 
 villager_tutorial = Objects.Quest_Villager("villager", True, (2,3), 400, 200)
 
-collidable_group = p.sprite.Group(rect, rect2, rect3, villager_tutorial, quest_villager, cage)
+collidable_group = p.sprite.Group( rect2, rect3, villager_tutorial, quest_villager, cage)
 for i in range(5):
     villager = Objects.Villagers("villager", False, 500 + 100*i, 500 + 100*i)
     collidable_group.add(villager)

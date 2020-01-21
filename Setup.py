@@ -22,6 +22,8 @@ class Setup:
         collidable = p.sprite.Group(self.villagers())
         for sprite in self.hitboxes():
             collidable.add(sprite)
+        for sprite in self.objects():
+            collidable.add(sprite)
 
 
 
@@ -57,9 +59,36 @@ class Setup:
 
         while line:
             split_array = line.split(", ")
+            action = ""
+            if len(split_array) > 4:
+                action = split_array[4]
+                for i in range(4, len(split_array)-1):
+                    action += ", " +  split_array[i+1]
 
-            hitbox_list.add( Objects.Hitbox( int(split_array[0]), int(split_array[1]), int(split_array[2]), int(split_array[3])))
+            hitbox_list.add( Objects.Hitbox( int(split_array[0]), int(split_array[1]), int(split_array[2]), int(split_array[3]), action))
 
             line = file.readline()
 
         return hitbox_list
+
+    def objects(self):
+        print("here we go")
+        file = open("setup/objects.txt", "r")
+        object_list = p.sprite.Group()
+        file.readline()
+        line = file.readline()
+
+        while line:
+            split_array = line.split(", ")
+            # overworld_image_name, x=0, y=0, width=50, height=50, action =
+            action = ""
+            if len(split_array) > 5:
+                action = split_array[5]
+                for i in range(5, len(split_array)-1):
+                    action += ", " +  split_array[i+1]
+
+            object_list.add( Objects.Object(split_array[0], int(split_array[1]), int(split_array[2]), int(split_array[3]), int(split_array[4]), action ))
+
+            line = file.readline()
+
+        return object_list

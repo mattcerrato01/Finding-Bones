@@ -18,10 +18,10 @@ def loadify(imgname):
 
 class Object(p.sprite.Sprite):
 
-    def __init__(self, overworld_image_name, x=0, y=0, width=50, height=50):  # NOTE: come back and clean up initialization and such here
+    def __init__(self, overworld_image_name, x=0, y=0, width=50, height=50, action = """has(berry) {print "I'm a big berry man"} AND do(2) {to inv "berry", print "Take your berry you bastard"} AND do(2:3) {print "go away now"}  """):  # NOTE: come back and clean up initialization and such here
         p.sprite.Sprite.__init__(self)
         self.soul_reaped = False
-        self.action = """has(berry) {print "I'm a big berry man"} AND do(2) {to inv "berry", print "Take your berry you bastard"} AND do(2:3) {print "go away now"}  """
+        self.action = action
         self.overworld_image_name = overworld_image_name
 
         try:
@@ -576,21 +576,32 @@ class Graveyard(Object):
         return self.tombstones[:]
 
 class Hitbox(p.sprite.Sprite):
-    def __init__(self, x, y, width, height):
+    def __init__(self, x, y, width, height, action = ""):
         p.sprite.Sprite.__init__(self)
         self.x = x
         self.y = y
         self.width = width
         self.height = height
+        self.action = action
         self.drawn = False
-        self.mouse_drawn = False
         self.rect = p.Rect(coord.screen_x(self.x), coord.screen_y(self.y), self.width, self.height)
 
     def draw(self, screen, player):
         self.drawn = True
 
-    def changeMouse(self, pos):
-        self.mouse_drawn = True
+    def changeMouse(self, mouse):
+        if self.rect.collidepoint(mouse):
+            return True
+        else:
+            return False
+
+    def perform_action(self, mouse_click):
+        if self.rect.collidepoint(mouse_click) and world.state():
+            self.action = actions.perform_action(self.action)
+        return False
+
+    def update_action(self):
+        return self.action
 
 
 
