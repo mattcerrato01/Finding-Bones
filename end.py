@@ -21,7 +21,7 @@ def main(screen):
 	screen.blit(background, (0, 0))
 	p.display.flip()
 	
-	cursor = p.transform.scale(p.image.load("cursor-small-arrow.png").convert_alpha(), (15,15))	
+	cursor = p.transform.scale(Objects.loadify("cursor-small-arrow.png").convert_alpha(), (15,15))
 	
 	while endrunning:
 		#screen.fill([255, 255, 255])

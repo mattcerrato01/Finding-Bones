@@ -559,11 +559,12 @@ class Graveyard(Object):
                 num_of_graves = 0
                 x_of_grave = self.x
                 y_of_grave += 120
-            x_of_grave += 100
+
             tombstone = Tombstone(name = self.dead_people[i].name)
             tombstone.setX(x_of_grave)
             tombstone.setY(y_of_grave)
             self.tombstones.append(tombstone)
+            x_of_grave += 100
 
         if len(self.dead_people) > 9:
             self.dead_people.pop(0)

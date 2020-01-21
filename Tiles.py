@@ -16,7 +16,7 @@ class Tile:  # One 800x800 tile, contains the collision sprites contained within
     def __init__(self, name, collision_group, x, y):
         self.image = loadify(name)
         self.image = p.transform.scale(self.image, (800, 600))
-        self.underworld_image = p.transform.scale(loadify(name[:-4] + "_underworld" + name[-4:]), (800, 600))
+        self.underworld_image = p.transform.scale(loadify(name[:-4] + "U" + name[-4:]), (800, 600))
         self.collision_group = collision_group
         self.x = x * 800
         self.y = y * 600

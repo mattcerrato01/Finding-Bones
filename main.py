@@ -66,7 +66,7 @@ print(vill)
 
 quest_villager = Objects.Quest_Villager("villager", True, (2,3), 400, 800)
 
-graveyard = Objects.Graveyard(100,800)
+graveyard = Objects.Graveyard(75,1325)
 
 rect.setX(100)
 rect.setY(300)
@@ -89,10 +89,10 @@ for i in range(5):
 collidable_group.add(vill)
 for tombstone in graveyard.get_tombstones():
     collidable_group.add(tombstone)
-image_name_array = [["background.jpg", "background.jpg", "background.jpg", "background.jpg"],
-                    ["background.jpg", "background.jpg", "background.jpg", "background.jpg"],
-                    ["background.jpg", "background.jpg", "background.jpg", "background.jpg"],
-                    ["background.jpg", "background.jpg", "background.jpg", "background.jpg"]]
+image_name_array = [["tile1.png", "tile5.png", "tile9.png", "tile13.png"],
+                    ["tile2.png", "tile6.png", "tile10.png", "tile14.png"],
+                    ["tile3.png", "tile7.png", "tile11.png", "tile15.png"],
+                    ["tile4.png", "tile8.png", "tile12.png", "tile16.png"]]
 
 tile_map = t.Map(image_name_array, collidable_group)
 demons = p.sprite.Group()
