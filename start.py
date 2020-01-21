@@ -15,7 +15,7 @@ def main(screen):
 	background = p.Surface(screen.get_size())
 	background = background.convert()
 	background.fill((250, 250, 250))
-	startbutton = loadify("VillagerMaleFront.png")
+	startbutton = loadify("villager_front_m.png")
 	startbutton = p.transform.scale(startbutton, (100,80))
 	startbuttonpos = startbutton.get_rect()
 	#print(startbuttonpos)
