@@ -32,25 +32,25 @@ quests.advance_quest(1)
 
 
 def loadify(imgname):
-	return p.image.load("images/" + imgname).convert_alpha()
+    return p.image.load("images/" + imgname).convert_alpha()
 
 '''Function that adds a set number of demons to a group of sprites, takes in a group of sprites, a player object, and
 the amount of demons to be added to the group'''
 def createDemons(demons, player, numDemons):
-	for i in range(numDemons):
-		randomx = random.randint(0, 800 * len(image_name_array[0]))
-		randomy = random.randint(0, 600 * len(image_name_array))
-		collided = False
+    for i in range(numDemons):
+        randomx = random.randint(0, 800 * len(image_name_array[0]))
+        randomy = random.randint(0, 600 * len(image_name_array))
+        collided = False
 
-		demon = Objects.Demons("M-F-L.png", randomx, randomy, ["M-F-L", "M-F-S", "M-F-R"], ["M-B-L", "M-B-S", "M-B-R"],
-							   ["M-L-L", "M-L-S", "M-L-R"], ["M-R-L", "M-R-S", "M-R-R"], player)
-		for boys in demons:
-			if demon.collide(boys):
-				collided = True
-				i -= 1
-				break
-		if not collided:
-			demons.add(demon)
+        demon = Objects.Demons("M-F-L.png", randomx, randomy, ["M-F-L", "M-F-S", "M-F-R"], ["M-B-L", "M-B-S", "M-B-R"],
+                               ["M-L-L", "M-L-S", "M-L-R"], ["M-R-L", "M-R-S", "M-R-R"], player)
+        for boys in demons:
+            if demon.collide(boys):
+                collided = True
+                i -= 1
+                break
+        if not collided:
+            demons.add(demon)
 
 
 player = Objects.Player("player.jpg", ["GR-F-L", "GR-F-S", "GR-F-R", "GR-F-S"],
@@ -76,17 +76,17 @@ villager_tutorial = Objects.Quest_Villager("villager", fated=True, quest_end=(2,
 
 collidable_group = p.sprite.Group(villager_tutorial, quest_villager, cage)
 for i in range(5):
-	villager = Objects.Villagers("villager", False, 500 + 100*i, 500 + 100*i)
-	collidable_group.add(villager)
+    villager = Objects.Villagers("villager", False, 500 + 100*i, 500 + 100*i)
+    collidable_group.add(villager)
 for collidable in collidables:
-	collidable_group.add(collidable)
+    collidable_group.add(collidable)
 
 for tombstone in graveyard.get_tombstones():
-	collidable_group.add(tombstone)
+    collidable_group.add(tombstone)
 image_name_array = [["tile1.png", "tile5.png", "tile9.png", "tile13.png"],
-					["tile2.png", "tile6.png", "tile10.png", "tile14.png"],
-					["tile3.png", "tile7.png", "tile11.png", "tile15.png"],
-					["tile4.png", "tile8.png", "tile12.png", "tile16.png"]]
+                    ["tile2.png", "tile6.png", "tile10.png", "tile14.png"],
+                    ["tile3.png", "tile7.png", "tile11.png", "tile15.png"],
+                    ["tile4.png", "tile8.png", "tile12.png", "tile16.png"]]
 
 tile_map = t.Map(image_name_array, collidable_group)
 demons = p.sprite.Group()
@@ -111,19 +111,19 @@ ptextRect = pausetext.get_rect()
 ptextRect.center = (400,300)
 
 def run_tutorial(t_stage):
-	# print("tutorial running press p to skip")
-	# print(t_stage)
-	if t_stage == 0:
-		t_stage = 1
-	elif t_stage == 1:
-		actions.perform_action(villager_tutorial.action)
-		t_stage = 2
-	elif t_stage == 2:
-		while villager_tutorial.getX() < 420:
-			villager_tutorial.setX(villager_tutorial.getX()+0.5)
-			villager_tutorial.setY(villager_tutorial.getY()+1)
-		t_stage = 3
-	return t_stage
+    # print("tutorial running press p to skip")
+    # print(t_stage)
+    if t_stage == 0:
+        t_stage = 1
+    elif t_stage == 1:
+        actions.perform_action(villager_tutorial.action)
+        t_stage = 2
+    elif t_stage == 2:
+        while villager_tutorial.getX() < 420:
+            villager_tutorial.setX(villager_tutorial.getX()+0.5)
+            villager_tutorial.setY(villager_tutorial.getY()+1)
+        t_stage = 3
+    return t_stage
 
 t_stage = 0
 time = 0

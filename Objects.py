@@ -611,6 +611,10 @@ class Hitbox(p.sprite.Sprite):
     def update(self):
         self.rect = p.Rect(coord.screen_x(self.x), coord.screen_y(self.y), self.width, self.height)
 
+class Well(Object):
+    def __init__(self, x, y, width = , height = 168):
+        Object.__init__()
+
 
 
 
