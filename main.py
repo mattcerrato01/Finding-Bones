@@ -118,8 +118,8 @@ ptextRect = pausetext.get_rect()
 ptextRect.center = (400,300)
 
 def run_tutorial(t_stage):
-    print("tutorial running press p to skip")
-    print(t_stage)
+    # print("tutorial running press p to skip")
+    # print(t_stage)
     if t_stage == 0:
         t_stage = 1
     elif t_stage == 1:
@@ -154,6 +154,7 @@ while running:
             elif event.type == p.MOUSEBUTTONUP:
 
                 pos = p.mouse.get_pos()
+                print(coord.real_x(pos[0]), coord.real_y(pos[1]))
 
                 for collidable in collision_group:
                     if collidable.perform_action(pos): #returns true if villager has been reaped

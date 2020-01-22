@@ -1,1 +1,29 @@
-(x, y, width, height)
+(x, y, width, heigh, action = "")
+100, 0, 100, 125
+120, 125, 90, 52, """has(berry) {print "I'm a big berry man"} AND do(2) {to inv "berry", print "Take your berry you bastard"} AND do(2:3) {print "go away now"}  """
+100, 175, 90, 52, """has(berry) {print "I'm a big berry man"} AND do(2) {to inv "berry", print "Take your berry you bastard"} AND do(2:3) {print "go away now"}  """
+65, 220, 100, 52, """has(berry) {print "I'm a big berry man"} AND do(2) {to inv "berry", print "Take your berry you bastard"} AND do(2:3) {print "go away now"}  """
+0, 245, 85, 52, """has(berry) {print "I'm a big berry man"} AND do(2) {to inv "berry", print "Take your berry you bastard"} AND do(2:3) {print "go away now"}  """
+320, 0, 20, 110
+345, 110, 20, 35
+370, 80, 20, 95
+395, 200, 80, 45, """has(berry) {print "I'm a big berry man"} AND do(2) {to inv "berry", print "Take your berry you bastard"} AND do(2:3) {print "go away now"}  """
+475, 240, 30, 33
+525, 225, 95, 57, """has(berry) {print "I'm a big berry man"} AND do(2) {to inv "berry", print "Take your berry you bastard"} AND do(2:3) {print "go away now"}  """
+625, 220, 90, 52, """has(berry) {print "I'm a big berry man"} AND do(2) {to inv "berry", print "Take your berry you bastard"} AND do(2:3) {print "go away now"}  """
+715, 190, 80, 60, """has(berry) {print "I'm a big berry man"} AND do(2) {to inv "berry", print "Take your berry you bastard"} AND do(2:3) {print "go away now"}  """
+812, 150, 80, 50, """has(berry) {print "I'm a big berry man"} AND do(2) {to inv "berry", print "Take your berry you bastard"} AND do(2:3) {print "go away now"}  """
+1035, 160, 90, 60, """has(berry) {print "I'm a big berry man"} AND do(2) {to inv "berry", print "Take your berry you bastard"} AND do(2:3) {print "go away now"}  """
+1150, 200, 80, 50, """has(berry) {print "I'm a big berry man"} AND do(2) {to inv "berry", print "Take your berry you bastard"} AND do(2:3) {print "go away now"}  """
+1210, 262, 70, 40, """has(berry) {print "I'm a big berry man"} AND do(2) {to inv "berry", print "Take your berry you bastard"} AND do(2:3) {print "go away now"}  """
+1267, 307, 80, 47, """has(berry) {print "I'm a big berry man"} AND do(2) {to inv "berry", print "Take your berry you bastard"} AND do(2:3) {print "go away now"}  """
+1327, 345, 100, 55, """has(berry) {print "I'm a big berry man"} AND do(2) {to inv "berry", print "Take your berry you bastard"} AND do(2:3) {print "go away now"}  """
+1435, 400, 93, 45, """has(berry) {print "I'm a big berry man"} AND do(2) {to inv "berry", print "Take your berry you bastard"} AND do(2:3) {print "go away now"}  """
+1503, 473, 90, 50, """has(berry) {print "I'm a big berry man"} AND do(2) {to inv "berry", print "Take your berry you bastard"} AND do(2:3) {print "go away now"}  """
+800, 600, 800, 70
+1600, 600, 800, 70
+0, 1200, 800, 77
+800, 1200, 800, 77
+230, 780, 285, 195
+245, 750, 280, 25
+315, 711, 135, 30

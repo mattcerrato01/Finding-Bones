@@ -12,9 +12,9 @@ class WriteTest:
 
     file = open("testfile.txt", "r")
 
-    print(file.read(3))
-    print(file.read(6))
-    print(file.readline())
+    # print(file.read(3))
+    # print(file.read(6))
+    # print(file.readline())
 
 class Setup:
 
@@ -33,7 +33,7 @@ class Setup:
 
 
     def villagers(self):
-        print("here we are")
+        # print("here we are")
 
         file = open("setup/villagers.txt","r")
 
@@ -51,7 +51,7 @@ class Setup:
         return villager_list
 
     def hitboxes(self):
-        print("here we lay")
+        # print("here we lay")
         file = open("setup/hitboxes.txt", "r")
         hitbox_list = p.sprite.Group()
         file.readline()
@@ -72,7 +72,7 @@ class Setup:
         return hitbox_list
 
     def objects(self):
-        print("here we go")
+        # print("here we go")
         file = open("setup/objects.txt", "r")
         object_list = p.sprite.Group()
         file.readline()
@@ -80,7 +80,6 @@ class Setup:
 
         while line:
             split_array = line.split(", ")
-            # overworld_image_name, x=0, y=0, width=50, height=50, action =
             action = ""
             if len(split_array) > 5:
                 action = split_array[5]

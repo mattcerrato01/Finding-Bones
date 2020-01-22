@@ -288,8 +288,8 @@ class Player(Movable_Object):
         self.speed = 2  # Change to 20 when testing
         self.diag_speed = self.speed / m.sqrt(2)
 
-        coord.set_offset_x(374)
-        coord.set_offset_y(228)
+        coord.set_offset_x(300)
+        coord.set_offset_y(600)
 
         self.x = coord.real_x(374-225)
         self.y = coord.real_y(228)
@@ -593,7 +593,7 @@ class Hitbox(p.sprite.Sprite):
         self.rect = p.Rect(coord.screen_x(self.x), coord.screen_y(self.y), self.width, self.height)
 
     def draw(self, screen, player):
-        self.drawn = True
+        p.draw.rect(screen, (0,0,0), (coord.screen_x(self.x), coord.screen_y(self.y), self.width, self.height), 2 )
 
     def changeMouse(self, mouse):
         if self.rect.collidepoint(mouse):
@@ -608,6 +608,8 @@ class Hitbox(p.sprite.Sprite):
 
     def update_action(self):
         return self.action
+    def update(self):
+        self.rect = p.Rect(coord.screen_x(self.x), coord.screen_y(self.y), self.width, self.height)
 
 
 
