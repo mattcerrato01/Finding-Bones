@@ -67,9 +67,8 @@ quest_villager = Objects.Quest_Villager("villager", True, (2,3), 400, 800)
 graveyard = Objects.Graveyard(45,1325)
 
 
-cage = Objects.Cage()
-cage.setX(1200)
-cage.setY(1200)
+cage = Objects.Object_chgs_image("cage-locked-bones.png", "cage-unlocked.png",600,600,128,114, """has(berry){print "I'm freed", "berry" from inv}""", "berry")
+
 dialogue_box = Objects.Dialogue_box()
 
 villager_tutorial = Objects.Quest_Villager("villager", fated=True, quest_end=(2,3), x= 400, y=200)

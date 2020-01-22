@@ -613,9 +613,36 @@ class Hitbox(p.sprite.Sprite):
     def update(self):
         self.rect = p.Rect(coord.screen_x(self.x), coord.screen_y(self.y), self.width, self.height)
 
-class Well(Object):
-    def __init__(self, x, y, width =  108, height = 168):
-        Object.__init__(self, "well-with-bucket.png", x, y, width, height, )
+class Object_chgs_image(Object):
+    def __init__(self, start_image_name, end_image_name, x, y, width, height, action, conditional):
+        Object.__init__(self, start_image_name, x, y, width, height, action)
+        self.start_image = p.transform.scale(loadify(start_image_name), (self.width, self.height))
+        self.end_image = p.transform.scale(loadify(end_image_name), (self.width, self.height))
+        self.conditional = conditional
+        self.image = self.start_image
+
+    def chg_image(self):
+
+        if self.image == self.start_image:
+            print("chged image")
+            self.image = self.end_image
+        elif self.image == self.end_image:
+            print("chged image")
+            self.image = self.start_image
+
+    def perform_action(self, mouse_click):
+        if self.rect.collidepoint(mouse_click) and world.state():
+            if inventory.has(self.conditional) > 0:
+                print("will change image")
+                self.chg_image()
+            self.action = actions.perform_action(self.action)
+            print(inventory.inventory)
+
+
+        return False
+
+
+#         Well's width is 108, height is 168
 
 
 

@@ -55,8 +55,8 @@ class Inventory:
     def has(self, item):
 
         for item_idx in range(len(Inventory.inventory)):
-            if item in Inventory.inventory[item_idx][0]:
-                print("definite" + str(Inventory.inventory[item_idx][0]) + " " + str(Inventory.inventory[item_idx][1]))
+            if item == Inventory.inventory[item_idx][0]:
+                print(str(Inventory.inventory[item_idx][1]))
                 return Inventory.inventory[item_idx][1]
         return 0
 
@@ -68,7 +68,7 @@ class Inventory:
         found_item = False
 
         for i in range(len(Inventory.inventory)):
-            if object in Inventory.inventory[i][0]: #dkid
+            if object == Inventory.inventory[i][0]:
                 Inventory.inventory[i][1] += 1
                 found_item = True
                 break
@@ -78,7 +78,10 @@ class Inventory:
     def remove_from_inventory(self, object):
         for i in range(len(Inventory.inventory)):
             if Inventory.inventory[i][0] == object:
-                Inventory.inventory.remove( ( object, Inventory.inventory[i][1] ) )
+                if Inventory.inventory[i][1] == 1:
+                    Inventory.inventory.pop(i)
+                elif Inventory.inventory[i][1] > 1:
+                    Inventory.inventory[i][1] -= 1
                 break
 
     def draw(self, screen):
@@ -199,7 +202,6 @@ class Actions:
 
                 if Inventory.has(Inventory,action[first_index:second_index]):
                     conditional_action = action[action.find("{") + 1:action.find("}")]
-                    print("happened")
                     for string in conditional_action.split(", "):
                         return_sub_string = action[action.find("has("):action.find("{") + 1] + self.perform_action(string) + "}" + " AND "
                 else:
@@ -215,7 +217,6 @@ class Actions:
                 if 0 <= first_index < second_index:
                     if "to" in action:
                         Inventory.append_to_inventory(Inventory, action[first_index+1:second_index])
-                        print(Inventory.inventory)
 
                     elif "from" in action:
                         Inventory.remove_from_inventory(Inventory, action[first_index+1:second_index])
