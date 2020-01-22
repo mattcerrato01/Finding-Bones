@@ -567,7 +567,6 @@ class Graveyard(Object):
             self.tombstones.append(tombstone)
             x_of_grave += 125
 
-
     def add_grave(self, villager):
 
         self.dead_people.append(villager)
@@ -579,9 +578,8 @@ class Graveyard(Object):
 
         self.visible_tombstones.append(self.tombstones[len(self.dead_people)-1])
 
-
     def get_tombstones(self):
-            return self.visible_tombstones[:]
+        return self.visible_tombstones[:]
 
 class Hitbox(p.sprite.Sprite):
     def __init__(self, x, y, width, height, action = ""):

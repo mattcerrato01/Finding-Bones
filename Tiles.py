@@ -24,7 +24,7 @@ class Tile:  # One 800x800 tile, contains the collision sprites contained within
     def add_to_group(self, *object):
         self.collision_group.add(object)
 
-    def remove_from_goup(self, *object):
+    def remove_from_group(self, *object):
         self.collision_group.remove(object)
 
     def draw(self, screen, player):  # draws the tile and all the sprites within it

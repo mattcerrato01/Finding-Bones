@@ -157,9 +157,12 @@ while running:
                 for collidable in collision_group:
                     if collidable.perform_action(pos): #returns true if villager has been reaped
                         graveyard.add_grave(collidable)
-                        collidable_group.add(graveyard.get_tombstones()[len(graveyard.get_tombstones())-1])
-                        collidable_group.remove(collidable)
-                        tile_map = t.Map(image_name_array, collidable_group)
+
+                        tomb = graveyard.get_tombstones()[len(graveyard.get_tombstones())-1]
+                        collidable_group.add(tomb)
+
+                        tile_map.tile_array[0][2].add_to_group(tomb)
+                        tile_map.tile_array[collidable.x // 800][collidable.y // 600].remove_from_group(collidable)
                         player.soul += 10
                         break
                     collidable.update_action()
