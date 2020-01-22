@@ -84,6 +84,7 @@ class Object(p.sprite.Sprite):
 class Cage(Object):
     def __init__(self, overworld_image_name = "cage-locked-bones.png"):
         Object.__init__(self,overworld_image_name, 128,114)
+        self.open = False
         self.action = """has(berry){print "I'm freed"}"""
 class Villagers(Object):
 
@@ -295,7 +296,7 @@ class Player(Movable_Object):
         self.y = coord.real_y(228)
         self.width = 40
         self.height = 127  # check this, should be collision height
-        self.rect = p.Rect(380, 244, self.width, self.height)
+        self.rect = p.Rect(380, 244 + 3*self.height/4, self.width, self.height/4)
         self.walking_time = 0
 
         self.tab_ = True
@@ -449,6 +450,7 @@ class Player(Movable_Object):
                     (0, 46 + 30 * (self.soul / 100), 50, 76))
 
 
+
 class Demons(Object):
 
     def __init__(self, name, x, y, up_walk, down_walk, left_walk, right_walk, player):
@@ -593,7 +595,7 @@ class Hitbox(p.sprite.Sprite):
         self.rect = p.Rect(coord.screen_x(self.x), coord.screen_y(self.y), self.width, self.height)
 
     def draw(self, screen, player):
-        # p.draw.rect(screen, (0,0,0), (coord.screen_x(self.x), coord.screen_y(self.y), self.width, self.height), 2 )
+        p.draw.rect(screen, (0,0,0), (coord.screen_x(self.x), coord.screen_y(self.y), self.width, self.height), 2 )
         self.drawn = True
     def changeMouse(self, mouse):
         if self.rect.collidepoint(mouse) and self.action != "" and world.state():
@@ -612,8 +614,8 @@ class Hitbox(p.sprite.Sprite):
         self.rect = p.Rect(coord.screen_x(self.x), coord.screen_y(self.y), self.width, self.height)
 
 class Well(Object):
-    def __init__(self, x, y, width = , height = 168):
-        Object.__init__()
+    def __init__(self, x, y, width =  108, height = 168):
+        Object.__init__(self, "well-with-bucket.png", x, y, width, height, )
 
 
 
