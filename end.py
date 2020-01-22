@@ -35,10 +35,10 @@ def main(screen):
 		key = p.key.get_pressed()
 		if key[p.K_ESCAPE]:
 			endrunning = False
-		
-		if 300 < p.mouse.get_pos()[0] < 500 and 140 < p.mouse.get_pos()[1] < 180:
+
+		if clicked:
+			if 300 < p.mouse.get_pos()[0] < 500 and 140 < p.mouse.get_pos()[1] < 180:
 			#print("mouse is over 'newGameButton'")
-			if clicked:
 				endrunning = False
 				return False
 		background.fill((250, 250, 250))

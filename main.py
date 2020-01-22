@@ -144,126 +144,126 @@ piles_of_bones = []
 
 while running:
 
-	if not paused:
-		screen.fill([255, 255, 255])
-		collision_group = tile_map.draw(screen, player)
-		clicked = False
+    if not paused:
+        screen.fill([255, 255, 255])
+        collision_group = tile_map.draw(screen, player)
+        clicked = False
 
-		for event in p.event.get():
-			if event.type == p.QUIT:
-				running = False
-			elif event.type == p.MOUSEBUTTONUP:
+        for event in p.event.get():
+            if event.type == p.QUIT:
+                running = False
+            elif event.type == p.MOUSEBUTTONUP:
 
-				pos = p.mouse.get_pos()
-				print(coord.real_x(pos[0]), coord.real_y(pos[1]))
+                pos = p.mouse.get_pos()
+                print(coord.real_x(pos[0]), coord.real_y(pos[1]))
 
-				for collidable in collision_group:
-					if collidable.perform_action(pos): #returns true if villager has been reaped
-						graveyard.add_grave(collidable)
-						bones = p.transform.scale(loadify("skull_and_bones.png"), (60,62))
-						piles_of_bones.append([bones, p.time.get_ticks(), collidable.x, collidable.y])
+                for collidable in collision_group:
+                    if collidable.perform_action(pos): #returns true if villager has been reaped
+                        graveyard.add_grave(collidable)
+                        bones = p.transform.scale(loadify("skull_and_bones.png"), (60,62))
+                        piles_of_bones.append([bones, p.time.get_ticks(), collidable.x, collidable.y])
 
-						tomb = graveyard.get_tombstones()[len(graveyard.get_tombstones())-1]
-						collidable_group.add(tomb)
+                        tomb = graveyard.get_tombstones()[len(graveyard.get_tombstones())-1]
+                        collidable_group.add(tomb)
 
-						tile_map.tile_array[0][2].add_to_group(tomb)
-						tile_map.tile_array[collidable.x // 800][collidable.y // 600].remove_from_group(collidable)
-						player.soul += 10
-						break
-					collidable.update_action()
-		if tutorial_active:
-			t_stage = run_tutorial(t_stage)
-			if t_stage == 3:
-				tutorial_active = False
+                        tile_map.tile_array[0][2].add_to_group(tomb)
+                        tile_map.tile_array[collidable.x // 800][collidable.y // 600].remove_from_group(collidable)
+                        player.soul += 10
+                        break
+                    collidable.update_action()
+        if tutorial_active:
+            t_stage = run_tutorial(t_stage)
+            if t_stage == 3:
+                tutorial_active = False
 
-		key = p.key.get_pressed()
-		if key[p.K_i]:
-			inventory.draw(screen)	#Draws inventory when holding i
+        key = p.key.get_pressed()
+        if key[p.K_i]:
+            inventory.draw(screen)	#Draws inventory when holding i
 
-		if key[p.K_p]:
-			tutorial_active = False
+        if key[p.K_p]:
+            tutorial_active = False
 
-		if key[p.K_ESCAPE] and esc_holder:
-			esc_holder = False
-			paused = True
+        if key[p.K_ESCAPE] and esc_holder:
+            esc_holder = False
+            paused = True
 
-		elif not key[p.K_ESCAPE]:
-			esc_holder = True
+        elif not key[p.K_ESCAPE]:
+            esc_holder = True
 
-		for x in range(p.time.get_ticks() // 10 - time // 10):
-			player.move(p.key.get_pressed(), collision_group, demons)
-			if not world.state():
-				for demon in demons:
-					demon.move(player)
-					if demon.hit:
-						demons.remove(demon)
-						player.set_fate(player.get_fate()-10)
-		# adding or subtracting demons when player's fate goes down
-		if abs(fate - player.get_fate()) >= 5:
-			i = 0
-			while i < abs(fate - player.get_fate()) // 5:
-				if fate - player.fate < 0:
-					randIDX = random.randint(0,len(demons)-1)
-					demons.remove(demons[randIDX])
-					i += 1
-				elif fate - player.get_fate() > 0:
-					createDemons(demons,player,1)
-					i += 1
-			fate = player.get_fate()
-		if not world.state():
-			for demon in demons:
-				demon.draw(screen)
+        for x in range(p.time.get_ticks() // 10 - time // 10):
+            player.move(p.key.get_pressed(), collision_group, demons)
+            if not world.state():
+                for demon in demons:
+                    demon.move(player)
+                    if demon.hit:
+                        demons.remove(demon)
+                        player.set_fate(player.get_fate()-10)
+        # adding or subtracting demons when player's fate goes down
+        if abs(fate - player.get_fate()) >= 5:
+            i = 0
+            while i < abs(fate - player.get_fate()) // 5:
+                if fate - player.fate < 0:
+                    randIDX = random.randint(0,len(demons)-1)
+                    demons.remove(demons[randIDX])
+                    i += 1
+                elif fate - player.get_fate() > 0:
+                    createDemons(demons,player,1)
+                    i += 1
+            fate = player.get_fate()
+        if not world.state():
+            for demon in demons:
+                demon.draw(screen)
 
-		dialogue_box.draw(screen)
-		for bone in piles_of_bones:
-			screen.blit(bone[0], (coord.screen_x(bone[2]), coord.screen_y(bone[3])))
-			if bone[1] + 3000 < p.time.get_ticks():
-				piles_of_bones.remove(bone)
-
-
-		player.draw(screen)
-		mouseChanged = False
-		for collidable in collision_group:
-			if collidable.changeMouse(p.mouse.get_pos()):
-				if type(collidable) == Objects.Villagers or type(collidable)==Objects.Quest_Villager:
-					if world.state():
-						screen.blit(speech_cursor, p.mouse.get_pos())
-						mouseChanged = True
-						break
-					else:
-						if not type(collidable) == Objects.Quest_Villager:
-							screen.blit(scythe_cursor, p.mouse.get_pos())
-							mouseChanged = True
-							break
-				else:
-					screen.blit(investigation_cursor, p.mouse.get_pos())
-					mouseChanged = True
-					break
-
-		if not mouseChanged:
-			screen.blit(cursor, p.mouse.get_pos())
-
-		if player.fate <= 0 or player.soul <= 0:
-			player.fate = 100
-			player.soul = 100
-			p.mouse.set_visible(True)
-			if not end.main(screen):
-				running = False
-		time = p.time.get_ticks()
-	else:
-		for event in p.event.get():
-			if event.type == p.QUIT:
-				running = False
-		key = p.key.get_pressed()
-		if key[p.K_ESCAPE] and esc_holder:
-			esc_holder = False
-			paused = False
-
-		elif not key[p.K_ESCAPE]:
-			esc_holder = True
-		#print(ptime)
-		p.draw.rect(screen,(0,0,0),p.Rect(250,200,300,200))
-		screen.blit(pausetext, ptextRect)
+        dialogue_box.draw(screen)
+        for bone in piles_of_bones:
+            screen.blit(bone[0], (coord.screen_x(bone[2]), coord.screen_y(bone[3])))
+            if bone[1] + 3000 < p.time.get_ticks():
+                piles_of_bones.remove(bone)
 
 
-	p.display.update()
+        player.draw(screen)
+        mouseChanged = False
+        for collidable in collision_group:
+            if collidable.changeMouse(p.mouse.get_pos()):
+                if type(collidable) == Objects.Villagers or type(collidable)==Objects.Quest_Villager:
+                    if world.state():
+                        screen.blit(speech_cursor, p.mouse.get_pos())
+                        mouseChanged = True
+                        break
+                    else:
+                        if not type(collidable) == Objects.Quest_Villager:
+                            screen.blit(scythe_cursor, p.mouse.get_pos())
+                            mouseChanged = True
+                            break
+                else:
+                    screen.blit(investigation_cursor, p.mouse.get_pos())
+                    mouseChanged = True
+                    break
+
+        if not mouseChanged:
+            screen.blit(cursor, p.mouse.get_pos())
+
+        # if player.fate <= 0 or player.soul <= 0:
+        #     player.fate = 100
+        #     player.soul = 100
+        #     p.mouse.set_visible(True)
+        #     if not end.main(screen):
+        #         running = False
+        time = p.time.get_ticks()
+    else:
+        for event in p.event.get():
+            if event.type == p.QUIT:
+                running = False
+        key = p.key.get_pressed()
+        if key[p.K_ESCAPE] and esc_holder:
+            esc_holder = False
+            paused = False
+
+        elif not key[p.K_ESCAPE]:
+            esc_holder = True
+        #print(ptime)
+        p.draw.rect(screen,(0,0,0),p.Rect(250,200,300,200))
+        screen.blit(pausetext, ptextRect)
+
+
+    p.display.update()
