@@ -632,11 +632,21 @@ class Object_chgs_image(Object):
 
     def perform_action(self, mouse_click):
         if self.rect.collidepoint(mouse_click) and world.state():
-            if inventory.has(self.conditional) > 0:
+            if inventory.has(self.conditional) > 0 or self.conditional == "":
                 print("will change image")
                 self.chg_image()
+
             self.action = actions.perform_action(self.action)
+            if self.conditional == "" or self.conditional == "bucket":
+                self.chg_action()
             print(inventory.inventory)
+    def chg_action(self):
+        if self.image == self.end_image:
+            self.action = """has(bucket){ "bucket" from inv"""
+            self.conditional = "bucket"
+        elif self.image == self.start_image:
+            self.action = """hasnt(bucket){"bucket" to inv}"""
+            self.conditional = ""
 
 
         return False

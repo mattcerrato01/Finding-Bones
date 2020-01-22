@@ -68,12 +68,12 @@ graveyard = Objects.Graveyard(45,1325)
 
 
 cage = Objects.Object_chgs_image("cage-locked-bones.png", "cage-unlocked.png",600,600,128,114, """has(berry){print "I'm freed", "berry" from inv}""", "berry")
-
+well = Objects.Object_chgs_image("well-with-bucket.png", "well-without-bucket.png", 100, 1500, 108,168,"""hasnt(bucket){"bucket" to inv}""", "")
 dialogue_box = Objects.Dialogue_box()
 
 villager_tutorial = Objects.Quest_Villager("villager", fated=True, quest_end=(2,3), x= 400, y=200)
 
-collidable_group = p.sprite.Group(villager_tutorial, quest_villager, cage)
+collidable_group = p.sprite.Group(villager_tutorial, quest_villager, cage, well)
 for i in range(5):
     villager = Objects.Villagers("villager", False, 500 + 100*i, 500 + 100*i)
     collidable_group.add(villager)

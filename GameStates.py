@@ -206,6 +206,18 @@ class Actions:
                         return_sub_string = action[action.find("has("):action.find("{") + 1] + self.perform_action(string) + "}" + " AND "
                 else:
                     return_sub_string = action + " AND "
+            elif "hasnt(" in action:
+
+
+                first_index = action.find("hasnt(")+6
+                second_index = action.find(")")
+
+                if not Inventory.has(Inventory,action[first_index:second_index]):
+                    conditional_action = action[action.find("{") + 1:action.find("}")]
+                    for string in conditional_action.split(", "):
+                        return_sub_string = action[action.find("hasnt("):action.find("{") + 1] + self.perform_action(string) + "}" + " AND "
+                else:
+                    return_sub_string = action + " AND "
 
             elif "inv" in action:
 
@@ -217,6 +229,7 @@ class Actions:
                 if 0 <= first_index < second_index:
                     if "to" in action:
                         Inventory.append_to_inventory(Inventory, action[first_index+1:second_index])
+                        print(Inventory.inventory)
 
                     elif "from" in action:
                         Inventory.remove_from_inventory(Inventory, action[first_index+1:second_index])
