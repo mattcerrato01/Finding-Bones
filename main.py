@@ -242,12 +242,12 @@ while running:
         if not mouseChanged:
             screen.blit(cursor, p.mouse.get_pos())
 
-        if player.fate <= 0 or player.soul <= 0:
-            player.fate = 100
-            player.soul = 100
-            p.mouse.set_visible(True)
-            if not end.main(screen):
-                running = False
+        # if player.fate <= 0 or player.soul <= 0:
+        #     player.fate = 100
+        #     player.soul = 100
+        #     p.mouse.set_visible(True)
+        #     if not end.main(screen):
+        #         running = False
         time = p.time.get_ticks()
     else:
         for event in p.event.get():
