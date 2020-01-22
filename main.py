@@ -147,6 +147,7 @@ while running:
             elif event.type == p.MOUSEBUTTONUP:
 
                 pos = p.mouse.get_pos()
+                print(coord.real_x(pos[0]), coord.real_y(pos[1]))
 
                 for collidable in collision_group:
                     if collidable.perform_action(pos): #returns true if villager has been reaped
