@@ -534,7 +534,7 @@ class Dialogue_box():
 
 class Tombstone(Object):
     def __init__(self, overworld_image_name = "graveyard-tombstone.png", name = ""):
-        Object.__init__(self, overworld_image_name, 94,100)
+        Object.__init__(self, overworld_image_name, width=103,height=110)
         self.name = name
 
     def set_name(self, name):

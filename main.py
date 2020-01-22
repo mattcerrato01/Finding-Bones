@@ -66,7 +66,7 @@ print(collidables)
 
 quest_villager = Objects.Quest_Villager("villager", True, (2,3), 400, 800)
 
-graveyard = Objects.Graveyard(75,1325)
+graveyard = Objects.Graveyard(45,1325)
 
 # rect.setX(100)
 # rect.setY(300)
