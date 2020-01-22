@@ -139,6 +139,7 @@ ptime = 0
 esc_holder = False
 mouseChanged = False
 tutorial_active = True
+piles_of_bones = []
 
 while running:
 
@@ -157,6 +158,8 @@ while running:
                 for collidable in collision_group:
                     if collidable.perform_action(pos): #returns true if villager has been reaped
                         graveyard.add_grave(collidable)
+                        bones = p.transform.scale(loadify("skull_and_bones.png"), (60,62))
+                        piles_of_bones.append([bones, p.time.get_ticks(), collidable.x, collidable.y])
 
                         tomb = graveyard.get_tombstones()[len(graveyard.get_tombstones())-1]
                         collidable_group.add(tomb)
@@ -210,6 +213,11 @@ while running:
                 demon.draw(screen)
 
         dialogue_box.draw(screen)
+        for bone in piles_of_bones:
+            screen.blit(bone[0], (coord.screen_x(bone[2]), coord.screen_y(bone[3])))
+            if bone[1] + 3000 < p.time.get_ticks():
+                piles_of_bones.remove(bone)
+
 
         player.draw(screen)
         mouseChanged = False
