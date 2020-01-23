@@ -60,6 +60,7 @@ player = Objects.Player("player.jpg", ["GR-F-L", "GR-F-S", "GR-F-R", "GR-F-S"],
 
 setup = Setup.Setup()
 collidables = setup.collidables()
+quest_dialogue = setup.quest_dialogue()
 print(collidables)
 
 quest_villager = Objects.Quest_Villager("villager", True, (2,3), 400, 800)
@@ -108,15 +109,31 @@ font = p.font.Font(None, 36)
 pausetext = font.render("Paused", 1, (250, 250, 250))
 ptextRect = pausetext.get_rect()
 ptextRect.center = (400,300)
+def forced_dialogue(dialogue):
+    """
 
-def run_tutorial(t_stage, villager_tutorial, dialogue):
+    :param quest_villager: villager that will be speaking the forced dialogue with death
+    :param dialogue: list of strings representing the print action a villager can perform
+    :return: running
+    """
+    if len(dialogue)>0 and dialogue[0] != """print "quest end" """:
+        if p.time.get_ticks() % 3000:
+            actions.perform_action(dialogue[0])
+            dialogue_box.draw(screen)
+            dialogue.pop(0)
+        return False
+    return True
+
+def run_tutorial(t_stage, villager_tutorial, quest_dialogue):
     # print("tutorial running press p to skip")
     # print(t_stage)
     if t_stage == 0:
         t_stage = 1
     elif t_stage == 1:
-        # if forced_dialogue(dialogue):
-        t_stage = 2
+        if forced_dialogue(quest_dialogue):
+            t_stage = 2
+        else:
+            return t_stage
     elif t_stage == 2:
         if p.time.get_ticks()%1000:
             villager_tutorial.setX(villager_tutorial.getX()+0.5)
@@ -125,19 +142,7 @@ def run_tutorial(t_stage, villager_tutorial, dialogue):
             t_stage = 3
     return t_stage
 
-def forced_dialogue(dialogue):
-    """
 
-    :param quest_villager: villager that will be speaking the forced dialogue with death
-    :param dialogue: list of strings representing the print action a villager can perform
-    :return: running
-    """
-    if len(dialogue)>0:
-        if p.time.get_ticks() % 1000:
-            actions.perform_action(dialogue[0])
-            dialogue.pop(0)
-        return False
-    return True
 
 
 t_stage = 0
@@ -180,7 +185,7 @@ while running:
                         break
                     collidable.update_action()
         if tutorial_active:
-            t_stage = run_tutorial(t_stage, villager_tutorial, "")
+            t_stage = run_tutorial(t_stage, villager_tutorial, quest_dialogue)
             if t_stage == 3:
                 tutorial_active = False
 

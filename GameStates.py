@@ -236,6 +236,7 @@ class Actions:
 
 
             elif "print" in action:
+                print("PRINTED")
                 return_sub_string = action+" AND "
                 first_index = action.find('"')
                 second_index = action.find('"', first_index + 1)

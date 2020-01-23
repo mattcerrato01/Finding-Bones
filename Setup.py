@@ -17,6 +17,15 @@ class WriteTest:
     # print(file.readline())
 
 class Setup:
+    def quest_dialogue(self):
+        file = open("setup/forced_dialogue.txt")
+        dialogue = []
+        line = file.readline()
+        while line:
+            dialogue.append(line)
+            # print(line)
+            line = file.readline()
+        return dialogue
 
     def collidables(self):
         collidable = p.sprite.Group(self.villagers())
