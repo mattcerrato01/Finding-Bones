@@ -119,7 +119,7 @@ def forced_dialogue(dialogue, dialogue_time):
     """
     if len(dialogue) > 0:
         if "quest end" not in dialogue[0]:
-            if dialogue_time[0] + 1500< p.time.get_ticks():
+            if dialogue_time[0] + 3000< p.time.get_ticks():
                 dialogue_time[0] = p.time.get_ticks()
                 actions.perform_action(dialogue[0])
                 dialogue.pop(0)
@@ -145,6 +145,9 @@ def run_tutorial(t_stage, villager_tutorial, quest_dialogue, dialogue_time):
             villager_tutorial.setY(villager_tutorial.getY()+1)
         if villager_tutorial.getX() == 420:
             t_stage = 3
+    elif t_stage == 3:
+        if forced_dialogue(quest_dialogue, dialogue_time):
+            t_stage = 4
     return t_stage
 
 
@@ -191,7 +194,7 @@ while running:
                     collidable.update_action()
         if tutorial_active:
             t_stage = run_tutorial(t_stage, villager_tutorial, quest_dialogue, dialogue_time)
-            if t_stage == 3:
+            if t_stage == 4:
                 tutorial_active = False
 
         key = p.key.get_pressed()
