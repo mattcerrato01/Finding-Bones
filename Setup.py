@@ -1,5 +1,7 @@
 import pygame as p
 import Objects
+import GameStates as gs
+qm = gs.QuestManager()
 
 class WriteTest:
     file = open("testfile.txt", "w")
@@ -71,6 +73,51 @@ class Setup:
             split_array = line.split(", ")
 
             villager_list.add( Objects.Villagers( split_array[0] , split_array[1] == "True" , int(split_array[2]), int(split_array[3]), split_array[4] == "True" ) )
+
+            line = file.readline()
+
+        return villager_list
+
+    def quests(self):
+        # print("here we are")
+
+        file = open("setup/quests.txt","r")
+
+        villager_list = p.sprite.Group()
+        line = file.readline()
+
+        while line:
+
+            command = line[0 : line.find(" ")]
+
+            if command == "Quest":
+                quest = int( line[line.find(" ")+1 : line.find(":")] )
+            elif command == "Stage":
+                stage = int( line[line.find(" ")+1 : line.find(":")] )
+                qm.set_quest_stage(quest, stage, input)
+            elif command == "Name":
+                name = line[ line.find("= ")+2 : ]
+            elif command == "Image":
+                image = line[ line.find("= ")+2 : ]
+            elif command == "Fated":
+                fated = line[ line.find("= ")+2 : ]
+            elif command == "(x,y)":
+                sub = line[ line.find("= ")+2 : ]
+                x = int( sub[ sub.find("(")+1 : sub.find(",") ] )
+                y = int( sub[ sub.find(",")+1 : sub.find(")") ] )
+            elif command == "Gender":
+                male = not "f" in line[ line.find("= ")+2 : ]
+            elif command == "Grey":
+                grey = line[ line.find("= ")+2 : ] == "True"
+            elif command == "Action":
+                action = line[ line.find("= ")+2 : ]
+                split_string = action.split("Q(")
+                quest_array = [split_string[0][ : split_string[0].find(",")]]
+
+                for sub in split_string:
+                    quest_array.append( sub[sub.find(",")+1 : sub.find(")")] )
+
+                villager_list.add(Objects.Quest_Villager( name, image.strip(), fated, quest_array, action, x, y, male, grey))
 
             line = file.readline()
 

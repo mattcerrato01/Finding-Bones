@@ -174,7 +174,7 @@ class Actions:
 
             elif "do(" in action:
 
-                first_index = action.find("do(") + 3
+                first_index = action.find("do(")+3
                 second_index = action.find(")")
 
                 if ":" in action[first_index:second_index]:
@@ -275,32 +275,43 @@ class QuestManager:
 
     def add_number_quests(self, num):
         while True:
-            if self.add_quest() >= num:
+            if self.add_quest(num):
                 break
 
-    def add_quest(self):
-        QuestManager.quests.append(0)
-        QuestManager.quest_actions.append([])
-        return len(QuestManager.quests)
+    def add_quest(self, add_to = -1):
 
-    def set_quest_actions(self, quest_num, quest_stage, action):
+        if add_to == -1:
+            QuestManager.quests.append(0)
+            QuestManager.quest_actions.append([])
+        else:
+            while len(QuestManager.quests) <= add_to:
+                QuestManager.quests.append(0)
+                QuestManager.quest_actions.append([])
 
-        while len(QuestManager.quest_actions[quest_num]) - 1 < quest_stage:
+    def set_quest_stage(self, quest_num, quest_stage, action):
+
+        QuestManager.add_quest(self, quest_num)
+
+
+        while len(QuestManager.quest_actions[quest_num]) <= quest_stage:
             QuestManager.quest_actions[quest_num].append('')
 
         QuestManager.quest_actions[quest_num][quest_stage] = action
 
     def advance_quest(self, quest_num):
-        while len(QuestManager.quests) <= quest_num:
+        while(len(QuestManager.quests) <= quest_num):
             QuestManager.quests.append(0)
             QuestManager.quest_actions.append([])
-        QuestManager.quests[quest_num] += 1
-        while len(QuestManager.quest_actions[quest_num]) <= QuestManager.quests[quest_num]:
+        QuestManager.quests[quest_num]+=1
+        while (len(QuestManager.quest_actions[quest_num]) <= QuestManager.quests[quest_num]):
             QuestManager.quest_actions[quest_num].append('')
         Actions.perform_action(Actions, QuestManager.quest_actions[quest_num][QuestManager.quests[quest_num]])
 
     def quest_stage(self, quest_num):
-        return QuestManager.quests[quest_num]
+        try:
+            return QuestManager.quests[quest_num]
+        except:
+            return 0
 
     def is_quest_stage(self, quest_num, quest_stage):
         return QuestManager.quests[quest_num] == quest_stage

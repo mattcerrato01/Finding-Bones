@@ -155,8 +155,8 @@ class Villagers(Object):
                           """print "Best way to ward off demons? Call them demoffs" """] #List of dialogue options for normal villager
         idx = r.randint(0,len(self.dialogues)-1)
         self.action = self.dialogues[idx]
-        font = p.font.SysFont('Times New Romans', 16)
-        self.nameplate = font.render(self.name, False, (0, 0, 0), (255,255,255))
+        self.font = p.font.SysFont('Times New Romans', 16)
+        self.nameplate = self.font.render(self.name, False, (0, 0, 0), (255,255,255))
     #   self.fated
 
     def update_action(self):
@@ -217,11 +217,15 @@ class Villagers(Object):
 
 class Quest_Villager(Villagers):
 
-    def __init__(self, overworld_image_name, fated, quest_end, x, y, male = True, grey = False):
+    def __init__(self, name, overworld_image_name, fated, quest_array, action, x, y, male = True, grey = False):
         Villagers.__init__(self, overworld_image_name, fated, x, y, male)
+        self.nameplate = self.font.render(name, False, (0, 0, 0), (255, 255, 255))
         # print(str(self.essential) + str(quest_end))
+        self.action = action
         self.grey = grey
-        self.quest_end = quest_end
+        self.quest = quest_array[0]
+        self.quest_end = quest_array[len(quest_array)-1]
+        self.quest_array = quest_array[1:len(quest_array)-1]
 
         self.question_mark = p.transform.scale(loadify("question_mark.png"), (16, 24))
         if grey:
@@ -234,8 +238,9 @@ class Quest_Villager(Villagers):
 
         if world.state():
             Villagers.draw(self, screen, player)
-            screen.blit(self.question_mark, (coord.screen_x(self.x)+self.width/2-8, coord.screen_y(self.y)-30))
-        elif qm.quests[self.quest_end[0]] < self.quest_end[1]:
+            if qm.quest_stage(self.quest) in self.quest_array:
+                screen.blit(self.question_mark, (coord.screen_x(self.x)+self.width/2-8, coord.screen_y(self.y)-30))
+        elif qm.quests[self.quest] < self.quest_end:
             self.draw_image(screen, self.essential_soul)
         elif self.grey and qm.quests[3]>4:
             self.draw_image(screen, self.grey_soul)

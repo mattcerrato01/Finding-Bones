@@ -76,10 +76,11 @@ player = Objects.Player("player.jpg", ["GR-F-L", "GR-F-S", "GR-F-R", "GR-F-S"],
 
 setup = Setup.Setup()
 collidables = setup.collidables()
+collidables.add( setup.quests() )
 quest_dialogue = setup.quest_dialogue()
 print(collidables)
 
-quest_villager = Objects.Quest_Villager("villager", True, (2,3), 400, 800)
+#quest_villager = Objects.Quest_Villager("villager", True, (2,3), 400, 800)
 
 graveyard = Objects.Graveyard(45,1325)
 
@@ -88,9 +89,9 @@ cage = Objects.Object_chgs_image("cage-locked-bones.png", "cage-unlocked.png",60
 well = Objects.Object_chgs_image("well-with-bucket.png", "well-without-bucket.png", 120, 1830, 108,168,"""hasnt(bucket){"bucket" to inv}""", "")
 dialogue_box = Objects.Dialogue_box()
 
-villager_tutorial = Objects.Quest_Villager("villager", fated=True, quest_end=(2,3), x= 400, y=200)
+villager_tutorial = Objects.Quest_Villager("Harold Alfond Tutorial Villager", "villager", False, [2,3], "", 400, 200)
 
-collidable_group = p.sprite.Group(villager_tutorial, quest_villager, cage, well)
+collidable_group = p.sprite.Group(villager_tutorial, cage, well)
 for i in range(5):
     villager = Objects.Villagers("villager", False, 500 + 100 * i, 500 + 100 * i)
     collidable_group.add(villager)
