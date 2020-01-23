@@ -273,10 +273,10 @@ class QuestManager:
     quests = []
     quest_actions = []
 
-    def add_number_quests(self, num):
-        while True:
-            if self.add_quest(num):
-                break
+    #def add_number_quests(self, num):
+    #    while True:
+    #        if self.add_quest(num):
+    #            break
 
     def add_quest(self, add_to = -1):
 

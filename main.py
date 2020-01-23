@@ -32,7 +32,6 @@ screen = p.display.set_mode((800, 600))
 p.display.set_caption("Grim Reaper")
 
 
-quests.add_number_quests(5)
 
 quests.advance_quest(1)
 #quests.advance_quest(1)
