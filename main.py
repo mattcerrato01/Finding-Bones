@@ -117,11 +117,10 @@ def forced_dialogue(dialogue, dialogue_time):
     :param dialogue: list of strings representing the print action a villager can perform
     :return: running
     """
-    if len(dialogue)>0:
-        if dialogue[0] != """print "quest end" """:
-            if dialogue_time[0] + 1300< p.time.get_ticks():
+    if len(dialogue) > 0:
+        if "quest end" not in dialogue[0]:
+            if dialogue_time[0] + 1500< p.time.get_ticks():
                 dialogue_time[0] = p.time.get_ticks()
-                # print(dialogue[0])
                 actions.perform_action(dialogue[0])
                 dialogue.pop(0)
         else:
