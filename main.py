@@ -68,7 +68,7 @@ graveyard = Objects.Graveyard(45,1325)
 
 
 cage = Objects.Object_chgs_image("cage-locked-bones.png", "cage-unlocked.png",600,600,128,114, """has(berry){print "I'm freed", "berry" from inv}""", "berry")
-well = Objects.Object_chgs_image("well-with-bucket.png", "well-without-bucket.png", 100, 1500, 108,168,"""hasnt(bucket){"bucket" to inv}""", "")
+well = Objects.Object_chgs_image("well-with-bucket.png", "well-without-bucket.png", 120, 1830, 108,168,"""hasnt(bucket){"bucket" to inv}""", "")
 dialogue_box = Objects.Dialogue_box()
 
 villager_tutorial = Objects.Quest_Villager("villager", fated=True, quest_end=(2,3), x= 400, y=200)
@@ -109,7 +109,7 @@ pausetext = font.render("Paused", 1, (250, 250, 250))
 ptextRect = pausetext.get_rect()
 ptextRect.center = (400,300)
 
-def run_tutorial(t_stage):
+def run_tutorial(t_stage, villager_tutorial):
     # print("tutorial running press p to skip")
     # print(t_stage)
     if t_stage == 0:
@@ -165,7 +165,7 @@ while running:
                         break
                     collidable.update_action()
         if tutorial_active:
-            t_stage = run_tutorial(t_stage)
+            t_stage = run_tutorial(t_stage, villager_tutorial)
             if t_stage == 3:
                 tutorial_active = False
 

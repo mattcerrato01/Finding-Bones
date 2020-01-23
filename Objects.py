@@ -52,7 +52,7 @@ class Object(p.sprite.Sprite):
     def update_action(self):
         return self.action
     def changeMouse(self, mouse):
-        if self.rect.collidepoint(mouse):
+        if self.rect.collidepoint(mouse) and world.state():
             return True
         else:
             return False
@@ -81,11 +81,7 @@ class Object(p.sprite.Sprite):
     def collide(self, sprite):
         return p.sprite.collide_rect(self, sprite)
 
-class Cage(Object):
-    def __init__(self, overworld_image_name = "cage-locked-bones.png"):
-        Object.__init__(self,overworld_image_name, 128,114)
-        self.open = False
-        self.action = """has(berry){print "I'm freed"}"""
+
 class Villagers(Object):
 
     def __init__(self, overworld_image_name, fated, x, y, male = True):
@@ -204,7 +200,11 @@ class Villagers(Object):
         screen.blit(image, (coord.screen_x(self.x), coord.screen_y(self.y)))
         rect = self.nameplate.get_rect()
         screen.blit(self.nameplate, (coord.screen_x(self.x) + self.width / 2 - rect.width / 2, coord.screen_y(self.y) + self.height))
-
+    def changeMouse(self, mouse):
+        if self.rect.collidepoint(mouse):
+            return True
+        else:
+            return False
 
 
     def get_soul_reaped(self):
@@ -597,11 +597,7 @@ class Hitbox(p.sprite.Sprite):
     def draw(self, screen, player):
         p.draw.rect(screen, (0,0,0), (coord.screen_x(self.x), coord.screen_y(self.y), self.width, self.height), 2 )
         self.drawn = True
-    def changeMouse(self, mouse):
-        if self.rect.collidepoint(mouse) and self.action != "" and world.state():
-            return True
-        else:
-            return False
+
 
     def perform_action(self, mouse_click):
         if self.rect.collidepoint(mouse_click) and world.state():
@@ -647,8 +643,6 @@ class Object_chgs_image(Object):
         elif self.image == self.start_image:
             self.action = """hasnt(bucket){"bucket" to inv}"""
             self.conditional = ""
-
-
         return False
 
 
