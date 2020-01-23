@@ -1,8 +1,8 @@
 import random
 import pygame as p
 
-class WorldState:
 
+class WorldState:
     overworld = True
 
     def state(self):
@@ -10,31 +10,37 @@ class WorldState:
 
     def toggle(self):
         WorldState.overworld = not WorldState.overworld
+
     def x(self):
         x = 0
 
+
 def change_track(state):
-	p.mixer.music.stop()
-	if state == 1:
-		p.mixer.music.load('soundtrack/Overworld_Track.wav')
-	elif state == 2:
-		p.mixer.music.load('soundtrack/Underworld_Theme.wav')
-	p.mixer.music.play(-1)
+    p.mixer.music.stop()
+    if state == 1:
+        p.mixer.music.load('soundtrack/Overworld_Track.wav')
+    elif state == 2:
+        p.mixer.music.load('soundtrack/Underworld_Theme.wav')
+    p.mixer.music.play(-1)
+
 
 class NameGenerator:
 
     def __init__(self):
-        self.male_names = ["William","Jonathan","Walter","Peter","Frederick","Roger","Arthur","Cedric","Leo","Ronald","Robin","Gavin","Charles","Benjamin","Matthew","Edwin","Nick","Bruce","Anthony","Juan","Albert","Gabriel"]
+        self.male_names = ["William", "Jonathan", "Walter", "Peter", "Frederick", "Roger", "Arthur", "Cedric", "Leo",
+                           "Ronald", "Robin", "Gavin", "Charles", "Benjamin", "Matthew", "Edwin", "Nick", "Bruce",
+                           "Anthony", "Juan", "Albert", "Gabriel"]
 
-        self.female_names = ["Mary","Elizabeth","Maria","Claudia","Lydia","Cynthia","Lauren","Maisy","Erika","Silvia","Melody","Ann","Lisa","Elise","Joanne","Sue"]
+        self.female_names = ["Mary", "Elizabeth", "Maria", "Claudia", "Lydia", "Cynthia", "Lauren", "Maisy", "Erika",
+                             "Silvia", "Melody", "Ann", "Lisa", "Elise", "Joanne", "Sue"]
 
-    def generate(self, male = True):
+    def generate(self, male=True):
         if male:
-            return self.male_names[random.randint(0, len(self.male_names)-1)]
-        return self.female_names[random.randint(0, len(self.female_names)-1)]
+            return self.male_names[random.randint(0, len(self.male_names) - 1)]
+        return self.female_names[random.randint(0, len(self.female_names) - 1)]
+
 
 class CoordConverter:
-
     offset_x = 0
     offset_y = 0
 
@@ -56,8 +62,8 @@ class CoordConverter:
     def screen_y(self, real_y):
         return real_y + CoordConverter.offset_y
 
-class Inventory:
 
+class Inventory:
     inventory = []
 
     def has(self, item):
@@ -81,7 +87,7 @@ class Inventory:
                 found_item = True
                 break
         if not found_item:
-            Inventory.inventory.append( [ object , 1 ] )
+            Inventory.inventory.append([object, 1])
 
     def remove_from_inventory(self, object):
         for i in range(len(Inventory.inventory)):
@@ -93,21 +99,19 @@ class Inventory:
                 break
 
     def draw(self, screen):
-        height  = 50 + 20*len(Inventory.inventory) #hjkl
-        p.draw.rect(screen,(0,0,0), (450,228,150, height))
+        height = 50 + 20 * len(Inventory.inventory)  # hjkl
+        p.draw.rect(screen, (0, 0, 0), (450, 228, 150, height))
         dialogue_box_font = p.font.SysFont("papyrus", 20)
         dialogue_box = dialogue_box_font.render("Inventory:", True, (255, 255, 255))
         rect = dialogue_box.get_rect()
-        screen.blit(dialogue_box,(525 - rect.width/2,238))
+        screen.blit(dialogue_box, (525 - rect.width / 2, 238))
         for i in range(len(Inventory.inventory)):
             dialogue_box = dialogue_box_font.render(Inventory.inventory[i][0], True, (255, 255, 255))
             rect = dialogue_box.get_rect()
-            screen.blit(dialogue_box,(525 - rect.width/2 ,258 + 20*i))
-
+            screen.blit(dialogue_box, (525 - rect.width / 2, 258 + 20 * i))
 
 
 class Actions:
-
     dialogue_list = []
 
     def dialogue_box(self, dialogue):
@@ -127,8 +131,6 @@ class Actions:
             else:
                 temp_string += " " + word
         Actions.dialogue_list.append(temp_string)
-
-
 
     def perform_action(self, quest_actions):
 
@@ -164,25 +166,29 @@ class Actions:
             second_index = action.find(",")
 
             if "Q(" in action:
-                if QuestManager.quests[int(action[first_index+2:second_index])] == int(action[second_index+1:action.find(")")]) or action[second_index+1] == "A":
-
-                    return_sub_string = action[action.find("Q"):action.find("{")+1] + self.perform_action(action[action.find("{")+1:action.find("}")]) + "}" +" AND "
+                if QuestManager.quests[int(action[first_index + 2:second_index])] == int(
+                        action[second_index + 1:action.find(")")]) or action[second_index + 1] == "A":
+                    return_sub_string = action[action.find("Q"):action.find("{") + 1] + self.perform_action(
+                        action[action.find("{") + 1:action.find("}")]) + "}" + " AND "
 
 
             elif "do(" in action:
 
-                first_index = action.find("do(")+3
+                first_index = action.find("do(") + 3
                 second_index = action.find(")")
 
                 if ":" in action[first_index:second_index]:
 
                     lower_bound = int(action[first_index:action.find(":")])
-                    upper_bound = int(action[action.find(":")+1:second_index])
+                    upper_bound = int(action[action.find(":") + 1:second_index])
 
                     will_run = False
 
-                    if lower_bound>0:
-                        return_sub_string = "do(" + str(lower_bound-1) + ":" + str(upper_bound) + ") {" + action[action.find("{")+1:action.find("}")] + "}" +" AND "
+                    if lower_bound > 0:
+                        return_sub_string = "do(" + str(lower_bound - 1) + ":" + str(upper_bound) + ") {" + action[
+                                                                                                            action.find(
+                                                                                                                "{") + 1:action.find(
+                                                                                                                "}")] + "}" + " AND "
                     else:
                         will_run = True
 
@@ -190,88 +196,82 @@ class Actions:
                     upper_bound = int(action[first_index:second_index])
                     will_run = True
 
-
-
-                if will_run and upper_bound>0:
+                if will_run and upper_bound > 0:
                     conditional_action = action[action.find("{") + 1:action.find("}")]
                     strings = conditional_action.split(", ")
                     upper_bound_chg = 0
                     end_string = ""
                     for idx in range(len(strings)):
-                        if idx == (len(strings)-1):
-
+                        if idx == (len(strings) - 1):
                             upper_bound_chg = 1
-                        end_string +=  self.perform_action(strings[idx])  + ", "
+                        end_string += self.perform_action(strings[idx]) + ", "
 
-                    return_sub_string = "do(" + str(upper_bound-upper_bound_chg) + ") {" + end_string + "}" + " AND "
+                    return_sub_string = "do(" + str(upper_bound - upper_bound_chg) + ") {" + end_string + "}" + " AND "
 
             elif "has(" in action:
 
-
-                first_index = action.find("has(")+4
+                first_index = action.find("has(") + 4
                 second_index = action.find(")")
 
-                if Inventory.has(Inventory,action[first_index:second_index]):
+                if Inventory.has(Inventory, action[first_index:second_index]):
                     conditional_action = action[action.find("{") + 1:action.find("}")]
                     for string in conditional_action.split(", "):
-                        return_sub_string = action[action.find("has("):action.find("{") + 1] + self.perform_action(string) + "}" + " AND "
+                        return_sub_string = action[action.find("has("):action.find("{") + 1] + self.perform_action(
+                            string) + "}" + " AND "
                 else:
                     return_sub_string = action + " AND "
             elif "hasnt(" in action:
 
-
-                first_index = action.find("hasnt(")+6
+                first_index = action.find("hasnt(") + 6
                 second_index = action.find(")")
 
-                if not Inventory.has(Inventory,action[first_index:second_index]):
+                if not Inventory.has(Inventory, action[first_index:second_index]):
                     conditional_action = action[action.find("{") + 1:action.find("}")]
                     for string in conditional_action.split(", "):
-                        return_sub_string = action[action.find("hasnt("):action.find("{") + 1] + self.perform_action(string) + "}" + " AND "
+                        return_sub_string = action[action.find("hasnt("):action.find("{") + 1] + self.perform_action(
+                            string) + "}" + " AND "
                 else:
                     return_sub_string = action + " AND "
 
             elif "inv" in action:
 
-                return_sub_string = action+" AND "
+                return_sub_string = action + " AND "
 
                 first_index = action.find('"')
-                second_index = action.find('"', first_index+1)
+                second_index = action.find('"', first_index + 1)
 
                 if 0 <= first_index < second_index:
                     if "to" in action:
-                        Inventory.append_to_inventory(Inventory, action[first_index+1:second_index])
+                        Inventory.append_to_inventory(Inventory, action[first_index + 1:second_index])
 
                     elif "from" in action:
-                        Inventory.remove_from_inventory(Inventory, action[first_index+1:second_index])
+                        Inventory.remove_from_inventory(Inventory, action[first_index + 1:second_index])
 
 
             elif "print" in action:
-                return_sub_string = action+" AND "
+                return_sub_string = action + " AND "
                 first_index = action.find('"')
                 second_index = action.find('"', first_index + 1)
                 if 0 <= first_index < second_index:
-                    self.dialogue_box(action[first_index+1:second_index])
+                    self.dialogue_box(action[first_index + 1:second_index])
 
             elif "adv" in action:
                 first_index = action.find('"')
-                second_index = action.find('"', first_index+1)
+                second_index = action.find('"', first_index + 1)
                 quest_num = int(action[first_index:second_index])
                 QuestManager.advance_quest(quest_num)
 
-
-
-            return_string+=return_sub_string
+            return_string += return_sub_string
 
         return return_string[:-5]
-        #return ""
+        # return ""
 
     "Q(1,A) {} AND Q(2,4) {}"
 
-class QuestManager:
 
+class QuestManager:
     quests = []
     quest_actions = []
-
 
     def add_number_quests(self, num):
         while True:
@@ -285,20 +285,19 @@ class QuestManager:
 
     def set_quest_actions(self, quest_num, quest_stage, action):
 
-        while( len(QuestManager.quest_actions[quest_num])-1 < quest_stage ):
+        while len(QuestManager.quest_actions[quest_num]) - 1 < quest_stage:
             QuestManager.quest_actions[quest_num].append('')
 
         QuestManager.quest_actions[quest_num][quest_stage] = action
 
     def advance_quest(self, quest_num):
-        while(len(QuestManager.quests) <= quest_num):
+        while len(QuestManager.quests) <= quest_num:
             QuestManager.quests.append(0)
             QuestManager.quest_actions.append([])
-        QuestManager.quests[quest_num]+=1
-        while (len(QuestManager.quest_actions[quest_num]) <= QuestManager.quests[quest_num]):
+        QuestManager.quests[quest_num] += 1
+        while len(QuestManager.quest_actions[quest_num]) <= QuestManager.quests[quest_num]:
             QuestManager.quest_actions[quest_num].append('')
         Actions.perform_action(Actions, QuestManager.quest_actions[quest_num][QuestManager.quests[quest_num]])
-
 
     def quest_stage(self, quest_num):
         return QuestManager.quests[quest_num]
