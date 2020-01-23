@@ -13,6 +13,14 @@ class WorldState:
     def x(self):
         x = 0
 
+def change_track(state):
+	p.mixer.music.stop()
+	if state == 1:
+		p.mixer.music.load('soundtrack/Overworld_Track.wav')
+	elif state == 2:
+		p.mixer.music.load('soundtrack/Underworld_Theme.wav')
+	p.mixer.music.play(-1)
+
 class NameGenerator:
 
     def __init__(self):
@@ -114,26 +122,13 @@ class Actions:
         for word in words:
 
             if dialogue_box_font.size(temp_string + " " + word)[0] > 460:
-                Actions.dialogue_list.append((temp_string, p.time.get_ticks()))
+                Actions.dialogue_list.append(temp_string)
                 temp_string = word
             else:
                 temp_string += " " + word
-        Actions.dialogue_list.append((temp_string, p.time.get_ticks()))
+        Actions.dialogue_list.append(temp_string)
 
 
-
-    def update_dialogue_box(self):
-
-        while len(Actions.dialogue_list) > 4:
-            Actions.dialogue_list.pop(0)
-
-        while len(Actions.dialogue_list) > 0:
-            if Actions.dialogue_list[0][1]+3000 < p.time.get_ticks():
-                Actions.dialogue_list.pop(0)
-            else:
-                break
-
-        return len(Actions.dialogue_list) > 0
 
     def perform_action(self, quest_actions):
 
@@ -245,19 +240,16 @@ class Actions:
                 if 0 <= first_index < second_index:
                     if "to" in action:
                         Inventory.append_to_inventory(Inventory, action[first_index+1:second_index])
-                        print(Inventory.inventory)
 
                     elif "from" in action:
                         Inventory.remove_from_inventory(Inventory, action[first_index+1:second_index])
 
 
             elif "print" in action:
-                print("PRINTED")
                 return_sub_string = action+" AND "
                 first_index = action.find('"')
                 second_index = action.find('"', first_index + 1)
                 if 0 <= first_index < second_index:
-                    print(action[first_index+1:second_index])
                     self.dialogue_box(action[first_index+1:second_index])
 
             elif "adv" in action:
