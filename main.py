@@ -9,6 +9,7 @@ import start as st
 import end
 import Setup
 import Canopy
+import os
 
 
 
@@ -35,6 +36,12 @@ quests.add_number_quests(3)
 
 quests.advance_quest(1)
 #quests.advance_quest(1)
+
+def play_sound(name):
+  sound = p.mixer.Sound("effects/" + name + ".wav")
+  sound.play()
+
+
 
 
 def loadify(imgname):
@@ -124,6 +131,7 @@ def forced_dialogue(dialogue):
 	"""
 	if len(dialogue) > 0:
 		if "quest end" not in dialogue[0]:
+			#play_sound('BlehSound') #test
 			actions.perform_action(dialogue[0])
 			dialogue.pop(0)
 		else:
@@ -170,6 +178,7 @@ esc_holder = False
 mouseChanged = False
 tutorial_active = True
 piles_of_bones = []
+gs.change_track(1)
 
 while running:
 

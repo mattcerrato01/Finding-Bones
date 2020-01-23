@@ -96,3 +96,5 @@ class Setup:
             line = file.readline()
 
         return object_list
+    
+   
