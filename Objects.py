@@ -4,6 +4,7 @@ import math as m
 import GameStates as gs
 import random as r
 
+
 coord = gs.CoordConverter()
 world = gs.WorldState()
 names = gs.NameGenerator()
@@ -428,6 +429,10 @@ class Player(Movable_Object):
                     break
             if not collide:
                 world.toggle()
+                if world.state():
+                	gs.change_track(1)
+                else:
+                	gs.change_track(2)
                 self.soul -= 10
                 self.tab_holder = False
 

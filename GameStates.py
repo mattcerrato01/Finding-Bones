@@ -13,6 +13,14 @@ class WorldState:
     def x(self):
         x = 0
 
+def change_track(state):
+	p.mixer.music.stop()
+	if state == 1:
+		p.mixer.music.load('soundtrack/Overworld_Track.wav')
+	elif state == 2:
+		p.mixer.music.load('soundtrack/Underworld_Theme.wav')
+	p.mixer.music.play(-1)
+
 class NameGenerator:
 
     def __init__(self):
