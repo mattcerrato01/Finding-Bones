@@ -520,22 +520,27 @@ class Dialogue_box():
         self.box_2 = p.transform.scale(loadify("dialoguebox-2.png"), (300, 100))
         self.dialogue = actions.dialogue_list
         self.dialogue_box_font = p.font.SysFont("papyrus", 20)
+        self.drawn = False
+    def perform_action(self, mouse):
+        if mouse:
+            actions.dialogue_list.pop(0)
+            self.dialogue = actions.dialogue_list
 
     def draw(self, screen):
-        if actions.update_dialogue_box():
+        if len(self.dialogue)>0:
+            self.drawn = True
 
 
             screen.blit(self.box_1, (100,25))
             screen.blit(self.box_2,(400,25))
-
-            while len(self.dialogue) > 4:
-                self.dialogue.pop(0)
-
-            for i in range(len(self.dialogue)):
-
-
-                dialogue_box = self.dialogue_box_font.render(self.dialogue[i][0], True, (255, 255, 255))
+            dialogues_shown = 4
+            if len(self.dialogue)<4:
+                dialogues_shown = len(self.dialogue)
+            for i in range(dialogues_shown):
+                dialogue_box = self.dialogue_box_font.render(self.dialogue[i], True, (255, 255, 255))
                 screen.blit(dialogue_box,(120,35 + 20*i))
+            return True
+        return False
 
 class Tombstone(Object):
     def __init__(self, overworld_image_name = "graveyard-tombstone.png", name = ""):

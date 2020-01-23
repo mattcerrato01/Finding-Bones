@@ -114,26 +114,13 @@ class Actions:
         for word in words:
 
             if dialogue_box_font.size(temp_string + " " + word)[0] > 460:
-                Actions.dialogue_list.append((temp_string, p.time.get_ticks()))
+                Actions.dialogue_list.append(temp_string)
                 temp_string = word
             else:
                 temp_string += " " + word
-        Actions.dialogue_list.append((temp_string, p.time.get_ticks()))
+        Actions.dialogue_list.append(temp_string)
 
 
-
-    def update_dialogue_box(self):
-
-        while len(Actions.dialogue_list) > 4:
-            Actions.dialogue_list.pop(0)
-
-        while len(Actions.dialogue_list) > 0:
-            if Actions.dialogue_list[0][1]+3000 < p.time.get_ticks():
-                Actions.dialogue_list.pop(0)
-            else:
-                break
-
-        return len(Actions.dialogue_list) > 0
 
     def perform_action(self, quest_actions):
 

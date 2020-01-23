@@ -115,8 +115,7 @@ font = p.font.Font(None, 36)
 pausetext = font.render("Paused", 1, (250, 250, 250))
 ptextRect = pausetext.get_rect()
 ptextRect.center = (400,300)
-dialogue_time = [p.time.get_ticks()]
-def forced_dialogue(dialogue, dialogue_time):
+def forced_dialogue(dialogue):
 	"""
 
 	:param quest_villager: villager that will be speaking the forced dialogue with death
@@ -125,28 +124,26 @@ def forced_dialogue(dialogue, dialogue_time):
 	"""
 	if len(dialogue) > 0:
 		if "quest end" not in dialogue[0]:
-			if dialogue_time[0] + 3000< p.time.get_ticks():
-				dialogue_time[0] = p.time.get_ticks()
-				actions.perform_action(dialogue[0])
-				dialogue.pop(0)
+			actions.perform_action(dialogue[0])
+			dialogue.pop(0)
 		else:
 			dialogue.pop(0)
 			return True
 		return False
 	return True
 
-def run_tutorial(t_stage, villager_tutorial, quest_dialogue, dialogue_time):
+def run_tutorial(t_stage, villager_tutorial, quest_dialogue):
 	# print("tutorial running press p to skip")
 	# print(t_stage)
 	if t_stage == 0:
 		t_stage = 1
 	elif t_stage == 1:
-		if forced_dialogue(quest_dialogue,dialogue_time):
+		if forced_dialogue(quest_dialogue):
 			t_stage = 2
 		else:
 			return t_stage
 	elif t_stage == 2:
-		if forced_dialogue(quest_dialogue,dialogue_time):
+		if forced_dialogue(quest_dialogue):
 			t_stage = 3
 		else:
 			return t_stage
@@ -157,7 +154,7 @@ def run_tutorial(t_stage, villager_tutorial, quest_dialogue, dialogue_time):
 		if villager_tutorial.getX() == 420:
 			t_stage = 4
 	elif t_stage == 4:
-		if forced_dialogue(quest_dialogue, dialogue_time):
+		if forced_dialogue(quest_dialogue):
 			t_stage = 5
 	return t_stage
 
@@ -195,23 +192,25 @@ while running:
 
 				pos = p.mouse.get_pos()
 				print(coord.real_x(pos[0]), coord.real_y(pos[1]))
+				if dialogue_box.draw(screen):
+					dialogue_box.perform_action(pos)
+				else:
+					for collidable in collision_group:
+						if collidable.perform_action(pos): #returns true if villager has been reaped
+							graveyard.add_grave(collidable)
+							bones = p.transform.scale(loadify("skull_and_bones.png"), (60,62))
+							piles_of_bones.append([bones, p.time.get_ticks(), collidable.x, collidable.y])
 
-				for collidable in collision_group:
-					if collidable.perform_action(pos): #returns true if villager has been reaped
-						graveyard.add_grave(collidable)
-						bones = p.transform.scale(loadify("skull_and_bones.png"), (60,62))
-						piles_of_bones.append([bones, p.time.get_ticks(), collidable.x, collidable.y])
+							tomb = graveyard.get_tombstones()[len(graveyard.get_tombstones())-1]
+							collidable_group.add(tomb)
 
-						tomb = graveyard.get_tombstones()[len(graveyard.get_tombstones())-1]
-						collidable_group.add(tomb)
-
-						tile_map.tile_array[0][2].add_to_group(tomb)
-						tile_map.tile_array[collidable.x // 800][collidable.y // 600].remove_from_group(collidable)
-						player.soul += 10
-						break
-					collidable.update_action()
+							tile_map.tile_array[0][2].add_to_group(tomb)
+							tile_map.tile_array[collidable.x // 800][collidable.y // 600].remove_from_group(collidable)
+							player.soul += 10
+							break
+						collidable.update_action()
 		if tutorial_active:
-			t_stage = run_tutorial(t_stage, villager_tutorial, quest_dialogue, dialogue_time)
+			t_stage = run_tutorial(t_stage, villager_tutorial, quest_dialogue)
 			if t_stage == 4:
 				tutorial_active = False
 
@@ -229,14 +228,15 @@ while running:
 		elif not key[p.K_ESCAPE]:
 			esc_holder = True
 
-		for x in range(p.time.get_ticks() // 10 - time // 10):
-			player.move(p.key.get_pressed(), collision_group, demons)
-			if not world.state():
-				for demon in demons:
-					demon.move(player)
-					if demon.hit:
-						demons.remove(demon)
-						player.set_fate(player.get_fate()-10)
+		if not dialogue_box.draw(screen):
+			for x in range(p.time.get_ticks() // 10 - time // 10):
+				player.move(p.key.get_pressed(), collision_group, demons)
+				if not world.state():
+					for demon in demons:
+						demon.move(player)
+						if demon.hit:
+							demons.remove(demon)
+							player.set_fate(player.get_fate()-10)
 		# adding or subtracting demons when player's fate goes down
 		if abs(fate - player.get_fate()) >= 5:
 			i = 0
