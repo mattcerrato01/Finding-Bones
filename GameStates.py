@@ -70,7 +70,6 @@ class Inventory:
 
         for item_idx in range(len(Inventory.inventory)):
             if item == Inventory.inventory[item_idx][0]:
-                print(str(Inventory.inventory[item_idx][1]))
                 return Inventory.inventory[item_idx][1]
         return 0
 

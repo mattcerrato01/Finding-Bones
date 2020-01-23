@@ -164,13 +164,11 @@ def run_tutorial(t_stage, villager_tutorial, quest_dialogue):
         forced_dialogue(quest_dialogue[2])
         t_stage = 7
     elif t_stage == 7:
-    	if villager_tutorial.get_soul_reaped():
-    		forced_dialogue(quest_dialogue[3])
-    		t_stage = 8
+        if villager_tutorial.get_soul_reaped():
+            forced_dialogue(quest_dialogue[3])
+            t_stage = 8
 
     return t_stage
-
-
 
 
 t_stage = 0
@@ -228,12 +226,14 @@ while running:
             if t_stage == 8:
                 tutorial_active = False
 
+
         key = p.key.get_pressed()
         if key[p.K_i]:
             inventory.draw(screen)  # Draws inventory when holding i
 
         if key[p.K_p]:
             tutorial_active = False
+            dialogue_box.dialogue = []
 
         if key[p.K_ESCAPE] and esc_holder:
             esc_holder = False

@@ -1,0 +1,38 @@
+Quest 1:
+
+Stage 1: print "stage 1"
+
+Villagers:
+
+Name = James
+Image = villager
+Fated = True
+(x,y) = (400,800)
+Gender = m
+Grey = False
+Action = Q(2,3) {print "hello there"}
+
+Name = Harold Alfond Tutorial Villager
+Image = villager
+Fated = False
+(x,y) = (400,200)
+Gender = m
+Grey = False
+Action = 
+
+Name = Jeffrey
+Image = villager
+Fated = False
+(x,y) = (0,0)
+Gender = m
+Grey = False
+Action =
+
+Quest 2:
+
+Stage 1: print "stage 2"
+
+Villagers:
+
+Name = Pastor Joel
+Image =
