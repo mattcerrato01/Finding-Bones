@@ -85,7 +85,7 @@ class Object(p.sprite.Sprite):
 
 class Villagers(Object):
 
-    def __init__(self, overworld_image_name, fated, x, y, male = True):
+    def __init__(self, overworld_image_name, fated, x, y, male = True, side_width = 32):
         self.male = male
         if male:
             Object.__init__(self, overworld_image_name + "_front_m.png", 46, 110)
@@ -93,6 +93,7 @@ class Villagers(Object):
             Object.__init__(self, overworld_image_name + "_front_f.png", 46, 110)
         self.width = 46
         self.height = 110
+        self.side_width = side_width
 
         self.setX(x)
         self.setY(y)
@@ -106,14 +107,14 @@ class Villagers(Object):
         if male:
             self.front_image = (p.transform.scale(loadify(overworld_image_name+"_front_m.png"), (self.width, self.height)))
             self.idle = (p.transform.scale(loadify(overworld_image_name+"_idle_m.png"), (self.width, self.height)))
-            self.left_image = p.transform.scale(loadify(overworld_image_name+"_left_m.png"), (self.width, self.height))
-            self.right_image = p.transform.scale(loadify(overworld_image_name+"_right_m.png"), (self.width, self.height))
+            self.left_image = p.transform.scale(loadify(overworld_image_name+"_left_m.png"), (self.side_width, self.height))
+            self.right_image = p.transform.scale(loadify(overworld_image_name+"_right_m.png"), (self.side_width, self.height))
             self.back_image = p.transform.scale(loadify(overworld_image_name+"_back_m.png"), (self.width, self.height))
         else:
             self.front_image = (p.transform.scale(loadify(overworld_image_name + "_front_f.png"), (self.width, self.height)))
             self.idle = (p.transform.scale(loadify(overworld_image_name + "_idle_f.png"), (self.width, self.height)))
-            self.left_image = p.transform.scale(loadify(overworld_image_name + "_left_f.png"), (self.width, self.height))
-            self.right_image = p.transform.scale(loadify(overworld_image_name + "_right_f.png"), (self.width, self.height))
+            self.left_image = p.transform.scale(loadify(overworld_image_name + "_left_f.png"), (self.side_width, self.height))
+            self.right_image = p.transform.scale(loadify(overworld_image_name + "_right_f.png"), (self.side_width, self.height))
             self.back_image = p.transform.scale(loadify(overworld_image_name + "_back_f.png"), (self.width, self.height))
         self.forward_image = self.front_image
         self.current_image = self.back_image
@@ -166,13 +167,18 @@ class Villagers(Object):
         walk_gap = 100
         distx = (400 - coord.screen_x(self.x+self.width/2))
         disty = (300-coord.screen_y(self.y+self.height/2))
+        x_chg = 0
         if world.state():
             dist = m.sqrt(distx**2 + disty**2)
             if dist < 200:
                 if abs(distx) > abs(disty):
                     if distx>=0:
+                        if self.current_image != self.right_image:
+                            x_chg =(self.width - self.side_width)/2
                         self.current_image = self.right_image
                     elif distx<0:
+                        if self.current_image != self.left_image:
+                            x_chg =(self.width - self.side_width)/2
                         self.current_image = self.left_image
                 elif abs(distx) < abs(disty):
                     if disty<=0:
@@ -197,8 +203,8 @@ class Villagers(Object):
         else:
             self.draw_image(screen, self.underworld_image)
 
-    def draw_image(self, screen, image):
-        screen.blit(image, (coord.screen_x(self.x), coord.screen_y(self.y)))
+    def draw_image(self, screen, image, x_chg = 0):
+        screen.blit(image, (coord.screen_x(self.x) + x_chg, coord.screen_y(self.y)))
         rect = self.nameplate.get_rect()
         screen.blit(self.nameplate, (coord.screen_x(self.x) + self.width / 2 - rect.width / 2, coord.screen_y(self.y) + self.height))
     def changeMouse(self, mouse):
@@ -630,22 +636,18 @@ class Object_chgs_image(Object):
     def chg_image(self):
 
         if self.image == self.start_image:
-            print("chged image")
             self.image = self.end_image
         elif self.image == self.end_image:
-            print("chged image")
             self.image = self.start_image
 
     def perform_action(self, mouse_click):
         if self.rect.collidepoint(mouse_click) and world.state():
             if inventory.has(self.conditional) > 0 or self.conditional == "":
-                print("will change image")
                 self.chg_image()
 
             self.action = actions.perform_action(self.action)
             if self.conditional == "" or self.conditional == "bucket":
                 self.chg_action()
-            print(inventory.inventory)
     def chg_action(self):
         if self.image == self.end_image:
             self.action = """has(bucket){ "bucket" from inv"""

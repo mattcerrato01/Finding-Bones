@@ -122,15 +122,9 @@ def forced_dialogue(dialogue):
 	:param dialogue: list of strings representing the print action a villager can perform
 	:return: running
 	"""
-	if len(dialogue) > 0:
-		if "quest end" not in dialogue[0]:
-			actions.perform_action(dialogue[0])
-			dialogue.pop(0)
-		else:
-			dialogue.pop(0)
-			return True
-		return False
-	return True
+	for action in dialogue:
+		actions.perform_action(action)
+
 
 def run_tutorial(t_stage, villager_tutorial, quest_dialogue):
 	# print("tutorial running press p to skip")
@@ -138,15 +132,10 @@ def run_tutorial(t_stage, villager_tutorial, quest_dialogue):
 	if t_stage == 0:
 		t_stage = 1
 	elif t_stage == 1:
-		if forced_dialogue(quest_dialogue):
-			t_stage = 2
-		else:
-			return t_stage
+		forced_dialogue(quest_dialogue)
+		t_stage = 2
 	elif t_stage == 2:
-		if forced_dialogue(quest_dialogue):
-			t_stage = 3
-		else:
-			return t_stage
+		t_stage = 3
 	elif t_stage == 3:
 		if p.time.get_ticks()%1000:
 			villager_tutorial.setX(villager_tutorial.getX()+0.5)

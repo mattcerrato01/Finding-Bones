@@ -232,19 +232,16 @@ class Actions:
                 if 0 <= first_index < second_index:
                     if "to" in action:
                         Inventory.append_to_inventory(Inventory, action[first_index+1:second_index])
-                        print(Inventory.inventory)
 
                     elif "from" in action:
                         Inventory.remove_from_inventory(Inventory, action[first_index+1:second_index])
 
 
             elif "print" in action:
-                print("PRINTED")
                 return_sub_string = action+" AND "
                 first_index = action.find('"')
                 second_index = action.find('"', first_index + 1)
                 if 0 <= first_index < second_index:
-                    print(action[first_index+1:second_index])
                     self.dialogue_box(action[first_index+1:second_index])
 
             elif "adv" in action:
