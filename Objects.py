@@ -173,13 +173,10 @@ class Villagers(Object):
             dist = m.sqrt(distx**2 + disty**2)
             if dist < 200:
                 if abs(distx) > abs(disty):
+                    x_chg = (self.width - self.side_width)/2
                     if distx>=0:
-                        if self.current_image != self.right_image:
-                            x_chg =(self.width - self.side_width)/2
                         self.current_image = self.right_image
                     elif distx<0:
-                        if self.current_image != self.left_image:
-                            x_chg =(self.width - self.side_width)/2
                         self.current_image = self.left_image
                 elif abs(distx) < abs(disty):
                     if disty<=0:
@@ -200,12 +197,12 @@ class Villagers(Object):
                 self.current_image = self.forward_image
             self.walking_time +=1
 
-            self.draw_image(screen, self.current_image)
+            self.draw_image(screen, self.current_image, x_chg)
         else:
             self.draw_image(screen, self.underworld_image)
 
     def draw_image(self, screen, image, x_chg = 0):
-        screen.blit(image, (coord.screen_x(self.x) + x_chg, coord.screen_y(self.y)))
+        screen.blit(image, (coord.screen_x(self.x + x_chg), coord.screen_y(self.y)))
         rect = self.nameplate.get_rect()
         screen.blit(self.nameplate, (coord.screen_x(self.x) + self.width / 2 - rect.width / 2, coord.screen_y(self.y) + self.height))
     def changeMouse(self, mouse):
