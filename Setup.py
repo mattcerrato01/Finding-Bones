@@ -22,7 +22,7 @@ class Setup:
         dialogue = []
         line = file.readline()
         while line:
-            dialogue.append(line)
+            dialogue.append(str(line))
             # print(line)
             line = file.readline()
         return dialogue
@@ -91,7 +91,7 @@ class Setup:
                 for i in range(5, len(split_array)-1):
                     action += ", " +  split_array[i+1]
 
-            object_list.add( Objects.Object(split_array[0], int(split_array[1]), int(split_array[2]), int(split_array[3]), int(split_array[4]), action ))
+            object_list.add(Objects.Object(split_array[0], int(split_array[1]), int(split_array[2]), int(split_array[3]), int(split_array[4]), action ))
 
             line = file.readline()
 

@@ -39,7 +39,8 @@ class Object(p.sprite.Sprite):
         # self.underworld_image = p.transform.scale(self.image, (self.width, self.height))
         self.image = p.transform.scale(self.image, (self.width, self.height))
         self.update()
-
+    def set_action(self, action):
+        self.action = action
     def perform_action(self, mouse_click): # returns true if villager has been reaped
         if self.rect.collidepoint(mouse_click) and world.state():
 
