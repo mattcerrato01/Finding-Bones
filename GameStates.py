@@ -109,16 +109,16 @@ class Actions:
         words = dialogue.split(" ")
 
         j = 0
-        temp_string = [""]
+        temp_string = ""
 
         for word in words:
 
-            if dialogue_box_font.size(temp_string[len(temp_string) - 1] + " " + word)[0] > 460:
+            if dialogue_box_font.size(temp_string + " " + word)[0] > 460:
                 Actions.dialogue_list.append((temp_string, p.time.get_ticks()))
                 temp_string = word
             else:
                 temp_string += " " + word
-
+        Actions.dialogue_list.append((temp_string, p.time.get_ticks()))
 
 
 
