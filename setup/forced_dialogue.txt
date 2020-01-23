@@ -1,5 +1,4 @@
 ﻿print "Click to advance dialogue."
-print "break"
 print "Villager: Oh gods, The Grim Reaper?!? But Im not dead! Honest!"
 print "I checked my pulse and I have not been hanged recently, please dont take me now!"
 print "Death: Hello Harold Alfond Tutorial Villager! Have you seen my dog Bones, I miss him dearly."

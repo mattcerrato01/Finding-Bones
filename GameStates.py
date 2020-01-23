@@ -255,7 +255,12 @@ class Actions:
                 if 0 <= first_index < second_index:
                     self.dialogue_box(action[first_index + 1:second_index])
 
-            elif "adv" in action:
+            elif "adv quest" in action:
+                first_index = action.find('"')
+                second_index = action.find('"', first_index + 1)
+                quest_num = int(action[first_index:second_index])
+                QuestManager.add_quest()
+            elif "adv event" in action:
                 first_index = action.find('"')
                 second_index = action.find('"', first_index + 1)
                 quest_num = int(action[first_index:second_index])

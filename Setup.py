@@ -111,8 +111,12 @@ class Setup:
                 grey = line[ line.find("= ")+2 : ] == "True"
             elif command == "Action":
                 action = line[ line.find("= ")+2 : ]
-                split_string = action.split("Q(")
-                quest_array = [split_string[0][ : split_string[0].find(",")]]
+                if "Q(" in action:
+                    split_string = action.split("Q(")
+                    quest_array = [split_string[0][ : split_string[0].find(",")]]
+                else:
+                    quest_array = [-1,-1]
+                    print("WARNING: Quest Villager without Quest Actions: Setup.py 119")
 
                 for sub in split_string:
                     quest_array.append( sub[sub.find(",")+1 : sub.find(")")] )
