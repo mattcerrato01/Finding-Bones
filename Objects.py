@@ -532,6 +532,12 @@ class Dialogue_box():
                 self.dialogue.pop(0)
 
             for i in range(len(self.dialogue)):
+
+
+
+
+
+
                 dialogue_box = self.dialogue_box_font.render(self.dialogue[i][0], True, (255, 255, 255))
                 screen.blit(dialogue_box,(120,35 + 20*i))
 

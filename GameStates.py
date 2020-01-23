@@ -104,7 +104,23 @@ class Actions:
 
     def dialogue_box(self, dialogue):
 
-        Actions.dialogue_list.append((dialogue, p.time.get_ticks()))
+        dialogue_box_font = p.font.SysFont("papyrus", 20)
+
+        words = dialogue.split(" ")
+
+        j = 0
+        temp_string = [""]
+
+        for word in words:
+
+            if dialogue_box_font.size(temp_string[len(temp_string) - 1] + " " + word)[0] > 460:
+                Actions.dialogue_list.append((temp_string, p.time.get_ticks()))
+                temp_string = word
+            else:
+                temp_string += " " + word
+
+
+
 
     def update_dialogue_box(self):
 

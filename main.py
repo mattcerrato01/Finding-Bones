@@ -8,6 +8,7 @@ import random
 import start as st
 import end
 import Setup
+import Canopy
 
 
 
@@ -16,6 +17,11 @@ world = gs.WorldState()
 inventory = gs.Inventory()
 actions = gs.Actions()
 quests = gs.QuestManager()
+sc = Canopy.Secret_Canopy(400,600*3,800*3,600)
+sc1 = Canopy.Canopy(-400, -300, 400, 600*5)
+sc2 = Canopy.Canopy(0, -300, 800*4, 300)
+sc3 = Canopy.Canopy(800*4, -300, 400, 600*5)
+sc4 = Canopy.Canopy(0, 600*4, 800*4, 300)
 
 gs.Overworld_State = False
 p.init()
@@ -168,6 +174,13 @@ while running:
     if not paused:
         screen.fill([255, 255, 255])
         collision_group = tile_map.draw(screen, player)
+
+        sc.draw(screen)
+        sc1.draw(screen)
+        sc2.draw(screen)
+        sc3.draw(screen)
+        sc4.draw(screen)
+
         clicked = False
 
         for event in p.event.get():
@@ -211,6 +224,8 @@ while running:
         elif not key[p.K_ESCAPE]:
             esc_holder = True
 
+
+
         for x in range(p.time.get_ticks() // 10 - time // 10):
             player.move(p.key.get_pressed(), collision_group, demons)
             if not world.state():
@@ -220,6 +235,9 @@ while running:
                         demons.remove(demon)
                         player.set_fate(player.get_fate()-10)
         # adding or subtracting demons when player's fate goes down
+
+
+
         if abs(fate - player.get_fate()) >= 5:
             i = 0
             while i < abs(fate - player.get_fate()) // 5:
@@ -235,6 +253,8 @@ while running:
             for demon in demons:
                 demon.draw(screen)
 
+
+
         dialogue_box.draw(screen)
         for bone in piles_of_bones:
             screen.blit(bone[0], (coord.screen_x(bone[2]), coord.screen_y(bone[3])))
@@ -242,7 +262,12 @@ while running:
                 piles_of_bones.remove(bone)
 
 
+
+
         player.draw(screen)
+
+
+
         mouseChanged = False
         for collidable in collision_group:
             if collidable.changeMouse(p.mouse.get_pos()):
