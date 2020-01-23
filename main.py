@@ -122,24 +122,31 @@ font = p.font.Font(None, 36)
 pausetext = font.render("Paused", 1, (250, 250, 250))
 ptextRect = pausetext.get_rect()
 ptextRect.center = (400,300)
-def forced_dialogue(dialogue):
+dInd = 0
+
+
+def forced_dialogue(dialogue, dInd):
 	"""
 
 	:param quest_villager: villager that will be speaking the forced dialogue with death
 	:param dialogue: list of strings representing the print action a villager can perform
 	:return: running
 	"""
-	for action in dialogue:
-		actions.perform_action(action)
+	for action in range(dInd, len(dialogue)):
+		if "break" in dialogue[action]:
+			dInd = action
+			break
+		if not "quest end" in dialogue[action]:
+			actions.perform_action(dialogue[action])
 
 
-def run_tutorial(t_stage, villager_tutorial, quest_dialogue):
+def run_tutorial(t_stage, villager_tutorial, quest_dialogue, dInd):
 	# print("tutorial running press p to skip")
 	# print(t_stage)
 	if t_stage == 0:
 		t_stage = 1
 	elif t_stage == 1:
-		forced_dialogue(quest_dialogue)
+		dInd = forced_dialogue(quest_dialogue, dInd)
 		t_stage = 2
 	elif t_stage == 2:
 		t_stage = 3
@@ -150,9 +157,8 @@ def run_tutorial(t_stage, villager_tutorial, quest_dialogue):
 		if villager_tutorial.getX() == 420:
 			t_stage = 4
 	elif t_stage == 4:
-		if forced_dialogue(quest_dialogue):
-			t_stage = 5
-	return t_stage
+		t_stage = 5
+	return (t_stage, dInd)
 
 
 
@@ -208,7 +214,9 @@ while running:
 							break
 						collidable.update_action()
 		if tutorial_active:
-			t_stage = run_tutorial(t_stage, villager_tutorial, quest_dialogue)
+			tutresult = run_tutorial(t_stage, villager_tutorial, quest_dialogue, dInd)
+			t_stage = tutresult[0]
+			dInd = tutresult[1]
 			if t_stage == 4:
 				tutorial_active = False
 
