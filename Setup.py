@@ -19,13 +19,35 @@ class WriteTest:
 class Setup:
     def quest_dialogue(self):
         file = open("setup/forced_dialogue.txt")
-        dialogue = []
+        dialogues = []
+        dialogues.append([])
+        dialogues[0].append([])
         line = file.readline()
+        quest_num = 0
+        quest_event = 0
         while line:
-            dialogue.append(str(line))
+            if "quest advance" in line:
+                quest_num += 1
+                quest_event = 0
+                dialogues.append([])
+                dialogues[quest_num].append([])
+                line = file.readline()
+            elif "quest event" in line:
+                q = quest_event
+                first_index = line.find("'")
+                second_index = line.find("'", first_index+1)
+                quest_event = int(line[first_index+1:second_index])
+                q_chg = quest_event- q
+                for i in range(q_chg):
+
+                    dialogues[quest_num].append([])
+                line = file.readline()
+            print(quest_num, quest_event)
+            dialogues[quest_num][quest_event].append(str(line))
+
             # print(line)
             line = file.readline()
-        return dialogue
+        return dialogues
 
     def collidables(self):
         collidable = p.sprite.Group(self.villagers())
