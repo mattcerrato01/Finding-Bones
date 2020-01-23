@@ -118,10 +118,11 @@ def run_tutorial(t_stage):
         actions.perform_action(villager_tutorial.action)
         t_stage = 2
     elif t_stage == 2:
-        while villager_tutorial.getX() < 420:
+        if p.time.get_ticks()%1000:
             villager_tutorial.setX(villager_tutorial.getX()+0.5)
             villager_tutorial.setY(villager_tutorial.getY()+1)
-        t_stage = 3
+        if villager_tutorial.getX() == 420:
+            t_stage = 3
     return t_stage
 
 t_stage = 0
