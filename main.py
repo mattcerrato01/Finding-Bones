@@ -163,6 +163,10 @@ def run_tutorial(t_stage, villager_tutorial, quest_dialogue):
     elif t_stage == 6:
         forced_dialogue(quest_dialogue[2])
         t_stage = 7
+    elif t_stage == 7:
+    	if villager_tutorial.get_soul_reaped():
+    		forced_dialogue(quest_dialogue[3])
+    		t_stage = 8
 
     return t_stage
 
@@ -221,7 +225,7 @@ while running:
                         collidable.update_action()
         if tutorial_active:
             t_stage = run_tutorial(t_stage, villager_tutorial, quest_dialogue[0])
-            if t_stage == 7:
+            if t_stage == 8:
                 tutorial_active = False
 
         key = p.key.get_pressed()
