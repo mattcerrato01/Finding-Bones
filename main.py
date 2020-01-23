@@ -176,17 +176,17 @@ piles_of_bones = []
 
 while running:
 
-    if not paused:
-        screen.fill([255, 255, 255])
-        collision_group = tile_map.draw(screen, player)
+	if not paused:
+		screen.fill([255, 255, 255])
+		collision_group = tile_map.draw(screen, player)
 
-        sc.draw(screen)
-        sc1.draw(screen)
-        sc2.draw(screen)
-        sc3.draw(screen)
-        sc4.draw(screen)
+		sc.draw(screen)
+		sc1.draw(screen)
+		sc2.draw(screen)
+		sc3.draw(screen)
+		sc4.draw(screen)
 
-        clicked = False
+		clicked = False
 
 		for event in p.event.get():
 			if event.type == p.QUIT:
@@ -253,11 +253,11 @@ while running:
 			for demon in demons:
 				demon.draw(screen)
 
-        dialogue_box.draw(screen)
-        for bone in piles_of_bones:
-            screen.blit(bone[0], (coord.screen_x(bone[2]), coord.screen_y(bone[3])))
-            if bone[1] + 3000 < p.time.get_ticks():
-                piles_of_bones.remove(bone)
+		dialogue_box.draw(screen)
+		for bone in piles_of_bones:
+			screen.blit(bone[0], (coord.screen_x(bone[2]), coord.screen_y(bone[3])))
+			if bone[1] + 3000 < p.time.get_ticks():
+				piles_of_bones.remove(bone)
 
 
 		player.draw(screen)
