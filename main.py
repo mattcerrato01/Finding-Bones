@@ -206,6 +206,7 @@ while running:
 				else:
 					for collidable in collision_group:
 						if collidable.perform_action(pos): #returns true if villager has been reaped
+							play_sound("Scythe")
 							graveyard.add_grave(collidable)
 							bones = p.transform.scale(loadify("skull_and_bones.png"), (60,62))
 							piles_of_bones.append([bones, p.time.get_ticks(), collidable.x, collidable.y])
