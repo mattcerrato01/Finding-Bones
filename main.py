@@ -1,3 +1,4 @@
+
 import pygame as p
 import math as m
 import Objects
@@ -9,6 +10,8 @@ import end
 import Setup
 import Canopy
 import os
+
+
 
 coord = gs.CoordConverter()
 world = gs.WorldState()
@@ -28,16 +31,17 @@ screen = p.display.set_mode((800, 600))
 
 p.display.set_caption("Grim Reaper")
 
+
 quests.add_number_quests(3)
 
 quests.advance_quest(1)
-
-
-# quests.advance_quest(1)
+#quests.advance_quest(1)
 
 def play_sound(name):
-    sound = p.mixer.Sound("effects/" + name + ".wav")
-    sound.play()
+  sound = p.mixer.Sound("effects/" + name + ".wav")
+  sound.play()
+
+
 
 
 def loadify(imgname):
@@ -69,22 +73,22 @@ player = Objects.Player("player.jpg", ["GR-F-L", "GR-F-S", "GR-F-R", "GR-F-S"],
                         ["GR-B-L", "GR-B-S", "GR-B-R", "GR-B-S"], ["GR-L-1", "GR-L-S", "GR-L-1", "GR-L-2"],
                         ["GR-R-1", "GR-R-S", "GR-R-1", "GR-R-2"])
 
+
 setup = Setup.Setup()
 collidables = setup.collidables()
 quest_dialogue = setup.quest_dialogue()
 print(collidables)
 
-quest_villager = Objects.Quest_Villager("villager", True, (2, 3), 400, 800)
+quest_villager = Objects.Quest_Villager("villager", True, (2,3), 400, 800)
 
-graveyard = Objects.Graveyard(45, 1325)
+graveyard = Objects.Graveyard(45,1325)
 
-cage = Objects.Object_chgs_image("cage-locked-bones.png", "cage-unlocked.png", 600, 600, 128, 114,
-                                 """has(berry){print "I'm freed", "berry" from inv}""", "berry")
-well = Objects.Object_chgs_image("well-with-bucket.png", "well-without-bucket.png", 120, 1830, 108, 168,
-                                 """hasnt(bucket){"bucket" to inv}""", "")
+
+cage = Objects.Object_chgs_image("cage-locked-bones.png", "cage-unlocked.png",600,600,128,114, """has(berry){print "I'm freed", "berry" from inv}""", "berry")
+well = Objects.Object_chgs_image("well-with-bucket.png", "well-without-bucket.png", 120, 1830, 108,168,"""hasnt(bucket){"bucket" to inv}""", "")
 dialogue_box = Objects.Dialogue_box()
 
-villager_tutorial = Objects.Quest_Villager("villager", fated=True, quest_end=(2, 3), x=400, y=200)
+villager_tutorial = Objects.Quest_Villager("villager", fated=True, quest_end=(2,3), x= 400, y=200)
 
 collidable_group = p.sprite.Group(villager_tutorial, quest_villager, cage, well)
 for i in range(5):
@@ -118,7 +122,8 @@ running = True
 font = p.font.Font(None, 36)
 pausetext = font.render("Paused", 1, (250, 250, 250))
 ptextRect = pausetext.get_rect()
-ptextRect.center = (400, 300)
+ptextRect.center = (400,300)
+dInd = 0
 
 
 def forced_dialogue(dialogue):
@@ -153,6 +158,8 @@ def run_tutorial(t_stage, villager_tutorial, quest_dialogue):
         forced_dialogue(quest_dialogue[1])
         t_stage = 5
     return t_stage
+
+
 
 
 t_stage = 0
