@@ -39,7 +39,6 @@ class Setup:
                 quest_event = int(line[first_index+1:second_index])
                 q_chg = quest_event- q
                 for i in range(q_chg):
-
                     dialogues[quest_num].append([])
                 line = file.readline()
             print(quest_num, quest_event)

@@ -32,7 +32,7 @@ screen = p.display.set_mode((800, 600))
 p.display.set_caption("Grim Reaper")
 
 
-quests.add_number_quests(3)
+quests.add_number_quests(5)
 
 quests.advance_quest(1)
 #quests.advance_quest(1)
@@ -157,6 +157,13 @@ def run_tutorial(t_stage, villager_tutorial, quest_dialogue):
     elif t_stage == 4:
         forced_dialogue(quest_dialogue[1])
         t_stage = 5
+    elif t_stage == 5:
+        if not world.state():
+            t_stage = 6
+    elif t_stage == 6:
+        forced_dialogue(quest_dialogue[2])
+        t_stage = 7
+
     return t_stage
 
 
@@ -214,7 +221,7 @@ while running:
                         collidable.update_action()
         if tutorial_active:
             t_stage = run_tutorial(t_stage, villager_tutorial, quest_dialogue[0])
-            if t_stage == 5:
+            if t_stage == 7:
                 tutorial_active = False
 
         key = p.key.get_pressed()
