@@ -109,13 +109,13 @@ pausetext = font.render("Paused", 1, (250, 250, 250))
 ptextRect = pausetext.get_rect()
 ptextRect.center = (400,300)
 
-def run_tutorial(t_stage, villager_tutorial):
+def run_tutorial(t_stage, villager_tutorial, dialogue):
     # print("tutorial running press p to skip")
     # print(t_stage)
     if t_stage == 0:
         t_stage = 1
     elif t_stage == 1:
-        actions.perform_action(villager_tutorial.action)
+        # if forced_dialogue(dialogue):
         t_stage = 2
     elif t_stage == 2:
         if p.time.get_ticks()%1000:
@@ -124,6 +124,21 @@ def run_tutorial(t_stage, villager_tutorial):
         if villager_tutorial.getX() == 420:
             t_stage = 3
     return t_stage
+
+def forced_dialogue(dialogue):
+    """
+
+    :param quest_villager: villager that will be speaking the forced dialogue with death
+    :param dialogue: list of strings representing the print action a villager can perform
+    :return: running
+    """
+    if len(dialogue)>0:
+        if p.time.get_ticks() % 1000:
+            actions.perform_action(dialogue[0])
+            dialogue.pop(0)
+        return False
+    return True
+
 
 t_stage = 0
 time = 0
@@ -165,7 +180,7 @@ while running:
                         break
                     collidable.update_action()
         if tutorial_active:
-            t_stage = run_tutorial(t_stage, villager_tutorial)
+            t_stage = run_tutorial(t_stage, villager_tutorial, "")
             if t_stage == 3:
                 tutorial_active = False
 

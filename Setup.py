@@ -24,10 +24,6 @@ class Setup:
             collidable.add(sprite)
         for sprite in self.objects():
             collidable.add(sprite)
-
-
-
-
         return collidable
 
 

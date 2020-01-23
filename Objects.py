@@ -479,7 +479,7 @@ class Demons(Object):
 
     def move(self, player):
         chg_x = self.x + player.x
-        chg_y = self.y + player.y
+        chg_y = self.y - (abs(player.y) + 3*player.height/4)
         hyp = m.sqrt(chg_x ** 2 + chg_y ** 2)
         # angle = m.atan2(chg_y, chg_x)
         x_move = (chg_x * self.speed) / hyp  # m.cos(angle) * self.speed
