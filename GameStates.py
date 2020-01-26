@@ -214,7 +214,7 @@ class Actions:
 
                 if Inventory.has(Inventory, action[first_index:second_index]):
                     conditional_action = action[action.find("{") + 1:action.find("}")]
-                    for string in conditional_action.split(", "):
+                    for string in conditional_action.split(",, "):
                         return_sub_string = action[action.find("has("):action.find("{") + 1] + self.perform_action(
                             string) + "}" + " AND "
                 else:
@@ -226,7 +226,7 @@ class Actions:
 
                 if not Inventory.has(Inventory, action[first_index:second_index]):
                     conditional_action = action[action.find("{") + 1:action.find("}")]
-                    for string in conditional_action.split(", "):
+                    for string in conditional_action.split(",, "):
                         return_sub_string = action[action.find("hasnt("):action.find("{") + 1] + self.perform_action(
                             string) + "}" + " AND "
                 else:

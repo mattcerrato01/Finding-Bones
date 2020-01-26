@@ -122,7 +122,6 @@ font = p.font.Font(None, 36)
 pausetext = font.render("Paused", 1, (250, 250, 250))
 ptextRect = pausetext.get_rect()
 ptextRect.center = (400,300)
-dInd = 0
 
 
 def forced_dialogue(dialogue):
