@@ -21,6 +21,7 @@ class Object(p.sprite.Sprite):
 
     def __init__(self, overworld_image_name, x=0, y=0, width=50, height=50, action = """has(berry) {print "I'm a big berry man"} AND do(2) {to inv "berry", print "Take your berry you bastard"} AND do(2:3) {print "go away now"}  """):  # NOTE: come back and clean up initialization and such here
         p.sprite.Sprite.__init__(self)
+        self.fated = False
         self.soul_reaped = False
         self.action = action
         self.overworld_image_name = overworld_image_name
@@ -40,6 +41,10 @@ class Object(p.sprite.Sprite):
         # self.underworld_image = p.transform.scale(self.image, (self.width, self.height))
         self.image = p.transform.scale(self.image, (self.width, self.height))
         self.update()
+
+    def isFated(self):
+        return self.fated
+
     def set_action(self, action):
         self.action = action
     def perform_action(self, mouse_click): # returns true if villager has been reaped
@@ -47,9 +52,7 @@ class Object(p.sprite.Sprite):
 
             self.action = actions.perform_action(self.action)
 
-        elif self.rect.collidepoint(mouse_click) and (type(self) == Villagers or type(self) == Quest_Villager) and not world.state():
-            self.soul_reaped = False
-            return True
+
         return False
     def update_action(self):
         return self.action
@@ -102,6 +105,8 @@ class Villagers(Object):
         self.width = 46
         self.height = 110
         self.side_width = side_width
+
+        self.essential = False
 
         self.setX(x)
         self.setY(y)
@@ -159,6 +164,13 @@ class Villagers(Object):
         self.font = p.font.SysFont('Times New Romans', 16)
         self.nameplate = self.font.render(self.name, False, (0, 0, 0), (255,255,255))
     #   self.fated
+
+    def perform_action(self, mouse_click):
+        Object.perform_action(self, mouse_click)
+
+        if self.rect.collidepoint(mouse_click) and not self.essential and not world.state():
+            self.soul_reaped = True
+            return True
 
     def update_action(self):
         idx = r.randint(0,len(self.dialogues)-1)
@@ -220,6 +232,7 @@ class Quest_Villager(Villagers):
 
     def __init__(self, name, overworld_image_name, fated, quest_array, action, x, y, male = "m", grey = False):
         Villagers.__init__(self, overworld_image_name, fated, x, y, male)
+        self.essential = True
         self.nameplate = self.font.render(name, False, (0, 0, 0), (255, 255, 255))
         # print(str(self.essential) + str(quest_end))
         self.action = action
@@ -241,6 +254,9 @@ class Quest_Villager(Villagers):
             stage = qm.quests[self.quest]
         except:
             stage = -1
+
+        if stage > self.quest_end or stage == -1:
+            self.essential = False
 
         if world.state():
             Villagers.draw(self, screen, player)

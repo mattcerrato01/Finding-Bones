@@ -148,9 +148,6 @@ class Actions:
                 do(A) {}
                 Q(2,3) {}
                 Q(2,A) {}
-                if(has "berry")
-                if(fate>=100)
-                if(soul<90)
 
                 :return:
                 """

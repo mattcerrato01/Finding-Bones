@@ -216,8 +216,22 @@ while running:
                             collidable_group.add(tomb)
 
                             tile_map.tile_array[0][2].add_to_group(tomb)
-                            tile_map.tile_array[collidable.x // 800][collidable.y // 600].remove_from_group(collidable)
+                            tile_map.tile_array[int( collidable.x // 800 )][int( collidable.y // 600 )].remove_from_group(collidable)
+
+                            #if anyone sees this remind Will to fix that /\
+
                             player.soul += 10
+                            if player.soul > 100:
+                                player.soul = 100
+
+                            if collidable.isFated():
+                                player.fate += 10
+                            else:
+                                player.fate -= 10
+
+                            if player.fate > 100:
+                                player.fate = 100
+
                             break
                         collidable.update_action()
         if tutorial_active:
@@ -282,10 +296,9 @@ while running:
                         mouseChanged = True
                         break
                     else:
-                        if not type(collidable) == Objects.Quest_Villager:
-                            screen.blit(scythe_cursor, p.mouse.get_pos())
-                            mouseChanged = True
-                            break
+                        screen.blit(scythe_cursor, p.mouse.get_pos())
+                        mouseChanged = True
+                        break
                 else:
                     screen.blit(investigation_cursor, p.mouse.get_pos())
                     mouseChanged = True
