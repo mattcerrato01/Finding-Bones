@@ -165,7 +165,6 @@ class Actions:
             second_index = action.find(",")
 
             if "Q(" in action:
-                print (action)
                 if QuestManager.quests[int(action[first_index + 2:second_index])] == int(
                         action[second_index + 1:action.find(")")]) or action[second_index + 1] == "A":
                     return_sub_string = action[action.find("Q"):action.find("{") + 1] + self.perform_action(
@@ -253,6 +252,7 @@ class Actions:
                 first_index = action.find('"')
                 second_index = action.find('"', first_index + 1)
                 if 0 <= first_index < second_index:
+                    print( action[first_index + 1:second_index] )
                     self.dialogue_box(action[first_index + 1:second_index])
 
             elif "adv quest" in action:

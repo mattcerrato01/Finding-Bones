@@ -77,7 +77,6 @@ setup = Setup.Setup()
 collidables = setup.collidables()
 collidables.add( setup.quests() )
 quest_dialogue = setup.quest_dialogue()
-print(collidables)
 
 #quest_villager = Objects.Quest_Villager("villager", True, (2,3), 400, 800)
 
@@ -136,8 +135,6 @@ def forced_dialogue(dialogue):
 
 
 def run_tutorial(t_stage, villager_tutorial, quest_dialogue):
-    # print("tutorial running press p to skip")
-    # print(t_stage)
     if t_stage == 0:
         t_stage = 1
     elif t_stage == 1:
@@ -200,7 +197,6 @@ while running:
             elif event.type == p.MOUSEBUTTONUP:
 
                 pos = p.mouse.get_pos()
-                # print(coord.real_x(pos[0]), coord.real_y(pos[1]))
                 if dialogue_box.draw(screen):
                     dialogue_box.perform_action(pos)
                 else:
@@ -325,7 +321,6 @@ while running:
 
         elif not key[p.K_ESCAPE]:
             esc_holder = True
-        # print(ptime)
         p.draw.rect(screen, (0, 0, 0), p.Rect(250, 200, 300, 200))
         screen.blit(pausetext, ptextRect)
 

@@ -91,15 +91,12 @@ class Villagers(Object):
 
     def __init__(self, overworld_image_name, fated, x, y, male, side_width = 32):
         self.male = male
-        print(male)
         if male == "m":
             self.male = "_m"
         elif male == "f":
             self.male = "_f"
         else:
-            # print(male)
             self.male = ""
-        print(self.male)
         Object.__init__(self, overworld_image_name + "_front" + self.male+".png", 46, 110)
 
         self.width = 46
@@ -234,7 +231,6 @@ class Quest_Villager(Villagers):
         Villagers.__init__(self, overworld_image_name, fated, x, y, male)
         self.essential = True
         self.nameplate = self.font.render(name, False, (0, 0, 0), (255, 255, 255))
-        # print(str(self.essential) + str(quest_end))
         self.action = action
         self.grey = grey
         self.quest = quest_array[0]
@@ -265,7 +261,7 @@ class Quest_Villager(Villagers):
                 screen.blit(self.question_mark, (coord.screen_x(self.x)+self.width/2-8, coord.screen_y(self.y)-30))
         elif stage < self.quest_end:
             self.draw_image(screen, self.essential_soul)
-        elif self.grey and qm.quests[3]>4:
+        elif self.grey and self.quest_end > qm.quests[self.quest]:
             self.draw_image(screen, self.grey_soul)
         elif self.fated:
             self.draw_image(screen, self.fated_soul)
@@ -562,7 +558,11 @@ class Dialogue_box():
 
     def perform_action(self, mouse):
         if mouse:
-            actions.dialogue_list.pop(0)
+            for i in range(4):
+                try:
+                    actions.dialogue_list.pop(0)
+                except:
+                    break
             self.dialogue = actions.dialogue_list
 
     def draw(self, screen):
@@ -575,7 +575,7 @@ class Dialogue_box():
             if len(self.dialogue)<4:
                 dialogues_shown = len(self.dialogue)
             for i in range(dialogues_shown):
-                dialogue_box = self.dialogue_box_font.render(self.dialogue[i], True, (255, 255, 255))
+                dialogue_box = self.dialogue_box_font.render(self.dialogue[i], True, (0, 0, 0))
                 screen.blit(dialogue_box,(120,35 + 20*i))
             return True
         return False

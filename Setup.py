@@ -14,9 +14,6 @@ class WriteTest:
 
     file = open("testfile.txt", "r")
 
-    # print(file.read(3))
-    # print(file.read(6))
-    # print(file.readline())
 
 class Setup:
     def quest_dialogue(self):
@@ -43,10 +40,8 @@ class Setup:
                 for i in range(q_chg):
                     dialogues[quest_num].append([])
                 line = file.readline()
-            print(quest_num, quest_event)
             dialogues[quest_num][quest_event].append(str(line))
 
-            # print(line)
             line = file.readline()
         return dialogues
 
@@ -61,7 +56,6 @@ class Setup:
 
 
     def villagers(self):
-        # print("here we are")
 
         file = open("setup/villagers.txt","r")
 
@@ -79,7 +73,6 @@ class Setup:
         return villager_list
 
     def quests(self):
-        # print("here we are")
 
         file = open("setup/quests.txt","r")
 
@@ -88,12 +81,14 @@ class Setup:
 
         while line:
 
-            command = line[0 : line.find(" ")]
+            command = line[ : line.find(" ")]
 
-            if command == "Quest":
+            if "Quest" in command:
                 quest = int( line[line.find(" ")+1 : line.find(":")] )
             elif command == "Stage":
                 stage = int( line[line.find(" ")+1 : line.find(":")] )
+                input = line[ line.find(":") + 1 : ]
+
                 qm.set_quest_stage(quest, stage, input)
             elif command == "Name":
                 name = line[ line.find("= ")+2 : ]
@@ -106,7 +101,6 @@ class Setup:
                 x = int( sub[ sub.find("(")+1 : sub.find(",") ] )
                 y = int( sub[ sub.find(",")+1 : sub.find(")") ] )
             elif command == "Gender":
-                # print(line[line.find("= ")+2:line.find("= ")+3])
                 male = str(line[line.find("= ")+2: line.find("= ")+3])
             elif command == "Grey":
                 grey = line[ line.find("= ")+2 : ] == "True"
@@ -114,7 +108,6 @@ class Setup:
                 action = line[ line.find("= ")+2 : ]
 
                 if "Q(" in action:
-                    # print("#"+action)
                     quest_array = [ action.rfind("Q(") + 2, action.rfind("Q(") + 3 ]
 
                     last_index = 0
@@ -126,13 +119,10 @@ class Setup:
                         if last_index == -1:
                             break
                         else:
-                            print(action)
                             quest_array.append( int( action[ action.find("," , last_index+1) + 1 : action.find( ")" , last_index+1 ) ] ) )
 
                 else:
                     quest_array = [-1,-1]
-                    # print("WARNING: Quest Villager without Quest Actions: Setup.py 119")
-                print(male)
 
                 villager_list.add(Objects.Quest_Villager( name, image.strip(), fated, quest_array, action, x, y, male, grey))
 
@@ -141,7 +131,6 @@ class Setup:
         return villager_list
 
     def hitboxes(self):
-        # print("here we lay")
         file = open("setup/hitboxes.txt", "r")
         hitbox_list = p.sprite.Group()
         file.readline()
@@ -162,7 +151,6 @@ class Setup:
         return hitbox_list
 
     def objects(self):
-        # print("here we go")
         file = open("setup/objects.txt", "r")
         object_list = p.sprite.Group()
         file.readline()

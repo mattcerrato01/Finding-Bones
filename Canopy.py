@@ -4,7 +4,6 @@ coord = gs.CoordConverter()
 
 
 def loadify(imgname):
-    print(imgname)
     return p.image.load("images/" + imgname)
 
 class Canopy:
