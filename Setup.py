@@ -51,7 +51,7 @@ class Setup:
         return dialogues
 
     def collidables(self):
-        collidable = p.sprite.Group(self.villagers())
+        collidable = p.sprite.Group(self.quests())
         for sprite in self.hitboxes():
             collidable.add(sprite)
         for sprite in self.objects():
@@ -60,23 +60,23 @@ class Setup:
 
 
 
-    def villagers(self):
-        # print("here we are")
-
-        file = open("setup/villagers.txt","r")
-
-        villager_list = p.sprite.Group()
-        file.readline()
-        line = file.readline()
-
-        while line:
-            split_array = line.split(", ")
-
-            villager_list.add( Objects.Villagers( split_array[0] , split_array[1] == "True" , int(split_array[2]), int(split_array[3]), split_array[4] == "True" ) )
-
-            line = file.readline()
-
-        return villager_list
+    # def villagers(self):
+    #     # print("here we are")
+    #
+    #     file = open("setup/villagers.txt","r")
+    #
+    #     villager_list = p.sprite.Group()
+    #     file.readline()
+    #     line = file.readline()
+    #
+    #     while line:
+    #         split_array = line.split(", ")
+    #
+    #         villager_list.add( Objects.Villagers( split_array[0] , split_array[1] == "True" , int(split_array[2]), int(split_array[3]), split_array[4] == "True" ) )
+    #
+    #         line = file.readline()
+    #
+    #     return villager_list
 
     def quests(self):
         # print("here we are")
@@ -106,14 +106,15 @@ class Setup:
                 x = int( sub[ sub.find("(")+1 : sub.find(",") ] )
                 y = int( sub[ sub.find(",")+1 : sub.find(")") ] )
             elif command == "Gender":
-                male = not "f" in line[ line.find("= ")+2 : ]
+                # print(line[line.find("= ")+2:line.find("= ")+3])
+                male = str(line[line.find("= ")+2: line.find("= ")+3])
             elif command == "Grey":
                 grey = line[ line.find("= ")+2 : ] == "True"
             elif command == "Action":
                 action = line[ line.find("= ")+2 : ]
 
                 if "Q(" in action:
-                    print("#"+action)
+                    # print("#"+action)
                     quest_array = [ action.find("Q(") + 2, action.find(",") ]
 
                     last_index = 0
@@ -129,7 +130,8 @@ class Setup:
 
                 else:
                     quest_array = [-1,-1]
-                    print("WARNING: Quest Villager without Quest Actions: Setup.py 119")
+                    # print("WARNING: Quest Villager without Quest Actions: Setup.py 119")
+                print(male)
 
                 villager_list.add(Objects.Quest_Villager( name, image.strip(), fated, quest_array, action, x, y, male, grey))
 

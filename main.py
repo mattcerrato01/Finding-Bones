@@ -91,9 +91,7 @@ dialogue_box = Objects.Dialogue_box()
 villager_tutorial = Objects.Quest_Villager("Harold Alfond Tutorial Villager", "villager", False, [2,3], "", 400, 200)
 
 collidable_group = p.sprite.Group(villager_tutorial, cage, well)
-for i in range(5):
-    villager = Objects.Villagers("villager", False, 500 + 100 * i, 500 + 100 * i)
-    collidable_group.add(villager)
+
 for collidable in collidables:
     collidable_group.add(collidable)
 

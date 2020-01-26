@@ -38,6 +38,6 @@ Name = Old Man Dorcus
 Image = Priest
 Fated = True
 (x,y) = (1883, 405)
-gender = m
+gender =
 Grey = False
 Action = Q(1,1) {hasnt(bucket){ print"Death: ...", print"Old Man Dorcus: What’s that sonny boy? You frost your dog?", Death: ……", print"Old Man Dorcus: You cost your frog?",print"Death ……!!!", print"Old Man Dorcus: You lost your dog? Why didn’t you just say so! It turns out there haven’t been any dogs in this village for years!", print"Death: ……", print"Old Man Dorcus: But, I did see a strange dog being taken a while back, in the forest, and I’d be willin’ to help, if you could do something for me.", print"Death: ……", print"Old Man Dorcus: I lost my bucket and I need it desperately, the fate of my bath tonight hinges on having my trusty bucket, if you bring it to me, I can give you some vital information about your pup.", print"Death: ……"} AND has(bucket){print"Old Man Dorcus: Let me take a look at this…Yep! This is my bucket! Thank you for you help. In regards to your dog, it seems he was carried off by someone to the east part of the region, I saw the man in the forest with the pup, and some keys. I found one, which I’ll give to you for helping.", print"Death: ……!", "key" to inv, print"Old Man Dorcus: Now, I will try to find my son, Young Man Dorcus, he went north to the forest to collect some berries in his bucket that you brought to me, I hope he come back soon.", print"Death: (Thought) Uh oh, first thing I gotta do is fill out those forms, thankfully, Young Man Dorcus will be put back into his body after the first 256 pages are filled out."}}
