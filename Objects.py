@@ -556,16 +556,18 @@ class Dialogue_box():
         self.dialogue = actions.dialogue_list
         self.dialogue_box_font = p.font.SysFont("papyrus", 20)
         self.drawn = False
+    def set_dialogue(self, dialogue):
+        self.dialogue = dialogue
+
     def perform_action(self, mouse):
         if mouse:
             actions.dialogue_list.pop(0)
             self.dialogue = actions.dialogue_list
 
     def draw(self, screen):
+        self.dialogue = actions.dialogue_list
         if len(self.dialogue)>0:
             self.drawn = True
-
-
             screen.blit(self.box_1, (100,25))
             screen.blit(self.box_2,(400,25))
             dialogues_shown = 4

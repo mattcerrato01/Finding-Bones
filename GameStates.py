@@ -131,6 +131,8 @@ class Actions:
             else:
                 temp_string += " " + word
         Actions.dialogue_list.append(temp_string)
+    def set_dialogue(self, dialogue):
+        Actions.dialogue_list = dialogue
 
     def perform_action(self, quest_actions):
 

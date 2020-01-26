@@ -243,11 +243,13 @@ while running:
         if key[p.K_i]:
             inventory.draw(screen)  # Draws inventory when holding i
 
-        if key[p.K_p]:
+        elif key[p.K_p]:
+            if tutorial_active:
+                actions.set_dialogue([])
             tutorial_active = False
-            dialogue_box.dialogue = []
 
-        if key[p.K_ESCAPE] and esc_holder:
+
+        elif key[p.K_ESCAPE] and esc_holder:
             esc_holder = False
             paused = True
 
@@ -278,7 +280,6 @@ while running:
         if not world.state():
             for demon in demons:
                 demon.draw(screen)
-
         dialogue_box.draw(screen)
         for bone in piles_of_bones:
             screen.blit(bone[0], (coord.screen_x(bone[2]), coord.screen_y(bone[3])))
