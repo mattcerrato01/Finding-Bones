@@ -34,10 +34,11 @@ class NameGenerator:
         self.female_names = ["Mary", "Elizabeth", "Maria", "Claudia", "Lydia", "Cynthia", "Lauren", "Maisy", "Erika",
                              "Silvia", "Melody", "Ann", "Lisa", "Elise", "Joanne", "Sue"]
 
-    def generate(self, male=True):
-        if male:
+    def generate(self, male):
+        if male == "m":
             return self.male_names[random.randint(0, len(self.male_names) - 1)]
-        return self.female_names[random.randint(0, len(self.female_names) - 1)]
+        elif male == "f":
+            return self.female_names[random.randint(0, len(self.female_names) - 1)]
 
 
 class CoordConverter:
