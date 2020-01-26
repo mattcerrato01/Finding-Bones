@@ -256,14 +256,12 @@ class Actions:
                     self.dialogue_box(action[first_index + 1:second_index])
 
             elif "adv quest" in action:
-                first_index = action.find('"')
-                second_index = action.find('"', first_index + 1)
                 QuestManager.add_quest()
             elif "adv event" in action:
                 first_index = action.find('"')
                 second_index = action.find('"', first_index + 1)
-                quest_num = int(action[first_index:second_index])
-                QuestManager.advance_quest(quest_num)
+                quest_num = int(action[first_index+1:second_index])
+                QuestManager.advance_quest(QuestManager,quest_num)
 
             return_string += return_sub_string
 

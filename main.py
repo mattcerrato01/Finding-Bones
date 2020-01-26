@@ -200,7 +200,7 @@ while running:
             elif event.type == p.MOUSEBUTTONUP:
 
                 pos = p.mouse.get_pos()
-                print(coord.real_x(pos[0]), coord.real_y(pos[1]))
+                # print(coord.real_x(pos[0]), coord.real_y(pos[1]))
                 if dialogue_box.draw(screen):
                     dialogue_box.perform_action(pos)
                 else:

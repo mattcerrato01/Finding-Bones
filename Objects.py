@@ -247,7 +247,8 @@ class Quest_Villager(Villagers):
         self.essential_soul = p.transform.scale(loadify("essential_soul.png"), (self.width, self.height))
         self.fated_soul = p.transform.scale(loadify("fated_soul.png"), (self.width, self.height))
         self.unfated_soul = p.transform.scale(loadify("unfated_soul.png"), (self.width, self.height))
-
+    def update_action(self):
+        self.action = self.action
     def draw(self, screen, player):
 
         try:
