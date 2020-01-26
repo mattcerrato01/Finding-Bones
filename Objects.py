@@ -236,6 +236,7 @@ class Quest_Villager(Villagers):
         self.quest = quest_array[0]
         self.quest_end = int( quest_array[len(quest_array)-1] )
         self.quest_array = quest_array[1:len(quest_array)-1]
+        print(name, self.quest_array)
         self.question_mark = p.transform.scale(loadify("question_mark.png"), (16, 24))
         if grey:
             self.grey_soul = p.transform.scale(loadify("grey_soul.png"), (self.width, self.height))

@@ -35,7 +35,7 @@ Stage 1: print "stage 2"
 Villagers:
 
 Name = Old Man Dorcus
-Image = Priest
+Image = OldMan
 Fated = True
 (x,y) = (1883, 405)
 Gender = n
