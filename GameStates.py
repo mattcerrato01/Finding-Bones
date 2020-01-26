@@ -163,6 +163,7 @@ class Actions:
             second_index = action.find(",")
 
             if "Q(" in action:
+                print (action)
                 if QuestManager.quests[int(action[first_index + 2:second_index])] == int(
                         action[second_index + 1:action.find(")")]) or action[second_index + 1] == "A":
                     return_sub_string = action[action.find("Q"):action.find("{") + 1] + self.perform_action(
@@ -255,7 +256,6 @@ class Actions:
             elif "adv quest" in action:
                 first_index = action.find('"')
                 second_index = action.find('"', first_index + 1)
-                quest_num = int(action[first_index:second_index])
                 QuestManager.add_quest()
             elif "adv event" in action:
                 first_index = action.find('"')

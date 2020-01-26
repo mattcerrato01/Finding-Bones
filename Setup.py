@@ -115,18 +115,19 @@ class Setup:
 
                 if "Q(" in action:
                     # print("#"+action)
-                    quest_array = [ action.find("Q(") + 2, action.find(",") ]
+                    quest_array = [ action.rfind("Q(") + 2, action.rfind("Q(") + 3 ]
 
                     last_index = 0
 
                     while True:
 
-                        last_index = action.find("Q(", last_index+1)
+                        last_index = int( action.find("Q(", last_index+1) )
 
                         if last_index == -1:
                             break
                         else:
-                            quest_array.append( action[last_index+4 : action.find( ",", last_index) ])
+                            print(action)
+                            quest_array.append( int( action[ action.find("," , last_index+1) + 1 : action.find( ")" , last_index+1 ) ] ) )
 
                 else:
                     quest_array = [-1,-1]
