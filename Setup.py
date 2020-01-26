@@ -91,7 +91,7 @@ class Setup:
 
                 qm.set_quest_stage(quest, stage, input)
             elif command == "Name":
-                name = line[ line.find("= ")+2 : ]
+                name = line[ line.find("= ")+2 : len(line)-1]
             elif command == "Image":
                 image = line[ line.find("= ")+2 : ]
             elif command == "Fated":

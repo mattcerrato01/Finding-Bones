@@ -118,6 +118,15 @@ class Actions:
 
         dialogue_box_font = p.font.SysFont("papyrus", 20)
 
+        temp = dialogue.split("â€™")
+
+        dialogue = ""
+
+        for word in temp:
+            dialogue += "'" + word
+
+        dialogue = dialogue[1:]
+
         words = dialogue.split(" ")
 
         j = 0
