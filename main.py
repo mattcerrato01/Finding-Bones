@@ -87,7 +87,7 @@ cage = Objects.Object_chgs_image("cage-locked-bones.png", "cage-unlocked.png",60
 well = Objects.Object_chgs_image("well-with-bucket.png", "well-without-bucket.png", 120, 1830, 108,168,"""hasnt(bucket){"bucket" to inv}""", "")
 dialogue_box = Objects.Dialogue_box()
 
-villager_tutorial = Objects.Quest_Villager("Harold Alfond Tutorial Villager", "villager", False, [2,3], "", 400, 200)
+villager_tutorial = Objects.Quest_Villager("Harold Alfond Tutorial Villager", "villager", False, [2,3], "", 400, 200, "m")
 
 collidable_group = p.sprite.Group(villager_tutorial, cage, well)
 villager_list = setup.villagers()

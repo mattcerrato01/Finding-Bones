@@ -227,7 +227,7 @@ class Villagers(Object):
 
 class Quest_Villager(Villagers):
 
-    def __init__(self, name, overworld_image_name, fated, quest_array, action, x, y, male = "m", grey = False):
+    def __init__(self, name, overworld_image_name, fated, quest_array, action, x, y, male, grey = False):
         Villagers.__init__(self, overworld_image_name, fated, x, y, male)
         self.essential = True
         self.nameplate = self.font.render(name, False, (0, 0, 0), (255, 255, 255))
@@ -236,7 +236,6 @@ class Quest_Villager(Villagers):
         self.quest = quest_array[0]
         self.quest_end = int( quest_array[len(quest_array)-1] )
         self.quest_array = quest_array[1:len(quest_array)-1]
-
         self.question_mark = p.transform.scale(loadify("question_mark.png"), (16, 24))
         if grey:
             self.grey_soul = p.transform.scale(loadify("grey_soul.png"), (self.width, self.height))

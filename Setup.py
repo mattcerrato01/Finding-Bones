@@ -101,14 +101,17 @@ class Setup:
                 x = int( sub[ sub.find("(")+1 : sub.find(",") ] )
                 y = int( sub[ sub.find(",")+1 : sub.find(")") ] )
             elif command == "Gender":
+
                 male = str(line[line.find("= ")+2: line.find("= ")+3])
+                print(male)
+
             elif command == "Grey":
                 grey = line[ line.find("= ")+2 : ] == "True"
             elif command == "Action":
                 action = line[ line.find("= ")+2 : ]
 
                 if "Q(" in action:
-                    quest_array = [ action.rfind("Q(") + 2, action.rfind("Q(") + 3 ]
+                    quest_array = [action.rfind("Q(") + 2, action.rfind("Q(") + 3 ]
 
                     last_index = 0
 
@@ -119,11 +122,11 @@ class Setup:
                         if last_index == -1:
                             break
                         else:
-                            quest_array.append( int( action[ action.find("," , last_index+1) + 1 : action.find( ")" , last_index+1 ) ] ) )
+                            quest_array.append(int(action[action.find(",", last_index+1) + 1 : action.find( ")" , last_index+1)]))
 
                 else:
                     quest_array = [-1,-1]
-
+                # print(male)
                 villager_list.add(Objects.Quest_Villager( name, image.strip(), fated, quest_array, action, x, y, male, grey))
 
             line = file.readline()
