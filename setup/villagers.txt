@@ -1,2 +1,2 @@
 (image_name, fated, x, y, male)
-villager, m, 800, 600, 0
+villager, False, 800, 600, m

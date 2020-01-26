@@ -51,7 +51,7 @@ class Setup:
         return dialogues
 
     def collidables(self):
-        collidable = p.sprite.Group(self.quests())
+        collidable = p.sprite.Group(self.villagers())
         for sprite in self.hitboxes():
             collidable.add(sprite)
         for sprite in self.objects():
@@ -60,23 +60,23 @@ class Setup:
 
 
 
-    # def villagers(self):
-    #     # print("here we are")
-    #
-    #     file = open("setup/villagers.txt","r")
-    #
-    #     villager_list = p.sprite.Group()
-    #     file.readline()
-    #     line = file.readline()
-    #
-    #     while line:
-    #         split_array = line.split(", ")
-    #
-    #         villager_list.add( Objects.Villagers( split_array[0] , split_array[1] == "True" , int(split_array[2]), int(split_array[3]), split_array[4] == "True" ) )
-    #
-    #         line = file.readline()
-    #
-    #     return villager_list
+    def villagers(self):
+        # print("here we are")
+
+        file = open("setup/villagers.txt","r")
+
+        villager_list = p.sprite.Group()
+        file.readline()
+        line = file.readline()
+
+        while line:
+            split_array = line.split(", ")
+
+            villager_list.add( Objects.Villagers( split_array[0], split_array[1] == "True" , int(split_array[2]), int(split_array[3]), split_array[4][0:1]) )
+
+            line = file.readline()
+
+        return villager_list
 
     def quests(self):
         # print("here we are")

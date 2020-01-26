@@ -47,7 +47,7 @@ class Object(p.sprite.Sprite):
 
             self.action = actions.perform_action(self.action)
 
-        elif self.rect.collidepoint(mouse_click) and type(self) == Villagers and not world.state():
+        elif self.rect.collidepoint(mouse_click) and (type(self) == Villagers or type(self) == Quest_Villager) and not world.state():
             self.soul_reaped = False
             return True
         return False
@@ -96,6 +96,7 @@ class Villagers(Object):
         else:
             # print(male)
             self.male = ""
+        print(self.male)
         Object.__init__(self, overworld_image_name + "_front" + self.male+".png", 46, 110)
 
         self.width = 46
