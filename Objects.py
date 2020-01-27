@@ -253,7 +253,9 @@ class Quest_Villager(Villagers):
         self.fated_soul = p.transform.scale(loadify("fated_soul.png"), (self.width, self.height))
         self.unfated_soul = p.transform.scale(loadify("unfated_soul.png"), (self.width, self.height))
     def update_action(self):
-        self.action = self.action
+        if not qm.quest_stage(self.quest) in self.quest_array:
+            idx = r.randint(0,len(self.dialogues)-1)
+            self.action = self.dialogues[idx]
     def draw(self, screen, player):
 
         try:
