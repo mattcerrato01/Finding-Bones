@@ -92,6 +92,8 @@ def main():
 
     collidable_group = p.sprite.Group(villager_tutorial, cage, well)
     villager_list = setup.villagers()
+    for villager in villager_list:
+        collidable_group.add(villager)
 
     for collidable in collidables:
         collidable_group.add(collidable)
@@ -190,7 +192,6 @@ def main():
             sc3.draw(screen)
             sc4.draw(screen)
 
-            clicked = False
 
             for event in p.event.get():
                 if event.type == p.QUIT:
