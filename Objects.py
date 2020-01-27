@@ -709,7 +709,7 @@ class Hitbox(p.sprite.Sprite):
         self.rect = p.Rect(coord.screen_x(self.x), coord.screen_y(self.y), self.width, self.height)
 
 class Object_chgs_image(Object):
-    def __init__(self, start_image_name, end_image_name, x, y, width, height, action, conditional):
+    def __init__(self, start_image_name, end_image_name, x, y, width, height, action, conditional, name = "bones"):
         Object.__init__(self, start_image_name, x, y, width, height, action)
         self.start_image = p.transform.scale(loadify(start_image_name), (self.width, self.height))
         self.end_image = p.transform.scale(loadify(end_image_name), (self.width, self.height))
@@ -717,6 +717,7 @@ class Object_chgs_image(Object):
         self.image = self.start_image
         self.start_image_name = start_image_name
         self.end_image_name = end_image_name
+        self.name = name
 
     def get_image_name(self):
         if self.image == self.start_image:
