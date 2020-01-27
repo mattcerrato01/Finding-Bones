@@ -15,6 +15,8 @@ import os
 def play_sound(name):
       sound = p.mixer.Sound("effects/" + name + ".wav")
       sound.play()
+def loadify(imgname):
+    return p.image.load("images/" + imgname).convert_alpha()
 
 def main():
     coord = gs.CoordConverter()
@@ -28,8 +30,10 @@ def main():
     sc3 = Canopy.Canopy(800 * 4, -300, 400, 600 * 5)
     sc4 = Canopy.Canopy(0, 600 * 4, 800 * 4, 300)
 
+
     gs.Overworld_State = False
     p.init()
+
 
     screen = p.display.set_mode((800, 600))
 
@@ -46,8 +50,7 @@ def main():
 
 
 
-    def loadify(imgname):
-        return p.image.load("images/" + imgname).convert_alpha()
+
 
 
     '''Function that adds a set number of demons to a group of sprites, takes in a group of sprites, a player object, and
@@ -114,6 +117,8 @@ def main():
     investigation_cursor = p.transform.scale(loadify("cursor-small-magnifyingglass.png"), (15, 15))
     scythe_cursor = p.transform.scale(loadify("cursor-small-scythe.png"), (15, 15))
     speech_cursor = p.transform.scale(loadify("cursor-small-speechbubble.png"), (15, 15))
+    inventory_image = p.transform.scale(loadify("Nametag.png"), (150,150))
+    quest_progress_image = p.transform.scale(loadify("Nametag.png"), (150,160))
 
     # tile = t.Tile("background.jpg", collidable_group, 0, 0)
     createDemons(demons, player, int(200 / player.fate))
@@ -242,9 +247,9 @@ def main():
 
             key = p.key.get_pressed()
             if key[p.K_i]:
-                inventory.draw(screen)  # Draws inventory when holding i
+                inventory.draw(screen, inventory_image)  # Draws inventory when holding i
             elif key[p.K_q]:
-                quests.draw(screen)
+                quests.draw(screen, quest_progress_image)
 
             elif key[p.K_p]:
                 if tutorial_active:

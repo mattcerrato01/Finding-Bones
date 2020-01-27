@@ -119,9 +119,11 @@ class Inventory:
                     Inventory.inventory[i][1] -= 1
                 break
 
-    def draw(self, screen):
-        height = 50 + 20 * len(Inventory.inventory)  # hjkl
-        p.draw.rect(screen, (0, 0, 0), (450, 228, 150, height))
+    def draw(self, screen, loaded_image):
+        height = 60 + 20 * len(Inventory.inventory)
+        image = p.transform.scale(loaded_image, (150, height))
+        screen.blit(image, (450, 228))
+        # p.draw.rect(screen, (0, 0, 0), (450, 228, 150, height))
         dialogue_box_font = p.font.SysFont("papyrus", 20)
         dialogue_box = dialogue_box_font.render("Inventory:", True, (255, 255, 255))
         rect = dialogue_box.get_rect()
@@ -379,13 +381,12 @@ class QuestManager:
     def past_quest_stage(self, quest_num, quest_stage):
         return QuestManager.quests[quest_num] > quest_stage
 
-    def draw(self, screen):
-        height = 50 + 100
-        p.draw.rect(screen, (0, 0, 0), (220, 228, 150, height))
+    def draw(self, screen, loaded_image):
+        screen.blit(loaded_image, (200, 223))
         dialogue_box_font = p.font.SysFont("papyrus", 20)
         dialogue_box = dialogue_box_font.render("Quests Progress", True, (255, 255, 255))
         rect = dialogue_box.get_rect()
-        screen.blit(dialogue_box, (295 - rect.width / 2, 238))
+        screen.blit(dialogue_box, (275 - rect.width / 2, 238))
         quest_titles = ["Tutorial", "Old Man's Bucket", "The people's bucket", "Demon hunting", "Sacred Tree", "Lucky duck"]
         for i in range(len(quest_titles)):
             stage_chg = 0
@@ -396,4 +397,4 @@ class QuestManager:
             line = quest_titles[i] + "  " + str(QuestManager.quest_stage(QuestManager, i) +stage_chg)
             dialogue_box = dialogue_box_font.render(line, True, (255, 255, 255))
             rect = dialogue_box.get_rect()
-            screen.blit(dialogue_box, (295 - rect.width / 2, 258 + 20 * i))
+            screen.blit(dialogue_box, (275 - rect.width / 2, 258 + 20 * i))
