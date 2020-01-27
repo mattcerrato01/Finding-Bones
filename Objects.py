@@ -710,7 +710,13 @@ class Object_chgs_image(Object):
 
     def perform_action(self, mouse_click):
         if self.rect.collidepoint(mouse_click) and world.state():
-            if inventory.has(self.conditional) > 0 or self.conditional == "":
+            conditionals = self.conditional.split(", ")
+            condition_met = True
+            for conditional in conditionals:
+                if not inventory.has(conditional):
+                    condition_met = False
+                    break
+            if condition_met or self.conditional == "":
                 self.chg_image()
 
             self.action = actions.perform_action(self.action)

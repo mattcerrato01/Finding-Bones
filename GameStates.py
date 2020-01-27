@@ -78,11 +78,18 @@ class Inventory:
     inventory = []
 
     def has(self, item):
+        num = 1
+        if " x " in item:
+            num = int(item[item.find(" x ")+ 3:])
+            item = item[:item.find(" x ")]
 
-        for item_idx in range(len(Inventory.inventory)):
-            if item == Inventory.inventory[item_idx][0]:
-                return Inventory.inventory[item_idx][1]
-        return 0
+        for things in Inventory.inventory:
+            if item == things[0]:
+                if num ==1:
+                    return True
+                else:
+                    return things[1]>= num
+        return False
 
     def get_inventory(self):
         return Inventory.inventory[:]

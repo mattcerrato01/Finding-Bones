@@ -48,7 +48,7 @@ Fated = True
 (x,y) = (2190,785)
 Gender = n
 Grey = False
-Action =  Q(1,5) {has(berry) {print "Perfect! Here is a fresh fish for your hungry ... ribcage.",, to inv "fish",, from inv "berry",, set quest(1,6) }} AND Q(1,4) {print "You want a fish? I could sell one, but you don’t have any money... Ah, get me some berries from the forest, I need them to cook the fish properly. I need 3 berries to properly cook the fish."** set quest(1,5)}
+Action =  Q(1,5) {has(berry x 3) {print "Perfect! Here is a fresh fish for your hungry ... ribcage.",, to inv "fish",, from inv "berry",, from inv "berry",, from inv "berry",, set quest(1,6) }} AND Q(1,4) {print "You want a fish? I could sell one, but you don’t have any money... Ah, get me some berries from the forest, I need them to cook the fish properly. I need 3 berries to properly cook the fish."** set quest(1,5)}
 
 
 Quest  2:

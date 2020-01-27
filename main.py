@@ -86,7 +86,7 @@ def main():
     graveyard = Objects.Graveyard(45,1325)
 
 
-    cage = Objects.Object_chgs_image("cage-locked-bones.png", "cage-unlocked.png",2875,1420,128,114, """has(key1, key2, key3){print "I'm freed",, "key" from inv}""", "key1, key2, key3")
+    cage = Objects.Object_chgs_image("cage-locked-bones.png", "cage-unlocked.png",2875,1420,128,114, """has(key1, key2, key3){print "I'm freed",, "key1" from inv,, "key2" from inv,, "key3" from inv}""", "key1, key2, key3")
     well = Objects.Object_chgs_image("well-with-bucket.png", "well-without-bucket.png", 120, 1830, 108,168,"""hasnt(bucket){"bucket" to inv}""", "")
     dialogue_box = Objects.Dialogue_box()
 
