@@ -1,16 +1,16 @@
-﻿Quest 0:
+﻿#Quest 0:
 
-Stage 1:
+#Stage 1:
 
-Villagers:
+#Villagers:
 
-Name = Harold Alfond Tutorial Villager
-Image = villager
-Fated = False
-(x,y) = (400,200)
-Gender = m
-Grey = False
-Action =
+#Name = Harold Alfond Tutorial Villager
+#Image = villager
+#Fated = False
+#(x,y) = (400,200)
+#Gender = m
+#Grey = False
+#Action =
 
 Quest 1:
 
