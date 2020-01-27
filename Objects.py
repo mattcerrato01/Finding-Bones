@@ -87,7 +87,7 @@ class Object(p.sprite.Sprite):
 
 class Villagers(Object):
 
-    def __init__(self, overworld_image_name, fated, x, y, male, side_width = 32):
+    def __init__(self, overworld_image_name, fated, x, y, male, side_width = 32, key = False):
         self.male = male
         if male == "m":
             self.male = "_m"
@@ -96,12 +96,18 @@ class Villagers(Object):
         else:
             self.male = ""
         Object.__init__(self, overworld_image_name + "_front" + self.male+".png", 46, 110)
+        self.key = key
 
         self.width = 46
         self.height = 110
         self.side_width = side_width
 
+
         self.essential = False
+        if self.key:
+            print("Key")
+            self.essential = True
+            self.grey_right_now = False
 
         self.setX(x)
         self.setY(y)
@@ -170,13 +176,14 @@ class Villagers(Object):
 
     def perform_action(self, mouse_click):
 
-        Object.perform_action(self, mouse_click)
+        if self.rect.collidepoint(mouse_click):
+            if self.key and  "key5" in self.action:
+                self.key = False
+                self.dialogues.pop(len(self.dialogues)-1)
+            self.action = actions.perform_action(self.action)
 
-        if type(self) == Quest_Villager:
-            print(self.name + " " + str(self.quest_action))
 
-
-        if self.rect.collidepoint(mouse_click) and (not self.essential or self.grey) and not world.state():
+        if self.rect.collidepoint(mouse_click) and (not self.essential or self.grey_right_now) and not world.state():
             self.soul_reaped = True
             return True
 
@@ -186,6 +193,11 @@ class Villagers(Object):
 
 
     def draw(self, screen, player):
+
+        if self.key and player.fate == 100 and len(self.dialogues) == 23:
+            self.dialogues.append(""" print "Villager: Well aren’t you the model of what a deity of death should act like! I have a key I pickpocketed off some vampire this morning, I’ll give to you!" AND to inv "key5" """)
+        elif self.key and player.fate != 100 and  len(self.dialogues) >23:
+            self.dialogues.pop(len(self.dialogues)-1)
         walk_gap = 100
         distx = (400 - coord.screen_x(self.x+self.width/2))
         disty = (300-coord.screen_y(self.y+self.height/2))
@@ -245,12 +257,13 @@ class Villagers(Object):
 
 class Quest_Villager(Villagers):
 
-    def __init__(self, name, overworld_image_name, fated, quest_array, action, x, y, male, grey = False):
+    def __init__(self, name, overworld_image_name, fated, quest_array, action, x, y, male, grey = False, secret = False):
         Villagers.__init__(self, overworld_image_name, fated, x, y, male)
         self.name = name
 
         temp_x = self.font.size(str(self.name))[0]
         temp_y = self.font.size(str(self.name))[1]
+        self.secret = secret
 
         self.nameplate_text = self.font.render(self.name, False, (0, 0, 0))
         self.nameplate_image_left = p.transform.scale(loadify("NametagLeft.png"), (6, temp_y))
@@ -261,11 +274,11 @@ class Quest_Villager(Villagers):
         self.action = action
         self.quest_action = action
         self.grey = grey
+        self.grey_right_now = False
         self.quest = quest_array[0]
         self.quest_end = int( quest_array[len(quest_array)-1] )
         self.quest_array = quest_array[1:]
 
-        # print(name, self.quest_array)
         self.question_mark = p.transform.scale(loadify("question_mark.png"), (16, 24))
         if grey:
             self.grey_soul = p.transform.scale(loadify("grey_soul.png"), (self.width, self.height))
@@ -278,7 +291,10 @@ class Quest_Villager(Villagers):
             self.action = self.dialogues[idx]
         elif qm.quest_stage(self.quest) in self.quest_array:
             self.action = self.quest_action
+            if self.grey:
+                self.grey_right_now = True
     def draw(self, screen, player):
+        self.update_action()
 
         self.update_action()
 
@@ -293,15 +309,13 @@ class Quest_Villager(Villagers):
         if world.state():
             Villagers.draw(self, screen, player)
 
-            # print( self.name , self.quest_array )
-            # print( qm.quest_stage(self.quest) )
 
-            if qm.quest_stage(self.quest) in self.quest_array:
+            if qm.quest_stage(self.quest) in self.quest_array and not self.secret:
                 screen.blit(self.question_mark, (coord.screen_x(self.x)+self.width/2-8, coord.screen_y(self.y)-30))
 
-        elif self.grey and self.quest_end > qm.quest_stage(self.quest):
+        elif self.grey and qm.quest_stage(self.quest) in self.quest_array:
             self.draw_image(screen, self.grey_soul)
-        elif stage < self.quest_end:
+        elif stage <= self.quest_end and not self.secret:
             self.draw_image(screen, self.essential_soul)
         elif self.fated:
             self.draw_image(screen, self.fated_soul)
@@ -717,7 +731,13 @@ class Object_chgs_image(Object):
 
     def perform_action(self, mouse_click):
         if self.rect.collidepoint(mouse_click) and world.state():
-            if inventory.has(self.conditional) > 0 or self.conditional == "":
+            conditionals = self.conditional.split(", ")
+            condition_met = True
+            for conditional in conditionals:
+                if not inventory.has(conditional):
+                    condition_met = False
+                    break
+            if condition_met or self.conditional == "":
                 self.chg_image()
 
             self.action = actions.perform_action(self.action)

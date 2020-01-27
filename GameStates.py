@@ -1,5 +1,7 @@
 import random
 import pygame as p
+def loadify(imgname):
+    return p.image.load("images/" + imgname).convert_alpha()
 
 def reset():
     WorldState.overworld =True
@@ -27,8 +29,8 @@ def change_track(state):
         p.mixer.music.load('soundtrack/Underworld_Theme.wav')
     elif state == 3:
     	p.mixer.music.load('soundtrack/Game_Over.wav')
-    elif state == 4:
-    	p.mixer.music.load('soundtrack/Start_Screen.wav')
+    if state == 4:
+    	p.mixer.music.load('soundtrack/Start_Screen.wav') 
     else:
     	p.mixer.music.load('effects/BlehSound.wav')
     p.mixer.music.play(-1)
@@ -78,11 +80,18 @@ class Inventory:
     inventory = []
 
     def has(self, item):
+        num = 1
+        if " x " in item:
+            num = int(item[item.find(" x ")+ 3:])
+            item = item[:item.find(" x ")]
 
-        for item_idx in range(len(Inventory.inventory)):
-            if item == Inventory.inventory[item_idx][0]:
-                return Inventory.inventory[item_idx][1]
-        return 0
+        for things in Inventory.inventory:
+            if item == things[0]:
+                if num ==1:
+                    return True
+                else:
+                    return things[1]>= num
+        return False
 
     def get_inventory(self):
         return Inventory.inventory[:]
@@ -97,7 +106,9 @@ class Inventory:
                 found_item = True
                 break
         if not found_item:
-            Inventory.inventory.append([object, 1])
+            image = p.transform.scale(loadify(object + ".png"), (18,18 ))
+            Inventory.inventory.append([object, 1, image])
+
 
     def remove_from_inventory(self, object):
         for i in range(len(Inventory.inventory)):
@@ -108,9 +119,11 @@ class Inventory:
                     Inventory.inventory[i][1] -= 1
                 break
 
-    def draw(self, screen):
-        height = 50 + 20 * len(Inventory.inventory)  # hjkl
-        p.draw.rect(screen, (0, 0, 0), (450, 228, 150, height))
+    def draw(self, screen, loaded_image):
+        height = 60 + 20 * len(Inventory.inventory)
+        image = p.transform.scale(loaded_image, (150, height))
+        screen.blit(image, (450, 228))
+        # p.draw.rect(screen, (0, 0, 0), (450, 228, 150, height))
         dialogue_box_font = p.font.SysFont("papyrus", 20)
         dialogue_box = dialogue_box_font.render("Inventory:", True, (255, 255, 255))
         rect = dialogue_box.get_rect()
@@ -120,6 +133,7 @@ class Inventory:
             dialogue_box = dialogue_box_font.render(line, True, (255, 255, 255))
             rect = dialogue_box.get_rect()
             screen.blit(dialogue_box, (525 - rect.width / 2, 258 + 20 * i))
+            screen.blit(Inventory.inventory[i][2], (530 + rect.width / 2, 253 + 20 * i))
 
 
 class Actions:
@@ -181,20 +195,26 @@ class Actions:
         for action in quest_actions.split(' AND '):
 
             return_sub_string = ""
+            end_of_string = ""
+            if "reaped" in action and WorldState.state(WorldState):
+                action = action[:action.find("reaped")] + "}"
+                end_of_string = action[action.find("reaped"): action.rfind(")")]
+
 
 
 
             first_index = action.find("Q(")
             second_index = action.find(",")
-            if (WorldState.state(WorldState) or Actions.perform_action_in_underworld) and "reaped" not in action:
+            if (WorldState.state(WorldState) or Actions.perform_action_in_underworld):
 
                 if "Q(" in action:
                     if QuestManager.quest_stage(QuestManager,int(action[first_index + 2:second_index])) == int(
                             action[second_index + 1:action.find(")")]) or action[second_index + 1] == "A":
                         conditional_action = action[action.find("{") + 1:action.rfind("}")]
+                        return_sub_string = action[action.find("Q("):action.find("{") + 1]
                         for string in conditional_action.split("**"):
-                            return_sub_string = action[action.find("Q("):action.find("{") + 1] + self.perform_action(
-                                string) + "}" + " AND "
+                            return_sub_string +=  self.perform_action(string) + "**"
+                        return_sub_string += "} AND "
 
 
                 elif "do(" in action:
@@ -234,8 +254,13 @@ class Actions:
 
                     first_index = action.find("has(") + 4
                     second_index = action.find(")")
+                    condition_met = True
+                    for conditions in action[first_index:second_index].split(", "):
 
-                    if Inventory.has(Inventory, action[first_index:second_index]):
+                        if not Inventory.has(Inventory, conditions):
+                            condition_met = False
+                            break
+                    if condition_met:
                         conditional_action = action[action.find("{") + 1:action.find("}")]
                         for string in conditional_action.split(",, "):
                             return_sub_string = action[action.find("has("):action.find("{") + 1] + self.perform_action(
@@ -290,16 +315,12 @@ class Actions:
 
             elif not WorldState.state(WorldState) and "reaped" in action:
                 Actions.perform_action_in_underworld = True
-                print("Occured")
-                conditional_action = action[action.find("(") + 1:action.rfind(")")]
-                print(conditional_action)
+                conditional_action = action[action.find("reaped(") + 7:action.rfind(")")]
                 for string in conditional_action.split(",,"):
-                    print(string)
-                    return_sub_string = action[action.find("reaped"):action.find("(") + 1] + self.perform_action(
-                        string) + ")" + " AND "
+                    return_sub_string = "reaped(" + self.perform_action(string) + ")" + " AND "
                 Actions.perform_action_in_underworld = False
 
-            return_string += return_sub_string
+            return_string += return_sub_string + end_of_string
 
         return return_string[:-5]
         # return ""
@@ -359,3 +380,21 @@ class QuestManager:
 
     def past_quest_stage(self, quest_num, quest_stage):
         return QuestManager.quests[quest_num] > quest_stage
+
+    def draw(self, screen, loaded_image):
+        screen.blit(loaded_image, (200, 223))
+        dialogue_box_font = p.font.SysFont("papyrus", 20)
+        dialogue_box = dialogue_box_font.render("Quests Progress", True, (255, 255, 255))
+        rect = dialogue_box.get_rect()
+        screen.blit(dialogue_box, (275 - rect.width / 2, 238))
+        quest_titles = ["Tutorial", "Old Man's Bucket", "The people's bucket", "Demon hunting", "Sacred Tree", "Lucky duck"]
+        for i in range(len(quest_titles)):
+            stage_chg = 0
+            if i == 2 and QuestManager.quest_stage(QuestManager,1)>=2:
+                stage_chg = -1
+            elif i == 5:
+                 stage_chg = 1
+            line = quest_titles[i] + "  " + str(QuestManager.quest_stage(QuestManager, i) +stage_chg)
+            dialogue_box = dialogue_box_font.render(line, True, (255, 255, 255))
+            rect = dialogue_box.get_rect()
+            screen.blit(dialogue_box, (275 - rect.width / 2, 258 + 20 * i))

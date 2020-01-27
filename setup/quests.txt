@@ -1,20 +1,20 @@
-﻿Quest 0:
+﻿#Quest 0:
 
-Stage 1: print "stage 1"
+#Stage 1:
 
-Villagers:
+#Villagers:
 
-Name = Harold Alfond Tutorial Villager
-Image = villager
-Fated = False
-(x,y) = (400,200)
-Gender = m
-Grey = False
-Action =
+#Name = Harold Alfond Tutorial Villager
+#Image = villager
+#Fated = False
+#(x,y) = (400,200)
+#Gender = m
+#Grey = False
+#Action =
 
 Quest 1:
 
-Stage 1: print "stage 2"
+Stage 1:
 
 Villagers:
 
@@ -24,81 +24,99 @@ Fated = True
 (x,y) = (320, 391)
 Gender = n
 Grey = False
-Action = Q(1,0) {hasnt(bucket){ set quest(1,1) ,, print"Death: ...",, print"Old Man Dorcus: What’s that sonny boy? You frost your dog?",, print"Death: ......",, print "Old Man Dorcus: You cost your frog?",, print "Death ......!!!",, print "Old Man Dorcus: You lost your dog? Why didn’t you just say so! It turns out there haven’t been any dogs in this village for years!",, print "Death: ......",, print "Old Man Dorcus: But, I did see a strange dog being taken a while back, in the forest, and I’d be willin’ to help, if you could do something for me.",, print"Death: ......",, print"Old Man Dorcus: I lost my bucket and I need it desperately, the fate of my bath tonight hinges on having my trusty bucket, if you bring it to me, I can give you some vital information about your pup.",, print"Death: ......"} AND has(bucket){print"Old Man Dorcus: Let me take a look at this...Yep! This is my bucket! Thank you for you help. In regards to your dog, it seems he was carried off by someone to the east part of the region, I saw the man in the forest with the pup, and some keys. I found one, which I’ll give to you for helping.",, print"Death: ......!",, "key" to inv,, print"Old Man Dorcus: Now, I will try to find my son, Young Man Dorcus, he went north to the forest to collect some berries in his bucket that you brought to me, I hope he will come back soon.",, print"Death: (Thought) Uh oh, first thing I gotta do is fill out those forms, thankfully, Young Man Dorcus will be put back into his body after the first 256 pages are filled out."} AND Q(1,1) {has(bucket){print"Old Man Dorcus: Let me take a look at this... Yep! This is my bucket! Thank you for you help. In regards to your dog, it seems he was carried off by someone to the east part of the region, I saw the man in the forest with the pup, and some keys. I found one, which I’ll give to you for helping.",, print"Death: ......!",, "key" to inv,, print"Old Man Dorcus: Now, I will try to find my son, Young Man Dorcus, he went north to the forest to collect some berries in his bucket that you brought to me, I hope he come back soon.",, print"Death: (Thought) Uh oh, first thing I gotta do is fill out those forms, thankfully, Young Man Dorcus will be put back into his body after the first 256 pages are filled out.",, set quest(1,2) } AND hasnt(bucket) {print "I really want my bucket, how will I ever take a bath tonight without it"}}
+Action = Q(1,0) {hasnt(bucket){ set quest(1,1) ,, print"Death: ...",, print"Old Man Dorcus: What’s that sonny boy? You frost your dog?",, print"Death: ......",, print "Old Man Dorcus: You cost your frog?",, print "Death ......!!!",, print "Old Man Dorcus: You lost your dog? Why didn’t you just say so! It turns out there haven’t been any dogs in this village for years!",, print "Death: ......",, print "Old Man Dorcus: But, I did see a strange dog being taken a while back, in the forest, and I’d be willin’ to help, if you could do something for me.",, print"Death: ......",, print"Old Man Dorcus: I lost my bucket and I need it desperately, the fate of my bath tonight hinges on having my trusty bucket, if you bring it to me, I can give you some vital information about your pup.",, print"Death: ......"} AND has(bucket){print"Old Man Dorcus: Let me take a look at this...Yep! This is my bucket! Thank you for you help. In regards to your dog, it seems he was carried off by someone to the east part of the region, I saw the man in the forest with the pup, and some keys. I found one, which I’ll give to you for helping.",, print"Death: ......!",, "key1" to inv,, "bucket" from inv,, print"Old Man Dorcus: Now, I will try to find my son, Young Man Dorcus, he went north to the forest to collect some berries in his bucket that you brought to me, I hope he will come back soon.",, print"Death: (Thought) Uh oh, first thing I gotta do is fill out those forms, thankfully, Young Man Dorcus will be put back into his body after the first 256 pages are filled out.",, set quest(1,2) ,, set quest(2,1)}  AND Q(1,1){has(bucket) {print"Old Man Dorcus: Let me take a look at this...Yep! This is my bucket! Thank you for you help. In regards to your dog, it seems he was carried off by someone to the east part of the region, I saw the man in the forest with the pup, and some keys. I found one, which I’ll give to you for helping.",, print"Death: ......!",, "key1" to inv,, "bucket" from inv ,, print"Old Man Dorcus: Now, I will try to find my son, Young Man Dorcus, he went north to the forest to collect some berries in his bucket that you brought to me, I hope he will come back soon.",, print"Death: (Thought) Uh oh, first thing I gotta do is fill out those forms, thankfully, Young Man Dorcus will be put back into his body after the first 256 pages are filled out.",, set quest(1,2),, set quest(2,1)} ** hasnt(bucket) {print "I really want my bucket, how will I ever take a bath tonight without it"}}
+
 
 Quest  2:
 
-Stage 1: print "stage 1"
+Stage 1:
+
 
 Villagers:
-
-Name = King
-Image =  King
+Name = Farmer
+Image = Farmer
 Fated = True
-(x,y) = (2900, 100)
+(x,y) = (530,2180)
 Gender = n
 Grey = False
-Action = Q(2,0) {print "King: Oh ye gods, my kingdom is in worse shape than ever!"** print "Death: (Thought) Aside from the feudalism?"** print "King: A demon has possessed someone in the kingdom and it’s impossible to tell who has been taken by them"** print "Death: (Thought) Well, that’s a problem that I should worry about."** print "King: You there, bone man!"** print "Death: (Thought) I have a name."** print "King: Are you able to help our priest? You look…spectral."** print "Death: (Thought) I’m going to ignore that."** print "King: Will you help me?!?! I will pay you handsomely, with the finest key in the whole kingdom! (That my squire found on the ground outside)"** print "Death: ......!"** print "King: Excellent! Whenever you want to get started exorcising, the priest has more information to the west."** set quest(2,1)} AND Q(2,2) {print "King: Thank you stranger! Here is your key!"**"key1" to inv }
+Action = Q(2,1) {print "Farmer: Please sir, help, I'm so thirsty."** print "Death: (Thought) Is he good?"** print "Farmer: Someone took the bucket in my well, and now I can't drink water. I would go to the blacksmith, but I'm too dehydrated to move."** print "Death: ......"** print "Farmer: You will? Thank you, you need to go to the blacksmith to get a new bucket."** set quest(2,2)} AND Q(2,6) { has(bucket) {print "Thank the gods! I can finally get water, why is there a key in the bucket? Eh, here skinny guy, as a thank you.",, to inv "key2",, from inv "bucket",, set quest(2,7)} }
 
-Name = Priest
-Image = Priest
+Name = Blacksmith
+Image = Blacksmith
 Fated = True
-(x,y) = (1650, 347)
+(x,y) = (2920,806)
 Gender = n
-Grey = True
-Action = Q(2,1) {print "Priest: Why hello there Mr. Death! Recently, we have been pressing (heh heh) people for information about the demon. As a man of the gods, I have gathered the three souls the demon most likely jumped into."** print "Death: (Thought) Hmm… can’t get a read on this priest, the implied torture is normal though." ** print "Priest: If you talk to these three sinners, one of them is bound to reveal something about the demon and who among them is possessed."** print "Death: (Thought) Isn’t that your job?"** reaped( print "Priest: WAIT, YOU KNEW? How? I had the perfect disguise, I WILL RETURN."** set quest(2,2))}
+Grey = False
+Action = Q(2,2) {print "You want a bucket? I would, but I can’t smith on an empty stomach. If you can find a fisherman and grab me some lunch, I would appreciate it."** set quest(2,3)} AND Q(2,5) { has(fish) {print "My favorite! I was able to create a brand new bucket, here ya go!",, to inv "bucket",, from inv "fish",, set quest(2,6)} }
 
-Name = Suspect1
-Image = Suspect1
-Fated = False
-(x,y) = (1600, 500)
+Name = Fisherman
+Image = Fisherman
+Fated = True
+(x,y) = (2190,785)
 Gender = n
-Grey = True
-Action = Q(2,1) {print "Prisoner 1: Yeah, I haven’t been anywhere near a demon, however, I worry about how certain members of this kingdom use these demon hunts to expunge political dissidents and those vulnerable so kings and priests have the ability to save their people. What do I know? I’m just a fool." ** reaped(print "Priest: Excellent, no more demons in this kingdom, you did it congrats! I sent word to the king.")}
+Grey = False
+Action =  Q(2,4) {has(berry x 3) {print "Perfect! Here is a fresh fish for your hungry ... ribcage.",, to inv "fish",, from inv "berry",, from inv "berry",, from inv "berry",, set quest(2,5) }} AND Q(2,3) {print "You want a fish? I could sell one, but you don’t have any money... Ah, get me some berries from the forest, I need them to cook the fish properly. I need 3 berries to properly cook the fish."** set quest(2,4)}
 
-Name = Suspect2
-Image = Suspect2
-Fated = False
-(x,y) = (1650, 500)
-Gender = n
-Grey = True
-Action = Q(2,1) {print "Prisoner 2: Man do I love stealing, and lootin, it makes me feel alive." ** reaped(print "Priest: Excellent, no more demons in this kingdom, you did it congrats! I sent word to the king.")}
-
-Name = Suspect3
-Image = Suspect3
-Fated = False
-(x,y) = (1700, 500)
-Gender = n
-Grey = True
-Action = Q(2,1) {print "Prisoner 3: HEH HEH I GOT A DEMON IN ME." ** reaped(print "Priest: Excellent, no more demons in this kingdom, you did it congrats! I sent word to the king.")}
 
 
 Quest 3:
 
 Stage 1:
 
+Villagers:
 
-
-Name = Farmer
-Image = Farmer
+Name = King
+Image =  King
 Fated = True
-(x,y) = (100,300)
+(x,y) = (3094, 270)
 Gender = n
 Grey = False
-Action = Q(3,0) {print "Farmer: Please sir, help, I'm so thirsty."** print "Death: (Thought) Is he good?"** print "Farmer: Someone took the bucket in my well, and now I can't drink water. I would go to the blacksmith, but I'm too dehydrated to move."** print "Death: ......"** print "Farmer: You will? Thank you, you need to go to the blacksmith to get a new bucket."** set quest(3,1)} AND Q(3,5) { has(bucket) {print "Thank the gods! I can finally get water, why is there a key in the bucket? Eh, here skinny guy, as a thank you.",, to inv "key",, from inv "bucket",, set quest(3,6)} }
+Action = Q(3,0) {print "King: Oh ye gods, my kingdom is in worse shape than ever!"** print "Death: (Thought) Aside from the feudalism?"** print "King: A demon has possessed someone in the kingdom and it’s impossible to tell who has been taken by them"** print "Death: (Thought) Well, that’s a problem that I should worry about."** print "King: You there, bone man!"** print "Death: (Thought) I have a name."** print "King: Are you able to help our priest? You look…spectral."** print "Death: (Thought) I’m going to ignore that."** print "King: Will you help me?!?! I will pay you handsomely, with the finest key in the whole kingdom! (That my squire found on the ground outside)"** print "Death: ......!"** print "King: Excellent! Whenever you want to get started exorcising, the priest has more information to the west."** set quest(3,1)} AND Q(3,2) {print "King: Thank you stranger! Here is your key!"**"key3" to inv ** set quest(3,3) }
 
-Name = Blacksmith
-Image = Blacksmith
+Name = Priest
+Image = Priest
 Fated = True
-(x,y) = (200,300)
+(x,y) = (2175, 195)
 Gender = n
-Grey = False
-Action = Q(3,1) {print "You want a bucket? I would, but I can’t smith on an empty stomach. If you can find a fisherman and grab me some lunch, I would appreciate it."** set quest(3,2)} AND Q(3,4) { has(fish) {print "My favorite! I was able to create a brand new bucket, here ya go!",, to inv "bucket",, from inv "fish",, set quest(3,5)} }
+Grey = True
+Action = Q(3,1) {print "Priest: Why hello there Mr. Death! Recently, we have been pressing people hard for information about the demon. As a man of the gods, I have gathered the three souls the demon most likely jumped into." ** print "Death: (Thought) Hmm… can’t get a read on this priest, the implied torture is normal though." ** print "Priest: If you talk to these three sinners, one of them is bound to reveal something about the demon and who among them is possessed." ** print "Death: (Thought) Isn’t that your job?" ** reaped( print "Priest: WAIT, YOU KNEW? How? I had the perfect disguise, I WILL RETURN.",, set quest(3,2))}
 
-Name = Fisherman
-Image = Fisherman
-Fated = True
-(x,y) = (300,300)
+Name = Suspect1
+Image = Suspect1
+Fated = False
+(x,y) = (2075, 310)
 Gender = n
+Grey = True
+Action = Q(3,1) {print "Prisoner 1: Yeah, I haven’t been anywhere near a demon, however, I worry about how certain members of this kingdom use these demon hunts to expunge political dissidents and those vulnerable so kings and priests have the ability to save their people. What do I know? I’m just a fool." ** reaped(print "Priest: Excellent, no more demons in this kingdom, you did it congrats! I sent word to the king.")}
+
+Name = Suspect2
+Image = Suspect2
+Fated = False
+(x,y) = (2175, 310)
+Gender = n
+Grey = True
+Action = Q(3,1) {print "Prisoner 2: Man do I love stealing, and lootin, it makes me feel alive." ** reaped(print "Priest: Excellent, no more demons in this kingdom, you did it congrats! I sent word to the king.")}
+
+Name = Suspect3
+Image = Suspect3
+Fated = False
+(x,y) = (2275, 310)
+Gender = n
+Grey = True
+Action = Q(3,1) {print "Prisoner 3: HEH HEH I GOT A DEMON IN ME." ** reaped(print "Priest: Excellent, no more demons in this kingdom, you did it congrats! I sent word to the king.")}
+
+Quest 4:
+
+Stage 1:
+
+Villagers:
+
+Name = Tree Villager
+Image = Villager
+Fated = True
+(x,y) = (3000, 450)
+Gender = f
 Grey = False
-Action =  Q(3,3) {has(berry) {print "Perfect! Here is a fresh fish for your hungry ... ribcage.",, to inv "fish",, from inv "berry",, set quest(3,4) }} AND Q(3,2) {print "You want a fish? I could sell one, but you don’t have any money... Ah, get me some berries from the forest, I need them to cook the fish properly. I need 3 berries to properly cook the fish."** set quest(3,3)}
+Secret = True
+Action = Q(4,0) {print "I have heard a rumor about a tree, surrounded by a false wall, that will grant those who touch it something that they truly desire."** set quest(4,1)}
+

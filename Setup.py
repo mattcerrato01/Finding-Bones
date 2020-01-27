@@ -65,8 +65,11 @@ class Setup:
 
         while line:
             split_array = line.split(", ")
+            key = False
+            if len(split_array) == 6:
+                key = True
 
-            villager_list.add( Objects.Villagers( split_array[0], split_array[1] == "True" , int(split_array[2]), int(split_array[3]), split_array[4][0:1]) )
+            villager_list.add( Objects.Villagers( split_array[0], split_array[1] == "True" , int(split_array[2]), int(split_array[3]), split_array[4][0:1], key= key) )
 
             line = file.readline()
 
@@ -78,6 +81,7 @@ class Setup:
 
         villager_list = p.sprite.Group()
         line = file.readline()
+        secret = False
 
         while line:
 
@@ -107,6 +111,8 @@ class Setup:
 
             elif command == "Grey":
                 grey = line[ line.find("= ")+2 : line.rfind("e")+1] == "True"
+            elif command == "Secret":
+                secret = line[ line.find("= ")+2 : line.rfind("e")+1] == "True"
             elif command == "Action":
                 action = line[ line.find("= ")+2 : ]
 
@@ -129,10 +135,8 @@ class Setup:
                 else:
                     quest_array = [-1,-1]
 
-                # print( quest_array )
-                print(grey)
 
-                villager_list.add(Objects.Quest_Villager( name, image.strip(), fated, quest_array, action, x, y, male, grey))
+                villager_list.add(Objects.Quest_Villager( name, image.strip(), fated, quest_array, action, x, y, male, grey, secret))
 
             line = file.readline()
 

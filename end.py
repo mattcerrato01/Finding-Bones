@@ -1,9 +1,18 @@
 import pygame as p
 import Objects
+import GameStates as gs
 
 p.init()
 
-def main(screen):
+def loadify(imgname):
+    return p.image.load("images/" + imgname).convert_alpha()
+
+def win_anim(animI):
+	back = loadify('victoryscreen-' + str(animI) + '.png')
+	animI += 1
+	return animI, back
+
+def main(screen, win = True, score = None):
 	endrunning = True
 	clicked = False
 	
@@ -11,20 +20,34 @@ def main(screen):
 	background = background.convert()
 	background.fill((250, 250, 250))
 	
-	font = p.font.Font(None, 36)
-	text = font.render("Quit", 1, (10, 10, 10))
-	textpos = text.get_rect()
-	textpos.centerx = background.get_rect().centerx
-	textpos = textpos.move(0,150)
-	background.blit(text, textpos)
+	if not win:
+		back = loadify('endscreen.png')
+	else:
+		back = loadify('victoryscreen-1.png')
+	backpos = back.get_rect()
+	back = p.transform.scale(back, (800,600))
+	#backpos.centerx = background.get_rect().centerx
+	background.blit(back, backpos)
+	
 	
 	screen.blit(background, (0, 0))
 	p.display.flip()
 	
 	cursor = p.transform.scale(Objects.loadify("cursor-small-arrow.png").convert_alpha(), (15,15))
 	
+	animI = 1
+	
 	while endrunning:
 		#screen.fill([255, 255, 255])
+		if animI < 23:
+			animS = win_anim(animI)
+			animI = animS[0]
+			back = animS[1]
+			backpos = back.get_rect()
+			back = p.transform.scale(back, (800,600))
+		else:
+			animI = 1
+		
 		clicked = False
 		#print(p.mouse.get_pos())
 		for event in p.event.get():
@@ -37,12 +60,17 @@ def main(screen):
 			endrunning = False
 
 		if clicked:
-			if 300 < p.mouse.get_pos()[0] < 500 and 140 < p.mouse.get_pos()[1] < 180:
-			#print("mouse is over 'newGameButton'")
+			if 530 < p.mouse.get_pos()[0] < 770 and 280 < p.mouse.get_pos()[1] < 360:
 				endrunning = False
-				return False
+				return "restart"
+			elif 530 < p.mouse.get_pos()[0] < 770 and 380 < p.mouse.get_pos()[1] < 460:
+				endrunning = False
+				return "score"
+			elif 530 < p.mouse.get_pos()[0] < 770 and 470 < p.mouse.get_pos()[1] < 560:
+				endrunning = False
+				return "credits"
 		background.fill((250, 250, 250))
-		background.blit(text, textpos)
+		background.blit(back, backpos)
 		p.mouse.set_visible(False)
 		background.blit(cursor, p.mouse.get_pos())
 		screen.blit(background, (0, 0))
