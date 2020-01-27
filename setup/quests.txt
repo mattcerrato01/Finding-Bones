@@ -1,4 +1,4 @@
-﻿Quest 1:
+﻿Quest 0:
 
 Stage 1: print "stage 1"
 
@@ -28,7 +28,7 @@ Gender = m
 Grey = False
 Action =
 
-Quest 2:
+Quest 1:
 
 Stage 1: print "stage 2"
 
@@ -42,7 +42,7 @@ Gender = n
 Grey = False
 Action = Q(1,0) {hasnt(bucket){ set quest(1,1) ,, print"Death: ...",, print"Old Man Dorcus: What’s that sonny boy? You frost your dog?",, print"Death: ......",, print "Old Man Dorcus: You cost your frog?",, print "Death ......!!!",, print "Old Man Dorcus: You lost your dog? Why didn’t you just say so! It turns out there haven’t been any dogs in this village for years!",, print "Death: ......",, print "Old Man Dorcus: But, I did see a strange dog being taken a while back, in the forest, and I’d be willin’ to help, if you could do something for me.",, print"Death: ......",, print"Old Man Dorcus: I lost my bucket and I need it desperately, the fate of my bath tonight hinges on having my trusty bucket, if you bring it to me, I can give you some vital information about your pup.",, print"Death: ......"} AND has(bucket){print"Old Man Dorcus: Let me take a look at this...Yep! This is my bucket! Thank you for you help. In regards to your dog, it seems he was carried off by someone to the east part of the region, I saw the man in the forest with the pup, and some keys. I found one, which I’ll give to you for helping.",, print"Death: ......!",, "key" to inv,, print"Old Man Dorcus: Now, I will try to find my son, Young Man Dorcus, he went north to the forest to collect some berries in his bucket that you brought to me, I hope he will come back soon.",, print"Death: (Thought) Uh oh, first thing I gotta do is fill out those forms, thankfully, Young Man Dorcus will be put back into his body after the first 256 pages are filled out."} AND Q(1,1) {has(bucket){print"Old Man Dorcus: Let me take a look at this... Yep! This is my bucket! Thank you for you help. In regards to your dog, it seems he was carried off by someone to the east part of the region, I saw the man in the forest with the pup, and some keys. I found one, which I’ll give to you for helping.",, print"Death: ......!",, "key" to inv,, print"Old Man Dorcus: Now, I will try to find my son, Young Man Dorcus, he went north to the forest to collect some berries in his bucket that you brought to me, I hope he come back soon.",, print"Death: (Thought) Uh oh, first thing I gotta do is fill out those forms, thankfully, Young Man Dorcus will be put back into his body after the first 256 pages are filled out.",, set quest(1,2) } AND hasnt(bucket) {print "I really want my bucket, how will I ever take a bath tonight without it"}}
 
-Quest  3:
+Quest  2:
 
 Stage 1: print "stage 1"
 
@@ -54,15 +54,15 @@ Fated = True
 (x,y) = (2900, 100)
 Gender = n
 Grey = False
-Action = Q(2,0) {print "King: Oh ye gods, my kingdom is in worse shape than ever!" AND print "Death: (Thought) Aside from the feudalism?" AND print "King: A demon has possessed someone in the kingdom and it’s impossible to tell who has been taken by them" AND print "Death: (Thought) Well, that’s a problem that I should worry about." AND print "King: You there, bone man!" AND print "Death: (Thought) I have a name." AND print "King: Are you able to help our priest? You look…spectral." AND print "Death: (Thought) I’m going to ignore that." AND print "King: Will you help me?!?! I will pay you handsomely, with the finest key in the whole kingdom! (That my squire found on the ground outside)" AND print "Death: ……!" AND print "King: Excellent! Whenever you want to get started exorcising, the priest has more information to the west." AND  set quest(2,1)} AND Q(2,2) {print "King: Thank you stranger! Here is your key!",,"key1" to inv }
+Action = Q(2,0) {print "King: Oh ye gods, my kingdom is in worse shape than ever!" AND print "Death: (Thought) Aside from the feudalism?" AND print "King: A demon has possessed someone in the kingdom and it’s impossible to tell who has been taken by them" AND print "Death: (Thought) Well, that’s a problem that I should worry about." AND print "King: You there, bone man!" AND print "Death: (Thought) I have a name." AND print "King: Are you able to help our priest? You look…spectral." AND print "Death: (Thought) I’m going to ignore that." AND print "King: Will you help me?!?! I will pay you handsomely, with the finest key in the whole kingdom! (That my squire found on the ground outside)" AND print "Death: ……!" AND print "King: Excellent! Whenever you want to get started exorcising, the priest has more information to the west." AND  set quest(2,1)} AND Q(2,2) {print "King: Thank you stranger! Here is your key!" AND "key1" to inv}
 
 Name = Priest
 Image = Priest
-Fated = False
+Fated = True
 (x,y) = (1650, 347)
 Gender = n
 Grey = True
-Action = Q(2,1) {print "Priest: Why hello there Mr. Death! Recently, we have been pressing (heh heh) people for information about the demon. As a man of the gods, I have gathered the three souls the demon most likely jumped into." AND print "Death: (Thought) Hmm… can’t get a read on this priest, the implied torture is normal though." AND print "Priest: If you talk to these three sinners, one of them is bound to reveal something about the demon and who among us is possessed." AND print "Death: (Thought) Isn’t that your job?" AND reaped( print "Priest: WAIT, YOU KNEW? How? I had the perfect disguise, I WILL RETRUN.",, set quest(2,2))}
+Action = Q(2,1) {print "Priest: Why hello there Mr. Death! Recently, we have been pressing (heh heh) people for information about the demon. As a man of the gods, I have gathered the three souls the demon most likely jumped into." AND print "Death: (Thought) Hmm… can’t get a read on this priest, the implied torture is normal though." AND print "Priest: If you talk to these three sinners, one of them is bound to reveal something about the demon and who among us is possessed." AND print "Death: (Thought) Isn’t that your job?" AND reaped(print "Priest: WAIT, YOU KNEW? How? I had the perfect disguise, I WILL RETURN.",, set quest(2,2))}
 
 Name = Suspect1
 Image = Suspect1

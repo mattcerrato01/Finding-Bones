@@ -103,10 +103,10 @@ class Setup:
             elif command == "Gender":
 
                 male = str(line[line.find("= ")+2: line.find("= ")+3])
-                print(male)
+                # print(male)
 
             elif command == "Grey":
-                grey = line[ line.find("= ")+2 : line.rfind("e")] == "True"
+                grey = line[ line.find("= ")+2 : line.rfind("e")+1] == "True"
             elif command == "Action":
                 action = line[ line.find("= ")+2 : ]
 
@@ -129,7 +129,8 @@ class Setup:
                 else:
                     quest_array = [-1,-1]
 
-                print( quest_array )
+                # print( quest_array )
+                print(grey)
 
                 villager_list.add(Objects.Quest_Villager( name, image.strip(), fated, quest_array, action, x, y, male, grey))
 

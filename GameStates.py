@@ -118,6 +118,7 @@ class Inventory:
 
 class Actions:
     dialogue_list = []
+    perform_action_in_underworld = False
 
     def dialogue_box(self, dialogue):
 
@@ -174,18 +175,20 @@ class Actions:
         for action in quest_actions.split(' AND '):
 
             return_sub_string = ""
-            perform_action_in_underworld = False
+
 
 
             first_index = action.find("Q(")
             second_index = action.find(",")
-            if (WorldState.state(WorldState) or perform_action_in_underworld) and "reaped" not in action :
+            if (WorldState.state(WorldState) or Actions.perform_action_in_underworld) and "reaped" not in action:
 
                 if "Q(" in action:
                     if QuestManager.quest_stage(QuestManager,int(action[first_index + 2:second_index])) == int(
                             action[second_index + 1:action.find(")")]) or action[second_index + 1] == "A":
-                        return_sub_string = action[action.find("Q"):action.find("{") + 1] + self.perform_action(
-                            action[action.find("{") + 1:action.find("}")]) + "}" + " AND "
+                        conditional_action = action[action.find("{") + 1:action.find("}")]
+                        for string in conditional_action.split(",,"):
+                            return_sub_string = action[action.find("Q("):action.find("{") + 1] + self.perform_action(
+                                string) + "}" + " AND "
 
 
                 elif "do(" in action:
@@ -201,10 +204,7 @@ class Actions:
                         will_run = False
 
                         if lower_bound > 0:
-                            return_sub_string = "do(" + str(lower_bound - 1) + ":" + str(upper_bound) + ") {" + action[
-                                                                                                                action.find(
-                                                                                                                    "{") + 1:action.find(
-                                                                                                                    "}")] + "}" + " AND "
+                            return_sub_string = "do(" + str(lower_bound - 1) + ":" + str(upper_bound) + ") {" + action[action.find("{") + 1:action.find("}")] + "}" + " AND "
                         else:
                             will_run = True
 
@@ -214,13 +214,13 @@ class Actions:
 
                     if will_run and upper_bound > 0:
                         conditional_action = action[action.find("{") + 1:action.find("}")]
-                        strings = conditional_action.split(", ")
+                        strings = conditional_action.split(",, ")
                         upper_bound_chg = 0
                         end_string = ""
                         for idx in range(len(strings)):
                             if idx == (len(strings) - 1):
                                 upper_bound_chg = 1
-                            end_string += self.perform_action(strings[idx]) + ", "
+                            end_string += self.perform_action(strings[idx]) + ",, "
 
                         return_sub_string = "do(" + str(upper_bound - upper_bound_chg) + ") {" + end_string + "}" + " AND "
 
@@ -277,16 +277,19 @@ class Actions:
                     second_index = action.find(",")
                     third_index = action.find(")")
                     return_sub_string = action + " AND "
+                    # print(int(action[first_index: second_index]), int(action[second_index+1 : third_index]))
                     QuestManager.set_quest(QuestManager, int(action[first_index: second_index]) , int(action[second_index+1 : third_index]) )
 
-            elif not WorldState.state(WorldState):
-                perform_action_in_underworld = True
-                if "reaped" in action:
-                    print("Occured")
-                    conditional_action = action[action.find("(") + 1:action.find(")")]
-                    for string in conditional_action.split(",, "):
-                        return_sub_string = action[action.find("reaped"):action.find("(") + 1] + self.perform_action(
-                            string) + ")" + " AND "
+            elif not WorldState.state(WorldState) and "reaped" in action:
+                Actions.perform_action_in_underworld = True
+                print("Occured")
+                conditional_action = action[action.find("(") + 1:action.rfind(")")]
+                print(conditional_action)
+                for string in conditional_action.split(",,"):
+                    print(string)
+                    return_sub_string = action[action.find("reaped"):action.find("(") + 1] + self.perform_action(
+                        string) + ")" + " AND "
+                Actions.perform_action_in_underworld = False
 
             return_string += return_sub_string
 

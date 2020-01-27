@@ -196,8 +196,10 @@ def main():
                 elif event.type == p.MOUSEBUTTONUP:
 
                     pos = p.mouse.get_pos()
+                    print(quests.quest_stage(2))
                     # print(pos)
                     if dialogue_box.draw(screen):
+                        # print(dialogue_box.dialogue)
                         dialogue_box.perform_action(pos)
                     else:
                         for collidable in collision_group:
