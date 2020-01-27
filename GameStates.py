@@ -386,12 +386,14 @@ class QuestManager:
         dialogue_box = dialogue_box_font.render("Quests Progress", True, (255, 255, 255))
         rect = dialogue_box.get_rect()
         screen.blit(dialogue_box, (295 - rect.width / 2, 238))
-        quest_titles = ["Tutorial","Old Man's Bucket", "Demon hunting", "The people's bucket", "Lucky duck", "Sacred Tree"]
+        quest_titles = ["Tutorial", "Old Man's Bucket", "The people's bucket", "Demon hunting", "Sacred Tree", "Lucky duck"]
         for i in range(len(quest_titles)):
             stage_chg = 0
-            if i == 2:
+            if i == 2 and QuestManager.quest_stage(QuestManager,1)>=2:
                 stage_chg = -1
-            line = quest_titles[i] + "  " + str(QuestManager.quest_stage(QuestManager, i)) + stage_chg
+            elif i == 5:
+                 stage_chg = 1
+            line = quest_titles[i] + "  " + str(QuestManager.quest_stage(QuestManager, i) +stage_chg)
             dialogue_box = dialogue_box_font.render(line, True, (255, 255, 255))
             rect = dialogue_box.get_rect()
             screen.blit(dialogue_box, (295 - rect.width / 2, 258 + 20 * i))
