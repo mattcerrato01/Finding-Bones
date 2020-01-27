@@ -83,7 +83,7 @@ Fated = True
 (x,y) = (100,300)
 Gender = n
 Grey = False
-Action = Q(3,0) {print "Farmer: Please sir, help, I'm so thirsty."** print "Death: (Thought) Is he good?"** print "Farmer: Someone took the bucket in my well, and now I can't drink water. I would go to the blacksmith, but I'm too dehydrated to move."** print "Death: ......"** print "Farmer: You will? Thank you, you need to go to the blacksmith to get a new bucket."** set quest(3,1)} AND Q(3,5) { has(bucket) {print "Thank the gods! I can finally get water, why is there a key in the bucket? Eh, here skinny guy, as a thank you.",, to inv "key",, from inv "bucket",, set quest(3,5)} }
+Action = Q(3,0) {print "Farmer: Please sir, help, I'm so thirsty."** print "Death: (Thought) Is he good?"** print "Farmer: Someone took the bucket in my well, and now I can't drink water. I would go to the blacksmith, but I'm too dehydrated to move."** print "Death: ......"** print "Farmer: You will? Thank you, you need to go to the blacksmith to get a new bucket."** set quest(3,1)} AND Q(3,5) { has(bucket) {print "Thank the gods! I can finally get water, why is there a key in the bucket? Eh, here skinny guy, as a thank you.",, to inv "key",, from inv "bucket",, set quest(3,6)} }
 
 Name = Blacksmith
 Image = Blacksmith
@@ -91,7 +91,7 @@ Fated = True
 (x,y) = (200,300)
 Gender = n
 Grey = False
-Action = Q(3,1) {print "You want a bucket? I would, but I can’t smith on an empty stomach. If you can find a fisherman and grab me some lunch, I would appreciate it."** set quest(3,2)} AND Q(3,4) { has "fish" {print "My favorite! I was able to create a brand new bucket, here ya go!",, to inv "bucket",, from inv "fish",, set quest(3,5)} }
+Action = Q(3,1) {print "You want a bucket? I would, but I can’t smith on an empty stomach. If you can find a fisherman and grab me some lunch, I would appreciate it."** set quest(3,2)} AND Q(3,4) { has(fish) {print "My favorite! I was able to create a brand new bucket, here ya go!",, to inv "bucket",, from inv "fish",, set quest(3,5)} }
 
 Name = Fisherman
 Image = Fisherman

@@ -191,7 +191,7 @@ class Actions:
                 if "Q(" in action:
                     if QuestManager.quest_stage(QuestManager,int(action[first_index + 2:second_index])) == int(
                             action[second_index + 1:action.find(")")]) or action[second_index + 1] == "A":
-                        conditional_action = action[action.find("{") + 1:action.find("}")]
+                        conditional_action = action[action.find("{") + 1:action.rfind("}")]
                         for string in conditional_action.split("**"):
                             return_sub_string = action[action.find("Q("):action.find("{") + 1] + self.perform_action(
                                 string) + "}" + " AND "
@@ -283,8 +283,10 @@ class Actions:
                     second_index = action.find(",")
                     third_index = action.find(")")
                     return_sub_string = action + " AND "
-                    # print(int(action[first_index: second_index]), int(action[second_index+1 : third_index]))
-                    QuestManager.set_quest(QuestManager, int(action[first_index: second_index]) , int(action[second_index+1 : third_index]) )
+                    try:
+                        QuestManager.set_quest(QuestManager, int(action[first_index: second_index]) , int(action[second_index+1 : third_index]) )
+                    except:
+                        print(action)
 
             elif not WorldState.state(WorldState) and "reaped" in action:
                 Actions.perform_action_in_underworld = True
