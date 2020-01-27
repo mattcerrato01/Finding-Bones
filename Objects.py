@@ -19,7 +19,7 @@ def loadify(imgname):
 
 class Object(p.sprite.Sprite):
 
-    def __init__(self, overworld_image_name, x=0, y=0, width=50, height=50, action = """do(1) {to inv "berry", print "Take your berry you bastard"} AND do(1) {print "~You found a berry!~"}  """):  # NOTE: come back and clean up initialization and such here
+    def __init__(self, overworld_image_name, x=0, y=0, width=50, height=50, action = """do(1) {to inv "berry"} AND do(1) {print "~You found a berry!~"}  """):  # NOTE: come back and clean up initialization and such here
         p.sprite.Sprite.__init__(self)
         self.fated = False
         self.soul_reaped = False
@@ -172,12 +172,12 @@ class Villagers(Object):
         self.nameplate_image_right = p.transform.scale(loadify("NametagRight.png"), (6, temp_y))
         self.nameplate_image_mid = p.transform.scale(loadify("NametagMid.png"), (temp_x+4, temp_y))
 
-    #   self.fated
+    #	self.fated
 
     def perform_action(self, mouse_click):
 
         if self.rect.collidepoint(mouse_click):
-            if self.key and  "key5" in self.action:
+            if self.key and	 "key5" in self.action:
                 self.key = False
                 self.dialogues.pop(len(self.dialogues)-1)
             self.action = actions.perform_action(self.action)
@@ -369,7 +369,7 @@ class Player(Movable_Object):
         # check to see if we can just flip left walk for right walk
         Movable_Object.__init__(self, name)
 
-        self.speed = 2  # Change to 20 when testing
+        self.speed = 2	# Change to 20 when testing
         self.diag_speed = self.speed / m.sqrt(2)
 
         coord.set_offset_x(300)
@@ -569,8 +569,8 @@ class Demons(Object):
         chg_y = self.y - (abs(player.y) + 3*player.height/4)
         hyp = m.sqrt(chg_x ** 2 + chg_y ** 2)
         # angle = m.atan2(chg_y, chg_x)
-        x_move = (chg_x * self.speed) / hyp  # m.cos(angle) * self.speed
-        y_move = (chg_y * self.speed) / hyp  # m.sin(angle) * self.speed
+        x_move = (chg_x * self.speed) / hyp	 # m.cos(angle) * self.speed
+        y_move = (chg_y * self.speed) / hyp	 # m.sin(angle) * self.speed
 
         walk_gap = 30
 
@@ -651,7 +651,7 @@ class Tombstone(Object):
 class Graveyard(Object):
 
     def __init__(self, x = 200, y= 0):
-        Object.__init__(self,   overworld_image_name="graveyard-tombstone.png", x= x,y= y)
+        Object.__init__(self,	overworld_image_name="graveyard-tombstone.png", x= x,y= y)
         self.dead_people = []
         self.tombstones = []
         self.visible_tombstones = []
@@ -720,6 +720,14 @@ class Object_chgs_image(Object):
         self.end_image = p.transform.scale(loadify(end_image_name), (self.width, self.height))
         self.conditional = conditional
         self.image = self.start_image
+        self.start_image_name = start_image_name
+        self.end_image_name = end_image_name
+
+    def get_image_name(self):
+        if self.image == self.start_image:
+            return self.start_image_name
+        else:
+            return self.end_image_name
 
     def chg_image(self):
 
@@ -727,6 +735,7 @@ class Object_chgs_image(Object):
             self.image = self.end_image
         elif self.image == self.end_image:
             self.image = self.start_image
+
 
     def perform_action(self, mouse_click):
         if self.rect.collidepoint(mouse_click) and world.state():
@@ -738,6 +747,8 @@ class Object_chgs_image(Object):
                     break
             if condition_met or self.conditional == "":
                 self.chg_image()
+                if "key" in self.conditional:
+                    return True
 
             self.action = actions.perform_action(self.action)
             if self.conditional == "" or self.conditional == "bucket":
@@ -752,7 +763,7 @@ class Object_chgs_image(Object):
         return False
 
 
-#         Well's width is 108, height is 168
+#		  Well's width is 108, height is 168
 
 
 
