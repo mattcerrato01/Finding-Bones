@@ -158,13 +158,22 @@ class Villagers(Object):
         self.action = self.dialogues[idx]
         self.font = p.font.SysFont('Papyrus', 20)
         self.nameplate_text = self.font.render(self.name, False, (0, 0, 0))
-        holder = str(self.name)
-        # print( type(holder) )
-        self.nameplate_image = p.transform.scale(loadify("Nametag.png"), (self.font.size(holder)[0]+8, self.font.size(holder)[1]))
+
+        temp_x = self.font.size(str(self.name))[0]
+        temp_y = self.font.size(str(self.name))[1]
+
+        self.nameplate_image_left = p.transform.scale(loadify("NametagLeft.png"), (6, temp_y))
+        self.nameplate_image_right = p.transform.scale(loadify("NametagRight.png"), (6, temp_y))
+        self.nameplate_image_mid = p.transform.scale(loadify("NametagMid.png"), (temp_x+4, temp_y))
+
     #   self.fated
 
     def perform_action(self, mouse_click):
+
         Object.perform_action(self, mouse_click)
+
+        #if type(self) == Quest_Villager:
+
 
         if self.rect.collidepoint(mouse_click) and (not self.essential or self.grey) and not world.state():
             self.soul_reaped = True
@@ -215,8 +224,13 @@ class Villagers(Object):
     def draw_image(self, screen, image, x_chg = 0):
         screen.blit(image, (coord.screen_x(self.x + x_chg), coord.screen_y(self.y)))
         rect = self.nameplate_text.get_rect()
-        screen.blit(self.nameplate_image, (coord.screen_x(self.x) + self.width / 2 - rect.width / 2  -4, coord.screen_y(self.y) + self.height))
-        screen.blit(self.nameplate_text, (coord.screen_x(self.x) + self.width / 2 - rect.width / 2, coord.screen_y(self.y) + self.height))
+
+
+
+        screen.blit(self.nameplate_image_left, (coord.screen_x(self.x) + self.width / 2 - self.font.size(self.name)[0] / 2 - 8, coord.screen_y(self.y) + self.height))
+        screen.blit(self.nameplate_image_right, (coord.screen_x(self.x) + self.width / 2 + self.font.size(self.name)[0] / 2 + 2, coord.screen_y(self.y) + self.height))
+        screen.blit(self.nameplate_image_mid, (coord.screen_x(self.x) + self.width / 2 - self.font.size(self.name)[0] / 2 - 2, coord.screen_y(self.y) + self.height))
+        screen.blit(self.nameplate_text, (coord.screen_x(self.x) + self.width / 2 - self.font.size(self.name)[0] / 2 - 2, coord.screen_y(self.y) + self.height))
 
     def changeMouse(self, mouse):
         if self.rect.collidepoint(mouse):
@@ -233,16 +247,22 @@ class Quest_Villager(Villagers):
     def __init__(self, name, overworld_image_name, fated, quest_array, action, x, y, male, grey = False):
         Villagers.__init__(self, overworld_image_name, fated, x, y, male)
         self.name = name
+
+        temp_x = self.font.size(str(self.name))[0]
+        temp_y = self.font.size(str(self.name))[1]
+
+        self.nameplate_text = self.font.render(self.name, False, (0, 0, 0))
+        self.nameplate_image_left = p.transform.scale(loadify("NametagLeft.png"), (6, temp_y))
+        self.nameplate_image_right = p.transform.scale(loadify("NametagRight.png"), (6, temp_y))
+        self.nameplate_image_mid = p.transform.scale(loadify("NametagMid.png"), (temp_x + 4, temp_y))
+
         self.essential = True
-        self.nameplate = self.font.render(name, False, (0, 0, 0), (255, 255, 255))
         self.action = action
         self.quest_action = action
         self.grey = grey
         self.quest = quest_array[0]
-        self.quest_end = int( quest_array[len(quest_array)-1] )+1
-        # print("1")
+        self.quest_end = int( quest_array[len(quest_array)-1] )
         self.quest_array = quest_array[1:]
-        # print("2")
 
         # print(name, self.quest_array)
         self.question_mark = p.transform.scale(loadify("question_mark.png"), (16, 24))
@@ -252,7 +272,6 @@ class Quest_Villager(Villagers):
         self.fated_soul = p.transform.scale(loadify("fated_soul.png"), (self.width, self.height))
         self.unfated_soul = p.transform.scale(loadify("unfated_soul.png"), (self.width, self.height))
     def update_action(self):
-        print(self.quest_array)
         if qm.quest_stage(self.quest) not in self.quest_array:
             idx = r.randint(0,len(self.dialogues)-1)
             self.action = self.dialogues[idx]

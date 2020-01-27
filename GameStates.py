@@ -192,7 +192,7 @@ class Actions:
                     if QuestManager.quest_stage(QuestManager,int(action[first_index + 2:second_index])) == int(
                             action[second_index + 1:action.find(")")]) or action[second_index + 1] == "A":
                         conditional_action = action[action.find("{") + 1:action.find("}")]
-                        for string in conditional_action.split(",,"):
+                        for string in conditional_action.split("**"):
                             return_sub_string = action[action.find("Q("):action.find("{") + 1] + self.perform_action(
                                 string) + "}" + " AND "
 

@@ -4,26 +4,10 @@ Stage 1: print "stage 1"
 
 Villagers:
 
-Name = James
-Image = villager
-Fated = True
-(x,y) = (400,800)
-Gender = m
-Grey = False
-Action = Q(0,3) {print "hello there"}
-
 Name = Harold Alfond Tutorial Villager
 Image = villager
 Fated = False
 (x,y) = (400,200)
-Gender = m
-Grey = False
-Action =
-
-Name = Jeffrey
-Image = villager
-Fated = False
-(x,y) = (0,0)
 Gender = m
 Grey = False
 Action =
@@ -54,7 +38,7 @@ Fated = True
 (x,y) = (2900, 100)
 Gender = n
 Grey = False
-Action = Q(2,0) {print "King: Oh ye gods, my kingdom is in worse shape than ever!" AND print "Death: (Thought) Aside from the feudalism?" AND print "King: A demon has possessed someone in the kingdom and it’s impossible to tell who has been taken by them" AND print "Death: (Thought) Well, that’s a problem that I should worry about." AND print "King: You there, bone man!" AND print "Death: (Thought) I have a name." AND print "King: Are you able to help our priest? You look…spectral." AND print "Death: (Thought) I’m going to ignore that." AND print "King: Will you help me?!?! I will pay you handsomely, with the finest key in the whole kingdom! (That my squire found on the ground outside)" AND print "Death: ……!" AND print "King: Excellent! Whenever you want to get started exorcising, the priest has more information to the west." AND  set quest(2,1)} AND Q(2,2) {print "King: Thank you stranger! Here is your key!" AND "key1" to inv}
+Action = Q(2,0) {print "King: Oh ye gods, my kingdom is in worse shape than ever!"** print "Death: (Thought) Aside from the feudalism?"** print "King: A demon has possessed someone in the kingdom and it’s impossible to tell who has been taken by them"** print "Death: (Thought) Well, that’s a problem that I should worry about."** print "King: You there, bone man!"** print "Death: (Thought) I have a name."** print "King: Are you able to help our priest? You look…spectral."** print "Death: (Thought) I’m going to ignore that."** print "King: Will you help me?!?! I will pay you handsomely, with the finest key in the whole kingdom! (That my squire found on the ground outside)"** print "Death: ......!"** print "King: Excellent! Whenever you want to get started exorcising, the priest has more information to the west."** set quest(2,1)} AND Q(2,2) {print "King: Thank you stranger! Here is your key!"**"key1" to inv }
 
 Name = Priest
 Image = Priest
@@ -62,7 +46,7 @@ Fated = True
 (x,y) = (1650, 347)
 Gender = n
 Grey = True
-Action = Q(2,1) {print "Priest: Why hello there Mr. Death! Recently, we have been pressing (heh heh) people for information about the demon. As a man of the gods, I have gathered the three souls the demon most likely jumped into." AND print "Death: (Thought) Hmm… can’t get a read on this priest, the implied torture is normal though." AND print "Priest: If you talk to these three sinners, one of them is bound to reveal something about the demon and who among us is possessed." AND print "Death: (Thought) Isn’t that your job?" AND reaped(print "Priest: WAIT, YOU KNEW? How? I had the perfect disguise, I WILL RETURN.",, set quest(2,2))}
+Action = Q(2,1) {print "Priest: Why hello there Mr. Death! Recently, we have been pressing (heh heh) people for information about the demon. As a man of the gods, I have gathered the three souls the demon most likely jumped into."** print "Death: (Thought) Hmm… can’t get a read on this priest, the implied torture is normal though."** print "Priest: If you talk to these three sinners, one of them is bound to reveal something about the demon and who among them is possessed."** print "Death: (Thought) Isn’t that your job?"** reaped( print "Priest: WAIT, YOU KNEW? How? I had the perfect disguise, I WILL RETURN."** set quest(2,2))}
 
 Name = Suspect1
 Image = Suspect1
@@ -70,7 +54,7 @@ Fated = False
 (x,y) = (1600, 500)
 Gender = n
 Grey = True
-Action = Q(2,1) {print "Prisoner 1: Yeah, I haven’t been anywhere near a demon, however, I worry about how certain members of this kingdom use these demon hunts to expunge political dissidents and those vulnerable so kings and priests have the ability to save their people. What do I know? I’m just a fool." AND reaped(print "Priest: Excellent, no more demons in this kingdom, you did it congrats! I sent word to the king.")}
+Action = Q(2,1) {print "Prisoner 1: Yeah, I haven’t been anywhere near a demon, however, I worry about how certain members of this kingdom use these demon hunts to expunge political dissidents and those vulnerable so kings and priests have the ability to save their people. What do I know? I’m just a fool."** reaped(print "Priest: Excellent, no more demons in this kingdom, you did it congrats! I sent word to the king.")}
 
 Name = Suspect2
 Image = Suspect2
@@ -78,7 +62,7 @@ Fated = False
 (x,y) = (1650, 500)
 Gender = n
 Grey = True
-Action = Q(2,1) {print "Prisoner 2: Man do I love stealing, and lootin, it makes me feel alive." AND reaped(print "Priest: Excellent, no more demons in this kingdom, you did it congrats! I sent word to the king.")}
+Action = Q(2,1) {print "Prisoner 2: Man do I love stealing, and lootin, it makes me feel alive."** reaped(print "Priest: Excellent, no more demons in this kingdom, you did it congrats! I sent word to the king.")}
 
 Name = Suspect3
 Image = Suspect3
@@ -86,4 +70,33 @@ Fated = False
 (x,y) = (1700, 500)
 Gender = n
 Grey = True
-Action = Q(2,1) {print "Prisoner 3: HEH HEH I GOT A DEMON IN ME." AND reaped(print "Priest: Excellent, no more demons in this kingdom, you did it congrats! I sent word to the king.")}
+Action = Q(2,1) {print "Prisoner 3: HEH HEH I GOT A DEMON IN ME."** reaped(print "Priest: Excellent, no more demons in this kingdom, you did it congrats! I sent word to the king.")}
+
+
+Quest 3:
+
+Stage 1: print "Stage 1"
+
+Name = Farmer
+Image = Farmer
+Fated = True
+(x,y) = (100,300)
+Gender = n
+Grey = False
+Action = Q(3,0) {print "Farmer: Please sir, help, I'm so thirsty."** print "Death: (Thought) Is he good?"** print "Farmer: Someone took the bucket in my well, and now I can't drink water. I would go to the blacksmith, but I'm too dehydrated to move."** print "Death: ......"** print "Farmer: You will? Thank you, you need to go to the blacksmith to get a new bucket."** set quest(3,1)} AND Q(3,5) { has(bucket) {print "Thank the gods! I can finally get water, why is there a key in the bucket? Eh, here skinny guy, as a thank you.",, to inv "key",, from inv "bucket",, set quest(3,5)} }
+
+Name = Blacksmith
+Image = Blacksmith
+Fated = True
+(x,y) = (200,300)
+Gender = n
+Grey = False
+Action = Q(3,1) {print "You want a bucket? I would, but I can’t smith on an empty stomach. If you can find a fisherman and grab me some lunch, I would appreciate it."** set quest(3,2)} AND Q(3,4) { has "fish" {print "My favorite! I was able to create a brand new bucket, here ya go!",, to inv "bucket",, from inv "fish",, set quest(3,5)} }
+
+Name = Fisherman
+Image = Fisherman
+Fated = True
+(x,y) = (300,300)
+Gender = n
+Grey = False
+Action =  Q(3,3) {has(berry) {print "Test",, print "Perfect! Here is a fresh fish for your hungry ... ribcage.",, to inv "fish",, from inv "berry",, set quest(3,4) }} AND Q(3,2) {print "You want a fish? I could sell one, but you don’t have any money... Ah, get me some berries from the forest, I need them to cook the fish properly. I need 3 berries to properly cook the fish."** set quest(3,3)}
