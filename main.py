@@ -132,62 +132,38 @@ def main():
 	ptextRect.center = (400,300)
 
 
-	def forced_dialogue(dialogue):
-		"""
+    def run_tutorial(villager_tutorial, quest_dialogue):
+        # print(quest_dialogue)
+        # print(quests.quest_stage(0))
+        actions.perform_action_in_underworld = True
+        actions.perform_action(quest_dialogue)
+        if quests.quest_stage(0) == 1:
+            if p.time.get_ticks() % 1000:
+                villager_tutorial.setX(villager_tutorial.getX() + 0.5)
+                villager_tutorial.setY(villager_tutorial.getY() + 1)
+            if villager_tutorial.getX() == 420:
+                quests.set_quest(0, 2)
+        elif quests.quest_stage(0) == 3:
+            if not world.state():
 
-		:param quest_villager: villager that will be speaking the forced dialogue with death
-		:param dialogue: list of strings representing the print action a villager can perform
-		:return: running
-		"""
-		for action in dialogue:
-			actions.perform_action(action)
-
-
-	def run_tutorial(t_stage, villager_tutorial, quest_dialogue):
-		#print(t_stage)
-		if t_stage == 0:
-			t_stage = 1
-		elif t_stage == 1:
-			forced_dialogue(quest_dialogue[0])
-			t_stage = 2
-		elif t_stage == 2:
-			if len(dialogue_box.dialogue) == 0:
-				t_stage = 3
-		elif t_stage == 3:
-			if p.time.get_ticks() % 1000:
-				villager_tutorial.setX(villager_tutorial.getX() + 0.5)
-				villager_tutorial.setY(villager_tutorial.getY() + 1)
-			if villager_tutorial.getX() == 420:
-				t_stage = 4
-		elif t_stage == 4:
-			forced_dialogue(quest_dialogue[1])
-			t_stage = 5
-		elif t_stage == 5:
-			if not world.state():
-				t_stage = 6
-		elif t_stage == 6:
-			forced_dialogue(quest_dialogue[2])
-			t_stage = 7
-		elif t_stage == 7:
-			if villager_tutorial.get_soul_reaped():
-				forced_dialogue(quest_dialogue[3])
-				t_stage = 8
-
-		return t_stage
+                quests.set_quest(0, 4)
+        elif quests.quest_stage(0) == 5:
+            actions.perform_action_in_underworld = False
+            return False
+        return True
 
 
-	t_stage = 0
-	time = 0
-	fate = player.fate
-	paused = False
-	ptime = 0
-	esc_holder = False
-	mouseChanged = False
-	tutorial_active = True
-	piles_of_bones = []
-	gs.change_track(1)
-	
-	#print(forced_dialogue(quest_dialogue))
+    t_stage = 0
+    time = 0
+    fate = player.get_fate()
+    paused = False
+    ptime = 0
+    esc_holder = False
+    mouseChanged = False
+    tutorial_active = False
+    piles_of_bones = []
+    gs.change_track(1)
+    first_click = True
 
 	while running:
 
@@ -202,23 +178,27 @@ def main():
 			sc4.draw(screen)
 
 
-			for event in p.event.get():
-				if event.type == p.QUIT:
-					running = False
-				elif event.type == p.MOUSEBUTTONUP:
+            for event in p.event.get():
+                if event.type == p.QUIT:
+                    running = False
+                elif event.type == p.MOUSEBUTTONUP:
+                    if first_click:
+                        tutorial_active = True
+                        first_click = False
 
-					pos = p.mouse.get_pos()
-					print(coord.real_x(pos[0]), coord.real_y(pos[1]))
-					if dialogue_box.draw(screen):
-						play_sound(random.choice(["Greeting 1", "Greeting 2", "Greeting 3 (Female)", "Cough", "BlehSound"])) # FIX THIS SHIT LATER
-						dialogue_box.perform_action(pos)
-					else:
-						for collidable in collision_group:
-							if collidable.perform_action(pos):	# returns true if villager has been reaped
-								play_sound("Scythe")
-								graveyard.add_grave(collidable)
-								bones = p.transform.scale(loadify("skull_and_bones.png"), (60, 62))
-								piles_of_bones.append([bones, p.time.get_ticks(), collidable.x, collidable.y])
+                    pos = p.mouse.get_pos()
+                    print(coord.real_x(pos[0]), coord.real_y(pos[1]))
+                    print(actions.dialogue_list)
+                    if dialogue_box.draw(screen):
+                        play_sound(random.choice(["Greeting 1", "Greeting 2", "Greeting 3 (Female)", "Cough", "BlehSound"])) # FIX THIS SHIT LATER
+                        dialogue_box.perform_action(pos)
+                    else:
+                        for collidable in collision_group:
+                            if collidable.perform_action(pos):	# returns true if villager has been reaped
+                                play_sound("Scythe")
+                                graveyard.add_grave(collidable)
+                                bones = p.transform.scale(loadify("skull_and_bones.png"), (60, 62))
+                                piles_of_bones.append([bones, p.time.get_ticks(), collidable.x, collidable.y])
 
 								tomb = graveyard.get_tombstones()[len(graveyard.get_tombstones()) - 1]
 								collidable_group.add(tomb)
@@ -271,35 +251,39 @@ def main():
 			elif not key[p.K_ESCAPE]:
 				esc_holder = True
 
-			if not dialogue_box.draw(screen):
-				for x in range(p.time.get_ticks() // 10 - time // 10):
-					player.move(p.key.get_pressed(), collision_group, demons)
-					if not world.state():
-						for demon in demons:
-							demon.move(player)
-							if demon.hit:
-								demons.remove(demon)
-								player.set_fate(player.get_fate() - 10)
-			# adding or subtracting demons when player's fate goes down
-			if abs(fate - player.get_fate()) >= 5:
-				i = 0
-				while i < abs(fate - player.get_fate()) // 5:
-					if fate - player.fate < 0:
-						randIDX = random.randint(0, len(demons) - 1)
-						demons.remove(demons.sprites()[randIDX])
-						i += 1
-					elif fate - player.get_fate() > 0:
-						createDemons(demons, player, 1)
-						i += 1
-				fate = player.get_fate()
-			if not world.state():
-				for demon in demons:
-					demon.draw(screen)
-			dialogue_box.draw(screen)
-			for bone in piles_of_bones:
-				screen.blit(bone[0], (coord.screen_x(bone[2]), coord.screen_y(bone[3])))
-				if bone[1] + 3000 < p.time.get_ticks():
-					piles_of_bones.remove(bone)
+            if not dialogue_box.draw(screen):
+                for x in range(p.time.get_ticks() // 10 - time // 10):
+                    player.move(p.key.get_pressed(), collision_group, demons)
+                    if not world.state():
+                        for demon in demons:
+                            demon.move(player)
+                            if demon.hit:
+                                demons.remove(demon)
+                                player.set_fate(player.get_fate() - 10)
+            # adding or subtracting demons when player's fate goes down
+            if abs(fate - player.get_fate()) >= 5:
+                i = 0
+                while i < abs(fate - player.get_fate()) // 5:
+                    if fate - player.get_fate() < 0:
+                        try:
+                            randIDX = random.randint(0, len(demons)-1)
+                        except:
+                            randIDX = 0
+
+                        demons.remove(demons.sprites()[randIDX])
+                        i += 1
+                    elif fate - player.get_fate() > 0:
+                        createDemons(demons, player, 1)
+                        i += 1
+                fate = player.get_fate()
+            if not world.state():
+                for demon in demons:
+                    demon.draw(screen)
+            dialogue_box.draw(screen)
+            for bone in piles_of_bones:
+                screen.blit(bone[0], (coord.screen_x(bone[2]), coord.screen_y(bone[3])))
+                if bone[1] + 3000 < p.time.get_ticks():
+                    piles_of_bones.remove(bone)
 
 			player.draw(screen)
 			mouseChanged = False

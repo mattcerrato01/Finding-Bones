@@ -201,8 +201,6 @@ class Actions:
                 end_of_string = action[action.find("reaped"): action.rfind(")")]
 
 
-
-
             first_index = action.find("Q(")
             second_index = action.find(",")
             if (WorldState.state(WorldState) or Actions.perform_action_in_underworld):
@@ -213,7 +211,7 @@ class Actions:
                         conditional_action = action[action.find("{") + 1:action.rfind("}")]
                         return_sub_string = action[action.find("Q("):action.find("{") + 1]
                         for string in conditional_action.split("**"):
-                            return_sub_string +=  self.perform_action(string) + "**"
+                            return_sub_string += self.perform_action(string) + "**"
                         return_sub_string += "} AND "
 
 

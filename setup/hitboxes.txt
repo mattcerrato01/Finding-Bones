@@ -67,7 +67,7 @@
 1535, 0, 40, 460
 1230, 0, 30, 230
 0, 0, 90, 210
-1073, 2105, 70, 135, """ print"It's a tree" AND Q(4,1) {print "Hello Sir Death, I am happy to finally see you here, unfortunately, I cannot give you your  dog, as living objects cannot be recreated, but I can give you this key" ** "" to inv ** set quest(4,2)} """
-890, 1820, 440, 285, """ print"It's a tree" AND Q(4,1) {print "Hello Sir Death, I am happy to finally see you here, unfortunately, I cannot give you your  dog, as living objects cannot be recreated, but I can give you this key" ** "Silver Key" to inv ** set quest(4,2)} """
-845, 1825, 70, 140, """ print"It's a tree" AND Q(4,1) {print "Hello Sir Death, I am happy to finally see you here, unfortunately, I cannot give you your  dog, as living objects cannot be recreated, but I can give you this key" ** "Silver Key" to inv ** set quest(4,2)} """
-830, 1980, 240, 130, """ print "It's a tree" AND Q(4,1) {print "Hello Sir Death, I am happy to finally see you here, unfortunately, I cannot give you your  dog, as living objects cannot be recreated, but I can give you this key" ** "Silver Key" to inv ** set quest(4,2)} """
+1073, 2105, 70, 135, """Q(4,0) {print "Hello Sir Death, I am happy to finally see you here, unfortunately, I cannot give you your  dog, as living objects cannot be recreated, but I can give you this key" ** "key4" to inv ** set quest(4,1)} """
+890, 1820, 440, 285, """Q(4,0) {print "Hello Sir Death, I am happy to finally see you here, unfortunately, I cannot give you your  dog, as living objects cannot be recreated, but I can give you this key" ** "key4" to inv ** set quest(4,1)} """
+845, 1825, 70, 140, """Q(4,0) {print "Hello Sir Death, I am happy to finally see you here, unfortunately, I cannot give you your  dog, as living objects cannot be recreated, but I can give you this key" ** "key4" to inv ** set quest(4,1)} """
+830, 1980, 240, 130, """Q(4,0) {print "Hello Sir Death, I am happy to finally see you here, unfortunately, I cannot give you your  dog, as living objects cannot be recreated, but I can give you this key" ** "key4" to inv ** set quest(4,1)} """
