@@ -3,6 +3,7 @@ import pygame as p
 import math as m
 import GameStates as gs
 import random as r
+import main
 
 
 coord = gs.CoordConverter()
@@ -444,6 +445,7 @@ class Player(Movable_Object):
 		else:
 			self.walking_time += animation_speed
 			self.soul -= soul_drain
+			main.play_sound("Footsteps")
 
 		coord.set_offset_x(self.x + 374)
 		coord.set_offset_y(self.y + 228)

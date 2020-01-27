@@ -12,6 +12,9 @@ import Setup
 import Canopy
 import os
 
+def play_sound(name):
+	  sound = p.mixer.Sound("effects/" + name + ".wav")
+	  sound.play()
 
 def main():
 	coord = gs.CoordConverter()
