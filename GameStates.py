@@ -175,113 +175,116 @@ class Actions:
 
             return_sub_string = ""
 
+
             first_index = action.find("Q(")
             second_index = action.find(",")
+            if WorldState.state(WorldState) and "reaped" not in action:
 
-            if "Q(" in action:
-                if QuestManager.quest_stage(QuestManager,int(action[first_index + 2:second_index])) == int(
-                        action[second_index + 1:action.find(")")]) or action[second_index + 1] == "A":
-                    return_sub_string = action[action.find("Q"):action.find("{") + 1] + self.perform_action(
-                        action[action.find("{") + 1:action.find("}")]) + "}" + " AND "
+                if "Q(" in action:
+                    if QuestManager.quest_stage(QuestManager,int(action[first_index + 2:second_index])) == int(
+                            action[second_index + 1:action.find(")")]) or action[second_index + 1] == "A":
+                        return_sub_string = action[action.find("Q"):action.find("{") + 1] + self.perform_action(
+                            action[action.find("{") + 1:action.find("}")]) + "}" + " AND "
 
 
-            elif "do(" in action:
+                elif "do(" in action:
 
-                first_index = action.find("do(")+3
-                second_index = action.find(")")
+                    first_index = action.find("do(")+3
+                    second_index = action.find(")")
 
-                if ":" in action[first_index:second_index]:
+                    if ":" in action[first_index:second_index]:
 
-                    lower_bound = int(action[first_index:action.find(":")])
-                    upper_bound = int(action[action.find(":") + 1:second_index])
+                        lower_bound = int(action[first_index:action.find(":")])
+                        upper_bound = int(action[action.find(":") + 1:second_index])
 
-                    will_run = False
+                        will_run = False
 
-                    if lower_bound > 0:
-                        return_sub_string = "do(" + str(lower_bound - 1) + ":" + str(upper_bound) + ") {" + action[
-                                                                                                            action.find(
-                                                                                                                "{") + 1:action.find(
-                                                                                                                "}")] + "}" + " AND "
+                        if lower_bound > 0:
+                            return_sub_string = "do(" + str(lower_bound - 1) + ":" + str(upper_bound) + ") {" + action[
+                                                                                                                action.find(
+                                                                                                                    "{") + 1:action.find(
+                                                                                                                    "}")] + "}" + " AND "
+                        else:
+                            will_run = True
+
                     else:
+                        upper_bound = int(action[first_index:second_index])
                         will_run = True
 
-                else:
-                    upper_bound = int(action[first_index:second_index])
-                    will_run = True
+                    if will_run and upper_bound > 0:
+                        conditional_action = action[action.find("{") + 1:action.find("}")]
+                        strings = conditional_action.split(", ")
+                        upper_bound_chg = 0
+                        end_string = ""
+                        for idx in range(len(strings)):
+                            if idx == (len(strings) - 1):
+                                upper_bound_chg = 1
+                            end_string += self.perform_action(strings[idx]) + ", "
 
-                if will_run and upper_bound > 0:
-                    conditional_action = action[action.find("{") + 1:action.find("}")]
-                    strings = conditional_action.split(", ")
-                    upper_bound_chg = 0
-                    end_string = ""
-                    for idx in range(len(strings)):
-                        if idx == (len(strings) - 1):
-                            upper_bound_chg = 1
-                        end_string += self.perform_action(strings[idx]) + ", "
+                        return_sub_string = "do(" + str(upper_bound - upper_bound_chg) + ") {" + end_string + "}" + " AND "
 
-                    return_sub_string = "do(" + str(upper_bound - upper_bound_chg) + ") {" + end_string + "}" + " AND "
+                elif "has(" in action:
 
-            elif "has(" in action:
+                    first_index = action.find("has(") + 4
+                    second_index = action.find(")")
 
-                first_index = action.find("has(") + 4
-                second_index = action.find(")")
+                    if Inventory.has(Inventory, action[first_index:second_index]):
+                        conditional_action = action[action.find("{") + 1:action.find("}")]
+                        for string in conditional_action.split(",, "):
+                            return_sub_string = action[action.find("has("):action.find("{") + 1] + self.perform_action(
+                                string) + "}" + " AND "
+                    else:
+                        return_sub_string = action + " AND "
+                elif "hasnt(" in action:
 
-                if Inventory.has(Inventory, action[first_index:second_index]):
-                    conditional_action = action[action.find("{") + 1:action.find("}")]
-                    for string in conditional_action.split(",, "):
-                        return_sub_string = action[action.find("has("):action.find("{") + 1] + self.perform_action(
-                            string) + "}" + " AND "
-                else:
+                    first_index = action.find("hasnt(") + 6
+                    second_index = action.find(")")
+
+                    if not Inventory.has(Inventory, action[first_index:second_index]):
+                        conditional_action = action[action.find("{") + 1:action.find("}")]
+                        for string in conditional_action.split(",, "):
+                            return_sub_string = action[action.find("hasnt("):action.find("{") + 1] + self.perform_action(
+                                string) + "}" + " AND "
+                    else:
+                        return_sub_string = action + " AND "
+
+                elif "inv" in action:
+
                     return_sub_string = action + " AND "
-            elif "hasnt(" in action:
 
-                first_index = action.find("hasnt(") + 6
-                second_index = action.find(")")
+                    first_index = action.find('"')
+                    second_index = action.find('"', first_index + 1)
 
-                if not Inventory.has(Inventory, action[first_index:second_index]):
-                    conditional_action = action[action.find("{") + 1:action.find("}")]
-                    for string in conditional_action.split(",, "):
-                        return_sub_string = action[action.find("hasnt("):action.find("{") + 1] + self.perform_action(
-                            string) + "}" + " AND "
-                else:
+                    if 0 <= first_index < second_index:
+                        if "to" in action:
+                            Inventory.append_to_inventory(Inventory, action[first_index + 1:second_index])
+
+                        elif "from" in action:
+                            Inventory.remove_from_inventory(Inventory, action[first_index + 1:second_index])
+
+                elif "print" in action:
                     return_sub_string = action + " AND "
+                    first_index = action.find('"')
+                    second_index = action.find('"', first_index + 1)
+                    if 0 <= first_index < second_index:
+                        Actions.dialogue_box(Actions, action[first_index + 1:second_index])
 
-            elif "inv" in action:
+                elif "adv quest" in action:
+                    QuestManager.add_quest()
+                elif "set quest(" in action:
+                    first_index = action.find("set quest(") + 10
+                    second_index = action.find(",")
+                    third_index = action.find(")")
+                    return_sub_string = action + " AND "
+                    QuestManager.set_quest(QuestManager, int(action[first_index: second_index]) , int(action[second_index+1 : third_index]) )
 
-                return_sub_string = action + " AND "
-
-                first_index = action.find('"')
-                second_index = action.find('"', first_index + 1)
-
-                if 0 <= first_index < second_index:
-                    if "to" in action:
-                        Inventory.append_to_inventory(Inventory, action[first_index + 1:second_index])
-
-                    elif "from" in action:
-                        Inventory.remove_from_inventory(Inventory, action[first_index + 1:second_index])
-
-
-            elif "print" in action:
-                return_sub_string = action + " AND "
-                first_index = action.find('"')
-                second_index = action.find('"', first_index + 1)
-                if 0 <= first_index < second_index:
-                    Actions.dialogue_box(Actions, action[first_index + 1:second_index])
-
-            elif "adv quest" in action:
-                QuestManager.add_quest()
-            elif "set quest(" in action:
-                first_index = action.find("set quest(") + 10
-                second_index = action.find(",")
-                third_index = action.find(")")
-                return_sub_string = action + " AND "
-                QuestManager.set_quest(QuestManager, int(action[first_index: second_index]) , int(action[second_index+1 : third_index]) )
-            elif "adv event" in action:
-                return_sub_string = action + " AND "
-                first_index = action.find('"')
-                second_index = action.find('"', first_index + 1)
-                quest_num = int(action[first_index+1:second_index])
-                QuestManager.advance_quest(QuestManager,quest_num)
+            elif not WorldState.state(WorldState):
+                if "reaped" in action:
+                    perform_while_underworld = True
+                    conditional_action = action[action.find("(") + 1:action.find(")")]
+                    for string in conditional_action.split(",, "):
+                        return_sub_string = action[action.find("reaped"):action.find("(") + 1] + self.perform_action(
+                            string) + ")" + " AND "
 
             return_string += return_sub_string
 
