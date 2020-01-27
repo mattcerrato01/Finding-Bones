@@ -320,6 +320,9 @@ def main():
 				endc = end.main(screen, False)
 				
 			if win:
+				player.fate = 100
+				player.soul = 100
+				p.mouse.set_visible(True)
 				end.main(screen, True, player.get_fate())
 				#endc = end.main(screen, True, player.get_fate()
 			if endc == "restart":
