@@ -165,6 +165,7 @@ def main():
     piles_of_bones = []
     gs.change_track(1)
     first_click = True
+    win = False
 
     while running:
 
@@ -196,6 +197,8 @@ def main():
                     else:
                         for collidable in collision_group:
                             if collidable.perform_action(pos):	# returns true if villager has been reaped
+                                if collidable.image == "cage-locked-bones.png":
+                                    win = True
                                 play_sound("Scythe")
                                 graveyard.add_grave(collidable)
                                 bones = p.transform.scale(loadify("skull_and_bones.png"), (60, 62))
@@ -284,6 +287,8 @@ def main():
                 if bone[1] + 3000 < p.time.get_ticks():
                     piles_of_bones.remove(bone)
 
+
+
             player.draw(screen)
             mouseChanged = False
             for collidable in collision_group:
@@ -318,8 +323,8 @@ def main():
                     running = False
                 elif endc == "credits":
                     pass
-            if True:
-                pass
+            if win:
+                end.main(screen, True, player.get_fate())
                 #endc = end.main(screen, True, player.get_fate()
 
             time = p.time.get_ticks()
