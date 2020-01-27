@@ -91,7 +91,7 @@ class Setup:
 
                 qm.set_quest_stage(quest, stage, input)
             elif command == "Name":
-                name = line[ line.find("= ")+2 : len(line)-1]
+                name = line[ line.find("= ")+2 : len(line)-1 ]
             elif command == "Image":
                 image = line[ line.find("= ")+2 : ]
             elif command == "Fated":
@@ -111,9 +111,9 @@ class Setup:
                 action = line[ line.find("= ")+2 : ]
 
                 if "Q(" in action:
-                    quest_array = [action.rfind("Q(") + 2, action.rfind("Q(") + 3]
+                    quest_array = [ int( action[action.rfind("Q(") + 2 : action.rfind("Q(") + 3 ] ) ]
 
-                    last_index = 0
+                    last_index = -1
 
                     while True:
 
@@ -122,11 +122,15 @@ class Setup:
                         if last_index == -1:
                             break
                         else:
-                            quest_array.append(int(action[action.find(",", last_index+1) + 1 : action.find( ")" , last_index+1)]))
+                            holder = action[action.find(",", last_index+1) + 1 : action.find( ")" , last_index+1)]
+                            quest_array.append(int(holder))
+
 
                 else:
                     quest_array = [-1,-1]
-                # print(male)
+
+                print( quest_array )
+
                 villager_list.add(Objects.Quest_Villager( name, image.strip(), fated, quest_array, action, x, y, male, grey))
 
             line = file.readline()

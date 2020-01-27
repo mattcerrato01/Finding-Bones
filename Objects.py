@@ -229,13 +229,17 @@ class Quest_Villager(Villagers):
 
     def __init__(self, name, overworld_image_name, fated, quest_array, action, x, y, male, grey = False):
         Villagers.__init__(self, overworld_image_name, fated, x, y, male)
+        self.name = name
         self.essential = True
         self.nameplate = self.font.render(name, False, (0, 0, 0), (255, 255, 255))
         self.action = action
         self.grey = grey
         self.quest = quest_array[0]
         self.quest_end = int( quest_array[len(quest_array)-1] )
-        self.quest_array = quest_array[1:len(quest_array)-1]
+        print("1")
+        self.quest_array = quest_array[1:]
+        print("2")
+
         print(name, self.quest_array)
         self.question_mark = p.transform.scale(loadify("question_mark.png"), (16, 24))
         if grey:
@@ -257,6 +261,10 @@ class Quest_Villager(Villagers):
 
         if world.state():
             Villagers.draw(self, screen, player)
+
+            print( self.name , self.quest_array )
+            print( qm.quest_stage(self.quest) )
+
             if qm.quest_stage(self.quest) in self.quest_array:
                 screen.blit(self.question_mark, (coord.screen_x(self.x)+self.width/2-8, coord.screen_y(self.y)-30))
         elif stage < self.quest_end:

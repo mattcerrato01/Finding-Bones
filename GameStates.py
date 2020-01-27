@@ -266,12 +266,18 @@ class Actions:
                 first_index = action.find('"')
                 second_index = action.find('"', first_index + 1)
                 if 0 <= first_index < second_index:
-                    print( action[first_index + 1:second_index] )
                     self.dialogue_box(action[first_index + 1:second_index])
 
             elif "adv quest" in action:
                 QuestManager.add_quest()
+            elif "set quest(" in action:
+                first_index = action.find("set quest(") + 10
+                second_index = action.find(",")
+                third_index = action.find(")")
+                return_sub_string = action + " AND "
+                QuestManager.set_quest(QuestManager, action[first_index : second_index] , action[second_index+1 : third_index] )
             elif "adv event" in action:
+                return_sub_string = action + " AND "
                 first_index = action.find('"')
                 second_index = action.find('"', first_index + 1)
                 quest_num = int(action[first_index+1:second_index])
@@ -308,7 +314,6 @@ class QuestManager:
 
         QuestManager.add_quest(self, quest_num)
 
-
         while len(QuestManager.quest_actions[quest_num]) <= quest_stage:
             QuestManager.quest_actions[quest_num].append('')
 
@@ -322,6 +327,10 @@ class QuestManager:
         while (len(QuestManager.quest_actions[quest_num]) <= QuestManager.quests[quest_num]):
             QuestManager.quest_actions[quest_num].append('')
         Actions.perform_action(Actions, QuestManager.quest_actions[quest_num][QuestManager.quests[quest_num]])
+
+    def set_quest(self, quest_num, quest_stage):
+        while Questmanager.quests[quest_num] < quest_stage:
+            QuestManager.advance_quest(QuestManager, quest_num)
 
     def quest_stage(self, quest_num):
         try:
