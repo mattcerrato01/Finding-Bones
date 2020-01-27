@@ -158,8 +158,11 @@ class Villagers(Object):
                           """print "Best way to ward off demons? Call them demoffs" """] #List of dialogue options for normal villager
         idx = r.randint(0,len(self.dialogues)-1)
         self.action = self.dialogues[idx]
-        self.font = p.font.SysFont('Times New Romans', 16)
-        self.nameplate = self.font.render(self.name, False, (0, 0, 0), (255,255,255))
+        self.font = p.font.SysFont('Papyrus', 20)
+        self.nameplate_text = self.font.render(self.name, False, (0, 0, 0))
+        holder = str(self.name)
+        print( type(holder) )
+        self.nameplate_image = p.transform.scale(loadify("Nametag.png"), (self.font.size(holder)[0], self.font.size(holder)[1]))
     #   self.fated
 
     def perform_action(self, mouse_click):
@@ -213,8 +216,10 @@ class Villagers(Object):
 
     def draw_image(self, screen, image, x_chg = 0):
         screen.blit(image, (coord.screen_x(self.x + x_chg), coord.screen_y(self.y)))
-        rect = self.nameplate.get_rect()
-        screen.blit(self.nameplate, (coord.screen_x(self.x) + self.width / 2 - rect.width / 2, coord.screen_y(self.y) + self.height))
+        rect = self.nameplate_text.get_rect()
+        screen.blit(self.nameplate_image, (coord.screen_x(self.x) + self.width / 2 - rect.width / 2, coord.screen_y(self.y) + self.height))
+        screen.blit(self.nameplate_text, (coord.screen_x(self.x) + self.width / 2 - rect.width / 2, coord.screen_y(self.y) + self.height))
+
     def changeMouse(self, mouse):
         if self.rect.collidepoint(mouse):
             return True
