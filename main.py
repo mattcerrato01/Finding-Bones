@@ -243,6 +243,8 @@ def main():
             key = p.key.get_pressed()
             if key[p.K_i]:
                 inventory.draw(screen)  # Draws inventory when holding i
+            elif key[p.K_q]:
+                quests.draw(screen)
 
             elif key[p.K_p]:
                 if tutorial_active:

@@ -378,3 +378,20 @@ class QuestManager:
 
     def past_quest_stage(self, quest_num, quest_stage):
         return QuestManager.quests[quest_num] > quest_stage
+
+    def draw(self, screen):
+        height = 50 + 100
+        p.draw.rect(screen, (0, 0, 0), (220, 228, 150, height))
+        dialogue_box_font = p.font.SysFont("papyrus", 20)
+        dialogue_box = dialogue_box_font.render("Quests Progress", True, (255, 255, 255))
+        rect = dialogue_box.get_rect()
+        screen.blit(dialogue_box, (295 - rect.width / 2, 238))
+        quest_titles = ["Tutorial","Old Man's Bucket", "Demon hunting", "The people's bucket", "Lucky duck", "Sacred Tree"]
+        for i in range(len(quest_titles)):
+            stage_chg = 0
+            if i == 2:
+                stage_chg = -1
+            line = quest_titles[i] + "  " + str(QuestManager.quest_stage(QuestManager, i)) + stage_chg
+            dialogue_box = dialogue_box_font.render(line, True, (255, 255, 255))
+            rect = dialogue_box.get_rect()
+            screen.blit(dialogue_box, (295 - rect.width / 2, 258 + 20 * i))
