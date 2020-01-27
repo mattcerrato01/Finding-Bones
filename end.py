@@ -81,5 +81,5 @@ def main(screen, win, score = None):
 
 
 if __name__ == "__main__":
-	main(p.display.set_mode((800, 600)))
+	main(p.display.set_mode((800, 600)), False)
 	
