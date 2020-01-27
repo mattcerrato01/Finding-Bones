@@ -130,36 +130,37 @@ def main():
     pausetext = font.render("Paused", 1, (250, 250, 250))
     ptextRect = pausetext.get_rect()
     ptextRect.center = (400,300)
+    performed = [True]
 
 
-    def run_tutorial(villager_tutorial, quest_dialogue):
+    def run_tutorial(villager_tutorial, quest_dialogue, performed):
         # print(quest_dialogue)
         # print(quests.quest_stage(0))
-        actions.perform_action_in_underworld = True
-        actions.perform_action(quest_dialogue)
+        if performed[0]:
+            actions.perform_action_in_underworld = True
+            actions.perform_action(quest_dialogue)
+            performed[0] = False
         if quests.quest_stage(0) == 1:
             if p.time.get_ticks() % 1000:
                 villager_tutorial.setX(villager_tutorial.getX() + 0.5)
                 villager_tutorial.setY(villager_tutorial.getY() + 1)
             if villager_tutorial.getX() == 420:
+                performed[0] = True
                 quests.set_quest(0, 2)
         elif quests.quest_stage(0) == 3:
             if not world.state():
-
                 quests.set_quest(0, 4)
+                performed[0] = True
         elif quests.quest_stage(0) == 5:
             actions.perform_action_in_underworld = False
             return False
         return True
 
 
-    t_stage = 0
     time = 0
     fate = player.get_fate()
     paused = False
-    ptime = 0
     esc_holder = False
-    mouseChanged = False
     tutorial_active = False
     piles_of_bones = []
     gs.change_track(1)
@@ -227,7 +228,7 @@ def main():
                                 break
                             collidable.update_action()
             if tutorial_active:
-                tutorial_active = run_tutorial(villager_tutorial, quest_dialogue)
+                tutorial_active = run_tutorial(villager_tutorial, quest_dialogue, performed)
 
 
             key = p.key.get_pressed()
