@@ -39,14 +39,15 @@ def main(screen, win, score = None):
 	
 	while endrunning:
 		#screen.fill([255, 255, 255])
-		if animI < 23:
-			animS = win_anim(animI)
-			animI = animS[0]
-			back = animS[1]
-			backpos = back.get_rect()
-			back = p.transform.scale(back, (800,600))
-		else:
-			animI = 1
+		if win:
+			if animI < 23:
+				animS = win_anim(animI)
+				animI = animS[0]
+				back = animS[1]
+				backpos = back.get_rect()
+				back = p.transform.scale(back, (800,600))
+			else:
+				animI = 1
 		
 		clicked = False
 		#print(p.mouse.get_pos())
