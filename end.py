@@ -12,7 +12,7 @@ def win_anim(animI):
 	animI += 1
 	return animI, back
 
-def main(screen, win = True, score = None):
+def main(screen, win, score = None):
 	endrunning = True
 	clicked = False
 	
@@ -39,14 +39,15 @@ def main(screen, win = True, score = None):
 	
 	while endrunning:
 		#screen.fill([255, 255, 255])
-		if animI < 23:
-			animS = win_anim(animI)
-			animI = animS[0]
-			back = animS[1]
-			backpos = back.get_rect()
-			back = p.transform.scale(back, (800,600))
-		else:
-			animI = 1
+		if win:
+			if animI < 23:
+				animS = win_anim(animI)
+				animI = animS[0]
+				back = animS[1]
+				backpos = back.get_rect()
+				back = p.transform.scale(back, (800,600))
+			else:
+				animI = 1
 		
 		clicked = False
 		#print(p.mouse.get_pos())
@@ -81,5 +82,5 @@ def main(screen, win = True, score = None):
 
 
 if __name__ == "__main__":
-	main(p.display.set_mode((800, 600)))
+	main(p.display.set_mode((800, 600)), False)
 	
