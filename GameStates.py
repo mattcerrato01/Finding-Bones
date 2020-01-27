@@ -181,12 +181,17 @@ class Actions:
         for action in quest_actions.split(' AND '):
 
             return_sub_string = ""
+            end_of_string = ""
+            if "reaped" in action and WorldState.state(WorldState):
+                action = action[:action.find("reaped")] + "}"
+                end_of_string = action[action.find("reaped"): action.rfind(")")]
+
 
 
 
             first_index = action.find("Q(")
             second_index = action.find(",")
-            if (WorldState.state(WorldState) or Actions.perform_action_in_underworld) and "reaped" not in action:
+            if (WorldState.state(WorldState) or Actions.perform_action_in_underworld):
 
                 if "Q(" in action:
                     if QuestManager.quest_stage(QuestManager,int(action[first_index + 2:second_index])) == int(
@@ -299,7 +304,7 @@ class Actions:
                     return_sub_string = "reaped(" + self.perform_action(string) + ")" + " AND "
                 Actions.perform_action_in_underworld = False
 
-            return_string += return_sub_string
+            return_string += return_sub_string + end_of_string
 
         return return_string[:-5]
         # return ""

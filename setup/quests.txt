@@ -71,7 +71,7 @@ Fated = True
 (x,y) = (1650, 347)
 Gender = n
 Grey = True
-Action = Q(2,1) {print "Priest: Why hello there Mr. Death! Recently, we have been pressing people hard for information about the demon. As a man of the gods, I have gathered the three souls the demon most likely jumped into."** print "Death: (Thought) Hmm… can’t get a read on this priest, the implied torture is normal though." ** print "Priest: If you talk to these three sinners, one of them is bound to reveal something about the demon and who among them is possessed."** print "Death: (Thought) Isn’t that your job?"** reaped( print "Priest: WAIT, YOU KNEW? How? I had the perfect disguise, I WILL RETURN.",, set quest(2,2))}
+Action = Q(2,1) {print "Priest: Why hello there Mr. Death! Recently, we have been pressing people hard for information about the demon. As a man of the gods, I have gathered the three souls the demon most likely jumped into." ** print "Death: (Thought) Hmm… can’t get a read on this priest, the implied torture is normal though." ** print "Priest: If you talk to these three sinners, one of them is bound to reveal something about the demon and who among them is possessed." ** print "Death: (Thought) Isn’t that your job?" ** reaped( print "Priest: WAIT, YOU KNEW? How? I had the perfect disguise, I WILL RETURN.",, set quest(2,2))}
 
 Name = Suspect1
 Image = Suspect1
