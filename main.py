@@ -13,8 +13,8 @@ import Canopy
 import os
 
 def play_sound(name):
-	  sound = p.mixer.Sound("effects/" + name + ".wav")
-	  sound.play()
+      sound = p.mixer.Sound("effects/" + name + ".wav")
+      sound.play()
 
 def main():
     coord = gs.CoordConverter()
@@ -115,11 +115,11 @@ def main():
     scythe_cursor = p.transform.scale(loadify("cursor-small-scythe.png"), (15, 15))
     speech_cursor = p.transform.scale(loadify("cursor-small-speechbubble.png"), (15, 15))
 
-	# tile = t.Tile("background.jpg", collidable_group, 0, 0)
-	createDemons(demons, player, int(200 / player.fate))
-	gs.change_track(1)
-	st.main(screen)
-	running = True
+    # tile = t.Tile("background.jpg", collidable_group, 0, 0)
+    createDemons(demons, player, int(200 / player.fate))
+    gs.change_track(1)
+    st.main(screen)
+    running = True
 
     font = p.font.Font(None, 36)
     pausetext = font.render("Paused", 1, (250, 250, 250))
@@ -199,18 +199,18 @@ def main():
                     running = False
                 elif event.type == p.MOUSEBUTTONUP:
 
-					pos = p.mouse.get_pos()
-					# print(pos)
-					if dialogue_box.draw(screen):
-						play_sound(random.choice(["Greeting 1", "Greeting 2", "Greeting 3 (Female)", "Cough", "BlehSound"])) # FIX THIS SHIT LATER
-						dialogue_box.perform_action(pos)
-					else:
-						for collidable in collision_group:
-							if collidable.perform_action(pos):	# returns true if villager has been reaped
-								play_sound("Scythe")
-								graveyard.add_grave(collidable)
-								bones = p.transform.scale(loadify("skull_and_bones.png"), (60, 62))
-								piles_of_bones.append([bones, p.time.get_ticks(), collidable.x, collidable.y])
+                    pos = p.mouse.get_pos()
+                    # print(pos)
+                    if dialogue_box.draw(screen):
+                        play_sound(random.choice(["Greeting 1", "Greeting 2", "Greeting 3 (Female)", "Cough", "BlehSound"])) # FIX THIS SHIT LATER
+                        dialogue_box.perform_action(pos)
+                    else:
+                        for collidable in collision_group:
+                            if collidable.perform_action(pos):	# returns true if villager has been reaped
+                                play_sound("Scythe")
+                                graveyard.add_grave(collidable)
+                                bones = p.transform.scale(loadify("skull_and_bones.png"), (60, 62))
+                                piles_of_bones.append([bones, p.time.get_ticks(), collidable.x, collidable.y])
 
                                 tomb = graveyard.get_tombstones()[len(graveyard.get_tombstones()) - 1]
                                 collidable_group.add(tomb)
