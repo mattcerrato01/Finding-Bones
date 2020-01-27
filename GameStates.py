@@ -1,7 +1,11 @@
 import random
 import pygame as p
 
-
+def reset():
+    WorldState.overworld =True
+    Inventory.inventory = []
+    QuestManager.quests =  []
+    QuestManager.quest_actions = []
 class WorldState:
     overworld = True
 

@@ -111,7 +111,7 @@ class Setup:
                 action = line[ line.find("= ")+2 : ]
 
                 if "Q(" in action:
-                    quest_array = [action.rfind("Q(") + 2, action.rfind("Q(") + 3 ]
+                    quest_array = [action.rfind("Q(") + 2, action.rfind("Q(") + 3]
 
                     last_index = 0
 
