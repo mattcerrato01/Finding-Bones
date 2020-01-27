@@ -604,7 +604,7 @@ class Dialogue_box():
         self.box_2 = p.transform.scale(loadify("dialoguebox-2.png"), (300, 100))
         self.dialogue = actions.dialogue_list
         self.dialogue_box_font = p.font.SysFont("papyrus", 20)
-        self.drawn = False
+
     def set_dialogue(self, dialogue):
         self.dialogue = dialogue
 
@@ -620,7 +620,6 @@ class Dialogue_box():
     def draw(self, screen):
         self.dialogue = actions.dialogue_list
         if len(self.dialogue)>0:
-            self.drawn = True
             screen.blit(self.box_1, (100,25))
             screen.blit(self.box_2,(400,25))
             dialogues_shown = 4

@@ -1,16 +1,16 @@
-﻿#Quest 0:
+﻿Quest 0:
 
-#Stage 1:
+Stage 1:
 
-#Villagers:
+Villagers:
 
-#Name = Harold Alfond Tutorial Villager
-#Image = villager
-#Fated = False
-#(x,y) = (400,200)
-#Gender = m
-#Grey = False
-#Action =
+Name = Harold Alfond Tutorial Villager
+Image = villager
+Fated = False
+(x,y) = (400,200)
+Gender = m
+Grey = False
+Action = Q(0,5) {print "Hell yeah"}
 
 Quest 1:
 
@@ -118,5 +118,5 @@ Fated = True
 Gender = f
 Grey = False
 Secret = True
-Action = Q(4,0) {print "I have heard a rumor about a tree, surrounded by a false wall, that will grant those who touch it something that they truly desire."** set quest(4,1)}
+Action = Q(4,0) {print "I have heard a rumor about a tree, surrounded by a false wall, that will grant those who touch it something that they truly desire."}
 
