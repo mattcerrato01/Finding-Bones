@@ -239,6 +239,9 @@ def main():
 
 								if player.fate > 100:
 									player.fate = 100
+							if collidable.image:
+								if collidable.image == "cage-locked-bones.png":
+									print("bones")
 
 								break
 							collidable.update_action()
@@ -324,7 +327,7 @@ def main():
 				p.mouse.set_visible(True)
 				gs.change_track(3)
 				endc = end.main(screen, False)
-				if endc == "restart:":
+				if endc == "restart":
 					gs.reset()
 					main()
 				elif endc == "score":
