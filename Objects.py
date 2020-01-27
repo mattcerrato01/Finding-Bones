@@ -49,7 +49,6 @@ class Object(p.sprite.Sprite):
 		self.action = action
 	def perform_action(self, mouse_click): # returns true if villager has been reaped
 		if self.rect.collidepoint(mouse_click):
-
 			self.action = actions.perform_action(self.action)
 
 		return False
@@ -167,7 +166,7 @@ class Villagers(Object):
 	def perform_action(self, mouse_click):
 		Object.perform_action(self, mouse_click)
 
-		if self.rect.collidepoint(mouse_click) and not self.essential and not world.state():
+		if self.rect.collidepoint(mouse_click) and (not self.essential or self.grey) and not world.state():
 			self.soul_reaped = True
 			return True
 
@@ -239,7 +238,7 @@ class Quest_Villager(Villagers):
 		self.action = action
 		self.grey = grey
 		self.quest = quest_array[0]
-		self.quest_end = int( quest_array[len(quest_array)-1] )
+		self.quest_end = int( quest_array[len(quest_array)-1] )+1
 		# print("1")
 		self.quest_array = quest_array[1:]
 		# print("2")

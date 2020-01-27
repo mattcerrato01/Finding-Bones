@@ -196,7 +196,7 @@ def main():
                 elif event.type == p.MOUSEBUTTONUP:
 
                     pos = p.mouse.get_pos()
-                    print(pos)
+                    # print(pos)
                     if dialogue_box.draw(screen):
                         dialogue_box.perform_action(pos)
                     else:

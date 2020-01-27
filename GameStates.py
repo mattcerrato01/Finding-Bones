@@ -174,11 +174,12 @@ class Actions:
         for action in quest_actions.split(' AND '):
 
             return_sub_string = ""
+            perform_action_in_underworld = False
 
 
             first_index = action.find("Q(")
             second_index = action.find(",")
-            if WorldState.state(WorldState) and "reaped" not in action:
+            if (WorldState.state(WorldState) or perform_action_in_underworld) and "reaped" not in action :
 
                 if "Q(" in action:
                     if QuestManager.quest_stage(QuestManager,int(action[first_index + 2:second_index])) == int(
@@ -279,8 +280,9 @@ class Actions:
                     QuestManager.set_quest(QuestManager, int(action[first_index: second_index]) , int(action[second_index+1 : third_index]) )
 
             elif not WorldState.state(WorldState):
+                perform_action_in_underworld = True
                 if "reaped" in action:
-                    perform_while_underworld = True
+                    print("Occured")
                     conditional_action = action[action.find("(") + 1:action.find(")")]
                     for string in conditional_action.split(",, "):
                         return_sub_string = action[action.find("reaped"):action.find("(") + 1] + self.perform_action(

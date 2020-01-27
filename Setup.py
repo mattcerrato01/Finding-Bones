@@ -106,7 +106,7 @@ class Setup:
                 print(male)
 
             elif command == "Grey":
-                grey = line[ line.find("= ")+2 : ] == "True"
+                grey = line[ line.find("= ")+2 : line.rfind("e")] == "True"
             elif command == "Action":
                 action = line[ line.find("= ")+2 : ]
 
