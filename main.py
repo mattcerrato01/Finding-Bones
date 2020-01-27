@@ -220,7 +220,7 @@ def main():
 
                                 if player.fate > 100:
                                     player.fate = 100
-                            print(collidable.__class__)
+                            # print(collidable.__class__)
                             if collidable.__class__ == 'Objects.Object_chgs_image':
                                 if collidable.image == "cage-locked-bones.png":
                                     print("bones")
