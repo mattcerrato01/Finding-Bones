@@ -144,7 +144,7 @@ def main():
 
 
 	def run_tutorial(t_stage, villager_tutorial, quest_dialogue):
-		print(t_stage)
+		#print(t_stage)
 		if t_stage == 0:
 			t_stage = 1
 		elif t_stage == 1:
@@ -239,7 +239,8 @@ def main():
 
 								if player.fate > 100:
 									player.fate = 100
-							if collidable.image:
+							print(collidable.__class__)
+							if collidable.__class__ == <class 'Objects.Object_chgs_image'>:
 								if collidable.image == "cage-locked-bones.png":
 									print("bones")
 
