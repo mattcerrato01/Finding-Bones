@@ -266,7 +266,7 @@ class Actions:
                 first_index = action.find('"')
                 second_index = action.find('"', first_index + 1)
                 if 0 <= first_index < second_index:
-                    self.dialogue_box(action[first_index + 1:second_index])
+                    Actions.dialogue_box(Actions, action[first_index + 1:second_index])
 
             elif "adv quest" in action:
                 QuestManager.add_quest()

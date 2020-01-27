@@ -34,7 +34,6 @@ def main():
 
 
 
-    quests.advance_quest(1)
     #quests.advance_quest(1)
 
     def play_sound(name):
