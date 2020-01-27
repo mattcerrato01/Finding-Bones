@@ -324,7 +324,7 @@ def main():
 				p.mouse.set_visible(True)
 				gs.change_track(3)
 				endc = end.main(screen, False)
-				if endc == "restart:"
+				if endc == "restart:":
 					gs.reset()
 					main()
 				elif endc == "score":
