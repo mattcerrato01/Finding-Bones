@@ -1,3 +1,4 @@
 (image_name, fated, x, y, male)
 villager, False, 800, 600, f
 villager, True, 200, 200, f
+villager, False, 2510, 1995, m, True

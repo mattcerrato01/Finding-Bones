@@ -87,7 +87,7 @@ class Object(p.sprite.Sprite):
 
 class Villagers(Object):
 
-    def __init__(self, overworld_image_name, fated, x, y, male, side_width = 32):
+    def __init__(self, overworld_image_name, fated, x, y, male, side_width = 32, key = False):
         self.male = male
         if male == "m":
             self.male = "_m"
@@ -96,12 +96,18 @@ class Villagers(Object):
         else:
             self.male = ""
         Object.__init__(self, overworld_image_name + "_front" + self.male+".png", 46, 110)
+        self.key = key
 
         self.width = 46
         self.height = 110
         self.side_width = side_width
 
+
         self.essential = False
+        if self.key:
+            print("Key")
+            self.essential = True
+            self.grey_right_now = False
 
         self.setX(x)
         self.setY(y)
@@ -170,7 +176,11 @@ class Villagers(Object):
 
     def perform_action(self, mouse_click):
 
-        Object.perform_action(self, mouse_click)
+        if self.rect.collidepoint(mouse_click):
+            if self.key and  "key5" in self.action:
+                self.key = False
+                self.dialogues.pop(len(self.dialogues)-1)
+            self.action = actions.perform_action(self.action)
 
 
         if self.rect.collidepoint(mouse_click) and (not self.essential or self.grey_right_now) and not world.state():
@@ -183,6 +193,12 @@ class Villagers(Object):
 
 
     def draw(self, screen, player):
+
+        if self.key and player.fate == 100 and len(self.dialogues) == 23:
+            print("happened")
+            self.dialogues.append(""" print "Villager: Well aren’t you the model of what a deity of death should act like! I have a key I pickpocketed off some vampire this morning, I’ll give to you!" AND to inv "key5" """)
+        elif self.key and player.fate != 100 and  len(self.dialogues) >23:
+            self.dialogues.pop(len(self.dialogues)-1)
         walk_gap = 100
         distx = (400 - coord.screen_x(self.x+self.width/2))
         disty = (300-coord.screen_y(self.y+self.height/2))

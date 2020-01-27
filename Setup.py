@@ -65,8 +65,11 @@ class Setup:
 
         while line:
             split_array = line.split(", ")
+            key = False
+            if len(split_array) == 6:
+                key = True
 
-            villager_list.add( Objects.Villagers( split_array[0], split_array[1] == "True" , int(split_array[2]), int(split_array[3]), split_array[4][0:1]) )
+            villager_list.add( Objects.Villagers( split_array[0], split_array[1] == "True" , int(split_array[2]), int(split_array[3]), split_array[4][0:1], key= key) )
 
             line = file.readline()
 

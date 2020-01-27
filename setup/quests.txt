@@ -110,4 +110,3 @@ Grey = False
 Secret = True
 Action = Q(3,0) {print "I have heard a rumor about a tree, surrounded by a false wall, that will grant those who touch it something that they truly desire."** set quest(3,1)}
 
-
