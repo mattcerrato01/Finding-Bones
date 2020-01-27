@@ -19,7 +19,7 @@ def loadify(imgname):
 
 class Object(p.sprite.Sprite):
 
-    def __init__(self, overworld_image_name, x=0, y=0, width=50, height=50, action = """has(berry) {print "I'm a big berry man"} AND do(2) {to inv "berry", print "Take your berry you bastard"} AND do(2:3) {print "go away now"}  """):  # NOTE: come back and clean up initialization and such here
+    def __init__(self, overworld_image_name, x=0, y=0, width=50, height=50, action = """do(1) {to inv "berry", print "Take your berry you bastard"} AND do(1) {print "~You found a berry!~"}  """):  # NOTE: come back and clean up initialization and such here
         p.sprite.Sprite.__init__(self)
         self.fated = False
         self.soul_reaped = False
@@ -278,6 +278,8 @@ class Quest_Villager(Villagers):
         elif qm.quest_stage(self.quest) in self.quest_array:
             self.action = self.quest_action
     def draw(self, screen, player):
+
+        self.update_action()
 
         try:
             stage = qm.quests[self.quest]
@@ -685,6 +687,9 @@ class Hitbox(p.sprite.Sprite):
         return self.rect.collidepoint(mouse) and self.action != "" and world.state()
 
     def perform_action(self, mouse_click):
+
+        print(coord.real_x(mouse_click[0]), coord.real_y(mouse_click[1]))
+
         if self.rect.collidepoint(mouse_click) and world.state():
             self.action = actions.perform_action(self.action)
         return False

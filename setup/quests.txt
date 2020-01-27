@@ -75,6 +75,8 @@ Action = Q(2,1) {print "Prisoner 3: HEH HEH I GOT A DEMON IN ME."** reaped(print
 
 Quest 3:
 
+Stage 1:
+
 
 
 Name = Farmer
