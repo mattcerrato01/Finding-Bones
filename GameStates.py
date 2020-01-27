@@ -240,8 +240,13 @@ class Actions:
 
                     first_index = action.find("has(") + 4
                     second_index = action.find(")")
+                    condition_met = True
+                    for conditions in action[first_index:second_index].split(", "):
 
-                    if Inventory.has(Inventory, action[first_index:second_index]):
+                        if not Inventory.has(Inventory, conditions):
+                            condition_met = False
+                            break
+                    if condition_met:
                         conditional_action = action[action.find("{") + 1:action.find("}")]
                         for string in conditional_action.split(",, "):
                             return_sub_string = action[action.find("has("):action.find("{") + 1] + self.perform_action(
@@ -296,11 +301,8 @@ class Actions:
 
             elif not WorldState.state(WorldState) and "reaped" in action:
                 Actions.perform_action_in_underworld = True
-                print("Occured")
                 conditional_action = action[action.find("reaped(") + 7:action.rfind(")")]
-                print(conditional_action)
                 for string in conditional_action.split(",,"):
-                    print(string)
                     return_sub_string = "reaped(" + self.perform_action(string) + ")" + " AND "
                 Actions.perform_action_in_underworld = False
 

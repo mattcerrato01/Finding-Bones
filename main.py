@@ -86,7 +86,7 @@ def main():
     graveyard = Objects.Graveyard(45,1325)
 
 
-    cage = Objects.Object_chgs_image("cage-locked-bones.png", "cage-unlocked.png",600,600,128,114, """has(berry){print "I'm freed",, "berry" from inv}""", "berry")
+    cage = Objects.Object_chgs_image("cage-locked-bones.png", "cage-unlocked.png",2875,1420,128,114, """has(key1, key2, key3){print "I'm freed",, "key" from inv}""", "key1, key2, key3")
     well = Objects.Object_chgs_image("well-with-bucket.png", "well-without-bucket.png", 120, 1830, 108,168,"""hasnt(bucket){"bucket" to inv}""", "")
     dialogue_box = Objects.Dialogue_box()
 
@@ -200,7 +200,7 @@ def main():
                 elif event.type == p.MOUSEBUTTONUP:
 
                     pos = p.mouse.get_pos()
-                    # print(pos)
+                    print(coord.real_x(pos[0]), coord.real_y(pos[1]))
                     if dialogue_box.draw(screen):
                         play_sound(random.choice(["Greeting 1", "Greeting 2", "Greeting 3 (Female)", "Cough", "BlehSound"])) # FIX THIS SHIT LATER
                         dialogue_box.perform_action(pos)

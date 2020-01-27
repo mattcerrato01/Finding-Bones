@@ -171,8 +171,7 @@ class Villagers(Object):
     def perform_action(self, mouse_click):
 
         Object.perform_action(self, mouse_click)
-        # if type(Quest_Villager):
-        #     print(self.name , self.action)
+
 
         if self.rect.collidepoint(mouse_click) and (not self.essential or self.grey_right_now) and not world.state():
             self.soul_reaped = True
@@ -263,9 +262,7 @@ class Quest_Villager(Villagers):
         self.quest = quest_array[0]
         self.quest_end = int( quest_array[len(quest_array)-1] )
         self.quest_array = quest_array[1:]
-        print(self.name, self.quest_end)
 
-        # print(name, self.quest_array)
         self.question_mark = p.transform.scale(loadify("question_mark.png"), (16, 24))
         if grey:
             self.grey_soul = p.transform.scale(loadify("grey_soul.png"), (self.width, self.height))
@@ -273,13 +270,11 @@ class Quest_Villager(Villagers):
         self.fated_soul = p.transform.scale(loadify("fated_soul.png"), (self.width, self.height))
         self.unfated_soul = p.transform.scale(loadify("unfated_soul.png"), (self.width, self.height))
     def update_action(self):
-        # print(self.name , self.quest_action, self.quest_array)
         if qm.quest_stage(self.quest) not in self.quest_array:
             idx = r.randint(0,len(self.dialogues)-1)
             self.action = self.dialogues[idx]
         elif qm.quest_stage(self.quest) in self.quest_array:
             self.action = self.quest_action
-            # print(self.name, self.action)
             if self.grey:
                 self.grey_right_now = True
     def draw(self, screen, player):
@@ -296,8 +291,6 @@ class Quest_Villager(Villagers):
         if world.state():
             Villagers.draw(self, screen, player)
 
-            # print( self.name , self.quest_array )
-            # print( qm.quest_stage(self.quest) )
 
             if qm.quest_stage(self.quest) in self.quest_array:
                 screen.blit(self.question_mark, (coord.screen_x(self.x)+self.width/2-8, coord.screen_y(self.y)-30))
