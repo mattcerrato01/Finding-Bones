@@ -1,6 +1,6 @@
 ﻿Quest 0:
 
-Stage 1: print "stage 1"
+Stage 1:
 
 Villagers:
 
@@ -14,7 +14,7 @@ Action =
 
 Quest 1:
 
-Stage 1: print "stage 2"
+Stage 1:
 
 Villagers:
 
@@ -53,7 +53,7 @@ Action =  Q(1,5) {has(berry x 3) {print "Perfect! Here is a fresh fish for your 
 
 Quest  2:
 
-Stage 1: print "stage 1"
+Stage 1:
 
 Villagers:
 
@@ -96,5 +96,18 @@ Fated = False
 Gender = n
 Grey = True
 Action = Q(2,1) {print "Prisoner 3: HEH HEH I GOT A DEMON IN ME." ** reaped(print "Priest: Excellent, no more demons in this kingdom, you did it congrats! I sent word to the king.")}
+
+Quest 3:
+
+Stage 1:
+
+Name = Tree Villager
+Image = Villager
+Fated = True
+(x,y) = (3000, 450)
+Gender = f
+Grey = False
+Secret = True
+Action = Q(3,0) {print "I have heard a rumor about a tree, surrounded by a false wall, that will grant those who touch it something that they truly desire."** set quest(3,1)}
 
 

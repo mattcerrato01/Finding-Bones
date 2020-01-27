@@ -242,12 +242,13 @@ class Villagers(Object):
 
 class Quest_Villager(Villagers):
 
-    def __init__(self, name, overworld_image_name, fated, quest_array, action, x, y, male, grey = False):
+    def __init__(self, name, overworld_image_name, fated, quest_array, action, x, y, male, grey = False, secret = False):
         Villagers.__init__(self, overworld_image_name, fated, x, y, male)
         self.name = name
 
         temp_x = self.font.size(str(self.name))[0]
         temp_y = self.font.size(str(self.name))[1]
+        self.secret = secret
 
         self.nameplate_text = self.font.render(self.name, False, (0, 0, 0))
         self.nameplate_image_left = p.transform.scale(loadify("NametagLeft.png"), (6, temp_y))
@@ -292,7 +293,7 @@ class Quest_Villager(Villagers):
             Villagers.draw(self, screen, player)
 
 
-            if qm.quest_stage(self.quest) in self.quest_array:
+            if qm.quest_stage(self.quest) in self.quest_array and not self.secret:
                 screen.blit(self.question_mark, (coord.screen_x(self.x)+self.width/2-8, coord.screen_y(self.y)-30))
 
         elif self.grey and qm.quest_stage(self.quest) in self.quest_array:
