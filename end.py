@@ -12,7 +12,7 @@ def win_anim(animI):
 	animI += 1
 	return animI, back
 
-def main(screen, win = True, score = None):
+def main(screen, win, score = None):
 	endrunning = True
 	clicked = False
 	
