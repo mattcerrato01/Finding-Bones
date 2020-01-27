@@ -323,7 +323,7 @@ def main():
 				player.soul = 100
 				p.mouse.set_visible(True)
 				gs.change_track(3)
-				endc = end.main(screen)
+				endc = end.main(screen, False)
 				if endc == "restart:"
 					gs.reset()
 					main()
@@ -331,6 +331,10 @@ def main():
 					running = False
 				elif endc == "credits":
 					pass
+			if True:
+				pass
+				#endc = end.main(screen, True, player.get_fate()
+			
 			time = p.time.get_ticks()
 		else:
 			pause_screen = pause.Pause()
