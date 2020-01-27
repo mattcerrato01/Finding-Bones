@@ -90,9 +90,7 @@ def main():
     villager_tutorial = Objects.Quest_Villager("Harold Alfond Tutorial Villager", "villager", False, [2,3], "", 400, 200, "m")
 
     collidable_group = p.sprite.Group(villager_tutorial, cage, well)
-    villager_list = setup.villagers()
-    for villager in villager_list:
-        collidable_group.add(villager)
+
 
     for collidable in collidables:
         collidable_group.add(collidable)
@@ -268,7 +266,7 @@ def main():
                 while i < abs(fate - player.get_fate()) // 5:
                     if fate - player.fate < 0:
                         randIDX = random.randint(0, len(demons) - 1)
-                        demons.remove(demons[randIDX])
+                        demons.remove(demons.sprites()[randIDX])
                         i += 1
                     elif fate - player.get_fate() > 0:
                         createDemons(demons, player, 1)
