@@ -1,5 +1,7 @@
 import random
 import pygame as p
+def loadify(imgname):
+    return p.image.load("images/" + imgname).convert_alpha()
 
 def reset():
     WorldState.overworld =True
@@ -104,7 +106,9 @@ class Inventory:
                 found_item = True
                 break
         if not found_item:
-            Inventory.inventory.append([object, 1])
+            image = p.transform.scale(loadify(object + ".png"), (18,18 ))
+            Inventory.inventory.append([object, 1, image])
+
 
     def remove_from_inventory(self, object):
         for i in range(len(Inventory.inventory)):
@@ -127,6 +131,7 @@ class Inventory:
             dialogue_box = dialogue_box_font.render(line, True, (255, 255, 255))
             rect = dialogue_box.get_rect()
             screen.blit(dialogue_box, (525 - rect.width / 2, 258 + 20 * i))
+            screen.blit(Inventory.inventory[i][2], (530 + rect.width / 2, 253 + 20 * i))
 
 
 class Actions:

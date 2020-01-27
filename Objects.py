@@ -195,7 +195,6 @@ class Villagers(Object):
     def draw(self, screen, player):
 
         if self.key and player.fate == 100 and len(self.dialogues) == 23:
-            print("happened")
             self.dialogues.append(""" print "Villager: Well aren’t you the model of what a deity of death should act like! I have a key I pickpocketed off some vampire this morning, I’ll give to you!" AND to inv "key5" """)
         elif self.key and player.fate != 100 and  len(self.dialogues) >23:
             self.dialogues.pop(len(self.dialogues)-1)
@@ -314,7 +313,7 @@ class Quest_Villager(Villagers):
 
         elif self.grey and qm.quest_stage(self.quest) in self.quest_array:
             self.draw_image(screen, self.grey_soul)
-        elif stage <= self.quest_end:
+        elif stage <= self.quest_end and not self.secret:
             self.draw_image(screen, self.essential_soul)
         elif self.fated:
             self.draw_image(screen, self.fated_soul)
