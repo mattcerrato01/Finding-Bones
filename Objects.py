@@ -263,6 +263,7 @@ class Quest_Villager(Villagers):
         self.quest = quest_array[0]
         self.quest_end = int( quest_array[len(quest_array)-1] )
         self.quest_array = quest_array[1:]
+        print(self.name, self.quest_end)
 
         # print(name, self.quest_array)
         self.question_mark = p.transform.scale(loadify("question_mark.png"), (16, 24))
@@ -278,7 +279,7 @@ class Quest_Villager(Villagers):
             self.action = self.dialogues[idx]
         elif qm.quest_stage(self.quest) in self.quest_array:
             self.action = self.quest_action
-            print(self.name, self.action)
+            # print(self.name, self.action)
             if self.grey:
                 self.grey_right_now = True
     def draw(self, screen, player):
@@ -303,7 +304,7 @@ class Quest_Villager(Villagers):
 
         elif self.grey and qm.quest_stage(self.quest) in self.quest_array:
             self.draw_image(screen, self.grey_soul)
-        elif stage < self.quest_end:
+        elif stage <= self.quest_end:
             self.draw_image(screen, self.essential_soul)
         elif self.fated:
             self.draw_image(screen, self.fated_soul)
