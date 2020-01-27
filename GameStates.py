@@ -29,8 +29,8 @@ def change_track(state):
         p.mixer.music.load('soundtrack/Underworld_Theme.wav')
     elif state == 3:
     	p.mixer.music.load('soundtrack/Game_Over.wav')
-    elif state == 4:
-    	p.mixer.music.load('soundtrack/Start_Screen.wav')
+    if state == 4:
+    	p.mixer.music.load('soundtrack/Overworld_Track.wav') #Start_Screen.wav
     else:
     	p.mixer.music.load('effects/BlehSound.wav')
     p.mixer.music.play(-1)

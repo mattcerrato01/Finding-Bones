@@ -122,7 +122,7 @@ def main():
 
     # tile = t.Tile("background.jpg", collidable_group, 0, 0)
     createDemons(demons, player, int(200 / player.fate))
-    gs.change_track(1)
+    gs.change_track(4)
     st.main(screen)
     running = True
 
