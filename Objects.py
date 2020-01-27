@@ -172,7 +172,8 @@ class Villagers(Object):
 
         Object.perform_action(self, mouse_click)
 
-        #if type(self) == Quest_Villager:
+        if type(self) == Quest_Villager:
+            print(self.name + " " + str(self.quest_action))
 
 
         if self.rect.collidepoint(mouse_click) and (not self.essential or self.grey) and not world.state():
