@@ -75,7 +75,7 @@ Action = Q(2,1) {print "Prisoner 3: HEH HEH I GOT A DEMON IN ME."** reaped(print
 
 Quest 3:
 
-Stage 1: print "Stage 1"
+
 
 Name = Farmer
 Image = Farmer
@@ -99,4 +99,4 @@ Fated = True
 (x,y) = (300,300)
 Gender = n
 Grey = False
-Action =  Q(3,3) {has(berry) {print "Test",, print "Perfect! Here is a fresh fish for your hungry ... ribcage.",, to inv "fish",, from inv "berry",, set quest(3,4) }} AND Q(3,2) {print "You want a fish? I could sell one, but you don’t have any money... Ah, get me some berries from the forest, I need them to cook the fish properly. I need 3 berries to properly cook the fish."** set quest(3,3)}
+Action =  Q(3,3) {has(berry) {print "Perfect! Here is a fresh fish for your hungry ... ribcage.",, to inv "fish",, from inv "berry",, set quest(3,4) }} AND Q(3,2) {print "You want a fish? I could sell one, but you don’t have any money... Ah, get me some berries from the forest, I need them to cook the fish properly. I need 3 berries to properly cook the fish."** set quest(3,3)}
