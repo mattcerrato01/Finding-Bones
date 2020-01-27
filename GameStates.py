@@ -179,7 +179,7 @@ class Actions:
             second_index = action.find(",")
 
             if "Q(" in action:
-                if QuestManager.quests[int(action[first_index + 2:second_index])] == int(
+                if QuestManager.quest_stage(QuestManager,int(action[first_index + 2:second_index])) == int(
                         action[second_index + 1:action.find(")")]) or action[second_index + 1] == "A":
                     return_sub_string = action[action.find("Q"):action.find("{") + 1] + self.perform_action(
                         action[action.find("{") + 1:action.find("}")]) + "}" + " AND "
@@ -275,7 +275,7 @@ class Actions:
                 second_index = action.find(",")
                 third_index = action.find(")")
                 return_sub_string = action + " AND "
-                QuestManager.set_quest(QuestManager, action[first_index : second_index] , action[second_index+1 : third_index] )
+                QuestManager.set_quest(QuestManager, int(action[first_index: second_index]) , int(action[second_index+1 : third_index]) )
             elif "adv event" in action:
                 return_sub_string = action + " AND "
                 first_index = action.find('"')
@@ -329,14 +329,14 @@ class QuestManager:
         Actions.perform_action(Actions, QuestManager.quest_actions[quest_num][QuestManager.quests[quest_num]])
 
     def set_quest(self, quest_num, quest_stage):
-        while Questmanager.quests[quest_num] < quest_stage:
+        while QuestManager.quests[quest_num] < quest_stage:
             QuestManager.advance_quest(QuestManager, quest_num)
 
     def quest_stage(self, quest_num):
         try:
             return QuestManager.quests[quest_num]
         except:
-            return 0
+            return -1
 
     def is_quest_stage(self, quest_num, quest_stage):
         return QuestManager.quests[quest_num] == quest_stage
