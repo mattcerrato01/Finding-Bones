@@ -46,7 +46,7 @@ Fated = True
 (x,y) = (1650, 347)
 Gender = n
 Grey = True
-Action = Q(2,1) {print "Priest: Why hello there Mr. Death! Recently, we have been pressing (heh heh) people for information about the demon. As a man of the gods, I have gathered the three souls the demon most likely jumped into."** print "Death: (Thought) Hmm… can’t get a read on this priest, the implied torture is normal though."** print "Priest: If you talk to these three sinners, one of them is bound to reveal something about the demon and who among them is possessed."** print "Death: (Thought) Isn’t that your job?"** reaped( print "Priest: WAIT, YOU KNEW? How? I had the perfect disguise, I WILL RETURN."** set quest(2,2))}
+Action = Q(2,1) {print "Priest: Why hello there Mr. Death! Recently, we have been pressing (heh heh) people for information about the demon. As a man of the gods, I have gathered the three souls the demon most likely jumped into."** print "Death: (Thought) Hmm… can’t get a read on this priest, the implied torture is normal though." ** print "Priest: If you talk to these three sinners, one of them is bound to reveal something about the demon and who among them is possessed."** print "Death: (Thought) Isn’t that your job?"** reaped( print "Priest: WAIT, YOU KNEW? How? I had the perfect disguise, I WILL RETURN."** set quest(2,2))}
 
 Name = Suspect1
 Image = Suspect1
@@ -54,7 +54,7 @@ Fated = False
 (x,y) = (1600, 500)
 Gender = n
 Grey = True
-Action = Q(2,1) {print "Prisoner 1: Yeah, I haven’t been anywhere near a demon, however, I worry about how certain members of this kingdom use these demon hunts to expunge political dissidents and those vulnerable so kings and priests have the ability to save their people. What do I know? I’m just a fool."** reaped(print "Priest: Excellent, no more demons in this kingdom, you did it congrats! I sent word to the king.")}
+Action = Q(2,1) {print "Prisoner 1: Yeah, I haven’t been anywhere near a demon, however, I worry about how certain members of this kingdom use these demon hunts to expunge political dissidents and those vulnerable so kings and priests have the ability to save their people. What do I know? I’m just a fool." ** reaped(print "Priest: Excellent, no more demons in this kingdom, you did it congrats! I sent word to the king.")}
 
 Name = Suspect2
 Image = Suspect2
@@ -62,7 +62,7 @@ Fated = False
 (x,y) = (1650, 500)
 Gender = n
 Grey = True
-Action = Q(2,1) {print "Prisoner 2: Man do I love stealing, and lootin, it makes me feel alive."** reaped(print "Priest: Excellent, no more demons in this kingdom, you did it congrats! I sent word to the king.")}
+Action = Q(2,1) {print "Prisoner 2: Man do I love stealing, and lootin, it makes me feel alive." ** reaped(print "Priest: Excellent, no more demons in this kingdom, you did it congrats! I sent word to the king.")}
 
 Name = Suspect3
 Image = Suspect3
@@ -70,7 +70,7 @@ Fated = False
 (x,y) = (1700, 500)
 Gender = n
 Grey = True
-Action = Q(2,1) {print "Prisoner 3: HEH HEH I GOT A DEMON IN ME."** reaped(print "Priest: Excellent, no more demons in this kingdom, you did it congrats! I sent word to the king.")}
+Action = Q(2,1) {print "Prisoner 3: HEH HEH I GOT A DEMON IN ME." ** reaped(print "Priest: Excellent, no more demons in this kingdom, you did it congrats! I sent word to the king.")}
 
 
 Quest 3:
