@@ -150,7 +150,7 @@ def main():
             if not world.state():
                 quests.set_quest(0, 4)
                 villager_tutorial.set_essential(False)
-                villager_tutorial.image =
+
         elif quests.quest_stage(0) == 4:
             if villager_tutorial.soul_reaped:
                 quests.set_quest(0, 5)
