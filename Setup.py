@@ -27,7 +27,7 @@ class Setup:
             collidable.add(sprite)
         for sprite in self.objects():
             collidable.add(sprite)
-        return collidable.sprites()
+        return collidable
 
 
 
@@ -49,7 +49,7 @@ class Setup:
 
             line = file.readline()
 
-        return villager_list.sprites()
+        return villager_list
 
     def quests(self):
 
@@ -114,7 +114,7 @@ class Setup:
 
             line = file.readline()
 
-        return villager_list.sprites()
+        return villager_list
 
     def hitboxes(self):
         file = open("setup/hitboxes.txt", "r")
@@ -134,7 +134,7 @@ class Setup:
 
             line = file.readline()
 
-        return hitbox_list.sprites()
+        return hitbox_list
 
     def objects(self):
         file = open("setup/objects.txt", "r")
@@ -154,4 +154,4 @@ class Setup:
 
             line = file.readline()
 
-        return object_list.sprites()
+        return object_list

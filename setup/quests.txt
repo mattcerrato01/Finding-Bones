@@ -16,7 +16,7 @@ Fated = False
 (x,y) = (400,200)
 Gender = m
 Grey = False
-Action = Q(0,5) {print "Hell yeah"}
+Action =
 
 Quest 1:
 

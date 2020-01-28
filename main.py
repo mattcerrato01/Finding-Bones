@@ -81,7 +81,9 @@ def main():
 
     setup = Setup.Setup()
     collidables = setup.collidables()
-    collidables.add( setup.quests() )
+    q_vills = setup.quests()
+    villager_tutorial = q_vills.sprites()[0]
+    collidables.add( q_vills )
     quest_dialogue = setup.quest_dialogue()
 
     #quest_villager = Objects.Quest_Villager("villager", True, (2,3), 400, 800)
@@ -93,9 +95,9 @@ def main():
     well = Objects.Object_chgs_image("well-with-bucket.png", "well-without-bucket.png", 120, 1830, 108,168,"""hasnt(bucket){"bucket" to inv}""", "")
     dialogue_box = Objects.Dialogue_box()
 
-    villager_tutorial = Objects.Quest_Villager("Harold Alfond Tutorial Villager", "villager", False, [0,3], """Q(0,4) { reaped { print "Death: (Thought) Okay, I might have accidentally reaped an unprepared soul, the big folks upstairs do not like this sort of thing, I will probably have to be a bit more cautious. I will have to file the 666 forms after tonight, but first, I want my dog back." } ** reaped {set quest(0,5) }""", 400, 200, "m")
+    # villager_tutorial = Objects.Quest_Villager("Harold Alfond Tutorial Villager", "villager", False, [0,3], """Q(0,4) { reaped { print "Death: (Thought) Okay, I might have accidentally reaped an unprepared soul, the big folks upstairs do not like this sort of thing, I will probably have to be a bit more cautious. I will have to file the 666 forms after tonight, but first, I want my dog back." } ** reaped {set quest(0,5) }""", 400, 200, "m")
 
-    collidable_group = p.sprite.Group(villager_tutorial, cage, well)
+    collidable_group = p.sprite.Group( cage, well)
 
 
     for collidable in collidables:
@@ -133,11 +135,9 @@ def main():
     performed = [True]
 
 
-    def run_tutorial(villager_tutorial, quest_dialogue, performed):
-        # print(quest_dialogue)
-        # print(quests.quest_stage(0))
+    def run_tutorial(villager_tutorial):
+
         actions.set_uwa(True)
-        #print(quests.quest_stage(0))
         if quests.quest_stage(0) == -1:
             quests.set_quest(0,0)
         if quests.quest_stage(0) == 1:
@@ -149,6 +149,11 @@ def main():
         elif quests.quest_stage(0) == 3:
             if not world.state():
                 quests.set_quest(0, 4)
+                villager_tutorial.set_essential(False)
+                villager_tutorial.image =
+        elif quests.quest_stage(0) == 4:
+            if villager_tutorial.soul_reaped:
+                quests.set_quest(0, 5)
         elif quests.quest_stage(0) == 6:
             print("All done with tutorial")
             actions.set_uwa(False)
@@ -232,7 +237,7 @@ def main():
                                 break
                             collidable.update_action()
             if tutorial_active:
-                tutorial_active = run_tutorial(villager_tutorial, quest_dialogue, performed)
+                tutorial_active = run_tutorial(villager_tutorial)
 
 
             key = p.key.get_pressed()

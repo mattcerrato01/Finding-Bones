@@ -297,6 +297,8 @@ class Quest_Villager(Villagers):
             # print(self.name, self.action + str(qm.quest_stage(self.quest)))
             if self.grey:
                 self.grey_right_now = True
+    def set_essential(self,essential):
+        self.essential = essential
     def draw(self, screen, player):
         self.update_action()
 
