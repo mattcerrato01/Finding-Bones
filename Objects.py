@@ -340,6 +340,7 @@ class Movable_Object(Object):
 
     def moveX(self, x, collidable_group):
 
+
         self.x += x
         coord.set_offset_x(self.x + 374)
         if world.state():
@@ -383,8 +384,8 @@ class Player(Movable_Object):
         coord.set_offset_y(228)
 
 
-        self.x = coord.real_x(374 + 200)
-        self.y = coord.real_y(228 + 200)
+        self.x = coord.real_x(250)
+        self.y = coord.real_y(0)
 
         self.width = 40
         self.height = 127  # check this, should be collision height
@@ -407,9 +408,8 @@ class Player(Movable_Object):
         for name in right_walk:
             self.right_walk.append(p.transform.scale(loadify(name + ".png"), (112, 142)))
 
-        self.image = self.up_walk[0]
-
         self.current_group = self.up_walk
+        self.image = self.current_group[1]
 
         self.empty_hourglass = p.transform.scale(loadify("Empty_Hourglass.png"), (50, 80))
         self.fate_hourglass_bottom = p.transform.scale(loadify("Fate_Hourglass_Bottom.png"), (50, 80))
@@ -439,6 +439,7 @@ class Player(Movable_Object):
         return self.y
 
     def move(self, keys, collidable_group, demon_group):
+
 
         temp_speed = self.speed
         temp_diag_speed = self.diag_speed

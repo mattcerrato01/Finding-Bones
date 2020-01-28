@@ -167,7 +167,13 @@ def main():
     gs.change_track(1)
     win = False
 
+
+    #player.move(p.key.get_pressed(),collidable_group,demons)
+    player.moveX(0, collidable_group)
+    player.moveY(0, collidable_group)
+
     while running:
+
 
         if not paused:
             screen.fill([255, 255, 255])
@@ -293,6 +299,7 @@ def main():
 
 
             player.draw(screen)
+
             mouseChanged = False
             for collidable in collision_group:
                 if collidable.changeMouse(p.mouse.get_pos()):
