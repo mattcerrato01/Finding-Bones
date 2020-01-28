@@ -122,8 +122,10 @@ def main():
     # tile = t.Tile("background.jpg", collidable_group, 0, 0)
     createDemons(demons, player, int(200 / player.fate))
     gs.change_track(4)
-    st.main(screen)
     running = True
+    str = st.main(screen)
+    if str == "quit":
+    	running = False
 
     font = p.font.Font(None, 36)
     pausetext = font.render("Paused", 1, (250, 250, 250))

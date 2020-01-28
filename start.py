@@ -48,11 +48,13 @@ def main(screen):
 		for event in p.event.get():
 			if event.type == p.QUIT:
 				running = False
+				return "quit"
 			elif event.type == p.MOUSEBUTTONUP:
 				clicked = True
 		key = p.key.get_pressed()
 		if key[p.K_ESCAPE]:
 			running = False
+			return "quit"
 		
 		if clicked:
 			if 90 < p.mouse.get_pos()[0] < 350 and 445 < p.mouse.get_pos()[1] < 530:
