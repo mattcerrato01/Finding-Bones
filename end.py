@@ -69,7 +69,7 @@ def main(screen, win, score = None):
 				return "score"
 			elif 530 < p.mouse.get_pos()[0] < 770 and 470 < p.mouse.get_pos()[1] < 560:
 				endrunning = False
-				return "credits"
+				credits.main()
 		background.fill((250, 250, 250))
 		background.blit(back, backpos)
 		p.mouse.set_visible(False)
