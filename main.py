@@ -83,7 +83,7 @@ def main():
     collidables = setup.collidables()
     q_vills = setup.quests()
     villager_tutorial = q_vills.sprites()[0]
-    collidables.add( q_vills )
+    collidables.add(q_vills)
 
     #quest_villager = Objects.Quest_Villager("villager", True, (2,3), 400, 800)
 
