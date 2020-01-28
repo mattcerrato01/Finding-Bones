@@ -62,6 +62,10 @@ class CoordConverter:
 
     def set_offset_y(self, offset_y):
         CoordConverter.offset_y = offset_y
+    def get_offset_x(self):
+        return CoordConverter.offset_x
+    def get_offset_y(self):
+        return CoordConverter.offset_y
 
     def real_x(self, screen_x):
         return screen_x - CoordConverter.offset_x

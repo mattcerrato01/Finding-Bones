@@ -55,7 +55,6 @@ def main(screen, win, score = None):
 		for event in p.event.get():
 			if event.type == p.QUIT:
 				endrunning = False
-				return "quit"
 			elif event.type == p.MOUSEBUTTONUP:
 				clicked = True
 		key = p.key.get_pressed()

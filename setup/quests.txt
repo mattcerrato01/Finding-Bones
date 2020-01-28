@@ -6,7 +6,6 @@ Stage 2:  print "Death: (Thought) I know Im a personification of death and every
 
 Stage 4: print "Click to advance dialogue." AND print "Reap the villager by clicking on him."
 
-
 Stage 5: print "Death: (Thought) Okay, I might have accidentally reaped an unprepared soul, the big folks upstairs do not like this sort of thing," AND print "I will probably have to be a bit more cautious." AND print "I will have to file the 666 forms after tonight, but first, I want my dog back." AND set quest(1,0) AND set quest(2,0) AND set quest(3,0) AND set quest(4,0) AND set quest(5,0) AND set quest(0,6)
 
 Villagers:

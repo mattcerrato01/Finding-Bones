@@ -332,8 +332,8 @@ def main():
                 main()
             elif endc == "score":
                 running = False
-            elif endc == "quit":
-                running = False
+            elif endc == "credits":
+                pass
 
             time = p.time.get_ticks()
         else:
