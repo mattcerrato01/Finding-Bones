@@ -209,9 +209,9 @@ class Actions:
             first_index = action.find("Q(")
             second_index = action.find(",")
 
-            print("1 " + str(Actions.perform_action_in_underworld))
+            # print("1 " + str(Actions.perform_action_in_underworld))
             if (WorldState.state(WorldState) or Actions.perform_action_in_underworld):
-                print("2")
+                # print("2")
 
                 if "Q(" in action:
                     # print(action[first_index + 2:second_index], QuestManager.quest_stage(QuestManager,int(action[first_index + 2:second_index] )))
@@ -316,7 +316,8 @@ class Actions:
                     try:
                         QuestManager.set_quest(QuestManager, int(action[first_index: second_index]) , int(action[second_index+1 : third_index]) )
                     except:
-                        print(action)
+                        adfhj=0
+                        # print(action)
 
             elif not WorldState.state(WorldState) and "reaped" in action:
                 Actions.perform_action_in_underworld = True
@@ -365,7 +366,7 @@ class QuestManager:
         while (len(QuestManager.quest_actions[quest_num]) <= QuestManager.quests[quest_num]):
             QuestManager.quest_actions[quest_num].append('')
 
-        print("here i am " + str(  QuestManager.quest_actions[quest_num][QuestManager.quests[quest_num]]  ))
+        # print("here i am " + str(  QuestManager.quest_actions[quest_num][QuestManager.quests[quest_num]]  ))
         Actions.perform_action(Actions, QuestManager.quest_actions[quest_num][QuestManager.quests[quest_num]])
 
     def set_quest(self, quest_num, quest_stage):

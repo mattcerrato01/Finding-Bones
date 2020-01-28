@@ -84,11 +84,10 @@ def main():
     q_vills = setup.quests()
     villager_tutorial = q_vills.sprites()[0]
     collidables.add( q_vills )
-    quest_dialogue = setup.quest_dialogue()
 
     #quest_villager = Objects.Quest_Villager("villager", True, (2,3), 400, 800)
 
-    graveyard = Objects.Graveyard(45,1325)
+    graveyard = Objects.Graveyard(40,1325)
 
 
     cage = Objects.Object_chgs_image("cage-locked-bones.png", "cage-unlocked.png",2875,1420,128,114, """has(key1, key2, key3){print "I'm freed",, "key1" from inv,, "key2" from inv,, "key3" from inv}""", "key1, key2, key3")
@@ -132,12 +131,11 @@ def main():
     pausetext = font.render("Paused", 1, (250, 250, 250))
     ptextRect = pausetext.get_rect()
     ptextRect.center = (400,300)
-    performed = [True]
 
 
     def run_tutorial(villager_tutorial):
 
-        actions.set_uwa(True)
+
         if quests.quest_stage(0) == -1:
             quests.set_quest(0,0)
         if quests.quest_stage(0) == 1:
@@ -148,6 +146,7 @@ def main():
                 quests.set_quest(0, 2)
         elif quests.quest_stage(0) == 3:
             if not world.state():
+                actions.set_uwa(True)
                 quests.set_quest(0, 4)
                 villager_tutorial.set_essential(False)
 
@@ -165,10 +164,9 @@ def main():
     fate = player.get_fate()
     paused = False
     esc_holder = False
-    tutorial_active = False
+    tutorial_active = True
     piles_of_bones = []
     gs.change_track(1)
-    first_click = True
     win = False
 
     while running:
@@ -184,36 +182,40 @@ def main():
             sc3.draw(screen)
             sc4.draw(screen)
 
-
             for event in p.event.get():
                 if event.type == p.QUIT:
                     running = False
                 elif event.type == p.MOUSEBUTTONUP:
-                    if first_click:
-                        tutorial_active = True
-                        first_click = False
 
                     pos = p.mouse.get_pos()
                     print(coord.real_x(pos[0]), coord.real_y(pos[1]))
-                    print(actions.dialogue_list)
+
+
                     if dialogue_box.draw(screen):
                         play_sound(random.choice(["Greeting 1", "Greeting 2", "Greeting 3 (Female)", "Cough", "BlehSound"])) # FIX THIS SHIT LATER
                         dialogue_box.perform_action(pos)
                     else:
-                        for collidable in collision_group:
-                            if collidable.perform_action(pos):	# returns true if villager has been reaped
-                                if collidable.image == "cage-locked-bones.png":
+
+
+
+                        for sprite in collision_group:
+                            try:
+                                print(sprite.name)
+                            except:
+                                pass
+                            if sprite.perform_action(pos):	# returns true if villager has been reaped
+                                if sprite.image == "cage-locked-bones.png":
                                     win = True
                                 play_sound("Scythe")
-                                graveyard.add_grave(collidable)
+                                graveyard.add_grave(sprite)
                                 bones = p.transform.scale(loadify("skull_and_bones.png"), (60, 62))
-                                piles_of_bones.append([bones, p.time.get_ticks(), collidable.x, collidable.y])
+                                piles_of_bones.append([bones, p.time.get_ticks(), sprite.x, sprite.y])
 
                                 tomb = graveyard.get_tombstones()[len(graveyard.get_tombstones()) - 1]
                                 collidable_group.add(tomb)
 
                                 tile_map.tile_array[0][2].add_to_group(tomb)
-                                tile_map.tile_array[int( collidable.x // 800 )][int( collidable.y // 600 )].remove_from_group(collidable)
+                                tile_map.tile_array[int( sprite.x // 800 )][int( sprite.y // 600 )].remove_from_group(sprite)
 
                                 #if anyone sees this remind Will to fix that /\
 
@@ -221,7 +223,7 @@ def main():
                                 if player.soul > 100:
                                     player.soul = 100
 
-                                if collidable.isFated():
+                                if sprite.isFated():
                                     player.fate += 10
                                 else:
                                     player.fate -= 10
@@ -229,13 +231,13 @@ def main():
                                 if player.fate > 100:
                                     player.fate = 100
                             # print(collidable.__class__)
-                            if collidable.__class__ == Objects.Object_chgs_image:
-                                if collidable.get_image_name() == "cage-unlocked.png":
-                                    print("bones")
-                                    win = True
+                                if sprite.__class__ == Objects.Object_chgs_image:
+                                    if sprite.get_image_name() == "cage-unlocked.png":
+                                        print("bones")
+                                        win = True
 
                                 break
-                            collidable.update_action()
+                            sprite.update_action()
             if tutorial_active:
                 tutorial_active = run_tutorial(villager_tutorial)
 

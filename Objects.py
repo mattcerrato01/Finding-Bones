@@ -176,6 +176,7 @@ class Villagers(Object):
 
     def perform_action(self, mouse_click):
 
+
         if self.rect.collidepoint(mouse_click):
             print(self.name, "clicked on")
 
@@ -183,6 +184,7 @@ class Villagers(Object):
                 self.key = False
                 self.dialogues.pop(len(self.dialogues)-1)
             self.action = actions.perform_action(self.action)
+
 
 
         if self.rect.collidepoint(mouse_click) and (not self.essential or self.grey_right_now) and not world.state():
@@ -375,12 +377,13 @@ class Player(Movable_Object):
 
         self.speed = 2	# Change to 20 when testing
         self.diag_speed = self.speed / m.sqrt(2)
+        coord.set_offset_x(374)
+        coord.set_offset_y(228)
 
-        coord.set_offset_x(300)
-        coord.set_offset_y(600)
 
-        self.x = coord.real_x(374-225)
-        self.y = coord.real_y(228)
+        self.x = coord.real_x(1000)
+        self.y = coord.real_y(1000)
+
         self.width = 40
         self.height = 127  # check this, should be collision height
         self.rect = p.Rect(380, 244 + 3*self.height/4, self.width, self.height/4)
@@ -491,8 +494,7 @@ class Player(Movable_Object):
             self.walking_time += animation_speed
             self.soul -= soul_drain
 
-        coord.set_offset_x(self.x + 374)
-        coord.set_offset_y(self.y + 228)
+
 
         if p.key.get_pressed()[9] and self.tab_holder:
             collide = False
@@ -624,7 +626,7 @@ class Dialogue_box():
         if mouse:
             for i in range(4):
                 try:
-                    print(actions.dialogue_list.pop(0))
+                    actions.dialogue_list.pop(0)
                 except:
                     break
             self.dialogue = actions.dialogue_list
@@ -712,7 +714,7 @@ class Hitbox(p.sprite.Sprite):
 
     def perform_action(self, mouse_click):
 
-        print(coord.real_x(mouse_click[0]), coord.real_y(mouse_click[1]))
+
 
         if self.rect.collidepoint(mouse_click) and world.state():
             self.action = actions.perform_action(self.action)
