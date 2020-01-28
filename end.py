@@ -1,6 +1,7 @@
 import pygame as p
 import Objects
 import GameStates as gs
+import credits
 
 p.init()
 
@@ -69,7 +70,12 @@ def main(screen, win, score = None):
 				return "score"
 			elif 530 < p.mouse.get_pos()[0] < 770 and 470 < p.mouse.get_pos()[1] < 560:
 				endrunning = False
-				credits.main()
+				c = credits.main(screen)
+				if c == "quit":
+					endrunning = False
+					return "quit"
+				if c == "back":
+					endrunning = True
 		background.fill((250, 250, 250))
 		background.blit(back, backpos)
 		p.mouse.set_visible(False)
