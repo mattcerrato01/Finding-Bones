@@ -85,16 +85,14 @@ def main():
     villager_tutorial = q_vills.sprites()[0]
     collidables.add(q_vills)
 
-    #quest_villager = Objects.Quest_Villager("villager", True, (2,3), 400, 800)
 
     graveyard = Objects.Graveyard(40,1325)
 
 
-    cage = Objects.Object_chgs_image("cage-locked-bones.png", "cage-unlocked.png",2875,1420,128,114, """has(key1, key2, key3){print "I'm freed",, "key1" from inv,, "key2" from inv,, "key3" from inv}""", "key1, key2, key3")
+    cage = Objects.Object_chgs_image("cage-locked-bones.png", "cage-unlocked.png",2875,1420,128,114, """has(Iron Key, Gem Key, Silver Key, Onyx Key, Gold Key){print "I'm freed",, "Iron Key" from inv,, "Gem Key" from inv,, "Silver Key" from inv,, "Onyx Key" from inv,, "Gold Key" from inv}""", "Iron Key, Gem Key, Gold Key, Onyx Key, Silver Key")
     well = Objects.Object_chgs_image("well-with-bucket.png", "well-without-bucket.png", 120, 1830, 108,168,"""hasnt(bucket){"bucket" to inv}""", "")
     dialogue_box = Objects.Dialogue_box()
 
-    # villager_tutorial = Objects.Quest_Villager("Harold Alfond Tutorial Villager", "villager", False, [0,3], """Q(0,4) { reaped { print "Death: (Thought) Okay, I might have accidentally reaped an unprepared soul, the big folks upstairs do not like this sort of thing, I will probably have to be a bit more cautious. I will have to file the 666 forms after tonight, but first, I want my dog back." } ** reaped {set quest(0,5) }""", 400, 200, "m")
 
     collidable_group = p.sprite.Group( cage, well)
 
@@ -199,10 +197,7 @@ def main():
 
 
                         for sprite in collision_group:
-                            try:
-                                print(sprite.name)
-                            except:
-                                pass
+
                             if sprite.perform_action(pos):	# returns true if villager has been reaped
                                 if sprite.image == "cage-locked-bones.png":
                                     win = True
@@ -331,7 +326,7 @@ def main():
                 player.soul = 100
                 p.mouse.set_visible(True)
                 end.main(screen, True, player.get_fate())
-                #endc = end.main(screen, True, player.get_fate()
+                endc = end.main(screen, True, player.get_fate())
             if endc == "restart":
                 gs.reset()
                 main()

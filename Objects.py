@@ -754,11 +754,14 @@ class Object_chgs_image(Object):
         if self.rect.collidepoint(mouse_click) and world.state():
             conditionals = self.conditional.split(", ")
             condition_met = True
+            keys = 0
             for conditional in conditionals:
-                if not inventory.has(conditional):
+                if inventory.has(conditional) and "Key" in conditional:
+                    keys += 1
+                elif not inventory.has(conditional):
                     condition_met = False
-                    break
-            if condition_met or self.conditional == "":
+
+            if condition_met or self.conditional == "" or keys >= 4:
                 self.chg_image()
                 if "key" in self.conditional:
                     return True
