@@ -318,6 +318,8 @@ class Quest_Villager(Villagers):
 
             if qm.quest_stage(self.quest) in self.quest_array and not self.secret:
                 screen.blit(self.question_mark, (coord.screen_x(self.x)+self.width/2-8, coord.screen_y(self.y)-30))
+        elif "Tutorial" in self.name and qm.quest_stage(0) == 4:
+            self.draw_image(screen, self.unfated_soul)
 
         elif self.grey and qm.quest_stage(self.quest) in self.quest_array:
             self.draw_image(screen, self.grey_soul)
@@ -354,7 +356,7 @@ class Movable_Object(Object):
     def moveY(self, y, collidable_group):
 
         self.y += y
-        coord.set_offset_y(self.y + 228)
+        coord.set_offset_y(self.y +228)
 
         if world.state():
             for collidable in collidable_group:
@@ -381,8 +383,8 @@ class Player(Movable_Object):
         coord.set_offset_y(228)
 
 
-        self.x = coord.real_x(1000)
-        self.y = coord.real_y(1000)
+        self.x = coord.real_x(374 + 200)
+        self.y = coord.real_y(228 + 200)
 
         self.width = 40
         self.height = 127  # check this, should be collision height
@@ -404,6 +406,8 @@ class Player(Movable_Object):
             self.left_walk.append(p.transform.scale(loadify(name + ".png"), (112, 142)))
         for name in right_walk:
             self.right_walk.append(p.transform.scale(loadify(name + ".png"), (112, 142)))
+
+        self.image = self.up_walk[0]
 
         self.current_group = self.up_walk
 
@@ -530,6 +534,8 @@ class Player(Movable_Object):
             screen.blit(self.image, (316, 229))
         elif self.image in self.right_walk:
             screen.blit(self.image, (372, 229))
+        else:
+            screen.blit(self.image, (374, 228))
 
         screen.blit(self.empty_hourglass, (10, 510), (0, 0, 50, 80))
         screen.blit(self.fate_hourglass_top, (10, 544 - 30 * (self.fate / 100)),
