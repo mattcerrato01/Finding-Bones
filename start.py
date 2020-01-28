@@ -44,7 +44,7 @@ def main(screen):
 	while running:
 		#screen.fill([255, 255, 255])
 		clicked = False
-		print(p.mouse.get_pos())
+		#print(p.mouse.get_pos())
 		for event in p.event.get():
 			if event.type == p.QUIT:
 				running = False
