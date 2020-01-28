@@ -763,7 +763,7 @@ class Object_chgs_image(Object):
 
             if condition_met or self.conditional == "" or keys >= 4:
                 self.chg_image()
-                if "key" in self.conditional:
+                if "Key" in self.conditional:
                     return True
 
             self.action = actions.perform_action(self.action)
