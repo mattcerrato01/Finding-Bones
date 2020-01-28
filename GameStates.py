@@ -214,13 +214,13 @@ class Actions:
                 print("2")
 
                 if "Q(" in action:
+                    # print(action[first_index + 2:second_index], QuestManager.quest_stage(QuestManager,int(action[first_index + 2:second_index] )))
                     if QuestManager.quest_stage(QuestManager,int(action[first_index + 2:second_index])) == int(
                             action[second_index + 1:action.find(")")]) or action[second_index + 1] == "A":
                         conditional_action = action[action.find("{") + 1:action.rfind("}")]
                         return_sub_string = action[action.find("Q("):action.find("{") + 1]
                         for string in conditional_action.split("**"):
-                            return_sub_string += self.perform_action(string) + "**"
-                        return_sub_string += "} AND "
+                            return_sub_string = action[action.find("Q("):action.find("{") + 1] + self.perform_action(string) + "} AND "
 
 
                 elif "do(" in action:
@@ -261,16 +261,15 @@ class Actions:
                     first_index = action.find("has(") + 4
                     second_index = action.find(")")
                     condition_met = True
-                    for conditions in action[first_index:second_index].split(", "):
+                    for conditions in action[first_index:second_index].split(",, "):
 
                         if not Inventory.has(Inventory, conditions):
                             condition_met = False
                             break
                     if condition_met:
                         conditional_action = action[action.find("{") + 1:action.find("}")]
-                        for string in conditional_action.split(",, "):
-                            return_sub_string = action[action.find("has("):action.find("{") + 1] + self.perform_action(
-                                string) + "}" + " AND "
+                        for string in conditional_action.split(",,"):
+                            return_sub_string = action[action.find("has("):action.find("{") + 1] + self.perform_action(string) +"}" + " AND "
                     else:
                         return_sub_string = action + " AND "
                 elif "hasnt(" in action:
@@ -399,7 +398,7 @@ class QuestManager:
             stage_chg = 0
             if i == 2 and QuestManager.quest_stage(QuestManager,1)>=2:
                 stage_chg = -1
-            elif i == 5:
+            if i == 5:
                  stage_chg = 1
             line = quest_titles[i] + "  " + str(QuestManager.quest_stage(QuestManager, i) +stage_chg)
             dialogue_box = dialogue_box_font.render(line, True, (255, 255, 255))

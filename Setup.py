@@ -27,7 +27,7 @@ class Setup:
             collidable.add(sprite)
         for sprite in self.objects():
             collidable.add(sprite)
-        return collidable
+        return collidable.sprites()
 
 
 
@@ -49,7 +49,7 @@ class Setup:
 
             line = file.readline()
 
-        return villager_list
+        return villager_list.sprites()
 
     def quests(self):
 
@@ -68,7 +68,6 @@ class Setup:
             elif command == "Stage":
                 stage = int( line[line.find(" ")+1 : line.find(":")] )
                 input = line[ line.find(":") + 1 : ]
-
                 qm.set_quest_stage(quest, stage, input)
             elif command == "Name":
                 name = line[ line.find("= ")+2 : len(line)-1 ]
@@ -111,12 +110,11 @@ class Setup:
                 else:
                     quest_array = [-1,-1]
 
-
                 villager_list.add(Objects.Quest_Villager( name, image.strip(), fated, quest_array, action, x, y, male, grey, secret))
 
             line = file.readline()
 
-        return villager_list
+        return villager_list.sprites()
 
     def hitboxes(self):
         file = open("setup/hitboxes.txt", "r")
@@ -136,7 +134,7 @@ class Setup:
 
             line = file.readline()
 
-        return hitbox_list
+        return hitbox_list.sprites()
 
     def objects(self):
         file = open("setup/objects.txt", "r")
@@ -156,4 +154,4 @@ class Setup:
 
             line = file.readline()
 
-        return object_list
+        return object_list.sprites()

@@ -171,6 +171,7 @@ def main():
         if not paused:
             screen.fill([255, 255, 255])
             collision_group = tile_map.draw(screen, player)
+            player.set_soul(100)
 
             sc.draw(screen)
             sc1.draw(screen)

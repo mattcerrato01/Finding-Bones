@@ -177,6 +177,8 @@ class Villagers(Object):
     def perform_action(self, mouse_click):
 
         if self.rect.collidepoint(mouse_click):
+            print(self.name, "clicked on")
+
             if self.key and	"key5" in self.action:
                 self.key = False
                 self.dialogues.pop(len(self.dialogues)-1)
@@ -292,10 +294,10 @@ class Quest_Villager(Villagers):
             self.action = self.dialogues[idx]
         elif qm.quest_stage(self.quest) in self.quest_array:
             self.action = self.quest_action
+            # print(self.name, self.action + str(qm.quest_stage(self.quest)))
             if self.grey:
                 self.grey_right_now = True
     def draw(self, screen, player):
-
         self.update_action()
 
         try:
