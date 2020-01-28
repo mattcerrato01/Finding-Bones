@@ -177,7 +177,7 @@ class Villagers(Object):
     def perform_action(self, mouse_click):
 
         if self.rect.collidepoint(mouse_click):
-            if self.key and	 "key5" in self.action:
+            if self.key and	"key5" in self.action:
                 self.key = False
                 self.dialogues.pop(len(self.dialogues)-1)
             self.action = actions.perform_action(self.action)
@@ -186,6 +186,7 @@ class Villagers(Object):
         if self.rect.collidepoint(mouse_click) and (not self.essential or self.grey_right_now) and not world.state():
             self.soul_reaped = True
             return True
+        return False
 
     def update_action(self):
         idx = r.randint(0,len(self.dialogues)-1)
@@ -294,7 +295,6 @@ class Quest_Villager(Villagers):
             if self.grey:
                 self.grey_right_now = True
     def draw(self, screen, player):
-        self.update_action()
 
         self.update_action()
 
@@ -303,7 +303,7 @@ class Quest_Villager(Villagers):
         except:
             stage = -1
 
-        if stage > self.quest_end or stage == -1:
+        if stage > self.quest_end:
             self.essential = False
 
         if world.state():
@@ -405,6 +405,7 @@ class Player(Movable_Object):
         self.fate_hourglass_top = p.transform.scale(loadify("Fate_Hourglass_Top.png"), (50, 80))
         self.soul_hourglass_bottom = p.transform.scale(loadify("Soul_Hourglass_Bottom.png"), (50, 80))
         self.soul_hourglass_top = p.transform.scale(loadify("Soul_Hourglass_Top.png"), (50, 80))
+        self.exclamation = p.transform.scale(loadify("exclamation.png"), (10, 28))
 
         self.fate = 100
         self.soul = 100
@@ -536,6 +537,11 @@ class Player(Movable_Object):
         screen.blit(self.soul_hourglass_bottom, (740, 556 + 30 * (self.soul / 100)),
                     (0, 46 + 30 * (self.soul / 100), 50, 76))
 
+        if self.soul < 30:
+            screen.blit(self.exclamation, (740, 480))
+        if self.fate < 30:
+            screen.blit(self.exclamation, (10, 480))
+
 
 
 class Demons(Object):
@@ -614,7 +620,7 @@ class Dialogue_box():
         if mouse:
             for i in range(4):
                 try:
-                    actions.dialogue_list.pop(0)
+                    print(actions.dialogue_list.pop(0))
                 except:
                     break
             self.dialogue = actions.dialogue_list

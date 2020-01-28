@@ -166,6 +166,10 @@ class Actions:
             else:
                 temp_string += " " + word
         Actions.dialogue_list.append(temp_string)
+
+    def set_uwa(self, uwa):
+        Actions.perform_action_in_underworld = uwa
+
     def set_dialogue(self, dialogue):
         Actions.dialogue_list = dialogue
 
@@ -194,6 +198,7 @@ class Actions:
 
         for action in quest_actions.split(' AND '):
 
+
             return_sub_string = ""
             end_of_string = ""
             if "reaped" in action and WorldState.state(WorldState):
@@ -203,7 +208,10 @@ class Actions:
 
             first_index = action.find("Q(")
             second_index = action.find(",")
+
+            print("1 " + str(Actions.perform_action_in_underworld))
             if (WorldState.state(WorldState) or Actions.perform_action_in_underworld):
+                print("2")
 
                 if "Q(" in action:
                     if QuestManager.quest_stage(QuestManager,int(action[first_index + 2:second_index])) == int(
@@ -315,7 +323,7 @@ class Actions:
                 Actions.perform_action_in_underworld = True
                 conditional_action = action[action.find("reaped(") + 7:action.rfind(")")]
                 for string in conditional_action.split(",,"):
-                    return_sub_string = "reaped(" + self.perform_action(string) + ")" + " AND "
+                    return_sub_string = "reaped(" + Actions.perform_action(Actions, string) + ")" + " AND "
                 Actions.perform_action_in_underworld = False
 
             return_string += return_sub_string + end_of_string
@@ -330,19 +338,15 @@ class QuestManager:
     quests = []
     quest_actions = []
 
-    #def add_number_quests(self, num):
-    #    while True:
-    #        if self.add_quest(num):
-    #            break
 
     def add_quest(self, add_to = -1):
 
         if add_to == -1:
-            QuestManager.quests.append(0)
+            QuestManager.quests.append(-1)
             QuestManager.quest_actions.append([])
         else:
             while len(QuestManager.quests) <= add_to:
-                QuestManager.quests.append(0)
+                QuestManager.quests.append(-1)
                 QuestManager.quest_actions.append([])
 
     def set_quest_stage(self, quest_num, quest_stage, action):
@@ -356,16 +360,21 @@ class QuestManager:
 
     def advance_quest(self, quest_num):
         while(len(QuestManager.quests) <= quest_num):
-            QuestManager.quests.append(0)
+            QuestManager.quests.append(-1)
             QuestManager.quest_actions.append([])
         QuestManager.quests[quest_num]+=1
         while (len(QuestManager.quest_actions[quest_num]) <= QuestManager.quests[quest_num]):
             QuestManager.quest_actions[quest_num].append('')
+
+        print("here i am " + str(  QuestManager.quest_actions[quest_num][QuestManager.quests[quest_num]]  ))
         Actions.perform_action(Actions, QuestManager.quest_actions[quest_num][QuestManager.quests[quest_num]])
 
     def set_quest(self, quest_num, quest_stage):
         while QuestManager.quests[quest_num] < quest_stage:
             QuestManager.advance_quest(QuestManager, quest_num)
+
+    def run_stage(self, quest_num, quest_stage):
+        Actions.perform_action(Actions, QuestManager.quest_actions[quest_num][quest_stage])
 
     def quest_stage(self, quest_num):
         try:

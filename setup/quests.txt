@@ -1,6 +1,12 @@
 ﻿Quest 0:
 
-Stage 1:
+Stage 0: print "Click to advance dialogue." AND print "Villager: Oh gods, The Grim Reaper?!? But Im not dead! Honest!" AND print "I checked my pulse and I have not been hanged recently, please dont take me now!" AND print "Death: Hello Harold Alfond Tutorial Villager! Have you seen my dog Bones, I miss him dearly." AND print "Village: OH NO, I AM ON HIS LIST" AND set quest(0,1)
+
+Stage 2:  print "Death: (Thought) I know Im a personification of death and everything but you'd think people would have the decency to not run and scream." AND print "(Checks watch) Hm Im running a bit behind on my quota" AND print "I will have to reap a soul if I want to keep searching for Boney tonight." AND print "Death: To Reap a soul, I have to… Hang on, I will check the manual." AND print "Press tab to travel to the underworld" AND set quest(0,3)
+
+Stage 4: print "Click to advance dialogue." AND print "Reap the villager by clicking on him."
+
+Stage 5: set quest(1,0) AND set quest(2,0) AND set quest(3,0) AND quest(4,0) AND set quest(0,6)
 
 Villagers:
 
@@ -71,7 +77,7 @@ Fated = True
 (x,y) = (3094, 270)
 Gender = n
 Grey = False
-Action = Q(3,0) {print "King: Oh ye gods, my kingdom is in worse shape than ever!"** print "Death: (Thought) Aside from the feudalism?"** print "King: A demon has possessed someone in the kingdom and it’s impossible to tell who has been taken by them"** print "Death: (Thought) Well, that’s a problem that I should worry about."** print "King: You there, bone man!"** print "Death: (Thought) I have a name."** print "King: Are you able to help our priest? You look…spectral."** print "Death: (Thought) I’m going to ignore that."** print "King: Will you help me?!?! I will pay you handsomely, with the finest key in the whole kingdom! (That my squire found on the ground outside)"** print "Death: ......!"** print "King: Excellent! Whenever you want to get started exorcising, the priest has more information to the west."** set quest(3,1)} AND Q(3,2) {print "King: Thank you stranger! Here is your key!"**"Onyx Key" to inv ** set quest(3,3) }
+Action = Q(3,0) {print "King: Oh ye gods, my kingdom is in worse shape than ever!"** print "Death: (Thought) Aside from the feudalism?"** print "King: A demon has possessed someone in the kingdom and it’s impossible to tell who has been taken by them"** print "Death: (Thought) Well, that’s a problem that I should worry about."** print "King: You there, bone man!"** print "Death: (Thought) I have a name."** print "King: Are you able to help our priest? You look... spectral."** print "Death: (Thought) I’m going to ignore that."** print "King: Will you help me?!?! I will pay you handsomely, with the finest key in the whole kingdom! (That my squire found on the ground outside)"** print "Death: ......!"** print "King: Excellent! Whenever you want to get started exorcising, the priest has more information to the west."** set quest(3,1)} AND Q(3,2) {print "King: Thank you stranger! Here is your key!"**"Onyx Key" to inv ** set quest(3,3) }
 
 Name = Priest
 Image = Priest
