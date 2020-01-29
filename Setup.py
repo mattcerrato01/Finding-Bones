@@ -74,7 +74,7 @@ class Setup:
             elif command == "Image":
                 image = line[ line.find("= ")+2 : ]
             elif command == "Fated":
-                fated = line[ line.find("= ")+2 : ] == "True"
+                fated = line[ line.find("= ")+2 : line.rfind("e") + 1 ] == "True"
             elif command == "(x,y)":
                 sub = line[ line.find("= ")+2 : ]
                 x = int( sub[ sub.find("(")+1 : sub.find(",") ] )
