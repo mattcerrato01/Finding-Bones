@@ -418,7 +418,7 @@ class Player(Movable_Object):
         self.fate_hourglass_top = p.transform.scale(loadify("Fate_Hourglass_Top.png"), (50, 80))
         self.soul_hourglass_bottom = p.transform.scale(loadify("Soul_Hourglass_Bottom.png"), (50, 80))
         self.soul_hourglass_top = p.transform.scale(loadify("Soul_Hourglass_Top.png"), (50, 80))
-        self.exclamation = p.transform.scale(loadify("exclamation.png"), (10, 28))
+        self.exclamation = p.transform.scale(loadify("exclamation.png"), (20, 56))
 
         self.fate = 100
         self.soul = 100
@@ -547,15 +547,15 @@ class Player(Movable_Object):
                     (0, 46 + 30 * (self.fate / 100), 50, 76))
 
         screen.blit(self.empty_hourglass, (740, 510), (0, 0, 50, 80))
-        screen.blit(self.soul_hourglass_top, (740, 544 - 30 * (self.soul / 100)),
+        screen.blit(self.soul_hourglass_top, (740, 548 - 30 * (self.soul / 100)),
                     (0, 38 - 30 * (self.soul / 100), 50, 34))
         screen.blit(self.soul_hourglass_bottom, (740, 556 + 30 * (self.soul / 100)),
                     (0, 46 + 30 * (self.soul / 100), 50, 76))
 
-        if self.soul < 30:
-            screen.blit(self.exclamation, (740, 480))
-        if self.fate < 30:
-            screen.blit(self.exclamation, (10, 480))
+        if self.soul <= 50:
+            screen.blit(self.exclamation, (755, 450))
+        if self.fate <= 50:
+            screen.blit(self.exclamation, (25, 450))
 
 
 

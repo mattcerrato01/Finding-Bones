@@ -2,7 +2,7 @@
 
 Stage 0: print "Click to advance dialogue." AND print "Villager: Oh gods, The Grim Reaper?!? But Im not dead! Honest!" AND print "I checked my pulse and I have not been hanged recently, please dont take me now!" AND print "Death: Hello Harold Alfond Tutorial Villager! Have you seen my dog Bones, I miss him dearly." AND print "Village: OH NO, I AM ON HIS LIST" AND set quest(0,1)
 
-Stage 2:  print "Death: (Thought) I know Im a personification of death and everything but you'd think people would have the decency to not run and scream." AND print "(Checks watch) Hm Im running a bit behind on my quota" AND print "I will have to reap a soul if I want to keep searching for Boney tonight." AND print "Death: To Reap a soul, I have to… Hang on, I will check the manual." AND print "Press tab to travel to the underworld" AND set quest(0,3)
+Stage 2:  print "Death: (Thought) I know Im a personification of death and everything but you'd think people would have the decency to not run and scream." AND print "(Checks watch) Hm Im running a bit behind on my quota" AND print "I will have to reap a soul if I want to keep searching for Boney tonight." AND print "Death: To Reap a soul, I have to... Hang on, I will check the manual." AND print "Press tab to travel to the underworld" AND set quest(0,3)
 
 Stage 4: print "Click to advance dialogue." AND print "Reap the villager by clicking on him."
 
@@ -85,7 +85,7 @@ Fated = True
 (x,y) = (2175, 195)
 Gender = n
 Grey = True
-Action = Q(3,1) {print "Priest: Why hello there Mr. Death! Recently, we have been pressing people hard for information about the demon. As a man of the gods, I have gathered the three souls the demon most likely jumped into." ** print "Death: (Thought) Hmm… can’t get a read on this priest, the implied torture is normal though." ** print "Priest: If you talk to these three sinners, one of them is bound to reveal something about the demon and who among them is possessed." ** print "Death: (Thought) Isn’t that your job?" ** reaped( print "Priest: WAIT, YOU KNEW? How? I had the perfect disguise, I WILL RETURN.",, set quest(3,2))}
+Action = Q(3,1) {print "Priest: Why hello there Mr. Death! Recently, we have been pressing people hard for information about the demon. As a man of the gods, I have gathered the three souls the demon most likely jumped into." ** print "Death: (Thought) Hmm... can’t get a read on this priest, the implied torture is normal though." ** print "Priest: If you talk to these three sinners, one of them is bound to reveal something about the demon and who among them is possessed." ** print "Death: (Thought) Isn’t that your job?" ** reaped( print "Priest: WAIT, YOU KNEW? How? I had the perfect disguise, I WILL RETURN.",, set quest(3,2))}
 
 Name = Suspect1
 Image = Suspect1
