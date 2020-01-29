@@ -156,7 +156,6 @@ def main():
                 player.set_fate(player.get_fate()-10)
                 tile_map.tile_array[int( villager_tutorial.x // 800 )][int( villager_tutorial.y // 600 )].remove_from_group(villager_tutorial)
         elif quests.quest_stage(0) == 6:
-                print("All done with tutorial")
                 actions.set_uwa(False)
                 return False
         return True
@@ -196,7 +195,6 @@ def main():
                 elif event.type == p.MOUSEBUTTONUP:
 
                     pos = p.mouse.get_pos()
-                    print(coord.real_x(pos[0]), coord.real_y(pos[1]))
                     if quests.quest_stage(0) == 4:
                         run_tutorial(villager_tutorial, pos)
 
@@ -352,7 +350,6 @@ def main():
                     running = False
                 elif event.type == p.MOUSEBUTTONUP:
                     pos = p.mouse.get_pos()
-                    print(pos)
                     button_clicked	=  pause_screen.button_clicked(pos)
             key = p.key.get_pressed()
             if key[p.K_ESCAPE] and esc_holder:

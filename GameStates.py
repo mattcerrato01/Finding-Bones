@@ -317,8 +317,7 @@ class Actions:
                     try:
                         QuestManager.set_quest(QuestManager, int(action[first_index: second_index]) , int(action[second_index+1 : third_index]) )
                     except:
-                        adfhj=0
-                        # print(action)
+                        pass
 
             elif not WorldState.state(WorldState) and "reaped" in action:
                 Actions.perform_action_in_underworld = True
@@ -367,13 +366,11 @@ class QuestManager:
         while (len(QuestManager.quest_actions[quest_num]) <= QuestManager.quests[quest_num]):
             QuestManager.quest_actions[quest_num].append('')
 
-        # print("here i am " + str(  QuestManager.quest_actions[quest_num][QuestManager.quests[quest_num]]  ))
         Actions.perform_action(Actions, QuestManager.quest_actions[quest_num][QuestManager.quests[quest_num]])
 
     def set_quest(self, quest_num, quest_stage):
         while QuestManager.quests[quest_num] < quest_stage:
             QuestManager.advance_quest(QuestManager, quest_num)
-        # QuestManager.quests[quest_num] = quest_stage
 
     def run_stage(self, quest_num, quest_stage):
         Actions.perform_action(Actions, QuestManager.quest_actions[quest_num][quest_stage])
@@ -402,7 +399,6 @@ class QuestManager:
             if i == 2 and QuestManager.quest_stage(QuestManager,1)>=2:
                 stage_chg = -1
             line = quest_titles[i] + "  " + str(QuestManager.quest_stage(QuestManager, i) +stage_chg)
-            print(i,len(QuestManager.quest_actions[i]))
             if QuestManager.quest_stage(QuestManager, i) >= len(QuestManager.quest_actions[i])-1:
                 line = quest_titles[i] + "  " + "DONE"
             dialogue_box = dialogue_box_font.render(line, True, (255, 255, 255))

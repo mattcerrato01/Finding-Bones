@@ -54,21 +54,18 @@ def main(screen, win, score = None):
                 animI = 1
 
         clicked = False
-        #print(p.mouse.get_pos())
         for event in p.event.get():
             if event.type == p.QUIT:
                 endrunning = False
             elif event.type == p.MOUSEBUTTONUP:
                 clicked = True
                 pos = p.mouse.get_pos()
-                print(pos)
         key = p.key.get_pressed()
         if key[p.K_ESCAPE]:
             endrunning = False
 
         if clicked:
             if restart_button.collidepoint(pos):
-                print("restart")
             # if 530 < p.mouse.get_pos()[0] < 770 and 280 < p.mouse.get_pos()[1] < 360:
                 endrunning = False
                 return "restart"

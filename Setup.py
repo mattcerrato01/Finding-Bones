@@ -82,7 +82,6 @@ class Setup:
             elif command == "Gender":
 
                 male = str(line[line.find("= ")+2: line.find("= ")+3])
-                # print(male)
 
             elif command == "Grey":
                 grey = line[ line.find("= ")+2 : line.rfind("e")+1] == "True"

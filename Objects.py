@@ -105,7 +105,6 @@ class Villagers(Object):
 
         self.essential = False
         if self.key:
-            print("Key")
             self.essential = True
             self.grey_right_now = False
 
@@ -295,7 +294,6 @@ class Quest_Villager(Villagers):
             self.action = self.dialogues[idx]
         elif qm.quest_stage(self.quest) in self.quest_array:
             self.action = self.quest_action
-            # print(self.name, self.action + str(qm.quest_stage(self.quest)))
             if self.grey:
                 self.grey_right_now = True
     def set_essential(self,essential):
