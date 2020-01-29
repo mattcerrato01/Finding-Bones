@@ -279,10 +279,9 @@ def main():
                     if fate - player.get_fate() < 0:
                         try:
                             randIDX = random.randint(0, len(demons)-1)
+                            demons.remove(demons.sprites()[randIDX])
                         except:
-                            randIDX = 0
-
-                        demons.remove(demons.sprites()[randIDX])
+                            pass
                         i += 1
                     elif fate - player.get_fate() > 0:
                         createDemons(demons, player, 1)

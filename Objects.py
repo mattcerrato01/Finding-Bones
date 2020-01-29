@@ -178,7 +178,6 @@ class Villagers(Object):
 
 
         if self.rect.collidepoint(mouse_click):
-            print(self.name, "clicked on")
 
             if self.key and	"Iron Key" in self.action:
                 self.key = False
@@ -200,7 +199,7 @@ class Villagers(Object):
     def draw(self, screen, player):
 
         if self.key and player.fate == 100 and len(self.dialogues) == 23:
-            self.dialogues.append(""" print "Villager: Well aren’t you the model of what a deity of death should act like! I have a key I pickpocketed off some vampire this morning, I’ll give to you!" AND to inv "Iron Key" """)
+            self.dialogues.append(""" print "Villager: Well aren’t you the model of what a deity of death should act like! I have a key I pickpocketed off some vampire this morning, I’ll give to you!" AND to inv "Iron Key" AND set quest(5,2) """)
         elif self.key and player.fate != 100 and  len(self.dialogues) >23:
             self.dialogues.pop(len(self.dialogues)-1)
         walk_gap = 100

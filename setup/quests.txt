@@ -20,7 +20,7 @@ Action =
 
 Quest 1:
 
-Stage 1:
+Stage 2:
 
 Villagers:
 
@@ -35,7 +35,7 @@ Action = Q(1,0) {hasnt(bucket){ set quest(1,1) ,, print"Death: ...",, print"Old 
 
 Quest  2:
 
-Stage 1:
+Stage 7:
 
 
 Villagers:
@@ -67,7 +67,7 @@ Action =  Q(2,4) {has(berry x 3) {print "Perfect! Here is a fresh fish for your 
 
 Quest 3:
 
-Stage 1:
+Stage 3:
 
 Villagers:
 
@@ -126,3 +126,6 @@ Grey = False
 Secret = True
 Action = Q(4,0) {print "I have heard a rumor about a tree, surrounded by a false wall, that will grant those who touch it something that they truly desire."}
 
+Quest 5:
+
+Stage 1:

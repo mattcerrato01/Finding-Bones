@@ -213,12 +213,9 @@ class Actions:
             first_index = action.find("Q(")
             second_index = action.find(",")
 
-            # print("1 " + str(Actions.perform_action_in_underworld))
             if (WorldState.state(WorldState) or Actions.perform_action_in_underworld):
-                # print("2")
 
                 if "Q(" in action:
-                    # print(action[first_index + 2:second_index], QuestManager.quest_stage(QuestManager,int(action[first_index + 2:second_index] )))
                     if QuestManager.quest_stage(QuestManager,int(action[first_index + 2:second_index])) == int(
                             action[second_index + 1:action.find(")")]) or action[second_index + 1] == "A":
                         conditional_action = action[action.find("{") + 1:action.rfind("}")]
@@ -404,9 +401,10 @@ class QuestManager:
             stage_chg = 0
             if i == 2 and QuestManager.quest_stage(QuestManager,1)>=2:
                 stage_chg = -1
-            if i == 5:
-                 stage_chg = 1
             line = quest_titles[i] + "  " + str(QuestManager.quest_stage(QuestManager, i) +stage_chg)
+            print(i,len(QuestManager.quest_actions[i]))
+            if QuestManager.quest_stage(QuestManager, i) >= len(QuestManager.quest_actions[i])-1:
+                line = quest_titles[i] + "  " + "DONE"
             dialogue_box = dialogue_box_font.render(line, True, (255, 255, 255))
             rect = dialogue_box.get_rect()
             screen.blit(dialogue_box, (275 - rect.width / 2, 258 + 20 * i))
