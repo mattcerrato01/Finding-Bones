@@ -152,7 +152,8 @@ def main():
         elif quests.quest_stage(0) == 4:
             if world.state():
                 quests.set_quest(0, 3)
-            if villager_tutorial.rect.collidepoint(mouse_click):
+                print(quests.quest_stage(0))
+            elif villager_tutorial.rect.collidepoint(mouse_click):
                 quests.set_quest(0, 5)
                 tile_map.tile_array[int( villager_tutorial.x // 800 )][int( villager_tutorial.y // 600 )].remove_from_group(villager_tutorial)
         elif quests.quest_stage(0) == 6:
@@ -207,7 +208,7 @@ def main():
                     else:
                         for sprite in collision_group:
 
-                            if quests.quest_stage(0)!= 4 and sprite.perform_action(pos):	# returns true if villager has been reaped
+                            if quests.quest_stage(0) != 4 and sprite.perform_action(pos):	# returns true if villager has been reaped
                                 if sprite.image == "cage-locked-bones.png":
                                     win = True
                                 play_sound("Scythe")
