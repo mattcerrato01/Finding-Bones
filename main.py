@@ -133,7 +133,7 @@ def main():
     ptextRect.center = (400,300)
 
 
-    def run_tutorial(villager_tutorial):
+    def run_tutorial(villager_tutorial, mouse_click = (0,0)):
 
 
         if quests.quest_stage(0) == -1:
@@ -149,14 +149,16 @@ def main():
                 actions.set_uwa(True)
                 quests.set_quest(0, 4)
                 villager_tutorial.set_essential(False)
-
         elif quests.quest_stage(0) == 4:
-            if villager_tutorial.soul_reaped:
+            if world.state():
+                quests.set_quest(0, 3)
+            if villager_tutorial.rect.collidepoint(mouse_click):
                 quests.set_quest(0, 5)
+                tile_map.tile_array[int( villager_tutorial.x // 800 )][int( villager_tutorial.y // 600 )].remove_from_group(villager_tutorial)
         elif quests.quest_stage(0) == 6:
-            print("All done with tutorial")
-            actions.set_uwa(False)
-            return False
+                print("All done with tutorial")
+                actions.set_uwa(False)
+                return False
         return True
 
 
@@ -195,18 +197,17 @@ def main():
 
                     pos = p.mouse.get_pos()
                     print(coord.real_x(pos[0]), coord.real_y(pos[1]))
+                    if quests.quest_stage(0) == 4:
+                        run_tutorial(villager_tutorial, pos)
 
 
                     if dialogue_box.draw(screen):
                         play_sound(random.choice(["Greeting 1", "Greeting 2", "Greeting 3 (Female)", "Cough", "BlehSound"])) # FIX THIS SHIT LATER
                         dialogue_box.perform_action(pos)
                     else:
-
-
-
                         for sprite in collision_group:
 
-                            if sprite.perform_action(pos):	# returns true if villager has been reaped
+                            if quests.quest_stage(0)!= 4 and sprite.perform_action(pos):	# returns true if villager has been reaped
                                 if sprite.image == "cage-locked-bones.png":
                                     win = True
                                 play_sound("Scythe")
@@ -227,16 +228,14 @@ def main():
                                     player.soul = 100
 
                                 if sprite.isFated():
-                                    player.fate += 10
+                                    player.set_fate(player.get_fate()+10)
                                 else:
-                                    player.fate -= 10
+                                    player.set_fate(player.get_fate()-10)
 
                                 if player.fate > 100:
-                                    player.fate = 100
-                            # print(collidable.__class__)
+                                    player.set_fate(100)
                                 if sprite.__class__ == Objects.Object_chgs_image:
                                     if sprite.get_image_name() == "cage-unlocked.png":
-                                        print("bones")
                                         win = True
 
                                 break

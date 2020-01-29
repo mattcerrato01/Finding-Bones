@@ -709,26 +709,23 @@ class Hitbox(p.sprite.Sprite):
         self.width = width
         self.height = height
         self.action = action
-        self.drawn = False
         self.rect = p.Rect(coord.screen_x(self.x), coord.screen_y(self.y), self.width, self.height)
 
     def draw(self, screen, player):
-        p.draw.rect(screen, (0,0,0), (coord.screen_x(self.x), coord.screen_y(self.y), self.width, self.height), 2 )
-        self.drawn = True
+        p.draw.rect(screen, (0,0,0), (coord.screen_x(self.x), coord.screen_y(self.y), self.width, self.height), 2)
 
     def changeMouse(self, mouse):
+
         return self.rect.collidepoint(mouse) and self.action != "" and world.state()
 
     def perform_action(self, mouse_click):
-
-
-
         if self.rect.collidepoint(mouse_click) and world.state():
             self.action = actions.perform_action(self.action)
         return False
 
     def update_action(self):
-        return self.action
+        self.action = self.action
+
     def update(self):
         self.rect = p.Rect(coord.screen_x(self.x), coord.screen_y(self.y), self.width, self.height)
 
