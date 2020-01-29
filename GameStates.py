@@ -376,6 +376,7 @@ class QuestManager:
     def set_quest(self, quest_num, quest_stage):
         while QuestManager.quests[quest_num] < quest_stage:
             QuestManager.advance_quest(QuestManager, quest_num)
+        # QuestManager.quests[quest_num] = quest_stage
 
     def run_stage(self, quest_num, quest_stage):
         Actions.perform_action(Actions, QuestManager.quest_actions[quest_num][quest_stage])

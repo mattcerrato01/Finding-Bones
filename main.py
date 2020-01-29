@@ -131,6 +131,7 @@ def main():
     pausetext = font.render("Paused", 1, (250, 250, 250))
     ptextRect = pausetext.get_rect()
     ptextRect.center = (400,300)
+    can_do_action = True
 
 
     def run_tutorial(villager_tutorial, mouse_click = (0,0)):
@@ -150,10 +151,7 @@ def main():
                 quests.set_quest(0, 4)
                 villager_tutorial.set_essential(False)
         elif quests.quest_stage(0) == 4:
-            if world.state():
-                quests.set_quest(0, 3)
-                print(quests.quest_stage(0))
-            elif villager_tutorial.rect.collidepoint(mouse_click):
+            if not world.state() and villager_tutorial.rect.collidepoint(mouse_click):
                 quests.set_quest(0, 5)
                 tile_map.tile_array[int( villager_tutorial.x // 800 )][int( villager_tutorial.y // 600 )].remove_from_group(villager_tutorial)
         elif quests.quest_stage(0) == 6:
