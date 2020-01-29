@@ -26,10 +26,10 @@ def main(screen):
 	#print(startbuttonpos)
 	
 	font = p.font.Font(None, 36)
-	text = font.render("", 1, (10, 10, 10))
+	text = font.render("CONTROLS", 1, (10, 10, 10))
 	textpos = text.get_rect()
 	textpos.centerx = background.get_rect().centerx
-	textpos = textpos.move(0,150)
+	textpos = textpos.move(15,550)
 	back = loadify("startscreen.png")
 	backpos = back.get_rect()
 	back = p.transform.scale(back, (800,600))
@@ -66,6 +66,8 @@ def main(screen):
 					return "quit"
 				if c == "back":
 					endrunning = True
+			elif 350 < p.mouse.get_pos()[0] < 480 and 525 < p.mouse.get_pos()[1] < 575:
+				running = False
 		background.fill((250, 250, 250))
 		background.blit(back, backpos)
 		background.blit(text, textpos)
