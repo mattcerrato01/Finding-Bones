@@ -10,7 +10,6 @@ def loadify(imgname):
     return p.image.load("images/" + imgname).convert_alpha()
 
 def main(screen):
-	#print("starting in", screen)
 	running = True
 	clicked = False
 	
@@ -20,11 +19,9 @@ def main(screen):
 	startbutton = loadify("Bones-WalkingRight-Rightfoot.png")
 	startbutton = p.transform.scale(startbutton, (100,80))
 	startbuttonpos = startbutton.get_rect()
-	#print(startbuttonpos)
 	startbuttonpos.centerx = background.get_rect().centerx
 	startbuttonpos = startbuttonpos.move(0,350)
-	#print(startbuttonpos)
-	
+
 	font = p.font.Font(None, 36)
 	text = font.render("CONTROLS", 1, (10, 10, 10))
 	textpos = text.get_rect()
@@ -44,7 +41,6 @@ def main(screen):
 	while running:
 		#screen.fill([255, 255, 255])
 		clicked = False
-		#print(p.mouse.get_pos())
 		for event in p.event.get():
 			if event.type == p.QUIT:
 				running = False
@@ -79,7 +75,6 @@ def main(screen):
 		#startbutton.blit(screen, p.mouse.get_pos())
 		
 	
-	print("starting main")
 
 
 if __name__ == "__main__":
