@@ -254,8 +254,6 @@ def main():
                 if tutorial_active:
                     actions.set_dialogue([])
                 tutorial_active = False
-            elif key[p.K_w]:
-                win = True
 
             elif key[p.K_ESCAPE] and esc_holder:
                 esc_holder = False
@@ -293,11 +291,13 @@ def main():
             if not world.state():
                 for demon in demons:
                     demon.draw(screen)
-            dialogue_box.draw(screen)
+
             for bone in piles_of_bones:
                 screen.blit(bone[0], (coord.screen_x(bone[2]), coord.screen_y(bone[3])))
                 if bone[1] + 3000 < p.time.get_ticks():
                     piles_of_bones.remove(bone)
+
+            dialogue_box.draw(screen)
 
 
 
