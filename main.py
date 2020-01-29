@@ -125,7 +125,7 @@ def main():
     running = True
     str = st.main(screen)
     if str == "quit":
-    	running = False
+        running = False
 
     font = p.font.Font(None, 36)
     pausetext = font.render("Paused", 1, (250, 250, 250))
@@ -153,6 +153,7 @@ def main():
         elif quests.quest_stage(0) == 4:
             if not world.state() and villager_tutorial.rect.collidepoint(mouse_click):
                 quests.set_quest(0, 5)
+                player.set_fate(player.get_fate()-10)
                 tile_map.tile_array[int( villager_tutorial.x // 800 )][int( villager_tutorial.y // 600 )].remove_from_group(villager_tutorial)
         elif quests.quest_stage(0) == 6:
                 print("All done with tutorial")
@@ -253,6 +254,8 @@ def main():
                 if tutorial_active:
                     actions.set_dialogue([])
                 tutorial_active = False
+            elif key[p.K_w]:
+                win = True
 
             elif key[p.K_ESCAPE] and esc_holder:
                 esc_holder = False
@@ -332,7 +335,6 @@ def main():
                 player.fate = 100
                 player.soul = 100
                 p.mouse.set_visible(True)
-                end.main(screen, True, player.get_fate())
                 endc = end.main(screen, True, player.get_fate())
             if endc == "restart":
                 gs.reset()
@@ -340,7 +342,7 @@ def main():
             elif endc == "score":
                 running = False
             elif endc == "quit":
-            	running = False
+                running = False
 
             time = p.time.get_ticks()
         else:
