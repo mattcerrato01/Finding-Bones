@@ -226,13 +226,22 @@ class Actions:
 
                 elif "do(" in action:
 
+                    boundless = False
+
                     first_index = action.find("do(")+3
                     second_index = action.find(")")
 
                     if ":" in action[first_index:second_index]:
 
                         lower_bound = int(action[first_index:action.find(":")])
-                        upper_bound = int(action[action.find(":") + 1:second_index])
+                        upper_bound = action[action.find(":") + 1:second_index]
+
+
+                        if upper_bound == "A":
+                            upper_bound = 25
+                            boundless = True
+                        else:
+                            upper_bound = int(upper_bound)
 
                         will_run = False
 
@@ -242,7 +251,12 @@ class Actions:
                             will_run = True
 
                     else:
-                        upper_bound = int(action[first_index:second_index])
+                        upper_bound = action[first_index:second_index]
+                        if upper_bound == "A":
+                            upper_bound = 25
+                            boundless = True
+                        else:
+                            upper_bound = int(upper_bound)
                         will_run = True
 
                     if will_run and upper_bound > 0:
@@ -255,7 +269,10 @@ class Actions:
                                 upper_bound_chg = 1
                             end_string += self.perform_action(strings[idx]) + ",, "
 
-                        return_sub_string = "do(" + str(upper_bound - upper_bound_chg) + ") {" + end_string + "}" + " AND "
+                        if boundless:
+                            return_sub_string = "do(A) {" + end_string + "}" + " AND "
+                        else:
+                            return_sub_string = "do(" + str(upper_bound - upper_bound_chg) + ") {" + end_string + "}" + " AND "
 
                 elif "has(" in action:
 

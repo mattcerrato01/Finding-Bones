@@ -1,25 +1,25 @@
 (x, y, width, heigh, action = "")
 100, 0, 100, 125
-120, 125, 90, 52, """has(berry) {print "I'm a big berry man"} AND do(2) {to inv "berry",, print "Take your berry you bastard"} AND do(2:3) {print "go away now"}  """
-100, 175, 90, 52, """has(berry) {print "I'm a big berry man"} AND do(2) {to inv "berry",, print "Take your berry you bastard"} AND do(2:3) {print "go away now"}  """
-65, 220, 100, 52, """has(berry) {print "I'm a big berry man"} AND do(2) {to inv "berry",, print "Take your berry you bastard"} AND do(2:3) {print "go away now"}  """
-0, 245, 85, 52, """has(berry) {print "I'm a big berry man"} AND do(2) {to inv "berry",, print "Take your berry you bastard"} AND do(2:3) {print "go away now"}  """
+120, 125, 90, 52, """do(1:A) {print "This bush has been picked already."} AND do(1) {to inv "berry",, print "You picked a berry!"}"""
+100, 175, 90, 52, """do(1:A) {print "This bush has been picked already."} AND do(1) {to inv "berry",, print "You picked a berry!"}"""
+65, 220, 100, 52, """do(1:A) {print "This bush has been picked already."} AND do(1) {to inv "berry",, print "You picked a berry!"}"""
+0, 245, 85, 52, """do(1:A) {print "This bush has been picked already."} AND do(1) {to inv "berry",, print "You picked a berry!"}"""
 320, 0, 20, 110
 345, 110, 20, 35
 370, 80, 20, 95
-395, 200, 80, 45, """has(berry) {print "I'm a big berry man"} AND do(2) {to inv "berry", print "Take your berry you bastard"} AND do(2:3) {print "go away now"}  """
+395, 200, 80, 45, """do(1,25) {print "This bush has been picked already."} AND do(1) {to inv "berry",, print "You picked a berry!"}"""
 475, 240, 30, 33
-525, 225, 95, 57, """has(berry) {print "I'm a big berry man"} AND do(2) {to inv "berry",, print "Take your berry you bastard"} AND do(2:3) {print "go away now"}  """
-625, 220, 90, 52, """has(berry) {print "I'm a big berry man"} AND do(2) {to inv "berry",, print "Take your berry you bastard"} AND do(2:3) {print "go away now"}  """
-715, 190, 80, 60, """has(berry) {print "I'm a big berry man"} AND do(2) {to inv "berry",, print "Take your berry you bastard"} AND do(2:3) {print "go away now"}  """
-812, 150, 80, 50, """has(berry) {print "I'm a big berry man"} AND do(2) {to inv "berry",, print "Take your berry you bastard"} AND do(2:3) {print "go away now"}  """
-1035, 160, 90, 60, """has(berry) {print "I'm a big berry man"} AND do(2) {to inv "berry",, print "Take your berry you bastard"} AND do(2:3) {print "go away now"}  """
-1150, 200, 80, 50, """has(berry) {print "I'm a big berry man"} AND do(2) {to inv "berry",, print "Take your berry you bastard"} AND do(2:3) {print "go away now"}  """
-1210, 262, 70, 40, """has(berry) {print "I'm a big berry man"} AND do(2) {to inv "berry",, print "Take your berry you bastard"} AND do(2:3) {print "go away now"}  """
-1267, 307, 80, 47, """has(berry) {print "I'm a big berry man"} AND do(2) {to inv "berry",, print "Take your berry you bastard"} AND do(2:3) {print "go away now"}  """
-1327, 345, 100, 55, """has(berry) {print "I'm a big berry man"} AND do(2) {to inv "berry",, print "Take your berry you bastard"} AND do(2:3) {print "go away now"}  """
-1435, 400, 93, 45, """has(berry) {print "I'm a big berry man"} AND do(2) {to inv "berry",, print "Take your berry you bastard"} AND do(2:3) {print "go away now"}  """
-1503, 473, 90, 50, """has(berry) {print "I'm a big berry man"} AND do(2) {to inv "berry",, print "Take your berry you bastard"} AND do(2:3) {print "go away now"}  """
+525, 225, 95, 57, """do(1:A) {print "This bush has been picked already."} AND do(1) {to inv "berry",, print "You picked a berry!"}"""
+625, 220, 90, 52, """do(1:A) {print "This bush has been picked already."} AND do(1) {to inv "berry",, print "You picked a berry!"}"""
+715, 190, 80, 60, """do(1:A) {print "This bush has been picked already."} AND do(1) {to inv "berry",, print "You picked a berry!"}"""
+812, 150, 80, 50, """do(1:A) {print "This bush has been picked already."} AND do(1) {to inv "berry",, print "You picked a berry!"}"""
+1035, 160, 90, 60, """do(1:A) {print "This bush has been picked already."} AND do(1) {to inv "berry",, print "You picked a berry!"}"""
+1150, 200, 80, 50, """do(1:A) {print "This bush has been picked already."} AND do(1) {to inv "berry",, print "You picked a berry!"}"""
+1210, 262, 70, 40, """do(1:A) {print "This bush has been picked already."} AND do(1) {to inv "berry",, print "You picked a berry!"}"""
+1267, 307, 80, 47, """do(1:A) {print "This bush has been picked already."} AND do(1) {to inv "berry",, print "You picked a berry!"}"""
+1327, 345, 100, 55, """do(1:A) {print "This bush has been picked already."} AND do(1) {to inv "berry",, print "You picked a berry!"}"""
+1435, 400, 93, 45, """do(1:A) {print "This bush has been picked already."} AND do(1) {to inv "berry",, print "You picked a berry!"}"""
+1503, 473, 90, 50, """do(1:A) {print "This bush has been picked already."} AND do(1) {to inv "berry",, print "You picked a berry!"}"""
 800, 600, 800, 70
 1600, 600, 800, 70
 0, 1200, 800, 77
@@ -67,10 +67,10 @@
 1535, 0, 40, 460
 1230, 0, 30, 230
 0, 0, 90, 210
-1073, 2105, 70, 135, """Q(4,1){print "You already got one key don't be greedy"} AND Q(4,0) {print "Hello Sir Death, I am happy to finally see you here, unfortunately, I cannot give you your dog, as living objects cannot be recreated, but I can give you this key" ** "Onyx Key" to inv ** set quest(4,1)} """
-890, 1820, 440, 285, """Q(4,1){print "You already got one key don't be greedy"} AND Q(4,0) {print "Hello Sir Death, I am happy to finally see you here, unfortunately, I cannot give you your dog, as living objects cannot be recreated, but I can give you this key" ** "Onyx Key" to inv ** set quest(4,1)}"""
-845, 1825, 70, 140, """Q(4,1){print "You already got one key don't be greedy"} AND Q(4,0) {print "Hello Sir Death, I am happy to finally see you here, unfortunately, I cannot give you your dog, as living objects cannot be recreated, but I can give you this key" ** "Onyx Key" to inv ** set quest(4,1)} """
-830, 1980, 50, 110, """Q(4,1){print "You already got one key don't be greedy"} AND Q(4,0) {print "Hello Sir Death, I am happy to finally see you here, unfortunately, I cannot give you your dog, as living objects cannot be recreated, but I can give you this key" ** "Onyx Key" to inv ** set quest(4,1)}"""
+1073, 2105, 70, 135, """has(Onyx Key) {print "You already got one key don't be greedy"} AND hasnt(Onyx Key) {print "Hello Sir Death, I am happy to finally see you here, unfortunately, I cannot give you your dog, as living objects cannot be recreated, but I can give you this key" ,, "Onyx Key" to inv ,, set quest(4,1)} """
+890, 1820, 440, 285, """has(Onyx Key) {print "You already got one key don't be greedy"} AND hasnt(Onyx Key) {print "Hello Sir Death, I am happy to finally see you here, unfortunately, I cannot give you your dog, as living objects cannot be recreated, but I can give you this key" ,, "Onyx Key" to inv ,, set quest(4,1)} """
+845, 1825, 70, 140, """has(Onyx Key) {print "You already got one key don't be greedy"} AND hasnt(Onyx Key) {print "Hello Sir Death, I am happy to finally see you here, unfortunately, I cannot give you your dog, as living objects cannot be recreated, but I can give you this key" ,, "Onyx Key" to inv ,, set quest(4,1)} """
+830, 1980, 50, 110, """has(Onyx Key) {print "You already got one key don't be greedy"} AND hasnt(Onyx Key) {print "Hello Sir Death, I am happy to finally see you here, unfortunately, I cannot give you your dog, as living objects cannot be recreated, but I can give you this key" ,, "Onyx Key" to inv ,, set quest(4,1)} """
 2405, 1210, 105, 545
 2437, 1762, 30, 35
 2510, 1770, 30, 35

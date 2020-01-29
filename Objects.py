@@ -87,7 +87,7 @@ class Object(p.sprite.Sprite):
 
 class Villagers(Object):
 
-    def __init__(self, overworld_image_name, fated, x, y, male, side_width = 32, key = False):
+    def __init__(self, overworld_image_name, fated, x, y, male, side_width = 32):
         self.male = male
         if male == "m":
             self.male = "_m"
@@ -96,7 +96,6 @@ class Villagers(Object):
         else:
             self.male = ""
         Object.__init__(self, overworld_image_name + "_front" + self.male+".png", 46, 110)
-        self.key = key
 
         self.width = 46
         self.height = 110
@@ -104,9 +103,6 @@ class Villagers(Object):
 
 
         self.essential = False
-        if self.key:
-            self.essential = True
-            self.grey_right_now = False
 
         self.setX(x)
         self.setY(y)
@@ -158,8 +154,11 @@ class Villagers(Object):
                           """print "Hello friend! Need some berries" """,
                           """print "One day, I will eat something other than fish" """,
                           """print "I wish I wish I was a fish """,
-                          """print "Best way to ward off demons? Call them demoffs" """] #List of dialogue options for normal villager
-        idx = r.randint(0,len(self.dialogues)-1)
+                          """print "Best way to ward off demons? Call them demoffs" """
+                          """print "I have heard a rumor about a tree, surrounded by a false wall, that will grant those who touch it something that they truly desire." AND set quest(4,0)"""
+                          """hasnt(Iron Key) {print "Well aren’t you the model of what a deity of death should act like! I have a key I pickpocketed off some vampire this morning, I’ll give to you!" ,, to inv "Iron Key"} AND has(Iron Key) {print "I like the look of you."}"""
+                          ] #List of dialogue options for normal villager
+        idx = r.randint(0,len(self.dialogues)-3)
         self.action = self.dialogues[idx]
         self.font = p.font.SysFont('Papyrus', 20)
         self.nameplate_text = self.font.render(self.name, False, (0, 0, 0))
@@ -175,13 +174,13 @@ class Villagers(Object):
 
     def perform_action(self, mouse_click):
 
+        if type(self) == Villagers:
+            self.update_action()
 
         if self.rect.collidepoint(mouse_click):
 
-            if self.key and	"Iron Key" in self.action:
-                self.key = False
-                self.dialogues.pop(len(self.dialogues)-1)
             self.action = actions.perform_action(self.action)
+
 
 
 
@@ -191,16 +190,22 @@ class Villagers(Object):
         return False
 
     def update_action(self):
-        idx = r.randint(0,len(self.dialogues)-1)
+
+        fate_factor = 3
+
+        if self.fate >= 100:
+            fate_factor = 1
+        elif self.fate >= 65:
+            fate_factor = 2
+
+        idx = r.randint(0,len(self.dialogues)-fate_factor)
         self.action = self.dialogues[idx]
 
 
     def draw(self, screen, player):
 
-        if self.key and player.fate == 100 and len(self.dialogues) == 23:
-            self.dialogues.append(""" print "Villager: Well aren’t you the model of what a deity of death should act like! I have a key I pickpocketed off some vampire this morning, I’ll give to you!" AND to inv "Iron Key" AND set quest(5,2) """)
-        elif self.key and player.fate != 100 and  len(self.dialogues) >23:
-            self.dialogues.pop(len(self.dialogues)-1)
+        self.fate = player.fate
+
         walk_gap = 100
         distx = (400 - coord.screen_x(self.x+self.width/2))
         disty = (300-coord.screen_y(self.y+self.height/2))

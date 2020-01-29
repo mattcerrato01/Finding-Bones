@@ -181,7 +181,6 @@ def main():
         if not paused:
             screen.fill([255, 255, 255])
             collision_group = tile_map.draw(screen, player)
-            player.set_soul(100)
 
             sc.draw(screen)
             sc1.draw(screen)
@@ -205,7 +204,7 @@ def main():
                     else:
                         for sprite in collision_group:
 
-                            if quests.quest_stage(0) != 4 and sprite.perform_action(pos):	# returns true if villager has been reaped
+                            if quests.quest_stage(0)!= 4 and sprite.perform_action(pos):	# returns true if villager has been reaped
                                 if sprite.image == "cage-locked-bones.png":
                                     win = True
                                 play_sound("Scythe")
