@@ -89,7 +89,7 @@ def main():
     graveyard = Objects.Graveyard(40,1325)
 
 
-    cage = Objects.Object_chgs_image("cage-locked-bones.png", "cage-unlocked.png",2875,1420,128,114, """has(Iron Key, Gem Key, Silver Key, Onyx Key, Gold Key){print "I'm freed",, "Iron Key" from inv,, "Gem Key" from inv,, "Silver Key" from inv,, "Onyx Key" from inv,, "Gold Key" from inv}""", "Iron Key, Gem Key, Gold Key, Onyx Key, Silver Key")
+    cage = Objects.Object_chgs_image("cage-locked-bones.png", "cage-unlocked.png",2875,1420,128,114, """has(Iron Key, Gem Key, Silver Key, Onyx Key, Gold Key){print "I'm freed",, "Iron Key" from inv,, "Gem Key" from inv,, "Silver Key" from inv,, "Onyx Key" from inv,, "Gold Key" from inv} AND print"Death: Oh no Bones, I'll key you out of there I just need to get the keys to your cage, I'll come back for you " """, "Iron Key, Gem Key, Gold Key, Onyx Key, Silver Key")
     well = Objects.Object_chgs_image("well-with-bucket.png", "well-without-bucket.png", 120, 1830, 108,168,"""hasnt(bucket){"bucket" to inv}""", "")
     dialogue_box = Objects.Dialogue_box()
 
