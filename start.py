@@ -3,6 +3,7 @@ import pygame as p
 import Objects
 import GameStates as gs
 import credits
+import controls
 
 p.init()
 
@@ -58,12 +59,18 @@ def main(screen):
 			elif 480 < p.mouse.get_pos()[0] < 730 and 445 < p.mouse.get_pos()[1] < 530:
 				c = credits.main(screen)
 				if c == "quit":
-					endrunning = False
+					running = False
 					return "quit"
 				if c == "back":
-					endrunning = True
+					running = True
 			elif 350 < p.mouse.get_pos()[0] < 480 and 525 < p.mouse.get_pos()[1] < 575:
-				running = False
+				o = controls.main(screen)
+				if o == "quit":
+					running = False
+					return "quit"
+				elif o == "back":
+					running = True
+					
 		background.fill((250, 250, 250))
 		background.blit(back, backpos)
 		background.blit(text, textpos)
