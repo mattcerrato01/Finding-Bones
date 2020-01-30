@@ -180,7 +180,6 @@ class Actions:
 
         words = dialogue.split(" ")
 
-        j = 0
         temp_string = ""
 
         for word in words:
@@ -190,7 +189,7 @@ class Actions:
                 temp_string = word
             else:
                 temp_string += " " + word
-        Actions.dialogufe_list.append(temp_string)
+        Actions.dialogue_list.append(temp_string)
 
     def set_uwa(self, uwa):
         Actions.perform_action_in_underworld = uwa

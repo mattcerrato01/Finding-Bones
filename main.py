@@ -19,6 +19,7 @@ def loadify(imgname):
     return p.image.load("images/" + imgname).convert_alpha()
 
 def main():
+    score = 0
     start_time = p.time.get_ticks()
     pause_counter = 0
     coord = gs.CoordConverter()
@@ -229,6 +230,7 @@ def main():
                                     player.set_fate(player.get_fate()+10)
                                 else:
                                     player.set_fate(player.get_fate()-10)
+                                    score -=5
 
                                 if player.fate > 100:
                                     player.set_fate(100)
@@ -271,6 +273,7 @@ def main():
                         for demon in demons:
                             demon.move(player)
                             if demon.hit:
+                                score -=10
                                 demons.remove(demon)
                                 player.set_fate(player.get_fate() - 10)
             # adding or subtracting demons when player's fate goes down
@@ -336,7 +339,13 @@ def main():
                 player.set_fate(100)
                 player.set_soul(100)
                 p.mouse.set_visible(True)
-                endc = end.main(screen, True, (player.get_fate() * 10000)-(end_time-start_time - pause_counter))
+                score += 500
+                for object in inventory.inventory:
+                    if "Key" in object:
+                        score += 100
+                        print("score went up")
+
+                endc = end.main(screen, True, score)
             if endc == "restart":
                 gs.reset()
                 main()
