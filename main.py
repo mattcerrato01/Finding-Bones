@@ -222,7 +222,7 @@ def main():
 
                                 #if anyone sees this remind Will to fix that /\
 
-                                player.soul += 10
+                                player.soul += 20
                                 if player.soul > 100:
                                     player.soul = 100
 

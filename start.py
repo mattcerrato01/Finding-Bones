@@ -27,11 +27,16 @@ def main(screen):
 	startbuttonpos.centerx = background.get_rect().centerx
 	startbuttonpos = startbuttonpos.move(0,350)
 
-
+	font = p.font.Font(None, 36)
+	text = font.render("CONTROLS", 1, (10, 10, 10))
+	textpos = text.get_rect()
+	textpos.centerx = background.get_rect().centerx
+	textpos = textpos.move(15,550)
 	back = loadify("startscreen.png")
 	backpos = back.get_rect()
 	back = p.transform.scale(back, (800,600))
-
+	background.blit(back, backpos)
+	#background.blit(text, textpos)
 	background.blit(startbutton, startbuttonpos)
 	screen.blit(background, (0, 0))
 	p.display.flip()
@@ -76,6 +81,7 @@ def main(screen):
 					
 		background.fill((250, 250, 250))
 		background.blit(back, backpos)
+		#background.blit(text, textpos)
 		background.blit(startbutton, startbuttonpos)
 		p.mouse.set_visible(False)
 		background.blit(cursor, p.mouse.get_pos())
