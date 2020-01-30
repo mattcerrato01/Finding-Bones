@@ -524,7 +524,7 @@ class Player(Movable_Object):
                     gs.change_track(1)
                 else:
                     gs.change_track(2)
-                self.soul -= 10
+                self.soul -= 4
                 self.tab_holder = False
 
         elif not p.key.get_pressed()[9]:
