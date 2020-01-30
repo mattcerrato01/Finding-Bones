@@ -336,7 +336,7 @@ def main():
                 player.set_fate(100)
                 player.set_soul(100)
                 p.mouse.set_visible(True)
-                endc = end.main(screen, True, end_time-start_time - pause_counter)
+                endc = end.main(screen, True, (player.get_fate() * 10000)-(end_time-start_time - pause_counter))
             if endc == "restart":
                 gs.reset()
                 main()
