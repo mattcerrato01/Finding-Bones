@@ -52,16 +52,17 @@ def main(screen):
 				return "quit"
 			elif event.type == p.MOUSEBUTTONUP:
 				clicked = True
+				print(p.mouse.get_pos())
 		key = p.key.get_pressed()
 		if key[p.K_ESCAPE]:
 			running = False
 			return "quit"
 		
 		if clicked:
-			if 90 < p.mouse.get_pos()[0] < 350 and 445 < p.mouse.get_pos()[1] < 530:
+			if 35 < p.mouse.get_pos()[0] < 250 and 445 < p.mouse.get_pos()[1] < 530:
 				play_sound("Button_Click")
 				running = False
-			elif 480 < p.mouse.get_pos()[0] < 730 and 445 < p.mouse.get_pos()[1] < 530:
+			elif 290 < p.mouse.get_pos()[0] < 505 and 445 < p.mouse.get_pos()[1] < 530:
 				play_sound("Button_Click")
 				c = credits.main(screen)
 				if c == "quit":
@@ -69,7 +70,7 @@ def main(screen):
 					return "quit"
 				if c == "back":
 					running = True
-			elif 350 < p.mouse.get_pos()[0] < 480 and 525 < p.mouse.get_pos()[1] < 575:
+			elif 550 < p.mouse.get_pos()[0] < 765 and 525 < p.mouse.get_pos()[1] < 575:
 				play_sound("Button_Click")
 				o = controls.main(screen)
 				if o == "quit":
