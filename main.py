@@ -206,8 +206,8 @@ def main():
 
 
                     if dialogue_box.draw(screen):
-                    	if random.random() < 0.5:
-                        	play_sound(random.choice(["Greeting 1", "Greeting 2", "Greeting 3 (Female)", "Cough", "BlehSound"])) # FIX THIS SHIT LATER
+                        if random.random() < 0.5:
+                            play_sound(random.choice(["Greeting 1", "Greeting 2", "Greeting 3 (Female)", "Cough", "BlehSound"])) # FIX THIS SHIT LATER
                         dialogue_box.perform_action(pos)
                     else:
                         for sprite in collision_group:
@@ -339,8 +339,9 @@ def main():
                 p.mouse.set_visible(True)
                 gs.change_track(3)
                 for object in inventory.inventory:
-                    if "Key" in object:
+                    if "Key" in object[0]:
                         score += 100
+                        print(score)
                 endc = end.main(screen, False, score)
 
 
@@ -350,7 +351,7 @@ def main():
                 p.mouse.set_visible(True)
                 score += 500
                 for object in inventory.inventory:
-                    if "Key" in object:
+                    if "Key" in object[0]:
                         score += 100
 
                 endc = end.main(screen, True, score)
