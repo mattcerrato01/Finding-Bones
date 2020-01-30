@@ -16,6 +16,9 @@ qm = gs.QuestManager()
 def loadify(imgname):
     return p.image.load("images/" + imgname).convert_alpha()
 
+def play_sound(name):
+	  sound = p.mixer.Sound("effects/" + name + ".wav")
+	  sound.play()
 
 class Object(p.sprite.Sprite):
 
@@ -497,11 +500,13 @@ class Player(Movable_Object):
         else:
             self.walking_time += animation_speed
             self.soul -= soul_drain
+            play_sound("Footsteps")
 
 
 
         if p.key.get_pressed()[9] and self.tab_holder:
             collide = False
+            play_sound("Teleport")
             for collidable in collidable_group:
                 collidable.update()
                 if collidable != self and self.collide(collidable):
