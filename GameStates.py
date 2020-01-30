@@ -190,7 +190,7 @@ class Actions:
                 temp_string = word
             else:
                 temp_string += " " + word
-        Actions.dialogue_list.append(temp_string)
+        Actions.dialogufe_list.append(temp_string)
 
     def set_uwa(self, uwa):
         Actions.perform_action_in_underworld = uwa

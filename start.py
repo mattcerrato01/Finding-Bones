@@ -52,7 +52,6 @@ def main(screen):
 				return "quit"
 			elif event.type == p.MOUSEBUTTONUP:
 				clicked = True
-				print(p.mouse.get_pos())
 		key = p.key.get_pressed()
 		if key[p.K_ESCAPE]:
 			running = False

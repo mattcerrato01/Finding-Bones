@@ -30,14 +30,12 @@ def main(screen):
     cursor = p.transform.scale(Objects.loadify("cursor-small-arrow.png").convert_alpha(), (15,15))
 
     while running:
-        #print(p.mouse.get_pos())
         clicked = False
         for event in p.event.get():
             if event.type == p.QUIT:
                 running = False
                 return "quit"
             elif event.type == p.MOUSEBUTTONUP:
-                print(p.mouse.get_pos())
                 clicked = True
         key = p.key.get_pressed()
         if key[p.K_ESCAPE]:
