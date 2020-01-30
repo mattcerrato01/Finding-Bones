@@ -16,6 +16,9 @@ qm = gs.QuestManager()
 def loadify(imgname):
     return p.image.load("images/" + imgname).convert_alpha()
 
+def play_sound(name):
+	  sound = p.mixer.Sound("effects/" + name + ".wav")
+	  sound.play()
 
 class Object(p.sprite.Sprite):
 
@@ -154,8 +157,8 @@ class Villagers(Object):
                           """print "Hello friend! Need some berries" """,
                           """print "One day, I will eat something other than fish" """,
                           """print "I wish I wish I was a fish """,
-                          """print "Best way to ward off demons? Call them demoffs" """
-                          """print "I have heard a rumor about a tree, surrounded by a false wall, that will grant those who touch it something that they truly desire." AND set quest(4,0)"""
+                          """print "Best way to ward off demons? Call them demoffs" """,
+                          """print "I have heard a rumor about a tree, surrounded by a false wall, that will grant those who touch it something that they truly desire." AND set quest(4,0)""",
                           """hasnt(Iron Key) {print "Well aren’t you the model of what a deity of death should act like! I have a key I pickpocketed off some vampire this morning, I’ll give to you!" ,, to inv "Iron Key"} AND has(Iron Key) {print "I like the look of you."}"""
                           ] #List of dialogue options for normal villager
         idx = r.randint(0,len(self.dialogues)-3)
@@ -497,11 +500,13 @@ class Player(Movable_Object):
         else:
             self.walking_time += animation_speed
             self.soul -= soul_drain
+            play_sound("Footsteps")
 
 
 
         if p.key.get_pressed()[9] and self.tab_holder:
             collide = False
+            play_sound("Teleport")
             for collidable in collidable_group:
                 collidable.update()
                 if collidable != self and self.collide(collidable):
