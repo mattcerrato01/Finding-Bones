@@ -337,8 +337,11 @@ def main():
                 player.set_soul(100)
                 p.mouse.set_visible(True)
                 gs.change_track(3)
+                for object in inventory.inventory:
+                    if "Key" in object:
+                        score += 100
                 endc = end.main(screen, False, score)
-                end_time = p.time.get_ticks()
+
 
             if win:
                 player.set_fate(100)
@@ -373,16 +376,13 @@ def main():
             if key[p.K_ESCAPE] and esc_holder:
                 esc_holder = False
                 paused = False
-                end_pause_time = p.time.get_ticks()
-                pause_counter += (end_pause_time-pause_time)
 
 
             elif not key[p.K_ESCAPE]:
                 esc_holder = True
             if button_clicked == "continue":
                 paused = False
-                end_pause_time = p.time.get_ticks()
-                pause_counter += (end_pause_time-pause_time)
+
             elif button_clicked == "restart":
                 gs.reset()
                 main()
