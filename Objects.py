@@ -159,7 +159,7 @@ class Villagers(Object):
                           """print "I wish I wish I was a fish """,
                           """print "Best way to ward off demons? Call them demoffs" """,
                           """print "I have heard a rumor about a tree, surrounded by a false wall, that will grant those who touch it something that they truly desire." AND set quest(4,0)""",
-                          """hasnt(Iron Key) {print "Well aren’t you the model of what a deity of death should act like! I have a key I pickpocketed off some vampire this morning, I’ll give to you!" ,, to inv "Iron Key"} AND has(Iron Key) {print "I like the look of you."}"""
+                          """has(Iron Key) {print "I like the look of you."} AND hasnt(Iron Key) {print "Well aren’t you the model of what a deity of death should act like! I have a key I pickpocketed off some vampire this morning, I’ll give to you!" ,, to inv "Iron Key"}"""
                           ] #List of dialogue options for normal villager
         idx = r.randint(0,len(self.dialogues)-3)
         self.action = self.dialogues[idx]

@@ -34,6 +34,7 @@ def main():
     sc4 = Canopy.Canopy(0, 600 * 4, 800 * 4, 300)
 
 
+
     gs.Overworld_State = False
     p.init()
 
@@ -122,6 +123,9 @@ def main():
     inventory_image = p.transform.scale(loadify("Nametag.png"), (150,150))
     quest_progress_image = p.transform.scale(loadify("quest_plate.png"), (360,500))
 
+    bb = p.transform.scale(loadify("bush-5.png"), (95, 57))
+
+
     # tile = t.Tile("background.jpg", collidable_group, 0, 0)
     createDemons(demons, player, int(200 / player.fate))
     gs.change_track(4)
@@ -183,6 +187,7 @@ def main():
         if not paused:
             screen.fill([255, 255, 255])
             collision_group = tile_map.draw(screen, player)
+            screen.blit(bb, (coord.screen_x(1505), coord.screen_y(530)))
 
             sc.draw(screen)
             sc1.draw(screen)

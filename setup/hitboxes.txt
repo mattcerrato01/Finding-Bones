@@ -79,4 +79,4 @@
 2437, 1163, 30, 35
 2510, 1160, 30, 35
 2495, 970, 65, 180
-1600, 520, 1, 70
+1505, 530, 95, 57, """do(1:A) {print "This bush has been picked already."} AND do(1) {to inv "berry",, print "You picked a berry!"}"""

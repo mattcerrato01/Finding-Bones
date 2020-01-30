@@ -158,7 +158,7 @@ class Inventory:
             dialogue_box = dialogue_box_font.render(line, True, (255, 255, 255))
             rect = dialogue_box.get_rect()
             screen.blit(dialogue_box, (525 - rect.width / 2, 258 + 20 * i))
-            screen.blit(Inventory.inventory[i][2], (530 + rect.width / 2, 253 + 20 * i))
+            screen.blit(Inventory.inventory[i][2], (530 + rect.width / 2, 260 + 20 * i))
 
 
 class Actions:
