@@ -138,7 +138,6 @@ def main():
 
     def run_tutorial(villager_tutorial, mouse_click = (0,0)):
 
-
         if quests.quest_stage(0) == -1:
             quests.set_quest(0,0)
         if quests.quest_stage(0) == 1:

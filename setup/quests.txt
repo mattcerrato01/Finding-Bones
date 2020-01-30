@@ -24,8 +24,6 @@ Quest 1 / Old Man's Bucket
 
 Stage 1: / Find the Old Man's Bucket
 
-Stage 2: / "Done"
-
 Villagers:
 
 Name = Old Man Dorcus
@@ -39,7 +37,15 @@ Action = Q(1,0) {hasnt(bucket){ set quest(1,1) ,, print"Death: ...",, print"Old 
 
 Quest  2 / The People's Bucket
 
-Stage 7: / I Think Done?
+Stage 2: / Get a bucket from the blacksmith.
+
+Stage 3: / Get a fish from the fisherman.
+
+Stage 4: / Get a berry for the fisherman.
+
+Stage 5: / Bring the fish to the blacksmith.
+
+Stage 6: / Bring the bucket to the farmer.
 
 
 Villagers:
@@ -65,7 +71,7 @@ Fated = True
 (x,y) = (2190,785)
 Gender = n
 Grey = False
-Action =  Q(2,4) {has(berry x 3) {print "Perfect! Here is a fresh fish for your hungry ... ribcage.",, to inv "fish",, from inv "berry",, from inv "berry",, from inv "berry",, set quest(2,5) }} AND Q(2,3) {print "You want a fish? I could sell one, but you don’t have any money... Ah, get me some berries from the forest, I need them to cook the fish properly. I need 3 berries to properly cook the fish."** set quest(2,4)}
+Action = Q(2,3) {print "You want a fish? I could sell one, but you don’t have any money... Ah, get me some berries from the forest, I need them to cook the fish properly. I need 3 berries to properly cook the fish."** set quest(2,4)} AND Q(2,4) {has(berry x 3) {print "Perfect! Here is a fresh fish for your hungry ... ribcage.",, to inv "fish",, from inv "berry",, from inv "berry",, from inv "berry",, set quest(2,5) }}
 
 
 
@@ -73,7 +79,7 @@ Quest 3 / Demon Hunting
 
 Stage 1: / Find the Demon Among the Kingdom
 
-Stage 3: / Done
+Stage 2: / Return to the King
 
 Villagers:
 
@@ -119,9 +125,8 @@ Action = Q(3,1) {print "Prisoner 3: HEH HEH I GOT A DEMON IN ME." ** reaped(prin
 
 Quest 4 / Sacred Tree
 
-Stage 0: / Find the key in the tree.
+Stage 0: / Find the sacred tree.
 
 
 Quest 5 / Lucky Duck
 
-Stage 1:
