@@ -62,7 +62,7 @@ def main(screen):
 			if 35 < p.mouse.get_pos()[0] < 250 and 445 < p.mouse.get_pos()[1] < 530:
 				play_sound("Button_Click")
 				running = False
-			elif 290 < p.mouse.get_pos()[0] < 505 and 445 < p.mouse.get_pos()[1] < 530:
+			elif 550 < p.mouse.get_pos()[0] < 765 and 445 < p.mouse.get_pos()[1] < 530:
 				play_sound("Button_Click")
 				c = credits.main(screen)
 				if c == "quit":
@@ -70,7 +70,7 @@ def main(screen):
 					return "quit"
 				if c == "back":
 					running = True
-			elif 550 < p.mouse.get_pos()[0] < 765 and 525 < p.mouse.get_pos()[1] < 575:
+			elif 290 < p.mouse.get_pos()[0] < 505 and 445 < p.mouse.get_pos()[1] < 530:
 				play_sound("Button_Click")
 				o = controls.main(screen)
 				if o == "quit":
