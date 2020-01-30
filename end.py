@@ -3,6 +3,7 @@ import Objects
 import GameStates as gs
 import credits
 import score as scr
+world = gs.WorldState()
 
 p.init()
 
@@ -53,9 +54,9 @@ def main(screen, win, score = 0):
 
 	animI = 1
 	
-	highscore = gs.get_highscore()
+	highscore = world.get_highscore()
 	if score > highscore:
-		gs.set_highscore(score)
+		world.set_highscore(score)
 		highscore = score
 
 	while endrunning:
