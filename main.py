@@ -119,7 +119,7 @@ def main():
     scythe_cursor = p.transform.scale(loadify("cursor-small-scythe.png"), (15, 15))
     speech_cursor = p.transform.scale(loadify("cursor-small-speechbubble.png"), (15, 15))
     inventory_image = p.transform.scale(loadify("Nametag.png"), (150,150))
-    quest_progress_image = p.transform.scale(loadify("Nametag.png"), (150,160))
+    quest_progress_image = p.transform.scale(loadify("quest_plate.png"), (360,500))
 
     # tile = t.Tile("background.jpg", collidable_group, 0, 0)
     createDemons(demons, player, int(200 / player.fate))

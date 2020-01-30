@@ -57,16 +57,23 @@ class Setup:
         line = file.readline()
         secret = False
 
+        quest_text_array = []
+
         while line:
 
             command = line[ : line.find(" ")]
 
             if "Quest" in command:
-                quest = int( line[line.find(" ")+1 : line.find(":")] )
+                quest = int( line[line.find(" ")+1 : line.find(" /")] )
+                quest_text_array.append([ (quest , line[line.find("/ ")+2 : len(line)-1 ]) ])
+
             elif command == "Stage":
                 stage = int( line[line.find(" ")+1 : line.find(":")] )
-                input = line[ line.find(":") + 1 : ]
+                input = line[ line.find(":") + 1 : line.find(" /")]
                 qm.set_quest_stage(quest, stage, input)
+
+                quest_text_array[ len(quest_text_array)-1 ].append( (stage, line[ line.find("/ ") + 2 : len(line)-1 ] ))
+
             elif command == "Name":
                 name = line[ line.find("= ")+2 : len(line)-1 ]
             elif command == "Image":
@@ -110,6 +117,9 @@ class Setup:
                 villager_list.add(Objects.Quest_Villager( name, image.strip(), fated, quest_array, action, x, y, male, grey, secret))
 
             line = file.readline()
+
+        qm.set_quest_text_array(quest_text_array)
+
 
         return villager_list
 
