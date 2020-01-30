@@ -259,6 +259,7 @@ def main():
                 esc_holder = False
                 paused = True
                 pause_time = p.time.get_ticks()
+                play_sound("Inventory")
 
 
             elif not key[p.K_ESCAPE]:
