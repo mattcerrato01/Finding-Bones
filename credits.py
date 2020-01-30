@@ -28,7 +28,7 @@ def main(screen):
 	p.display.flip()
 	backbutton = p.rect.Rect(350, 500, 450, 550)
 	running = True
-	cursor = p.transform.scale(Objects.loadify("cursor-small-arrow.png").convert_alpha(), (15,15))
+	cursor = p.transform.scale(Objects.loadify("cursor-small-magnifyingglass.png").convert_alpha(), (15,15))
 	
 	
 	while running:
