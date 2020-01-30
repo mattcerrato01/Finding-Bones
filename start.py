@@ -36,7 +36,7 @@ def main(screen):
 	backpos = back.get_rect()
 	back = p.transform.scale(back, (800,600))
 	background.blit(back, backpos)
-	background.blit(text, textpos)
+	#background.blit(text, textpos)
 	background.blit(startbutton, startbuttonpos)
 	screen.blit(background, (0, 0))
 	p.display.flip()
@@ -81,7 +81,7 @@ def main(screen):
 					
 		background.fill((250, 250, 250))
 		background.blit(back, backpos)
-		background.blit(text, textpos)
+		#background.blit(text, textpos)
 		background.blit(startbutton, startbuttonpos)
 		p.mouse.set_visible(False)
 		background.blit(cursor, p.mouse.get_pos())
