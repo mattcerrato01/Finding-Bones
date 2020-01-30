@@ -337,7 +337,7 @@ def main():
                 player.set_soul(100)
                 p.mouse.set_visible(True)
                 gs.change_track(3)
-                endc = end.main(screen, False)
+                endc = end.main(screen, False, score)
                 end_time = p.time.get_ticks()
 
             if win:
@@ -348,7 +348,6 @@ def main():
                 for object in inventory.inventory:
                     if "Key" in object:
                         score += 100
-                        print("score went up")
 
                 endc = end.main(screen, True, score)
             if endc == "restart":

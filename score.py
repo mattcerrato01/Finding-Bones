@@ -12,6 +12,7 @@ def play_sound(name):
 	  sound.play()
 
 def main(screen, score, highscore):
+	print(score)
 	if score > highscore:
 		gs.set_highscore(score)
 	background = p.Surface(screen.get_size())
