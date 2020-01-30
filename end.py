@@ -48,9 +48,9 @@ def main(screen, win, score = 0):
 	p.display.flip()
 
 	cursor = p.transform.scale(Objects.loadify("cursor-small-arrow.png").convert_alpha(), (15,15))
-	restart_button = p.rect.Rect(530, 280,240, 120)
-	score_button = p.rect.Rect(530, 380, 240, 120)
-	credit_button = p.rect.Rect(530, 470, 240, 120)
+	restart_button = p.rect.Rect(535, 285,240, 90)
+	score_button = p.rect.Rect(530, 380, 240, 90)
+	credit_button = p.rect.Rect(530, 470, 240, 90)
 
 	animI = 1
 	
@@ -61,6 +61,7 @@ def main(screen, win, score = 0):
 
 	while endrunning:
 		#screen.fill([255, 255, 255])
+		#print(p.mouse.get_pos())
 		if win:
 			if animI < 23:
 				animS = win_anim(animI)
