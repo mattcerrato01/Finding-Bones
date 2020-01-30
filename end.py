@@ -9,6 +9,10 @@ p.init()
 def loadify(imgname):
 	return p.image.load("images/" + imgname).convert_alpha()
 
+def play_sound(name):
+	  sound = p.mixer.Sound("effects/" + name + ".wav")
+	  sound.play()
+
 def win_anim(animI):
 	back = loadify('victoryscreen-' + str(animI) + '.png')
 	animI += 1
@@ -81,18 +85,21 @@ def main(screen, win, score = 0):
 		if clicked:
 			if restart_button.collidepoint(pos):
 			# if 530 < p.mouse.get_pos()[0] < 770 and 280 < p.mouse.get_pos()[1] < 360:
+				play_sound("Button_Click")
 				endrunning = False
 				return "restart"
 			elif score_button.collidepoint(pos):
 			# elif 530 < p.mouse.get_pos()[0] < 770 and 380 < p.mouse.get_pos()[1] < 460:
 				#endrunning = False
 				#return "score"
+				play_sound("Button_Click")
 				s = scr.main(screen, score, highscore)
 				if s == "quit":
 					endrunning = False
 					return "quit"
 			elif credit_button.collidepoint(pos):
 			# elif 530 < p.mouse.get_pos()[0] < 770 and 470 < p.mouse.get_pos()[1] < 560:
+				play_sound("Button_Click")
 				endrunning = False
 				c = credits.main(screen)
 				if c == "quit":

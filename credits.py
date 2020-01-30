@@ -6,7 +6,9 @@ p.init()
 def loadify(imgname):
 	return p.image.load("images/" + imgname).convert_alpha()
 
-
+def play_sound(name):
+	  sound = p.mixer.Sound("effects/" + name + ".wav")
+	  sound.play()
 
 def main(screen):
 	background = p.Surface(screen.get_size())
