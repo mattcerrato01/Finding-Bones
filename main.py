@@ -19,6 +19,8 @@ def loadify(imgname):
     return p.image.load("images/" + imgname).convert_alpha()
 
 def main():
+    start_time = p.time.get_ticks()
+    pause_counter = 0
     coord = gs.CoordConverter()
     world = gs.WorldState()
     inventory = gs.Inventory()
@@ -234,6 +236,7 @@ def main():
                                 if sprite.__class__ == Objects.Object_chgs_image:
                                     if sprite.get_image_name() == "cage-unlocked.png":
                                         win = True
+                                        end_time = p.time.get_ticks()
 
                                 break
                             sprite.update_action()
@@ -255,6 +258,7 @@ def main():
             elif key[p.K_ESCAPE] and esc_holder:
                 esc_holder = False
                 paused = True
+                pause_time = p.time.get_ticks()
 
 
             elif not key[p.K_ESCAPE]:
@@ -321,17 +325,18 @@ def main():
 
             endc = ""
             if player.fate <= 0 or player.soul <= 0:
-                player.fate = 100
-                player.soul = 100
+                player.set_fate(100)
+                player.set_soul(100)
                 p.mouse.set_visible(True)
                 gs.change_track(3)
                 endc = end.main(screen, False)
+                end_time = p.time.get_ticks()
 
             if win:
-                player.fate = 100
-                player.soul = 100
+                player.set_fate(100)
+                player.set_soul(100)
                 p.mouse.set_visible(True)
-                endc = end.main(screen, True, player.get_fate())
+                endc = end.main(screen, True, end_time-start_time - pause_counter)
             if endc == "restart":
                 gs.reset()
                 main()
@@ -342,6 +347,7 @@ def main():
 
             time = p.time.get_ticks()
         else:
+
             pause_screen = pause.Pause()
             button_clicked = ""
             for event in p.event.get():
@@ -354,11 +360,16 @@ def main():
             if key[p.K_ESCAPE] and esc_holder:
                 esc_holder = False
                 paused = False
+                end_pause_time = p.time.get_ticks()
+                pause_counter += (end_pause_time-pause_time)
+
 
             elif not key[p.K_ESCAPE]:
                 esc_holder = True
             if button_clicked == "continue":
                 paused = False
+                end_pause_time = p.time.get_ticks()
+                pause_counter += (end_pause_time-pause_time)
             elif button_clicked == "restart":
                 gs.reset()
                 main()

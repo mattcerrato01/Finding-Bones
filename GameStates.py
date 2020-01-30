@@ -10,6 +10,7 @@ def reset():
     QuestManager.quest_actions = []
 class WorldState:
     overworld = True
+    highscore = 0
 
     def state(self):
         return WorldState.overworld
@@ -17,14 +18,11 @@ class WorldState:
     def toggle(self):
         WorldState.overworld = not WorldState.overworld
 
-    def x(self):
-        x = 0
 
-highscore = 0
-def set_highscore(newhs):
-	highscore = newhs
-def get_highscore():
-	return highscore
+    def set_highscore(self,newhs):
+        WorldState.highscore = newhs
+    def get_highscore(self):
+        return WorldState.highscore
 
 def change_track(state):
     p.mixer.music.stop()
@@ -33,11 +31,11 @@ def change_track(state):
     elif state == 2:
         p.mixer.music.load('soundtrack/Underworld_Theme.wav')
     elif state == 3:
-    	p.mixer.music.load('soundtrack/Game_Over.wav')
+        p.mixer.music.load('soundtrack/Game_Over.wav')
     elif state == 4:
-    	p.mixer.music.load('soundtrack/Start_Screen.wav') 
+        p.mixer.music.load('soundtrack/Start_Screen.wav')
     else:
-    	p.mixer.music.load('effects/BlehSound.wav')
+        p.mixer.music.load('effects/BlehSound.wav')
     p.mixer.music.play(-1)
 
 

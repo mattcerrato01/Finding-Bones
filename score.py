@@ -1,5 +1,6 @@
 import pygame as p
 import Objects
+import GameStates as gs
 
 p.init()
 
@@ -9,6 +10,8 @@ def loadify(imgname):
 
 
 def main(screen, score, highscore):
+	if score > highscore:
+		gs.set_highscore(score)
 	background = p.Surface(screen.get_size())
 	background = background.convert()
 	background.fill((250, 250, 250))

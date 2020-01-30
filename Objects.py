@@ -181,9 +181,6 @@ class Villagers(Object):
 
             self.action = actions.perform_action(self.action)
 
-
-
-
         if self.rect.collidepoint(mouse_click) and (not self.essential or self.grey_right_now) and not world.state():
             self.soul_reaped = True
             return True
@@ -711,10 +708,11 @@ class Hitbox(p.sprite.Sprite):
         self.width = width
         self.height = height
         self.action = action
+        self.drawn = False
         self.rect = p.Rect(coord.screen_x(self.x), coord.screen_y(self.y), self.width, self.height)
 
     def draw(self, screen, player):
-        p.draw.rect(screen, (0,0,0), (coord.screen_x(self.x), coord.screen_y(self.y), self.width, self.height), 2)
+        self.drawn = True
 
     def changeMouse(self, mouse):
 
