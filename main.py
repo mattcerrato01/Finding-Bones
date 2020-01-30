@@ -206,7 +206,8 @@ def main():
 
 
                     if dialogue_box.draw(screen):
-                        play_sound(random.choice(["Greeting 1", "Greeting 2", "Greeting 3 (Female)", "Cough", "BlehSound"])) # FIX THIS SHIT LATER
+                    	if random.random() < 0.5:
+                        	play_sound(random.choice(["Greeting 1", "Greeting 2", "Greeting 3 (Female)", "Cough", "BlehSound"])) # FIX THIS SHIT LATER
                         dialogue_box.perform_action(pos)
                     else:
                         for sprite in collision_group:
