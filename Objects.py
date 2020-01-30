@@ -788,7 +788,6 @@ class Object_chgs_image(Object):
         return False
 
 
-#		  Well's width is 108, height is 168
 
 
 
