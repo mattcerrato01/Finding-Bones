@@ -20,6 +20,11 @@ class WorldState:
     def x(self):
         x = 0
 
+highscore = 0
+def set_highscore(newhs):
+	highscore = newhs
+def get_highscore():
+	return highscore
 
 def change_track(state):
     p.mixer.music.stop()

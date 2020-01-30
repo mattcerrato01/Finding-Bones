@@ -2,6 +2,7 @@ import pygame as p
 import Objects
 import GameStates as gs
 import credits
+import score as scr
 
 p.init()
 
@@ -13,7 +14,7 @@ def win_anim(animI):
 	animI += 1
 	return animI, back
 
-def main(screen, win, score = None):
+def main(screen, win, score = 0):
 	endrunning = True
 	clicked = False
 
@@ -47,6 +48,11 @@ def main(screen, win, score = None):
 	credit_button = p.rect.Rect(530, 470, 240, 120)
 
 	animI = 1
+	
+	highscore = gs.get_highscore()
+	if score > highscore:
+		gs.set_highscore(score)
+		highscore = score
 
 	while endrunning:
 		#screen.fill([255, 255, 255])
@@ -79,8 +85,12 @@ def main(screen, win, score = None):
 				return "restart"
 			elif score_button.collidepoint(pos):
 			# elif 530 < p.mouse.get_pos()[0] < 770 and 380 < p.mouse.get_pos()[1] < 460:
-				endrunning = False
-				return "score"
+				#endrunning = False
+				#return "score"
+				s = scr.main(screen, score, highscore)
+				if s == "quit":
+					endrunning = False
+					return "quit"
 			elif credit_button.collidepoint(pos):
 			# elif 530 < p.mouse.get_pos()[0] < 770 and 470 < p.mouse.get_pos()[1] < 560:
 				endrunning = False
