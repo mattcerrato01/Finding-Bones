@@ -4,6 +4,7 @@
     <extensionMap>
       <mapping pattern="Assembler.py" type="PLAIN_TEXT" />
       <mapping pattern="instructions" type="PLAIN_TEXT" />
+      <mapping pattern="sumInstructions" type="PLAIN_TEXT" />
     </extensionMap>
   </component>
 </application>
